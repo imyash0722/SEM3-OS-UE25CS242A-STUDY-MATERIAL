@@ -1,0 +1,178 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 2: IPC, Threads and Concurrency
+Lecture 5: Multicore Kernel Concepts, SMP Scheduling & Hardware Multithreading
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Multiprocessor Scheduling Fundamentals
+   - Motivation & Scope (Multicore CPUs, SMT Cores, NUMA Systems, Heterogeneous Cores)
+   - Asymmetric Multiprocessing (AMP) vs. Symmetric Multiprocessing (SMP)
+2. SMP Ready Queue Organization
+   - Common (Shared) Ready Queue Architecture & Lock Contention Bottlenecks
+   - Per-Core Private Run Queues Architecture (Modern Standard)
+   - Kernel Parallelism & State Partitioning
+3. Hardware Multithreading & Memory Stalls
+   - The Memory Stall Phenomenon (Compute Cycles vs. Memory Stalls)
+   - Multithreaded Processing Cores (Hardware Threads / SMT / Hyper-Threading)
+   - Chip Multithreading (CMT) & Physical Cores vs. Logical CPUs
+4. Multicore Load Balancing
+   - Workload Distribution Necessity
+   - Push Migration vs. Pull Migration (Work Stealing)
+5. Processor Affinity
+   - Cache Warming & The Cost of Inter-Core Thread Migration
+   - Soft Affinity (Best-Effort Policy)
+   - Hard Affinity (sched_setaffinity System Call in Linux)
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ARCHITECTURES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4, 5 & 6: Multiprocessor Architectures & SMP vs. AMP
+--------------------------------------------------------------------------------
+• Scope of Modern Multiprocessors:
+  - Multicore CPUs: Several computing cores placed on a single physical die.
+  - Multithreaded Cores: Multiple hardware execution contexts per physical core.
+  - NUMA (Non-Uniform Memory Access) Systems: Memory access latencies vary depending on the distance between the accessing CPU and physical memory bank.
+  - Heterogeneous Multiprocessing (HMP): Cores with differing performance/energy profiles (e.g. ARM big.LITTLE).
+
+• Asymmetric Multiprocessing (AMP):
+  - Master-Worker Organization: A single master CPU handles all OS scheduling decisions, system calls, and I/O processing.
+  - Worker CPUs execute user applications only.
+  - Advantage: Simplicity (only the master CPU accesses kernel data structures, avoiding complex locking).
+  - Disadvantage: The master CPU becomes a severe performance bottleneck as core counts scale.
+
+• Symmetric Multiprocessing (SMP):
+  - Peer Organization: Each processor is self-scheduling; any core can run user processes or execute kernel code.
+  - Universally adopted by modern operating systems: Linux, Windows, macOS, Android, and iOS.
+
+--------------------------------------------------------------------------------
+Slide 7 & 8: SMP Ready Queue Organizations & Kernel Parallelism
+--------------------------------------------------------------------------------
+• Silberschatz Figure 5.11: Common Ready Queue vs. Per-Core Run Queues:
+
+  (a) COMMON READY QUEUE                    (b) PER-CORE RUN QUEUES
+  +-------------------------------+         +--------+   +--------+   +--------+
+  |     Common Ready Queue        |         | Queue  |   | Queue  |   | Queue  |
+  +---------------+---------------+         +---+----+   +---+----+   +---+----+
+          |       |       |                     |            |            |
+          v       v       v                     v            v            v
+      [Core 0] [Core 1] [Core 2]            [Core 0]     [Core 1]     [Core 2]
+
+• Architectural Trade-offs:
+  1. Common Ready Queue:
+     - All cores compete for threads from a single shared ready queue.
+     - Critical Defect: A mutex lock is required to protect the queue from concurrent access. All cores serialize waiting for this lock, making the common queue a major scalability bottleneck.
+  2. Per-Core Private Run Queues:
+     - Each core maintains its own independent run queue.
+     - Dispatches processes without locking shared memory on the fast scheduling path.
+     - Used in the Linux Completely Fair Scheduler (CFS) and modern SMP kernels.
+
+• Kernel Parallelism under SMP:
+  - Multiple cores execute kernel routines simultaneously.
+  - High lock contention degrades SMP performance.
+  - Practical Solution: Partition kernel state per core; only synchronize for rare cross-core operations (such as thread migration during load balancing).
+
+--------------------------------------------------------------------------------
+Slide 9, 10 & 11: Memory Stalls & Multithreaded Processing Cores
+--------------------------------------------------------------------------------
+• The Memory Stall Problem:
+  - Modern processors operate at clock frequencies much faster than DRAM access speeds.
+  - On a cache miss, a core may spend 100 to 400 clock cycles stalled waiting for data from main memory.
+  - A thread alternates between Compute Cycles (C) and Memory Stall Cycles (M):
+
+  Silberschatz Figure 5.12: Memory Stall Timeline on Single Hardware Thread:
+  +---------+-------------------+---------+-------------------+
+  | Compute | Memory Stall (50%)| Compute | Memory Stall (50%)| ----> Time
+  |   (C)   |       (M)         |   (C)   |       (M)         |
+  +---------+-------------------+---------+-------------------+
+  - The physical processor is forced to sit completely idle during stall cycles.
+
+• Hardware Multithreading Remedy (SMT / Hyper-Threading):
+  - Hardware assigns two or more hardware threads (architectural execution contexts) to each physical core.
+  - If Hardware Thread 0 stalls waiting for memory, the core's execution pipeline immediately switches to execute instructions for Hardware Thread 1:
+
+  Silberschatz Figure 5.13: Multithreaded Core Cycle Interleaving:
+  Thread 0: | Compute (C0) | Memory Stall (M0) | Compute (C0) |
+  Thread 1: | Memory Stall (M1) | Compute (C1) | Memory Stall (M1) |
+  Physical
+  Core:     |      C0      |        C1         |      C0      | ----> Time
+
+• Result: The core fills otherwise wasted memory stall cycles with productive computation from the alternate hardware thread.
+
+--------------------------------------------------------------------------------
+Slide 12: Chip Multithreading (CMT) & Logical CPUs
+--------------------------------------------------------------------------------
+• Architecture:
+  - Combining multicore processor dies with hardware multithreading.
+  - Example: A processor with 4 physical cores, each supporting 2 hardware threads, provides 8 **Logical CPUs** to the operating system:
+
+  Silberschatz Figure 5.14: Chip Multithreading Architecture:
+  +-----------------------------------------------------------------------+
+  |                          PROCESSOR CHIP                               |
+  |  +---------------------------------+ +------------------------------+ |
+  |  |            CORE 0               | |            CORE 1            | |
+  |  | [HW Thread 0]   [HW Thread 1]   | | [HW Thread 2]  [HW Thread 3] | |
+  |  +---------------------------------+ +------------------------------+ |
+  |  +---------------------------------+ +------------------------------+ |
+  |  |            CORE 2               | |            CORE 3            | |
+  |  | [HW Thread 4]   [HW Thread 5]   | | [HW Thread 6]  [HW Thread 7] | |
+  |  +---------------------------------+ +------------------------------+ |
+  +-----------------------------------+-----------------------------------+
+                                      |
+                           (Operating System View)
+  [ Logical CPU 0 ] [ Logical CPU 1 ] [ Logical CPU 2 ] ... [ Logical CPU 7 ]
+
+• Commercial Examples:
+  - Intel Core i7 / Xeon (Hyper-Threading): 2 hardware threads per core.
+  - Oracle SPARC M7: 8 hardware threads per core.
+
+--------------------------------------------------------------------------------
+Slide 13: Multicore Load Balancing
+--------------------------------------------------------------------------------
+• Need for Load Balancing:
+  - With per-core run queues, workloads can become severely uneven: some cores sit idle while others have long backlogs of ready threads.
+• Two Primary Balancing Strategies:
+  1. **Push Migration**:
+     - A kernel daemon periodically inspects the load on each processor run queue.
+     - If an imbalance is detected, it forcibly pushes threads from overloaded queues to idle or underloaded cores.
+  2. **Pull Migration (Work Stealing)**:
+     - An idle processor detects that its own run queue is empty.
+     - It actively pulls (steals) a waiting thread from the run queue of a busy processor.
+  - In practice, modern kernels (like Linux CFS) implement both push and pull migration concurrently.
+
+--------------------------------------------------------------------------------
+Slide 14 & 15: Processor Affinity
+--------------------------------------------------------------------------------
+• Warm Cache Effect:
+  - While a thread runs on a CPU core, its working set is loaded into the core's local L1/L2 caches (the cache becomes "warm").
+  - Memory accesses are satisfied rapidly from high-speed cache lines.
+  - If the thread is migrated to a different core:
+    1. The old core's cache lines are invalidated.
+    2. The new core suffers extensive cache misses while repopulating its cold cache.
+• Principle of Processor Affinity:
+  - Schedulers strive to keep a thread executing on the same core where it last ran.
+• Classification of Affinity:
+  1. **Soft Affinity**:
+     - The OS scheduler has a policy preference to keep a thread on the same processor, but provides NO strict guarantee.
+     - A thread may still be migrated to another core if necessary to balance system load (Linux default behavior).
+  2. **Hard Affinity**:
+     - The operating system allows a process to explicitly pin its execution to a specific subset of CPU cores using system calls.
+     - Linux System Call:
+       #define _GNU_SOURCE
+       #include <sched.h>
+       int sched_setaffinity(pid_t pid, size_t cpusetsize, const cpu_set_t *mask);
+       int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask);
+     - Guarantees the specified process will NEVER be migrated outside the defined CPU affinity mask.
+
+--------------------------------------------------------------------------------
+Slide 16: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 5.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

@@ -1,0 +1,270 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 2: IPC, Threads and Concurrency
+Lecture 2: System Calls for IPC & Introduction to Threads
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. System Calls for Inter-Process Communication (IPC)
+   - Pipes (Ordinary / Unnamed Pipes):
+     * Limitations (Half-Duplex, Ancestry Dependency)
+     * pipe() System Call: fd[0] (Read) and fd[1] (Write)
+     * Communication Setup between Parent and Child Process
+     * Standard Library Helpers: popen() and pclose()
+   - FIFOs (Named Pipes):
+     * mkfifo() and mkfifoat() System Calls
+     * Unrelated Process Communication & Client-Server Rendezvous
+   - System V Message Queues:
+     * msgget(), msgsnd(), and msgrcv()
+     * Message Type Filtering (Selective Non-FIFO Retrieval)
+   - System V Semaphores:
+     * semget(), semctl(), and semop() System Calls
+     * Atomic Counter Operations
+   - Linux / UNIX Domain Sockets:
+     * AF_UNIX Address Family & struct sockaddr_un
+     * Complete Server and Client Lifecycle (socket, bind, listen, accept, connect)
+2. Introduction to Threads
+   - Thread Definition (Unit of CPU Utilization: Thread ID, PC, Registers, Stack)
+   - Single-Threaded vs. Multi-Threaded Process Architecture
+   - Multithreaded Server Architecture (Dispatcher / Worker Model)
+   - Key Benefits of Multithreading: Responsiveness, Resource Sharing, Economy, Scalability
+   - Comprehensive Comparison: Processes vs. Threads
+   - Shared Process Attributes vs. Thread-Specific Attributes
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ARCHITECTURES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4 to 8: Ordinary Pipes (Anonymous Pipes)
+--------------------------------------------------------------------------------
+• Definition & Properties:
+  - The oldest form of Unix IPC, providing a unidirectional (half-duplex) byte stream.
+  - Two Historic Limitations:
+    1. Half-duplex: Data flows in only one direction.
+    2. Common Ancestor required: Can only connect processes that share a common parent (created before `fork()`).
+
+• The pipe() System Call:
+  #include <unistd.h>
+  int pipe(int fd[2]);
+  - Returns: 0 on success, -1 on error.
+  - Returns two open file descriptors:
+    * `fd[0]`: Open for READING.
+    * `fd[1]`: Open for WRITING.
+    * The output of `fd[1]` serves as the direct input to `fd[0]`.
+
+• Unidirectional Communication Setup after fork():
+  1. Parent to Child Data Flow:
+     - Parent calls `pipe(fd)`.
+     - Parent calls `fork()`.
+     - Parent closes read end: `close(fd[0]);` -> writes data to `fd[1]`.
+     - Child closes write end: `close(fd[1]);` -> reads data from `fd[0]`.
+
+  Silberschatz Figure: Parent to Child Pipe:
+  +-------------------------+                     +-------------------------+
+  |      PARENT PROCESS     |                     |      CHILD PROCESS      |
+  | [close(fd[0])]          |                     | [close(fd[1])]          |
+  | Writes to fd[1]         |                     | Reads from fd[0]        |
+  +------------+------------+                     +------------^------------+
+               |                                               |
+               +-----------------> [ KERNEL ] -----------------+
+                                (Data Buffer)
+
+  2. Child to Parent Data Flow:
+     - Parent closes write end: `close(fd[1]);` -> reads from `fd[0]`.
+     - Child closes read end: `close(fd[0]);` -> writes to `fd[1]`.
+
+--------------------------------------------------------------------------------
+Slide 9: Standard Library Helpers: popen() and pclose()
+--------------------------------------------------------------------------------
+• Purpose:
+  - Automates pipe creation, process forking, file descriptor redirection, shell execution, and cleanup.
+• Prototypes:
+  #include <stdio.h>
+  FILE *popen(const char *cmdstring, const char *type);
+  int pclose(FILE *fp);
+
+• Mechanics:
+  - `popen()` executes `fork()` and `exec()` to run `cmdstring` via `/bin/sh`.
+  - If `type == "r"`: Returns a standard I/O stream connected to the child's stdout.
+  - If `type == "w"`: Returns a standard I/O stream connected to the child's stdin.
+  - `pclose()` closes the pipe stream, waits for the child shell process to exit, and returns the termination status.
+
+--------------------------------------------------------------------------------
+Slide 10: FIFOs (Named Pipes)
+--------------------------------------------------------------------------------
+• Distinction from Anonymous Pipes:
+  - Named pipes exist as directory entries in the filesystem (with file type `p`).
+  - Enables bidirectional or unidirectional communication between **completely unrelated processes** (no common parent needed).
+• Creation System Calls:
+  #include <sys/stat.h>
+  int mkfifo(const char *path, mode_t mode);
+  int mkfifoat(int fd, const char *path, mode_t mode);
+  - Returns: 0 on success, -1 on failure.
+• Usage:
+  - Once created, a FIFO is opened using the standard `open()` system call.
+  - Supports regular file operations: `read()`, `write()`, `close()`, and `unlink()`.
+  - Primary Applications:
+    1. Passing data between shell pipelines without intermediate temporary files.
+    2. Serving as well-known rendezvous endpoints in client-server IPC.
+
+--------------------------------------------------------------------------------
+Slide 11: System V Message Queues
+--------------------------------------------------------------------------------
+• Architecture:
+  - A linked list of structured messages stored directly in kernel memory, identified by an integer message queue identifier (`msqid`).
+• System Calls:
+  #include <sys/msg.h>
+  int msgget(key_t key, int flag);
+  int msgsnd(int msqid, const void *ptr, size_t nbytes, int flag);
+  ssize_t msgrcv(int msqid, void *ptr, size_t nbytes, long type, int flag);
+
+• Key Feature - Type Filtering:
+  - Each message consists of:
+    struct msgbuf {
+        long mtype;       // Positive message type (> 0)
+        char mtext[...];  // Message payload
+    };
+  - `msgrcv()` does NOT strictly require FIFO retrieval. Processes can selectively fetch messages based on their `mtype` (e.g. prioritize urgent message types).
+
+--------------------------------------------------------------------------------
+Slide 12 & 13: System V Semaphores
+--------------------------------------------------------------------------------
+• Definition & Behavior:
+  - A kernel-maintained counter providing synchronized access to shared resources among multiple processes.
+  - Operational Rules:
+    1. Test: Process inspects the semaphore value.
+    2. Acquire: If semaphore > 0, decrement by 1 and proceed to access shared resource.
+    3. Wait: If semaphore == 0, the process is put to sleep until value becomes positive.
+    4. Release: When process finishes using resource, increment semaphore by 1, waking sleeping processes.
+• System Calls:
+  #include <sys/sem.h>
+  int semget(key_t key, int nsems, int flag);
+  int semctl(int semid, int semnum, int cmd, ... /* union semun arg */);
+  int semop(int semid, struct sembuf semoparray[], size_t nops);
+  - `semop()` executes an array of semaphore operations **atomically** to prevent race conditions.
+
+--------------------------------------------------------------------------------
+Slide 14 to 18: Linux / UNIX Domain Sockets
+--------------------------------------------------------------------------------
+• Overview:
+  - Enables bidirectional IPC between processes executing on the same physical host using standard Berkeley Socket APIs without protocol stack overhead.
+  - Address Family: `AF_UNIX` (or `AF_LOCAL`).
+  - Address Structure:
+    #include <sys/un.h>
+    struct sockaddr_un {
+        sa_family_t sun_family; // AF_UNIX
+        char sun_path[108];     // Filesystem path for socket file
+    };
+
+• Complete Server Lifecycle:
+  1. `server_fd = socket(AF_UNIX, SOCK_STREAM, 0);`
+  2. Configure address: `addr.sun_family = AF_UNIX; strcpy(addr.sun_path, "/tmp/mysocket");`
+  3. Remove stale socket: `unlink("/tmp/mysocket");`
+  4. Bind address: `bind(server_fd, (struct sockaddr *)&addr, sizeof(addr));`
+  5. Listen: `listen(server_fd, 5);`
+  6. Accept: `client_fd = accept(server_fd, NULL, NULL);` (blocks for connection)
+  7. Receive: `read(client_fd, buffer, sizeof(buffer));`
+  8. Reply: `write(client_fd, "Hello Client", 13);`
+  9. Cleanup: `close(client_fd); close(server_fd); unlink("/tmp/mysocket");`
+
+• Complete Client Lifecycle:
+  1. `sockfd = socket(AF_UNIX, SOCK_STREAM, 0);`
+  2. Configure address: `addr.sun_family = AF_UNIX; strcpy(addr.sun_path, "/tmp/mysocket");`
+  3. Connect: `connect(sockfd, (struct sockaddr *)&addr, sizeof(addr));`
+  4. Send: `write(sockfd, "Hello Server", 13);`
+  5. Receive Reply: `read(sockfd, buffer, sizeof(buffer));`
+  6. Close: `close(sockfd);`
+
+--------------------------------------------------------------------------------
+Slide 19 to 23: Introduction to Threads & Process Models
+--------------------------------------------------------------------------------
+• Definition of Thread:
+  - A thread is a basic unit of CPU utilization (lightweight process).
+  - Comprises:
+    1. Thread ID (TID)
+    2. Program Counter (PC)
+    3. Register set
+    4. Private Stack
+
+• Silberschatz Figure 4.1: Single-Threaded vs. Multithreaded Process Architecture:
+
+  SINGLE-THREADED PROCESS                   MULTITHREADED PROCESS
+  +-----------------------------------+     +-----------------------------------+
+  | Code      | Data     | Files      |     | Code      | Data     | Files      |
+  +-----------------------------------+     +-----------------------------------+
+  | Registers | Stack                 |     | Regs|Regs|Regs  |Stack|Stack|Stack|
+  |           |                       |     | T1  | T2 | T3   | T1  | T2  | T3  |
+  +-----------------------------------+     +-----------------------------------+
+  |            Thread 1               |     |  Thread 1 |  Thread 2 |  Thread 3 |
+  +-----------------------------------+     +-----------------------------------+
+
+• Real-World Examples:
+  - Web Browser: Separate threads for fetching network data, rendering graphics, playing audio/video, handling UI clicks.
+  - Word Processor: Separate threads for user keystroke input, spell checking, autosaving, background formatting.
+
+• Silberschatz Figure 4.2: Multithreaded Server Architecture:
+  (1) Client issues request ----> [ Server Listener Thread ]
+                                             |
+                                             v (2) Spawns new worker thread
+                                 [ Worker Thread ] ---> Services client request
+                                             |
+  (3) Listener thread immediately resumes waiting for additional client requests.
+
+--------------------------------------------------------------------------------
+Slide 24, 25 & 26: Benefits of Multithreading
+--------------------------------------------------------------------------------
+1. **Responsiveness**:
+   - An interactive application remains responsive to user input even if a long-running computation or blocking I/O operation is executing in another thread.
+2. **Resource Sharing**:
+   - Threads inherently share the memory address space, global variables, and open files of their process without needing explicit IPC setup (no pipes or shared memory required).
+3. **Economy**:
+   - Allocating memory and resources for process creation is expensive.
+   - Example: On Solaris systems, creating a process is ~30 times slower than creating a thread, and process context switching is ~5 times slower than thread context switching.
+4. **Scalability**:
+   - Threads execute concurrently across multiple processing cores on multicore/multiprocessor architectures.
+
+--------------------------------------------------------------------------------
+Slide 27, 28 & 29: Processes vs. Threads & Attribute Segregation
+--------------------------------------------------------------------------------
+• Processes vs. Threads Summary Table:
+  +---------------------------------------+---------------------------------------+
+  | Process                               | Thread                                |
+  +---------------------------------------+---------------------------------------+
+  | Isolated memory address space         | Shares memory address space by default|
+  | File descriptors isolated             | Shares open file descriptors          |
+  | Independent filesystem context        | Shares filesystem context             |
+  | Distinct signal handling dispositions | Shares signal handling dispositions   |
+  | High creation and context-switch cost | Lightweight creation & fast switching |
+  +---------------------------------------+---------------------------------------+
+
+• Detailed Breakdown of Process vs. Thread Attributes:
+  - **Shared by All Threads within a Process**:
+    * Process ID (PID) and Parent Process ID (PPID)
+    * Process Group ID and Session ID
+    * Controlling Terminal
+    * Process Credentials (User ID, Effective UID, Group IDs)
+    * Open File Descriptors table
+    * Memory Address Space (Text, Data, BSS, Heap)
+    * Record locks
+    * Signal dispositions / actions
+    * Current Working Directory and root directory
+  - **Private / Unique to Each Individual Thread**:
+    * Thread Identifier (TID)
+    * Set of CPU registers (including Program Counter and Stack Pointer)
+    * Execution Stack (local variables, function call frames)
+    * Scheduling priority and policy
+    * Signal Mask (which signals are currently blocked)
+    * Thread-local `errno` variable
+    * Thread-Specific Data (TSD) keys and storage pointers
+
+--------------------------------------------------------------------------------
+Slide 30: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 2.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

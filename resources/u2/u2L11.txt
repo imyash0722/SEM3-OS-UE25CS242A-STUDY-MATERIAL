@@ -1,0 +1,306 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 2: IPC, Threads and Concurrency
+Lecture 11: Principles of Deadlocks - Characterization, Prevention, Detection & Avoidance
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Introduction to Deadlocks & System Model
+   - Deadlock Definition & System Resources (Physical vs. Logical)
+   - Resource Utilization Lifecycle: Request -> Use -> Release
+   - Illustrative Deadlocks: CD-RW Drives, Semaphores, Mutex Locks
+   - Deadlock vs. Starvation & Single-Lane Bridge Analogy
+2. Deadlock Characterization
+   - The Four Coffman Conditions (Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait)
+3. Resource-Allocation Graphs (RAG)
+   - Directed Graph Notation (Process nodes, Resource nodes, Multi-instance dots)
+   - Edges: Request Edges vs. Assignment Edges
+   - Cycle Analysis Theorems (Single Instance = Deadlock vs. Multi-Instance Possibility)
+4. Deadlock Handling Strategies
+   - Overview of the 4 Methods: Prevention, Avoidance, Detection & Recovery, Denial (Ostrich Algorithm)
+5. Deadlock Prevention (Negating Coffman Conditions)
+   - Negating Mutual Exclusion (Sharable resources)
+   - Negating Hold and Wait (All-at-once allocation or empty-hands requirement)
+   - Negating No Preemption (Forced release of held resources)
+   - Negating Circular Wait (Strict total resource ordering / linear numbering)
+6. Deadlock Detection & Wait-For Graphs
+   - Wait-For Graph Construction for Single-Instance Resources
+   - Cycle Detection Algorithm ($O(n^2)$ Complexity)
+7. Deadlock Avoidance & Safe States
+   - A Priori Information (Maximum Demands Declaration)
+   - Safe State Definition & Safe Sequences
+   - State Relationships: Safe State vs. Unsafe State vs. Deadlock
+   - Resource-Allocation Graph Algorithm (Claim Edges & Cycle Check)
+8. The Banker's Algorithm (Dijkstra)
+   - Data Structures: Available[m], Max[n][m], Allocation[n][m], Need[n][m]
+   - The Safety Algorithm (Step-by-step vector and matrix verification)
+   - Resource-Request Algorithm for Process Pi
+   - Comprehensive Numerical Example:
+     * Snapshot at T0, Need Matrix Computation, Safe Sequence Verification
+     * Request Handling for P1 (1, 0, 2)
+     * Examination of P4 Request (3, 3, 0) (Insufficient resources)
+     * Examination of P0 Request (0, 2, 0) (Unsafe state rejection proof)
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT, PROOFS & NUMERICAL EXAMPLES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4, 5 & 6: Deadlock Definition & System Model
+--------------------------------------------------------------------------------
+• Definition of Deadlock:
+  - In a multiprogramming environment, multiple processes compete for a finite set of resources.
+  - A process requests resources; if the resources are unavailable, the process enters a waiting state.
+  - A **Deadlock** occurs when two or more waiting processes are unable to change their state because the resources they have requested are held by other waiting processes.
+• System Model:
+  - The system consists of a finite number of resources distributed among competing processes:
+    * Resource types: $R_1, R_2, \dots, R_m$.
+    * Physical resources: CPU cycles, memory frames, I/O devices, printers, tape drives.
+    * Logical resources: Semaphores, mutex locks, database records, files.
+    * Each resource type $R_i$ has $W_i$ identical instances (e.g. 2 identical CPU cores).
+• Sequence of Resource Utilization:
+  1. **Request**: Process requests resource via system call (e.g., `wait()`, `open()`, `allocate()`).
+  2. **Use**: Process operates on the resource (e.g., prints, reads file).
+  3. **Release**: Process releases resource via system call (e.g., `signal()`, `close()`, `free()`).
+
+• Examples of Deadlock:
+  - Example 1 (Physical Drives): A system has 3 CD-RW drives. Three processes ($P_0, P_1, P_2$) hold 1 drive each. If $P_0$ requests a second drive, it blocks. If $P_1$ and $P_2$ also request another drive, all 3 block permanently.
+  - Example 2 (Printer & DVD): $P_i$ holds the Printer and requests DVD drive; $P_j$ holds the DVD drive and requests the Printer. Neither yields -> Deadlock.
+
+--------------------------------------------------------------------------------
+Slide 7 to 12: Deadlock Characterization & Real-World Analogies
+--------------------------------------------------------------------------------
+• Semaphore Deadlock:
+  P1: wait(S1); wait(S2);
+  P2: wait(S2); wait(S1);
+  - Interleaving where P1 acquires S1 and P2 acquires S2 results in permanent deadlock.
+
+• Deadlock vs. Starvation:
+  - **Starvation (Indefinite Blocking)**: A process waits indefinitely in a scheduling queue because higher-priority tasks continually preempt it. Starvation *can* eventually end if load subsides.
+  - **Deadlock**: Involves a strict circular dependency of waiting threads. Deadlock *cannot* end without external operating system intervention. All deadlocked processes are starved, but not all starved processes are deadlocked.
+
+• The Single-Lane Bridge Crossing Analogy (Slide 10 & 11):
+  - A narrow bridge allows traffic in only one direction at a time. Each section of road is a resource.
+  - Deadlock occurs when two cars heading in opposite directions meet in the middle. Each owns half the bridge and needs the other half to advance.
+  - Resolution requires rollback: one or more cars must back up (resource preemption).
+  - Starvation: If westbound traffic flows continuously, eastbound cars starve waiting for an opening.
+
+--------------------------------------------------------------------------------
+Slide 13: The Four Coffman Conditions
+--------------------------------------------------------------------------------
+A deadlock situation can arise if and ONLY if the following four conditions hold simultaneously:
+1. **Mutual Exclusion**:
+   - At least one resource must be held in a non-sharable mode. Only one process at a time can use the resource. (Sharable resources like read-only files do not require exclusive access and never deadlock).
+2. **Hold and Wait**:
+   - A process must currently hold at least one resource and be waiting to acquire additional resources that are currently being held by other operating processes.
+3. **No Preemption**:
+   - Resources cannot be forcibly confiscated from a process; a resource can be released only voluntarily by the holding process after completing its task.
+4. **Circular Wait**:
+   - A closed chain of waiting processes $\{P_0, P_1, \dots, P_n\}$ exists such that $P_0$ waits for a resource held by $P_1$, $P_1$ waits for a resource held by $P_2$, $\dots$, and $P_n$ waits for a resource held by $P_0$.
+
+--------------------------------------------------------------------------------
+Slide 14 to 19: Resource-Allocation Graphs (RAG)
+--------------------------------------------------------------------------------
+• Graph Definition:
+  - Directed graph $G = (V, E)$.
+  - Vertices $V$ partitioned into:
+    * Processes $P = \{P_1, P_2, \dots, P_n\}$ (represented as Circles).
+    * Resource types $R = \{R_1, R_2, \dots, R_m\}$ (represented as Rectangles with dots for instances).
+  - Edges $E$:
+    * **Request Edge**: Directed edge $P_i \to R_j$ (Process $P_i$ has requested an instance of resource type $R_j$).
+    * **Assignment Edge**: Directed edge $R_j \to P_i$ (An instance dot of resource $R_j$ is allocated to $P_i$).
+
+• Graph Evaluation Theorems:
+  1. If the resource-allocation graph contains **NO cycles**, the system is provably NOT in a deadlocked state.
+  2. If the graph contains **at least one cycle**:
+     - If every resource type has strictly **one instance**, a cycle implies **DEADLOCK exists**.
+     - If resource types have **multiple instances**, a cycle indicates the **possibility of deadlock** (deadlock may or may not exist depending on whether non-cycle processes release instances).
+
+--------------------------------------------------------------------------------
+Slide 20 to 23: Deadlock Prevention (Negating Coffman Conditions)
+--------------------------------------------------------------------------------
+Deadlock prevention ensures deadlock is impossible by strictly disallowing at least one of the 4 Coffman conditions:
+1. **Eliminate Mutual Exclusion**:
+   - Make all resources sharable. Impossible in practice because physical devices (printers, mutex locks) are fundamentally non-sharable.
+2. **Eliminate Hold and Wait**:
+   - Protocol A: A process must request and receive ALL required resources at once before beginning execution.
+   - Protocol B: A process may request resources only when it holds zero resources (must release all current allocations before requesting more).
+   - Drawbacks: Severe underutilization of resources and potential starvation for processes requiring many popular resources.
+3. **Eliminate No Preemption**:
+   - If a process holding resources requests an unavailable resource, the OS forcibly preempts and releases ALL resources currently held by that process.
+   - The process is suspended and restarted only when it re-acquires all old and new requested resources.
+   - Effective for state-saveable resources (CPU registers, memory pages); inapplicable to disk writes or printers.
+4. **Eliminate Circular Wait (The Standard Method)**:
+   - Impose a strict, global total ordering on all resource types:
+     $F: R \to \mathbb{N}$ (e.g. $F(\text{disk}) = 1, F(\text{printer}) = 2, F(\text{tape}) = 3$).
+   - Rule: A process can request a resource $R_j$ only if $F(R_j) > F(R_i)$ for all resources $R_i$ currently held by that process.
+   - Mathematical Proof: Prevents circular wait because a directed cycle would require $F(R_0) < F(R_1) < \dots < F(R_n) < F(R_0)$, which is a contradiction.
+
+--------------------------------------------------------------------------------
+Slide 24, 25 & 26: Deadlock Detection & Wait-For Graphs
+--------------------------------------------------------------------------------
+• Single-Instance Resources: Wait-For Graph:
+  - Constructed by collapsing resource nodes out of the Resource-Allocation Graph:
+    * A directed edge $P_i \to P_j$ exists in the wait-for graph if and only if $P_i \to R_q$ and $R_q \to P_j$ in the RAG.
+  - Cycle Theorem: The system is deadlocked if and only if the wait-for graph contains a directed cycle.
+  - Cycle detection runs in $O(n^2)$ time using Depth-First Search (DFS).
+
+--------------------------------------------------------------------------------
+Slide 27 to 33: Deadlock Avoidance & Safe States
+--------------------------------------------------------------------------------
+• Avoidance Concept:
+  - Requires *a priori* information: Each process must declare its **maximum demand** of each resource type upon admission.
+  - The OS dynamically inspects resource allocation states before granting requests.
+
+• Safe State & Safe Sequence:
+  - A state is **Safe** if there exists a **Safe Sequence** $\langle P_0, P_1, \dots, P_{n-1} \rangle$ of processes such that for each $P_i$, the maximum additional resources $P_i$ can request can be satisfied by:
+    $$\text{Currently Available Resources} + \sum_{j < i} \text{Resources Allocated to } P_j$$
+  - If such a sequence exists, each process $P_i$ can eventually finish, return its resources, and allow subsequent processes to complete without deadlock.
+  - If no safe sequence exists, the system is in an **Unsafe State**.
+
+• Silberschatz Figure 7.6: State Relationships:
+  +-------------------------------------------------------------+
+  |                        UNSAFE STATE                         |
+  |  +-------------------------------------------------------+  |
+  |  |                       DEADLOCK                        |  |
+  |  +-------------------------------------------------------+  |
+  +-------------------------------------------------------------+
+  |                         SAFE STATE                          |
+  |                       (NO DEADLOCK)                         |
+  +-------------------------------------------------------------+
+  - Safe State $\implies$ Guaranteed No Deadlock.
+  - Unsafe State $\implies$ Potential for Deadlock (not every unsafe state is deadlocked, but deadlock can only occur from an unsafe state).
+  - Deadlock Avoidance Goal: Ensure the system NEVER enters an unsafe state.
+
+• Claim Edges in RAG Avoidance:
+  - Claim edge $P_i \to R_j$ (dashed arrow): Indicates $P_i$ may request $R_j$ in the future.
+  - When $P_i$ requests $R_j$, claim edge becomes request edge $P_i \to R_j$.
+  - Request is granted ONLY IF converting to assignment edge $R_j \to P_i$ does not introduce a cycle into the graph.
+
+--------------------------------------------------------------------------------
+Slide 34 to 40: The Banker's Algorithm (Edsger Dijkstra)
+--------------------------------------------------------------------------------
+• Applicable to systems where resource types have multiple instances.
+
+• Data Structures ($n$ processes, $m$ resource types):
+  1. `Available[m]`: Vector of length $m$. If `Available[j] = k`, $k$ instances of resource $R_j$ are free.
+  2. `Max[n][m]`: Matrix $n \times m$. `Max[i][j]` defines the maximum demand of process $P_i$ for resource $R_j$.
+  3. `Allocation[n][m]`: Matrix $n \times m$. `Allocation[i][j]` defines current instances of $R_j$ allocated to $P_i$.
+  4. `Need[n][m]`: Matrix $n \times m$. Remaining need of process $P_i$:
+     $$\text{Need}[i][j] = \text{Max}[i][j] - \text{Allocation}[i][j]$$
+
+• The Safety Algorithm:
+  1. Let `Work` be a vector of length $m$ and `Finish` be a vector of length $n$.
+     Initialize: `Work = Available`, and `Finish[i] = false` for $i = 0, 1, \dots, n-1$.
+  2. Find an index $i$ such that both:
+     (a) `Finish[i] == false`
+     (b) $\text{Need}_i \le \text{Work}$
+     If no such $i$ exists, jump to step 4.
+  3. `Work = Work + Allocation_i`
+     `Finish[i] = true`
+     Return to step 2.
+  4. If `Finish[i] == true` for all $i = 0, \dots, n-1$, the system is in a **SAFE STATE**.
+
+• Resource-Request Algorithm for Process $P_i$ (Request Vector $\text{Request}_i$):
+  1. If $\text{Request}_i \le \text{Need}_i$, proceed to step 2. Otherwise, raise error (process exceeded maximum claim).
+  2. If $\text{Request}_i \le \text{Available}$, proceed to step 3. Otherwise, $P_i$ must wait (resources not available).
+  3. Pretend to allocate requested resources to $P_i$:
+     `Available = Available - Request_i;`
+     `Allocation_i = Allocation_i + Request_i;`
+     `Need_i = Need_i - Request_i;`
+  4. Execute Safety Algorithm on provisional state:
+     - If Safe $\implies$ Complete allocation; $P_i$ receives resources.
+     - If Unsafe $\implies P_i$ must wait; rollback variables to previous state.
+
+--------------------------------------------------------------------------------
+Detailed Numerical Walkthrough of Banker's Algorithm (Slides 38, 39 & 40)
+--------------------------------------------------------------------------------
+• System Parameters:
+  - 5 Processes: $P_0, P_1, P_2, P_3, P_4$
+  - 3 Resource Types: A (10 instances), B (5 instances), C (7 instances)
+
+• Initial State at Time $T_0$:
+  +---------+--------------------+--------------------+--------------------+
+  | Process | Allocation (A B C) | Max Demand (A B C) | Available (A B C)  |
+  +---------+--------------------+--------------------+--------------------+
+  | P0      | 0  1  0            | 7  5  3            | 3  3  2            |
+  | P1      | 2  0  0            | 3  2  2            |                    |
+  | P2      | 3  0  2            | 9  0  2            |                    |
+  | P3      | 2  1  1            | 2  2  2            |                    |
+  | P4      | 0  0  2            | 4  3  3            |                    |
+  +---------+--------------------+--------------------+--------------------+
+  - Total Allocated: $A = 0+2+3+2+0 = 7$, $B = 1+0+0+1+0 = 2$, $C = 0+0+2+1+2 = 5$
+  - Available = Total - Allocated = $(10-7, 5-2, 7-5) = (3, 3, 2)$
+
+• Need Matrix Computation (`Need = Max - Allocation`):
+  +---------+--------------------+
+  | Process | Need (A B C)       |
+  +---------+--------------------+
+  | P0      | 7  4  3            |
+  | P1      | 1  2  2            |
+  | P2      | 6  0  0            |
+  | P3      | 0  1  1            |
+  | P4      | 4  3  1            |
+  +---------+--------------------+
+
+• Safety Verification at $T_0$:
+  - Initial `Work` = (3, 3, 2). `Finish` = [F, F, F, F, F]
+  - Step 1: Check $P_1$: $\text{Need}_1 (1, 2, 2) \le \text{Work} (3, 3, 2) \implies$ TRUE.
+    `Work` = (3, 3, 2) + Allocation(2, 0, 0) = (5, 3, 2). `Finish[1]` = TRUE.
+  - Step 2: Check $P_3$: $\text{Need}_3 (0, 1, 1) \le \text{Work} (5, 3, 2) \implies$ TRUE.
+    `Work` = (5, 3, 2) + Allocation(2, 1, 1) = (7, 4, 3). `Finish[3]` = TRUE.
+  - Step 3: Check $P_4$: $\text{Need}_4 (4, 3, 1) \le \text{Work} (7, 4, 3) \implies$ TRUE.
+    `Work` = (7, 4, 3) + Allocation(0, 0, 2) = (7, 4, 5). `Finish[4]` = TRUE.
+  - Step 4: Check $P_2$: $\text{Need}_2 (6, 0, 0) \le \text{Work} (7, 4, 5) \implies$ TRUE.
+    `Work` = (7, 4, 5) + Allocation(3, 0, 2) = (10, 4, 7). `Finish[2]` = TRUE.
+  - Step 5: Check $P_0$: $\text{Need}_0 (7, 4, 3) \le \text{Work} (10, 4, 7) \implies$ TRUE.
+    `Work` = (10, 4, 7) + Allocation(0, 1, 0) = (10, 5, 7). `Finish[0]` = TRUE.
+  - Result: All `Finish[i] == true`. The system is in a **SAFE STATE**.
+  - Safe Sequence: $\langle P_1, P_3, P_4, P_2, P_0 \rangle$ (or $\langle P_1, P_3, P_4, P_0, P_2 \rangle$).
+
+• Scenario A: Process $P_1$ requests $(1, 0, 2)$:
+  1. Check $\text{Request}_1 (1, 0, 2) \le \text{Need}_1 (1, 2, 2) \implies$ TRUE.
+  2. Check $\text{Request}_1 (1, 0, 2) \le \text{Available} (3, 3, 2) \implies$ TRUE.
+  3. Provisional State Modification:
+     `Available` = (3, 3, 2) - (1, 0, 2) = (2, 3, 0)
+     `Allocation_1` = (2, 0, 0) + (1, 0, 2) = (3, 0, 2)
+     `Need_1` = (1, 2, 2) - (1, 0, 2) = (0, 2, 0)
+  4. Run Safety Test:
+     - `Work` = (2, 3, 0)
+     - $P_1$: $\text{Need}_1 (0, 2, 0) \le (2, 3, 0) \implies$ Finish $P_1$. `Work` = (2,3,0) + (3,0,2) = (5, 3, 2).
+     - $P_3$: $\text{Need}_3 (0, 1, 1) \le (5, 3, 2) \implies$ Finish $P_3$. `Work` = (5,3,2) + (2,1,1) = (7, 4, 3).
+     - $P_4$: $\text{Need}_4 (4, 3, 1) \le (7, 4, 3) \implies$ Finish $P_4$. `Work` = (7,4,3) + (0,0,2) = (7, 4, 5).
+     - $P_0$: $\text{Need}_0 (7, 4, 3) \le (7, 4, 5) \implies$ Finish $P_0$. `Work` = (7,4,5) + (0,1,0) = (7, 5, 5).
+     - $P_2$: $\text{Need}_2 (6, 0, 0) \le (7, 5, 5) \implies$ Finish $P_2$. `Work` = (7,5,5) + (3,0,2) = (10, 5, 7).
+  5. Conclusion: Safe sequence $\langle P_1, P_3, P_4, P_0, P_2 \rangle$ exists. **Request by P1 is GRANTED immediately!**
+
+• Scenario B: Can request for $(3, 3, 0)$ by $P_4$ be granted?
+  - In current state, $\text{Available} = (2, 3, 0)$.
+  - $\text{Request}_4 (3, 3, 0) \le \text{Available} (2, 3, 0) \implies$ FALSE (requires 3 instances of A, only 2 available).
+  - Conclusion: **Request CANNOT be granted; P4 must wait.**
+
+• Scenario C: Can request for $(0, 2, 0)$ by $P_0$ be granted?
+  - $\text{Request}_0 (0, 2, 0) \le \text{Available} (2, 3, 0) \implies$ TRUE.
+  - Provisional Modification:
+    `Available` = (2, 3, 0) - (0, 2, 0) = (2, 1, 0)
+    `Allocation_0` = (0, 1, 0) + (0, 2, 0) = (0, 3, 0)
+    `Need_0` = (7, 4, 3) - (0, 2, 0) = (7, 2, 3)
+  - Safety Check with `Work = (2, 1, 0)`:
+    * $P_0$: Need (7, 2, 3) $\le$ (2, 1, 0) -> False
+    * $P_1$: Need (0, 2, 0) $\le$ (2, 1, 0) -> False (Need B = 2 > Work B = 1)
+    * $P_2$: Need (6, 0, 0) $\le$ (2, 1, 0) -> False (Need A = 6 > Work A = 2)
+    * $P_3$: Need (0, 1, 1) $\le$ (2, 1, 0) -> False (Need C = 1 > Work C = 0)
+    * $P_4$: Need (4, 3, 1) $\le$ (2, 1, 0) -> False
+  - Result: **NO process can execute! The state is UNSAFE!**
+  - Conclusion: **Request for (0, 2, 0) by P0 CANNOT be granted; P0 must wait to avoid entering an unsafe state.**
+
+--------------------------------------------------------------------------------
+Slide 41: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 11.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

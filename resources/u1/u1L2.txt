@@ -1,0 +1,285 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 1: Introduction and Process Management
+Lecture 2: Computer-System Architecture, OS Structure and Operations
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Computer-System Architecture
+   - Single-Processor vs. Special-Purpose Processors
+   - Multiprocessor Systems (Parallel / Tightly-Coupled Systems)
+   - Symmetric Multiprocessing (SMP) vs. Asymmetric Multiprocessing (AMP)
+   - Multi-Core Designs
+   - Blade Servers & Clustered Systems (SAN, DLM, High Availability)
+2. Operating-System Structure
+   - Multiprogramming (Batch Systems) & Memory Layout
+   - Multitasking / Time-Sharing Systems
+3. Operating-System Operations
+   - Interrupt-Driven Nature (Hardware vs. Software Interrupts)
+   - Dual-Mode Operation (User Mode vs. Kernel Mode, Mode Bit)
+   - Transition from User to Kernel Mode via System Calls / Traps
+   - Timer and CPU Protection (Preventing Infinite Loops & Monopolization)
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ARCHITECTURES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4: Computer-System Architecture - Single & Special-Purpose Processors
+--------------------------------------------------------------------------------
+• Most systems traditionally use a single general-purpose processor (the main CPU).
+• Most modern systems also contain special-purpose processors:
+  - Device-specific microprocessors: embedded inside disk drives, keyboard controllers, graphics cards (GPUs).
+  - Special-purpose processors run a limited instruction set and perform dedicated functions.
+  - Low-level components built into hardware, monitored and managed by the OS.
+• Example: Disk Controller Microprocessor:
+  - Receives a high-level sequence of read/write requests from the main CPU.
+  - Maintains and implements its own disk queue and disk arm scheduling algorithm.
+  - Relieves the main CPU of the computational overhead of disk scheduling and track-level management.
+
+--------------------------------------------------------------------------------
+Slide 5: Multiprocessor Systems (Parallel / Tightly-Coupled Systems)
+--------------------------------------------------------------------------------
+• Multiprocessor systems have grown in prevalence and importance.
+• Characteristics:
+  - Contain two or more processors in close communication.
+  - Share the computer bus, clock, memory, and peripheral devices.
+• Key Advantages:
+  1. Increased Throughput:
+     - More processors execute more work in less time.
+     - Note: Speedup ratio is not strictly N times for N processors due to overhead from synchronization, contention for shared resources, and inter-processor communication.
+  2. Economy of Scale:
+     - Multiprocessor systems cost less than equivalent multiple single-processor systems because they share peripherals, mass storage, and power supplies.
+  3. Increased Reliability (Fault Tolerance / Graceful Degradation):
+     - If functions can be distributed properly among several processors, the failure of one processor does not halt the entire system.
+     - The system continues operating at reduced capacity (Graceful Degradation).
+     - Systems designed for graceful degradation are called fault tolerant.
+
+--------------------------------------------------------------------------------
+Slide 6 & 7: Multiprocessor Types & Symmetric Multiprocessing (SMP) Architecture
+--------------------------------------------------------------------------------
+• Two Types of Multiprocessor Systems:
+  1. Asymmetric Multiprocessing (AMP):
+     - Boss-worker (Master-Slave) relationship.
+     - A master processor controls the system, schedules processes, and allocates work to worker processors.
+     - Worker processors execute predefined tasks or wait for instructions.
+  2. Symmetric Multiprocessing (SMP):
+     - All processors are peers; no master-slave relationship exists.
+     - Each processor performs all tasks within the operating system (kernel and user code).
+     - Each processor has its own private registers and local cache.
+     - All processors share the same physical memory via a common system bus.
+
+• Silberschatz Figure 1.8: Symmetric Multiprocessing Architecture:
+
+  +------------------+   +------------------+   +------------------+
+  |      CPU 0       |   |      CPU 1       |   |      CPU 2       |
+  |  +------------+  |   |  +------------+  |   |  +------------+  |
+  |  | Registers  |  |   |  | Registers  |  |   |  | Registers  |  |
+  |  +------------+  |   |  +------------+  |   |  +------------+  |
+  |  |   Cache    |  |   |  |   Cache    |  |   |  |   Cache    |  |
+  |  +------------+  |   |  +------------+  |   |  +------------+  |
+  +--------+---------+   +--------+---------+   +--------+---------+
+           |                      |                      |
+  =========+======================+======================+===========
+                           SYSTEM BUS
+  =============================+=====================================
+                               |
+                   +-----------+-----------+
+                   |     SHARED MEMORY     |
+                   +-----------------------+
+
+--------------------------------------------------------------------------------
+Slide 8: Multi-Core Design
+--------------------------------------------------------------------------------
+• Multicore Systems:
+  - Recent architectural standard: Placing multiple computing cores on a single chip.
+  - Each core appears to the operating system as an independent physical CPU.
+• Benefits over Multi-Chip Systems:
+  - On-chip communication between cores is significantly faster than bus-level communication between separate chips.
+  - Consumes significantly less electrical power and generates less heat than multiple single-core chips.
+• Silberschatz Figure 1.9: Dual-Core Design on a Single Chip:
+
+  +-----------------------------------------------------------+
+  |                    PROCESSOR CHIP                         |
+  |                                                           |
+  |   +-----------------------+   +-----------------------+   |
+  |   |        CORE 0         |   |        CORE 1         |   |
+  |   |  +-----------------+  |   |  +-----------------+  |   |
+  |   |  |    Registers    |  |   |  |    Registers    |  |   |
+  |   |  +-----------------+  |   |  +-----------------+  |   |
+  |   |  |    L1 Cache     |  |   |  |    L1 Cache     |  |   |
+  |   |  +-----------------+  |   |  +-----------------+  |   |
+  |   +-----------+-----------+   +-----------+-----------+   |
+  |               |                           |               |
+  |               +-------------+-------------+               |
+  |                             |                             |
+  |                   [ Shared L2/L3 Cache ]                  |
+  +-----------------------------+-----------------------------+
+                                |
+                        (To Main Memory)
+
+• Linux Diagnostic Command:
+  $ cat /proc/cpuinfo | more
+  (Displays processor type, number of physical cores, siblings, cache sizes, and flags).
+
+--------------------------------------------------------------------------------
+Slide 9: Blade Servers
+--------------------------------------------------------------------------------
+• Definition & Structure:
+  - High-density server architecture where multiple processor boards, I/O boards, and networking boards are housed in a single chassis.
+  - Each blade-processor board boots independently and runs its own operating system.
+  - Some blade-server boards are themselves multiprocessors, creating networks of independent multiprocessor systems within one compact enclosure.
+
+--------------------------------------------------------------------------------
+Slide 10 & 11: Clustered Systems
+--------------------------------------------------------------------------------
+• Definition:
+  - Clustered systems combine two or more individual computer systems (nodes) linked together via high-speed local area networks or interconnects.
+  - Nodes share storage through a Storage Area Network (SAN).
+• High Availability:
+  - Provides fault tolerance: service survives even if one or more nodes fail.
+  - Asymmetric Clustering: One machine remains in hot-standby mode monitoring the active server. If active server fails, hot-standby takes over.
+  - Symmetric Clustering: Multiple nodes actively run applications simultaneously while monitoring each other.
+• High-Performance Computing (HPC):
+  - Clusters running parallel calculations across nodes using specialized software (MPI, OpenMP).
+• Distributed Lock Manager (DLM):
+  - Essential mechanism to prevent conflicting concurrent access when multiple nodes read/write the same shared data on the SAN storage pool.
+
+• Silberschatz Figure 1.10: General Structure of a Clustered System:
+
+  +--------------+       +--------------+       +--------------+
+  |   Node 1     |       |    Node 2    |       |    Node 3    |
+  |  (Computer)  |       |  (Computer)  |       |  (Computer)  |
+  +-------+------+       +-------+------+       +-------+------+
+          |                      |                      |
+  ========+======================+======================+========
+                    CLUSTER INTERCONNECT
+  ========+======================+======================+========
+          |                      |                      |
+  +-------v----------------------v----------------------v------+
+  |               STORAGE AREA NETWORK (SAN)                   |
+  +------------------------------+-----------------------------+
+                                 |
+                     +-----------v-----------+
+                     |  Shared Storage Array |
+                     |  (Disks / RAID Pool)  |
+                     +-----------------------+
+
+--------------------------------------------------------------------------------
+Slide 12: Operating-System Structure - Multiprogramming
+--------------------------------------------------------------------------------
+• Need for Multiprogramming (Batch Systems):
+  - A single user/job cannot keep both the CPU and I/O devices busy at all times.
+  - Multiprogramming organizes jobs (code and data) such that the CPU always has a job to execute, maximizing CPU utilization.
+• How Multiprogramming Works:
+  1. A subset of all jobs in the system is kept simultaneously in main memory.
+  2. The OS selects and runs one job via job scheduling.
+  3. When that job must wait (for an I/O request, disk read, or user input), the OS context-switches the CPU to another ready job.
+  4. The CPU never sits idle as long as at least one job is ready to run.
+
+• Silberschatz Figure 1.11: Memory Layout for a Multiprogramming System:
+
+  0 +-------------------------+
+    |    Operating System     |
+    +-------------------------+
+    |        Process 1        |
+    +-------------------------+
+    |        Process 2        |
+    +-------------------------+
+    |        Process 3        |
+    +-------------------------+
+    |        Process 4        |
+  M +-------------------------+
+
+--------------------------------------------------------------------------------
+Slide 13: Operating-System Structure - Multitasking (Time-Sharing)
+--------------------------------------------------------------------------------
+• Definition:
+  - Multitasking (Time-sharing) is a logical extension of multiprogramming.
+  - The CPU switches between jobs so frequently that users can interact with each program while it runs, creating interactive computing.
+• Requirements:
+  - Response time should be rapid (< 1 second).
+  - Each active user has at least one executing program in memory, called a **Process**.
+  - CPU Scheduling: If several processes are ready to execute concurrently, the CPU scheduler picks the next process.
+  - Virtual Memory & Swapping: If processes cannot entirely fit in physical RAM, swapping and virtual memory mechanisms move processes between memory and disk storage.
+
+--------------------------------------------------------------------------------
+Slide 14: Operating-System Operations - Interrupt-Driven Nature
+--------------------------------------------------------------------------------
+• Modern operating systems are interrupt-driven.
+• Two fundamental classes of interrupts:
+  1. Hardware Interrupt:
+     - Triggered by hardware devices (timer, keyboard, network card, disk controller) asserting signals on the CPU's interrupt request line.
+  2. Software Interrupt (Trap or Exception):
+     - Generated by the CPU hardware while executing instructions.
+     - Triggered by:
+       * Software errors: division by zero, invalid memory address access (segmentation fault).
+       * Explicit requests for OS services: executing a system call instruction (e.g., read, write, fork).
+       * Other issues: infinite execution loops or malicious attempts to alter kernel data structures.
+
+--------------------------------------------------------------------------------
+Slide 15 & 16: Dual-Mode and Multi-Mode Operations
+--------------------------------------------------------------------------------
+• Need for Dual-Mode:
+  - Protect the operating system from erroneous or malicious user programs, and protect user programs from one another.
+• Hardware Support (The Mode Bit):
+  - A dedicated bit in the CPU's processor status word (PSW) indicates current execution privilege:
+    * **User Mode**  -> Mode Bit = 1
+    * **Kernel Mode** (also Supervisor Mode, System Mode, Privileged Mode) -> Mode Bit = 0
+• Privileged Instructions:
+  - Certain critical CPU instructions can ONLY be executed in kernel mode (e.g., direct I/O manipulation, clearing interrupts, setting timer counters, modifying page tables).
+  - If an attempt is made to execute a privileged instruction in user mode, the hardware treats it as illegal and triggers a trap (exception) to the OS.
+• Multi-Mode Operation:
+  - Modern CPUs support additional mode levels, such as Virtual Machine Manager (VMM) mode to support virtualization and guest operating systems securely.
+
+• Silberschatz Figure 1.13: Transition from User to Kernel Mode:
+
+      USER MODE (Mode bit = 1)                 KERNEL MODE (Mode bit = 0)
+  +-------------------------------+         +-------------------------------+
+  | User Process executing        |         |                               |
+  |                               |         |                               |
+  | Calls system call             |         |                               |
+  | (e.g. read())                 |         |                               |
+  |         |                     |         |                               |
+  |         v                     |         |                               |
+  |   [ TRAP / SYSCALL ] -------->|-------->| System call handled           |
+  |   (Hardware sets bit = 0)     |         | Execute privileged routine    |
+  |                               |         |         |                     |
+  |                               |         |         v                     |
+  |                               |<--------|<--- [ RETURN-FROM-TRAP ]      |
+  | Resume user execution <-------+         |     (Hardware resets bit = 1) |
+  +-------------------------------+         +-------------------------------+
+
+• Transition Lifecycle:
+  1. User program executes in user mode (bit = 1).
+  2. Program needs OS service and executes a system call (trap).
+  3. Hardware traps, saves CPU state, and switches mode bit to 0 (kernel mode).
+  4. Kernel looks up the system call table, verifies parameters, and executes the privileged function.
+  5. Upon completion, kernel executes a privileged return-from-trap instruction.
+  6. Hardware restores state and sets the mode bit back to 1 (user mode).
+  7. Control returns to the user process.
+
+--------------------------------------------------------------------------------
+Slide 17: Timer and CPU Protection
+--------------------------------------------------------------------------------
+• Purpose of Timer:
+  - Prevent user programs from getting stuck in infinite loops or failing to yield control, thereby hogging the CPU indefinitely.
+• Mechanism:
+  1. A hardware timer is set to interrupt the CPU after a specified time interval:
+     - Fixed period (e.g., 1/60th second) or variable period (e.g., 1 millisecond to 1 second).
+  2. Variable timers are implemented using a fixed-rate clock and an internal counter.
+  3. The operating system loads the initial counter value using a **privileged instruction** before dispatching a user process.
+  4. Every clock tick, the counter decrements by 1.
+  5. When the counter reaches zero, a hardware timer interrupt occurs.
+  6. The interrupt transfers control back to the operating system's scheduler, enabling the OS to preempt the current process and assign the CPU to another task.
+
+--------------------------------------------------------------------------------
+Slide 18: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 2.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

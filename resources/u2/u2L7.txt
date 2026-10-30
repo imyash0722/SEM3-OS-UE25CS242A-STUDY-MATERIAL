@@ -1,0 +1,197 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 2: IPC, Threads and Concurrency
+Lecture 7: Mutual Exclusion & Process Synchronization (Software Approaches)
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Concurrency and Data Inconsistency
+   - Context & Concurrent Execution Risks
+   - Producer-Consumer with Shared Counter (Race Condition Demonstration)
+   - Machine-Level Instruction Interleaving (Assembly Level Race)
+   - Kernel Race Condition Example (Concurrent fork() & PID Allocation)
+2. The Critical-Section Problem
+   - Anatomy of a Process: Entry Section, Critical Section, Exit Section, Remainder Section
+   - Three Strict Requirements for Valid Solutions:
+     1. Mutual Exclusion
+     2. Progress
+     3. Bounded Waiting
+3. Kernel Architectures & Race Handling
+   - Preemptive Kernels (Responsive, Requires Synchronization on SMP)
+   - Non-Preemptive Kernels (Free from Kernel Data Structure Races)
+4. Peterson's Algorithm (Classic Software Solution)
+   - Assumptions (Atomic Load & Store Machine Instructions)
+   - Shared State: turn and flag[2]
+   - Symmetric Algorithm for Process Pi and Process Pj
+   - Formal Proof of Correctness (Mutual Exclusion, Progress, Bounded Waiting)
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ALGORITHMS
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4, 5, 6 & 7: Race Conditions & Shared Counter Flaw
+--------------------------------------------------------------------------------
+• Background:
+  - Concurrent processes can be preempted at arbitrary times, leaving operations partially completed.
+  - Concurrent, uncoordinated access to shared data leads to data inconsistency.
+• Bounded Buffer with Shared Counter:
+  - An integer `counter` is maintained to track the count of items in the buffer (initialized to 0).
+  - Producer executes `counter++;` after adding an item.
+  - Consumer executes `counter--;` after removing an item.
+
+• Machine-Level Race Condition Analysis:
+  - In machine code, `counter++` is executed as 3 distinct atomic instructions:
+    register1 = counter
+    register1 = register1 + 1
+    counter = register1
+  - Similarly, `counter--` is executed as 3 distinct atomic instructions:
+    register2 = counter
+    register2 = register2 - 1
+    counter = register2
+
+• Arbitrary Execution Interleaving (Initial counter = 5):
+  Step S0: Producer executes `register1 = counter`       {register1 = 5}
+  Step S1: Producer executes `register1 = register1 + 1` {register1 = 6}
+  Step S2: Consumer executes `register2 = counter`       {register2 = 5}  <-- PREEMPTION
+  Step S3: Consumer executes `register2 = register2 - 1` {register2 = 4}
+  Step S4: Producer executes `counter = register1`       {counter = 6}
+  Step S5: Consumer executes `counter = register2`       {counter = 4}
+
+• Outcome:
+  - The final value of `counter` is 4 (or 6 if S4 and S5 are swapped), even though one item was produced and one consumed! The correct value should be 5.
+  - **Definition**: A Race Condition occurs when multiple processes access and manipulate the same shared data concurrently and the outcome depends on the particular order in which execution access takes place.
+
+--------------------------------------------------------------------------------
+Slide 8: Kernel Race Condition Example (Concurrent fork() PID Allocation)
+--------------------------------------------------------------------------------
+• Silberschatz Figure 6.1: Race on next_available_pid:
+
+      Process P0                               Process P1
+  +-------------------------+              +-------------------------+
+  | Calls fork()            |              | Calls fork()            |
+  | Requests PID            |              | Requests PID            |
+  +------------+------------+              +------------+------------+
+               |                                        |
+               v                                        v
+     +=======================================================+
+     | Shared Kernel Variable: next_available_pid = 2615     |
+     +=======================================================+
+               |                                        |
+               +-------------------+--------------------+
+                                   |
+                                   v
+             Both P0 and P1 are returned PID = 2615!
+             (Disastrous duplicate PID assignment)
+
+--------------------------------------------------------------------------------
+Slide 9 & 10: The Critical-Section Problem
+--------------------------------------------------------------------------------
+• Definition:
+  - In a system of $n$ processes $\{P_0, P_1, \dots, P_{n-1}\}$, each process possesses a segment of code called a **Critical Section (CS)**.
+  - Inside the CS, the process modifies shared variables, updates tables, or writes to shared files.
+  - Rule: When one process is executing in its critical section, no other process is allowed to execute in its critical section.
+
+• General Code Structure of Process $P_i$:
+  do {
+      /* ENTRY SECTION: Request permission to enter critical section */
+
+          /* CRITICAL SECTION: Mutate shared variables/files */
+
+      /* EXIT SECTION: Notify system that critical section is complete */
+
+          /* REMAINDER SECTION: Unshared, non-critical execution */
+
+  } while (true);
+
+--------------------------------------------------------------------------------
+Slide 11: The Three Requirements for Critical-Section Solutions
+--------------------------------------------------------------------------------
+Any valid algorithmic or hardware solution to the critical-section problem MUST satisfy the following three criteria:
+1. **Mutual Exclusion**:
+   - If process $P_i$ is executing in its critical section, no other processes can be executing in their critical sections.
+2. **Progress**:
+   - If no process is executing in its critical section and some processes wish to enter, only those processes NOT in their remainder section can participate in deciding who enters next.
+   - This selection cannot be postponed indefinitely (no deadlock).
+3. **Bounded Waiting**:
+   - A bound exists on the number of times that other processes are allowed to enter their critical sections after a process has made a request to enter and before that request is granted.
+   - Prevents starvation of any waiting process.
+   - Note: Assumes each process executes at a non-zero speed, but makes no assumptions regarding relative speeds of processes.
+
+--------------------------------------------------------------------------------
+Slide 12: Critical-Section Handling in Operating System Kernels
+--------------------------------------------------------------------------------
+• Two Architectural Approaches:
+  1. **Preemptive Kernel**:
+     - Allows a process executing in kernel mode to be preempted by the scheduler.
+     - Advantage: More responsive; essential for real-time computing.
+     - Challenge: Highly prone to race conditions on kernel data structures; requires fine-grained locking on multiprocessor SMP architectures.
+  2. **Non-Preemptive Kernel**:
+     - A kernel-mode process runs until it voluntarily yields CPU, blocks for I/O, or exits kernel mode.
+     - Advantage: Completely free of race conditions on kernel data structures (single process in kernel at a time).
+     - Disadvantage: Poor responsiveness; long system calls delay high-priority tasks.
+
+--------------------------------------------------------------------------------
+Slide 13 to 17: Peterson's Algorithm (Software Solution)
+--------------------------------------------------------------------------------
+• Algorithmic Profile:
+  - Classic software-based solution designed by Gary L. Peterson (1981).
+  - Restricted to two cooperating processes: $P_i$ and $P_j$ (where $j = 1 - i$).
+  - Fundamental Hardware Assumption: Machine-language `load` and `store` instructions are strictly atomic.
+
+• Shared Data Structures:
+  int turn;          // Indicates whose turn it is to enter critical section
+  boolean flag[2];   // flag[i] == true indicates that process Pi is ready to enter CS
+
+• Structure of Process $P_i$:
+  do {
+      flag[i] = true;
+      turn = j;
+      while (flag[j] && turn == j)
+          ; /* Busy wait */
+
+      /* CRITICAL SECTION */
+
+      flag[i] = false;
+
+      /* REMAINDER SECTION */
+  } while (true);
+
+• Structure of Process $P_j$:
+  do {
+      flag[j] = true;
+      turn = i;
+      while (flag[i] && turn == i)
+          ; /* Busy wait */
+
+      /* CRITICAL SECTION */
+
+      flag[j] = false;
+
+      /* REMAINDER SECTION */
+  } while (true);
+
+• Formal Proof of Correctness:
+  1. Mutual Exclusion is Preserved:
+     - For $P_i$ to enter CS, either `flag[j] == false` or `turn == i`.
+     - If both processes attempt to enter simultaneously, both set `flag[0] = flag[1] = true`.
+     - The variable `turn` is set by both processes. Whichever write occurs last overwrites `turn`.
+     - `turn` can only hold one value (either 0 or 1). The process whose index matches `turn` is blocked in its `while` loop, allowing only one process into the CS.
+  2. Progress Requirement is Satisfied:
+     - If $P_j$ does not wish to enter its CS, `flag[j] == false`.
+     - The condition `flag[j] && turn == j` evaluates to false, so $P_i$ immediately enters its CS without hindrance.
+  3. Bounded-Waiting Requirement is Met:
+     - When $P_j$ exits its CS, it sets `flag[j] = false`, releasing $P_i$.
+     - If $P_j$ immediately tries to re-enter, it sets `turn = i`, thereby yielding priority to $P_i$.
+     - Hence, $P_i$ waits at most one entry of $P_j$ before being admitted.
+
+--------------------------------------------------------------------------------
+Slide 18: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 7.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

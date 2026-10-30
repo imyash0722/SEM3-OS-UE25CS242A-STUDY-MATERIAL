@@ -1,0 +1,251 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 1: Introduction and Process Management
+Lecture 11: Introduction to Shell Programming & Cron Scheduler
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Introduction to Linux Shell
+   - Definition & Purpose (Interfacing User and Kernel)
+   - Command Execution Syntax: command [options] [arguments]
+   - Token Parsing and Path Resolution ($PATH vs. Relative/Absolute Paths)
+   - Survey of Linux Shells: sh, csh, tcsh, ksh, bash
+2. Environment vs. Shell Variables
+   - Scope and Inheritance Rules (Parent Shell to Subshells)
+   - Standard Environment Variables (SHELL, TERM, USER, PWD, OLDPWD, PATH)
+   - Shell-Specific Variables (BASHOPTS, BASH_VERSION, BASH_VERSINFO)
+   - Variable Manipulation: Definition, Access ($), export, unset
+   - Persistent Configuration via ~/.profile / ~/.bashrc
+3. Shell Scripting Control Flow
+   - Conditional Execution: if-elif-else Constructs (File Existence Check)
+   - Iteration: for Loops & Nested Loops
+   - Loop Flow Control: continue vs. break Statements
+4. The Cron Scheduling Daemon
+   - Daemon Architecture (crond / cron.service)
+   - Crontab Management Commands (crontab -l, crontab -e, crontab -r)
+   - Crontab 5-Field Syntax Diagram (Minute, Hour, Day-of-Month, Month, Day-of-Week)
+   - Practical Scheduling Expressions
+   - Execution Logging and Output Redirection (/var/log/syslog)
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT, SCRIPTS & EXAMPLES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 3, 4 & 5: What is a Shell? & Shell Variants
+--------------------------------------------------------------------------------
+• Definition:
+  - The shell is the command-line interpreter (CLI) in Unix/Linux operating systems.
+  - Acts as an intermediary layer between the user and the kernel:
+    [ User / Terminal ] <---> [ Shell Interpreter ] <---> [ OS Kernel ] <---> [ Hardware ]
+  - Reads commands entered by the user, parses arguments, and requests the kernel to spawn processes or execute system programs, user binaries, or shell scripts.
+
+• Command Syntax & Parsing:
+  syntax: command [arg1] [arg2] ... [argn]
+  - Square brackets `[]` signify optional arguments.
+  - When the user presses Enter (Carriage Return), the shell reads the entire line and tokenizes it into:
+    1. Command name
+    2. Flags / Options (e.g. `-l`, `-a`)
+    3. Target arguments (e.g. filenames, paths)
+  - Executable Lookup:
+    * If a path is specified (`./myscript.sh` or `/bin/ls`), the shell directly accesses that file.
+    * If only a name is given (`ls`), the shell traverses the directories listed in the `$PATH` environment variable in order from left to right until the executable binary is found.
+
+• Survey of Common Unix/Linux Shells:
+  1. `sh` (Bourne Shell): Original shell developed by Stephen Bourne at AT&T Bell Labs.
+  2. `csh` / `tcsh` (C Shell / TENEX C Shell): Created by Bill Joy with syntax modeled on the C programming language.
+  3. `ksh` (Korn Shell): Developed by David Korn combining features of Bourne shell and C shell.
+  4. `bash` (Bourne-Again Shell): Developed by the GNU project; the standard default shell across modern Linux distributions.
+  - To display active login shell:
+    $ echo $SHELL
+    Output: /bin/bash
+
+--------------------------------------------------------------------------------
+Slide 6, 7 & 8: Environment Variables vs. Shell Variables
+--------------------------------------------------------------------------------
+• Difference in Scope & Inheritance:
+  1. **Shell Variables**:
+     - Local exclusively to the current shell process in which they are defined.
+     - NOT inherited by child processes, spawned scripts, or subshells.
+     - Used for ephemeral, local shell state.
+  2. **Environment Variables**:
+     - Global variables exported into the shell's environment block.
+     - Automatically inherited by all child processes and subshells created by that shell.
+     - By convention, named in uppercase letters (e.g., `PATH`, `USER`).
+
+• Standard Environment Variables:
+  - `SHELL`: Path to the active command-line interpreter (e.g., `/bin/bash`).
+  - `TERM`: Terminal emulation mode for terminal capabilities (e.g., `xterm-256color`).
+  - `USER`: Username of the currently authenticated session.
+  - `PWD`: Current working directory absolute path.
+  - `OLDPWD`: Previous working directory before the last `cd` command (enables `cd -`).
+  - `PATH`: Colon-separated list of search directories for executable programs.
+
+• Common Bash-Specific Shell Variables:
+  - `BASHOPTS`: Comma-separated list of active bash options (e.g. `checkwinsize:cmdhist`).
+  - `BASH_VERSION`: Human-readable version string (e.g., `5.0.17(1)-release`).
+  - `BASH_VERSINFO`: Multi-element array containing major, minor, patch levels.
+
+--------------------------------------------------------------------------------
+Slide 9 & 10: Shell Variable Operations & Exporting
+--------------------------------------------------------------------------------
+• Defining and Accessing Shell Variables:
+  $ MY_VAR="Hello world"
+  $ echo $MY_VAR
+  Hello world
+
+• Subshell Inheritance Demonstration (Unexported):
+  $ bash             # Spawn a child subshell
+  $ echo $MY_VAR     # Prints empty line! Child has no access to parent's local variable.
+  $ exit             # Return to parent shell
+
+• Exporting into the Environment:
+  $ export MY_VAR="Hello world"
+  $ bash             # Spawn child subshell
+  $ echo $MY_VAR     # Now prints: Hello world (successfully inherited!)
+  $ exit
+
+• Unsetting / Deleting Variables:
+  $ unset MY_VAR
+  $ echo $MY_VAR     # Prints nothing; variable is destroyed.
+
+• Persistent Environment Settings:
+  - To preserve environment variable exports across reboots and logins, add the export command into `~/.profile` or `~/.bashrc`:
+    $ vi ~/.profile
+    export PATH="$HOME/my_tools/bin:$PATH"
+
+--------------------------------------------------------------------------------
+Slide 11: Shell Control Flow - if Conditional
+--------------------------------------------------------------------------------
+• Syntax:
+  if commands; then
+      commands
+  elif commands; then
+      commands
+  else
+      commands
+  fi
+
+• Practical Example: Check if a file exists:
+  #!/bin/bash
+  if [ -f welcome.txt ]; then
+      echo "File exists"
+  else
+      echo "File does not exist"
+  fi
+
+• Notes on Conditional Expressions:
+  - `-f file`: True if file exists and is a regular file.
+  - `-d file`: True if directory exists.
+  - `-r file`: True if file is readable.
+  - `-w file`: True if file is writable.
+  - `-x file`: True if file is executable.
+
+--------------------------------------------------------------------------------
+Slide 12: Shell Control Flow - Loops (for & nested loops)
+--------------------------------------------------------------------------------
+• Single `for` Loop:
+  #!/bin/bash
+  for i in {1..5}
+  do
+      echo "i = $i"
+  done
+
+• Nested `for` Loop:
+  #!/bin/bash
+  for i in {1..5}
+  do
+      for j in {1..3}
+      do
+          echo "i = $i and j = $j"
+      done
+  done
+
+--------------------------------------------------------------------------------
+Slide 13: Loop Control - continue and break
+--------------------------------------------------------------------------------
+• `continue` Statement:
+  - Skips the remainder of the current iteration and jumps to the next iteration of the loop.
+  Example (skips iteration when i == 3):
+  #!/bin/bash
+  for i in {1..5}
+  do
+      if [ $i -eq 3 ]
+      then
+          continue
+      fi
+      for j in {1..3}
+      do
+          echo "i = $i and j = $j"
+      done
+  done
+
+• `break` Statement:
+  - Completely terminates loop execution and jumps to the statement following the loop.
+  Example (exits outer loop as soon as i == 3):
+  #!/bin/bash
+  for i in {1..5}
+  do
+      if [ $i -eq 3 ]
+      then
+          break
+      fi
+      for j in {1..3}
+      do
+          echo "i = $i and j = $j"
+      done
+  done
+
+--------------------------------------------------------------------------------
+Slide 14, 15, 16 & 17: The Cron Scheduling Daemon
+--------------------------------------------------------------------------------
+• Overview:
+  - `cron` is a Unix/Linux background daemon (`crond` / `cron.service`) that automatically launches tasks at scheduled times and dates.
+  - Starts automatically at boot time via systemd.
+  - Verifying daemon status:
+    $ sudo systemctl status cron.service
+    Active: active (running)
+
+• Crontab File Management:
+  - `crontab -l`: Lists all scheduled cron jobs for the current user.
+  - `crontab -e`: Opens the crontab file in the default text editor to add, edit, or delete jobs.
+  - `crontab -r`: Deletes the current user's entire crontab schedule.
+
+• Crontab 5-Field Time Specification:
+  +----------------- Minute (0 - 59)
+  | +--------------- Hour (0 - 23, 24-hour clock)
+  | | +------------- Day of the Month (1 - 31)
+  | | | +----------- Month of the Year (1 - 12)
+  | | | | +--------- Day of the Week (0 - 6, where 0 = Sunday)
+  | | | | |
+  * * * * *  /path/to/command_or_script.sh
+
+• Practical Scheduling Expressions:
+  1. `5 0 * 8 *`
+     - Executes at 00:05 (12:05 AM) every day during the month of August.
+  2. `5 4 * * 6`
+     - Executes at 04:05 AM on every Saturday.
+  3. `0 22 * * 1-5`
+     - Executes at 22:00 (10:00 PM) every weekday from Monday through Friday.
+  4. `*/1 * * * *` (or `* * * * *`)
+     - Executes once every minute.
+
+• Concrete Example: Running a Program Every Minute with Output Redirection:
+  - In `crontab -e`:
+    */1 * * * * /bin/bash $HOME/OS/hello.exe &> $HOME/OS/cron_output.log
+  - `&>` redirects both standard output (stdout, fd 1) and standard error (stderr, fd 2) into the log file.
+  - Verifying in system logs:
+    $ tail -f /var/log/syslog
+    Jan 24 08:40:01 ip-172-31-41-208 CRON[2935]: (ubuntu) CMD (/bin/bash $HOME/OS/hello.exe &> $HOME/OS/cron_output.log)
+    Jan 24 08:41:01 ip-172-31-41-208 CRON[2939]: (ubuntu) CMD (/bin/bash $HOME/OS/hello.exe &> $HOME/OS/cron_output.log)
+
+--------------------------------------------------------------------------------
+Slide 18: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 11.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

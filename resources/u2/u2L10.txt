@@ -1,0 +1,201 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 2: IPC, Threads and Concurrency
+Lecture 10: Classical Problems of Synchronization
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. The Bounded-Buffer (Producer-Consumer) Problem
+   - Problem Formulation & Synchronization Objectives
+   - Semaphore Configuration: mutex (binary), empty (counting), full (counting)
+   - Complete Producer and Consumer Code Implementations
+2. The Readers-Writers Problem
+   - Problem Statement & Concurrency Invariants
+   - First Readers-Writers Problem Solution (Reader Preference)
+   - The read_count Tracker & rw_mutex Exclusion
+   - Writer Starvation vs. Reader Starvation
+   - Real-World Applications (DBMS, File Systems, In-Memory Caches)
+   - Linux Kernel Solutions: rwlock_t, Queued RW Locks, and Read-Copy-Update (RCU)
+3. The Dining-Philosophers Problem
+   - Classical Problem Description (Dijkstra, 1965)
+   - Naive Semaphore Implementation & Circular Deadlock Proof
+   - Three Deadlock-Free Solutions:
+     1. Maximum Concurrency Limiting (At most 4 at table)
+     2. Asymmetric Solution (Odd vs. Even Philosophers)
+     3. Two-Chopstick Simultaneous Acquisition (Monitor / Critical Section)
+   - Real-Life Parallels (Multi-Table Database Transactions, Distributed Locks)
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ALGORITHMS
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4, 5 & 6: The Bounded-Buffer (Producer-Consumer) Problem
+--------------------------------------------------------------------------------
+• Problem Formulation:
+  - A pool of $n$ buffers, each capable of holding one data item.
+  - The Producer repeatedly creates items and inserts them into the buffer pool.
+  - The Consumer repeatedly retrieves items from the buffer pool and consumes them.
+  - Synchronization Requirements:
+    1. Producer must not insert into a full buffer.
+    2. Consumer must not extract from an empty buffer.
+    3. Buffer insertions and extractions must be mutually exclusive.
+
+• Semaphore Setup:
+  semaphore mutex = 1; // Binary semaphore to enforce mutual exclusion on buffer operations
+  semaphore empty = n; // Counting semaphore: tracks number of empty buffer slots
+  semaphore full  = 0; // Counting semaphore: tracks number of filled buffer slots
+
+• Producer Process Structure:
+  do {
+      /* Produce an item in next_produced */
+
+      wait(empty);  // Decrement empty count; blocks if buffer is completely full (empty == 0)
+      wait(mutex);  // Acquire exclusive buffer lock
+
+      /* Add next_produced to buffer */
+
+      signal(mutex); // Release buffer lock
+      signal(full);  // Increment full count; wakes up waiting consumers
+  } while (true);
+
+• Consumer Process Structure:
+  do {
+      wait(full);   // Decrement full count; blocks if buffer is completely empty (full == 0)
+      wait(mutex);  // Acquire exclusive buffer lock
+
+      /* Remove an item from buffer into next_consumed */
+
+      signal(mutex); // Release buffer lock
+      signal(empty); // Increment empty count; wakes up waiting producers
+
+      /* Consume the item in next_consumed */
+  } while (true);
+
+--------------------------------------------------------------------------------
+Slide 7 to 11: The Readers-Writers Problem
+--------------------------------------------------------------------------------
+• Problem Statement:
+  - A shared dataset or memory resource is accessed by multiple concurrent processes.
+  - Two classes of processes:
+    * **Readers**: Only read data; never perform modifications.
+    * **Writers**: Read and write (mutate) data.
+  - Invariants:
+    1. Multiple readers can read simultaneously without interference.
+    2. Only ONE writer can access the shared resource at any given time.
+    3. If a writer is writing, NO readers may access the resource.
+
+• First Readers-Writers Solution (Reader Preference):
+  - Shared Data Structures:
+    semaphore rw_mutex = 1; // Mutual exclusion for writers; also used by first/last reader
+    semaphore mutex    = 1; // Mutual exclusion for updating read_count
+    int read_count     = 0; // Number of processes currently reading
+
+  - Writer Process Structure:
+    do {
+        wait(rw_mutex); // Acquire exclusive write access
+
+        /* WRITING IS PERFORMED */
+
+        signal(rw_mutex); // Release write access
+    } while (true);
+
+  - Reader Process Structure:
+    do {
+        wait(mutex);
+        read_count++;
+        if (read_count == 1) {
+            wait(rw_mutex); // First reader locks out writers
+        }
+        signal(mutex);
+
+        /* READING IS PERFORMED */
+
+        wait(mutex);
+        read_count--;
+        if (read_count == 0) {
+            signal(rw_mutex); // Last reader releases writers
+        }
+        signal(mutex);
+
+        /* REMAINDER SECTION */
+    } while (true);
+
+• Variations & Starvation Risks:
+  1. First Variation (Reader Preference): No reader is kept waiting unless a writer already acquired the resource.
+     - Major Flaw: **Writer Starvation**. If a steady stream of readers arrives, `read_count` never drops to 0, leaving writers blocked indefinitely.
+  2. Second Variation (Writer Preference): Once a writer is ready, no new readers can start reading; new readers wait until the writer completes.
+     - Flaw: **Reader Starvation** if writers continuously submit updates.
+
+--------------------------------------------------------------------------------
+Slide 12 & 13: Real-World Applications & Linux Kernel Implementations
+--------------------------------------------------------------------------------
+• Real-World Use Cases:
+  - Database Management Systems (DBMS): Relational queries (SELECT) dominate writes (UPDATE/INSERT); reader-writer patterns optimize throughput.
+  - In-Memory Caches (Redis, Memcached): Concurrent cache reads with occasional cache invalidations.
+  - File Systems: Multiple processes reading configuration files vs. periodic administrative updates.
+
+• Linux Kernel Implementations:
+  1. `rwlock_t`: Reader-writer spinlock in kernel space. Multiple cores can hold lock for read, single core for write. Biased toward readers.
+  2. Queued RW Lock (qrwlock, Linux 3.16+): Enforces fair FIFO queueing between incoming readers and waiting writers, preventing writer starvation.
+  3. **RCU (Read-Copy-Update)**:
+     - Extremely high-performance synchronization used extensively in Linux network stacks and VFS.
+     - Readers execute lock-free without atomic instructions or bus locks (zero wait).
+     - When a writer modifies data, it creates a private copy, mutates the copy, and atomically updates the pointer.
+     - The old memory structure is reclaimed only after a "grace period" when all pre-existing readers have completed execution.
+
+--------------------------------------------------------------------------------
+Slide 14 to 18: The Dining-Philosophers Problem
+--------------------------------------------------------------------------------
+• Classical Problem (Edsger Dijkstra, 1965):
+  - Five philosophers sit around a circular table.
+  - In the center lies a bowl of rice.
+  - Between each pair of philosophers is a single chopstick (5 chopsticks total).
+  - A philosopher alternates between Thinking and Eating.
+  - To eat, a philosopher must acquire BOTH the left chopstick and the right chopstick.
+  - When finished, the philosopher releases both chopsticks and resumes thinking.
+
+• Shared Data Structures:
+  semaphore chopstick[5]; // Initialized to 1 for all five chopsticks
+
+• Naive Semaphore Solution for Philosopher $i$:
+  do {
+      wait(chopstick[i]);                 // Pick up left chopstick
+      wait(chopstick[(i + 1) % 5]);        // Pick up right chopstick
+
+      /* EATING */
+
+      signal(chopstick[i]);               // Put down left chopstick
+      signal(chopstick[(i + 1) % 5]);      // Put down right chopstick
+
+      /* THINKING */
+  } while (true);
+
+• The Fatal Flaw: Circular Deadlock!
+  - If all 5 philosophers become hungry simultaneously, each philosopher picks up their left chopstick (`wait(chopstick[i])`).
+  - All 5 chopsticks are acquired.
+  - When each philosopher attempts to pick up their right chopstick (`wait(chopstick[(i+1)%5])`), all 5 find the right chopstick occupied.
+  - Every philosopher is blocked waiting for their neighbor to yield -> **Complete Deadlock**!
+
+• Deadlock-Free Solutions (Slide 17):
+  1. **Capacity Limiting**:
+     - Allow at most 4 philosophers to sit at the table simultaneously (e.g. using a counting semaphore initialized to 4).
+     - Guarantees at least one philosopher can acquire two chopsticks and eat.
+  2. **Asymmetric Philosopher Strategy**:
+     - Odd-numbered philosophers ($P_1, P_3$) pick up their left chopstick first, then their right chopstick.
+     - Even-numbered philosophers ($P_0, P_2, P_4$) pick up their right chopstick first, then their left chopstick.
+     - Breaks the circular wait dependency chain.
+  3. **Simultaneous Atomic Acquisition**:
+     - Allow a philosopher to pick up chopsticks only if BOTH chopsticks are available simultaneously.
+     - Implemented by enclosing chopstick status checks within a critical section (or monitor).
+
+--------------------------------------------------------------------------------
+Slide 19: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 10.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

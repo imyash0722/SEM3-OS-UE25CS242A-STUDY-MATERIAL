@@ -1,0 +1,266 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 2: IPC, Threads and Concurrency
+Lecture 9: Mutex Locks, Semaphores & Priority Inheritance
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Mutex Locks & Spinlocks
+   - Motivation & Hardware-to-Software Abstraction
+   - acquire() and release() Semantics
+   - Spinlock Characteristics:
+     * Advantages (No context-switch overhead; fast on multiprocessors)
+     * Disadvantages (Busy waiting wastes CPU cycles)
+   - Lock Contention (Uncontended vs. Contended, High vs. Low Contention)
+   - Pthreads Mutex API (pthread_mutex_init, lock, unlock) with Code Example
+2. Semaphores
+   - Real-World Analogy (University Study Rooms Allocation)
+   - Classical Definition & Two Indivisible Atomic Operations: wait() / P() and signal() / V()
+   - Types: Counting Semaphores (Unrestricted Domain) vs. Binary Semaphores (Mutex equivalent)
+3. Non-Busy-Waiting Semaphore Implementation
+   - Internal Queue Representation: semaphore struct with value and process list
+   - block() and wakeup() Primitives
+   - Negative Semaphore Value Semantics (Magnitude = Number of Blocked Processes)
+4. Synchronization Hazards
+   - Common Pitfalls (Order reversal, omitting wait/signal, double wait)
+   - Deadlock Scenario (Cross-Waiting on S and Q)
+   - Starvation (Indefinite Blocking)
+5. Priority Inversion & Priority Inheritance Protocol
+   - The Priority Inversion Problem (High, Medium, Low Priority Interleaving)
+   - Priority Inheritance Protocol Mechanics & Priority Elevation
+6. POSIX Semaphore API
+   - sem_init(), sem_wait(), sem_post(), sem_destroy()
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ARCHITECTURES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4 & 5: Mutex Locks and Spinlocks
+--------------------------------------------------------------------------------
+• Motivation:
+  - Low-level hardware instructions (like `test_and_set` or `compare_and_swap`) are complex and error-prone for application programmers.
+  - OS designers encapsulate hardware primitives into user-friendly synchronization tools.
+  - The simplest tool is the **Mutex Lock** (Mutual Exclusion Lock).
+
+• Spinlocks:
+  - A mutex implementation where waiting threads repeatedly execute in a loop ("spin") waiting for the lock to become available.
+  - Advantages:
+    * No context switch is required when a thread must wait on a lock.
+    * Process context switching consumes substantial CPU cycles (saving/restoring registers, flushing pipelines, invalidating TLBs).
+    * When locks are held for short durations, spinlocks are faster and more efficient than sleeping.
+    * Highly effective on multiprocessor systems where one thread spins on Core 0 while another thread executes the critical section on Core 1.
+  - Disadvantages:
+    * Busy waiting consumes and wastes CPU execution cycles.
+    * Inefficient on uniprocessor architectures (spinning actively prevents the lock-holding thread from running).
+
+--------------------------------------------------------------------------------
+Slide 6: Lock Contention
+--------------------------------------------------------------------------------
+• Definitions:
+  - **Uncontended Lock**: A lock is uncontended if it is free when a thread attempts to acquire it; the thread obtains the lock without waiting.
+  - **Contended Lock**: A lock is contended if a thread must block or spin while attempting to acquire it because another thread already holds it.
+  - **High Contention**: A large number of threads simultaneously compete to acquire the same lock, creating serialized bottlenecks and severely degrading multicore scalability.
+  - **Low Contention**: Few threads compete for the lock; locks are usually acquired immediately.
+
+--------------------------------------------------------------------------------
+Slide 7, 8 & 9: Mutex Implementation & Critical Section Protection
+--------------------------------------------------------------------------------
+• Algorithmic Definition:
+  acquire() {
+      while (!available)
+          ; /* Busy wait */
+      available = false;
+  }
+
+  release() {
+      available = true;
+  }
+
+• Critical Section Protocol:
+  do {
+      acquire(&lock);
+          /* CRITICAL SECTION */
+      release(&lock);
+          /* REMAINDER SECTION */
+  } while (true);
+
+--------------------------------------------------------------------------------
+Slide 10 & 11: POSIX Pthread Mutex Implementation
+--------------------------------------------------------------------------------
+• API Primitives:
+  - Static Initialization: `pthread_mutex_t mylock = PTHREAD_MUTEX_INITIALIZER;`
+  - Dynamic Initialization: `pthread_mutex_init(&mylock, NULL);`
+  - Lock Acquisition: `pthread_mutex_lock(&mylock);` (blocks caller if busy)
+  - Lock Release: `pthread_mutex_unlock(&mylock);` (must be called only by lock owner)
+  - Destruction: `pthread_mutex_destroy(&mylock);`
+
+• Complete C Code Example (Slide 11):
+  #include <pthread.h>
+  #include <stdio.h>
+
+  int counter = 0; // Shared resource across threads
+  pthread_mutex_t mylock = PTHREAD_MUTEX_INITIALIZER;
+
+  void *increment_counter(void *arg) {
+      // Entry Section: Acquire the lock
+      pthread_mutex_lock(&mylock);
+
+      // Critical Section: Only one thread can be here at a time
+      counter++;
+      printf("Counter: %d\n", counter);
+
+      // Exit Section: Release the lock
+      pthread_mutex_unlock(&mylock);
+
+      return NULL;
+  }
+
+--------------------------------------------------------------------------------
+Slide 12, 13 & 14: Semaphores & Fundamental Primitives
+--------------------------------------------------------------------------------
+• Analogy (Slide 12):
+  - A university library has 10 private study rooms.
+  - A student checks with the front desk to enter an available room.
+  - If a room is vacant, front desk decrements available count.
+  - If all 10 are occupied, students wait. When a student finishes and leaves, front desk increments count and grants access to a waiting student.
+
+• Classical Definition (Edsger Dijkstra, 1965):
+  - A Semaphore $S$ is an integer variable accessed ONLY through two standard, indivisible atomic operations: `wait()` and `signal()`.
+  - Historical Nomenclature:
+    * `wait()` originally designated $P()$ (from Dutch *proberen*, to test).
+    * `signal()` originally designated $V()$ (from Dutch *verhogen*, to increment).
+
+• Classical Definitions (with Busy Waiting):
+  wait(S) {
+      while (S <= 0)
+          ; /* Busy wait */
+      S--;
+  }
+
+  signal(S) {
+      S++;
+  }
+
+• Classification:
+  1. **Counting Semaphore**: Value can range over an unrestricted integer domain ($\ge 0$). Used to manage allocation of a finite pool of identical resources.
+  2. **Binary Semaphore**: Value ranges strictly between 0 and 1. Behaves identically to a mutex lock.
+
+--------------------------------------------------------------------------------
+Slide 15, 16 & 17: Semaphore Implementation without Busy Waiting
+--------------------------------------------------------------------------------
+• Design Principle:
+  - Replace busy waiting with OS process suspension (sleeping).
+  - When a process calls `wait()` and finds the semaphore non-positive, it blocks itself and yields the CPU.
+
+• Structure & Data Types:
+  typedef struct {
+      int value;
+      struct process *list; // Queue of waiting Process Control Blocks (PCBs)
+  } semaphore;
+
+• Non-Busy-Waiting Implementation:
+  void wait(semaphore *S) {
+      S->value--;
+      if (S->value < 0) {
+          add this process PCB to S->list;
+          block(); // Suspends process, moves to waiting state, invokes CPU scheduler
+      }
+  }
+
+  void signal(semaphore *S) {
+      S->value++;
+      if (S->value <= 0) {
+          remove a process P from S->list;
+          wakeup(P); // Moves process P to Ready Queue
+      }
+  }
+
+• Interpretation of Semaphore Values:
+  - If $S->value \ge 0$: The value represents the exact number of available resources.
+  - If $S->value < 0$: The absolute value $|S->value|$ indicates the exact number of processes currently suspended and waiting on that semaphore's queue.
+
+--------------------------------------------------------------------------------
+Slide 18: Semaphore Misuse & Deadlock
+--------------------------------------------------------------------------------
+• Common Programming Hazards:
+  1. Inversion of operations: Calling `signal(mutex)` followed by `wait(mutex)`.
+  2. Redundant waits: Calling `wait(mutex)` followed by `wait(mutex)` (self-deadlock).
+  3. Omission: Omitting `wait(mutex)` or `signal(mutex)`.
+
+• Classical Deadlock Scenario:
+  - Let $S$ and $Q$ be two semaphores initialized to 1:
+
+      Process P0                               Process P1
+      ---------------------------------------------------
+      wait(S);                                 wait(Q);
+      wait(Q);                                 wait(S);
+      ...                                      ...
+      signal(S);                               signal(Q);
+      signal(Q);                               signal(S);
+
+  - If $P_0$ executes `wait(S)` and is preempted while $P_1$ executes `wait(Q)`:
+    * $P_0$ is waiting for $Q$ (held by $P_1$).
+    * $P_1$ is waiting for $S$ (held by $P_0$).
+    * Neither process can ever make progress -> **Deadlock**!
+
+--------------------------------------------------------------------------------
+Slide 19, 20 & 21: Priority Inversion & Priority Inheritance Protocol
+--------------------------------------------------------------------------------
+• The Priority Inversion Phenomenon:
+  - A severe scheduling hazard occurring when a lower-priority process holds a lock/resource needed by a higher-priority process.
+  - Scenario with Three Processes:
+    * Priorities: $P_1$ (High), $P_2$ (Medium), $P_3$ (Low).
+    * Execution Sequence:
+      1. $P_3$ (Low) begins execution and acquires semaphore $S$.
+      2. $P_1$ (High) becomes ready, preempts $P_3$, and attempts to acquire $S$.
+      3. Since $S$ is held by $P_3$, $P_1$ blocks and enters the waiting state.
+      4. $P_3$ resumes to finish its critical section and release $S$.
+      5. Before $P_3$ can release $S$, $P_2$ (Medium) becomes ready!
+      6. Because $P_2$ has a higher priority than $P_3$, the CPU scheduler assigns the CPU to $P_2$, preempting $P_3$.
+    * Result: $P_2$ (Medium) delays $P_3$ (Low), which indirectly prevents $P_1$ (High) from running! An intermediate-priority task has inverted system priorities.
+
+• Solution: **Priority Inheritance Protocol**:
+  - Whenever a higher-priority process ($P_1$) blocks waiting for a resource held by a lower-priority process ($P_3$):
+    1. The lower-priority process ($P_3$) **temporarily inherits the highest priority** of all processes waiting for that resource (inherits $P_1$'s priority).
+    2. Intermediate-priority processes (like $P_2$) can no longer preempt $P_3$ because $P_3$'s elevated priority exceeds $P_2$'s priority.
+    3. $P_3$ swiftly finishes its critical section and executes `signal(S)`.
+    4. Upon releasing the resource, $P_3$ reverts to its original low priority.
+    5. $P_1$ (High) immediately acquires the resource and resumes execution without unconstrained delays.
+
+--------------------------------------------------------------------------------
+Slide 22 & 23: POSIX Semaphore APIs
+--------------------------------------------------------------------------------
+• Header: `#include <semaphore.h>`
+• Initialization: `sem_init()`
+  int sem_init(sem_t *sem, int pshared, unsigned int value);
+  - `pshared == 0`: Semaphore shared between threads of the calling process.
+  - `pshared != 0`: Semaphore shared between distinct processes (stored in shared memory).
+  - `value`: Initial integer counter value.
+
+• Wait / Decrement: `sem_wait()`
+  int sem_wait(sem_t *sem);
+  - Performs the atomic $P()$ operation.
+  - If counter > 0, decrements value and returns immediately.
+  - If counter == 0, blocks calling thread on semaphore wait queue until another thread signals.
+
+• Signal / Increment: `sem_post()`
+  int sem_post(sem_t *sem);
+  - Performs the atomic $V()$ operation.
+  - Increments semaphore counter value.
+  - If threads are sleeping in `sem_wait()`, wakes up one thread and moves it to the Ready queue.
+
+• Destruction: `sem_destroy()`
+  int sem_destroy(sem_t *sem);
+  - Releases semaphore resources.
+
+--------------------------------------------------------------------------------
+Slide 24: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 9.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

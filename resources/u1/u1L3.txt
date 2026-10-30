@@ -1,0 +1,427 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 1: Introduction and Process Management
+Lecture 3: Operating-System Services & Process Concept
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Operating-System Services
+   - Architectural View of OS Services
+   - Services Helpful to the User (UI, Program Execution, I/O, File Systems, Communication, Error Detection)
+   - Services for System Efficiency (Resource Allocation, Accounting, Protection & Security)
+2. System Calls
+   - Definition & Purpose
+   - Example Sequence: File Copy
+   - Major Categories of System Calls (Comparison: Windows API vs. Unix Syscalls)
+   - Standard C Library (printf to write system call mapping)
+3. Process Concept
+   - Process vs. Program (Active vs. Passive Entity)
+   - Process Memory Layout (Text, Data, BSS, Heap, Stack)
+   - Concrete C Program Memory Mapping
+4. Process State Model
+   - The 5-State Lifecycle (New, Ready, Running, Waiting, Terminated)
+5. Process Control Block (PCB / task_struct)
+   - Structure, Attributes, and Fields
+6. Process Scheduling & Queues
+   - Scheduling Queues: Job Queue, Ready Queue, Device/Waiting Queues
+   - Types of Schedulers: Long-Term (Job), Short-Term (CPU), Medium-Term (Swapper)
+   - Process Characteristics: I/O-Bound vs. CPU-Bound Processes
+   - Queueing Diagram of Process Scheduling
+7. Context Switching
+   - Mechanism & Sequence Diagram
+   - Performance Overhead and Factors Affecting Switch Time
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ARCHITECTURES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4: A View of Operating System Services
+--------------------------------------------------------------------------------
+• Silberschatz Figure 2.1: Layered Architecture of Operating System Services:
+
+  +-------------------------------------------------------------------------+
+  |                   User and Other System Programs                        |
+  +-------------------------------------------------------------------------+
+  |              User Interfaces (GUI | Batch | Command Line / CLI)         |
+  +-------------------------------------------------------------------------+
+  |                              System Calls                               |
+  +-------------------------------------------------------------------------+
+  |                       OPERATING SYSTEM SERVICES                         |
+  |  +--------------------+---------------------+------------------------+  |
+  |  | Program Execution  | I/O Operations      | File Systems           |  |
+  |  +--------------------+---------------------+------------------------+  |
+  |  | Communications     | Resource Allocation | Accounting             |  |
+  |  +--------------------+---------------------+------------------------+  |
+  |  | Error Detection    | Protection & Security                        |  |
+  |  +--------------------+----------------------------------------------+  |
+  +-------------------------------------------------------------------------+
+  |                             Operating System                            |
+  +-------------------------------------------------------------------------+
+  |                                 Hardware                                |
+  +-------------------------------------------------------------------------+
+
+--------------------------------------------------------------------------------
+Slide 5, 6 & 7: OS Services Helpful to the User
+--------------------------------------------------------------------------------
+1. User Interface (UI):
+   - Command-Line Interface (CLI): Shells / command interpreters that read and execute text commands typed by users.
+   - Graphical User Interface (GUI): Window-based system with mouse/pointer interactions, menus, and icons.
+   - Batch Interface: Commands and directives entered via batch script files without real-time human interaction.
+2. Program Execution:
+   - System must load executable programs into memory, schedule CPU time, allocate resources, and handle normal/abnormal termination.
+3. I/O Operations:
+   - Running programs frequently require I/O (files, network connections, display, keyboard). Users cannot access hardware directly; the OS provides safe, abstracted I/O mechanisms.
+4. File-System Manipulation:
+   - Creation, deletion, reading, writing, searching files and directories; querying metadata and managing read/write/execute permissions.
+5. Communications:
+   - Processes exchange information on the same computer (Inter-Process Communication / IPC) or across networked systems:
+     * Shared Memory: Common memory region accessed directly by communicating processes.
+     * Message Passing: Packets of information moved between processes by the operating system kernel.
+6. Error Detection:
+   - OS must continually detect and handle errors occurring in CPU/memory hardware, I/O devices (paper out, network disconnect), or user programs (arithmetic overflow, illegal memory access).
+   - Provides debugging facilities, core dumps, and consistent logging.
+
+--------------------------------------------------------------------------------
+Slide 8 & 9: OS Services for System Efficiency & Protection
+--------------------------------------------------------------------------------
+1. Resource Allocation:
+   - Efficient, fair distribution of resources (CPU cycles, main memory frames, disk storage, I/O devices) among multiple concurrent users and processes.
+2. Accounting:
+   - Keeps precise track of which users/processes consume how much and what kinds of system resources (for billing, capacity planning, and performance optimization).
+3. Protection and Security:
+   - Protection: Ensuring all access to system resources (memory, CPU, files) is controlled, authenticated, and isolated so concurrent processes do not interfere with each other.
+   - Security: Defending the entire system against external intrusions, unauthorized users, malware, and network attacks.
+
+--------------------------------------------------------------------------------
+Slide 10: System Calls & Example Sequence (File Copy)
+--------------------------------------------------------------------------------
+• System Calls:
+  - The programmatic interface to services provided by the operating system kernel.
+  - Written in C/C++ or assembly language; exposed via Application Programming Interfaces (APIs).
+
+• Silberschatz Figure 2.2: Example System Call Sequence for Copying Source File to Destination:
+  1. Acquire input file name:
+     - Issue write() system call to display prompt on screen.
+     - Issue read() system call to accept input from keyboard.
+  2. Acquire output file name:
+     - Issue write() system call to display prompt on screen.
+     - Issue read() system call to accept input from keyboard.
+  3. Open input file:
+     - Issue open() system call; if file does not exist, issue system call to abort and print error.
+  4. Create destination file:
+     - Issue create() or open(O_CREAT) system call; if file already exists, abort or truncate.
+  5. Copy Loop:
+     - Issue read() system call from input file buffer.
+     - Issue write() system call to destination file buffer.
+     - Repeat until read returns 0 (End-Of-File / EOF) or error occurs.
+  6. Clean up:
+     - Issue close() system call on input file.
+     - Issue close() system call on destination file.
+  7. Output status message:
+     - Issue write() system call to display completion message.
+  8. Termination:
+     - Issue exit() system call for normal termination.
+
+--------------------------------------------------------------------------------
+Slide 11: Types of System Calls (Windows vs. Unix API Comparison)
+--------------------------------------------------------------------------------
++---------------------------+-----------------------------------+-----------------------------------+
+| Category                  | Windows API                       | Unix / Linux System Calls         |
++---------------------------+-----------------------------------+-----------------------------------+
+| 1. Process Control        | CreateProcess()                   | fork(), exec(), wait(), exit()    |
+|                           | ExitProcess()                     |                                   |
+|                           | WaitForSingleObject()             |                                   |
++---------------------------+-----------------------------------+-----------------------------------+
+| 2. File Manipulation      | CreateFile()                      | open(), creat()                   |
+|                           | ReadFile()                        | read()                            |
+|                           | WriteFile()                       | write()                           |
+|                           | CloseHandle()                     | close()                           |
++---------------------------+-----------------------------------+-----------------------------------+
+| 3. Device Manipulation    | SetConsoleMode()                  | ioctl()                           |
+|                           | ReadConsole()                     | read()                            |
+|                           | WriteConsole()                    | write()                           |
++---------------------------+-----------------------------------+-----------------------------------+
+| 4. Information            | GetCurrentProcessId()             | getpid()                          |
+|    Maintenance            | SetTimer()                        | alarm()                           |
+|                           | Sleep()                           | sleep()                           |
++---------------------------+-----------------------------------+-----------------------------------+
+| 5. Communications         | CreatePipe()                      | pipe()                            |
+|                           | CreateFileMapping()               | shm_open()                        |
+|                           | MapViewOfFile()                   | mmap()                            |
++---------------------------+-----------------------------------+-----------------------------------+
+| 6. Protection             | SetFileSecurity()                 | chmod()                           |
+|                           | InitializeSecurityDescriptor()    | umask()                           |
+|                           | SetSecurityDescriptorGroup()      | chown()                           |
++---------------------------+-----------------------------------+-----------------------------------+
+
+--------------------------------------------------------------------------------
+Slide 12: Standard C Library Invocation Example (printf -> write)
+--------------------------------------------------------------------------------
+• Relationship between User API, C Runtime Library, and Kernel:
+
+  USER MODE:
+  +-----------------------------------------------------+
+  | User Program (main.c):                              |
+  |   printf("Greetings\n");                            |
+  +--------------------------+--------------------------+
+                             | Calls library function
+                             v
+  +-----------------------------------------------------+
+  | Standard C Library (libc):                          |
+  |   Formats string buffer;                            |
+  |   Invokes write() system call stub                  |
+  +--------------------------+--------------------------+
+                             | TRAP to Kernel (Syscall Instruction)
+  ===========================|===========================
+  KERNEL MODE:               v
+  +-----------------------------------------------------+
+  | Kernel Syscall Handler:                             |
+  |   sys_write() executes;                             |
+  |   Data sent to terminal device / stdout buffer;     |
+  |   Returns number of bytes written                   |
+  +--------------------------+--------------------------+
+                             | Return from Trap
+  ===========================|===========================
+  USER MODE:                 v
+  +-----------------------------------------------------+
+  | libc write() stub passes control back to main()     |
+  +-----------------------------------------------------+
+
+--------------------------------------------------------------------------------
+Slide 13, 14 & 15: Process Concept & Process Memory Layout
+--------------------------------------------------------------------------------
+• Definition:
+  - A **Program** is a passive entity (an executable file containing machine instructions stored on disk).
+  - A **Process** is an active entity (a program in execution with an execution context, program counter, registers, and memory space).
+  - A program becomes a process when its executable file is loaded into main memory.
+  - Multiple processes can execute instances of the same program (e.g. multiple users opening the text editor).
+
+• Silberschatz Figure 3.1 & C Memory Layout:
+
+  High Memory (0xFFFFFFFF in 32-bit)
+  +---------------------------------------------------+
+  | Command-line arguments & Environment variables    |
+  | (argc, argv, envp)                                |
+  +---------------------------------------------------+
+  | STACK                                             |
+  | (grows downwards: function frames, local vars,    |
+  |  parameters, return addresses)                    |
+  |         |                                         |
+  |         v                                         |
+  |                                                   |
+  |         ^                                         |
+  |         |                                         |
+  | HEAP                                              |
+  | (grows upwards: dynamic allocations via malloc()) |
+  +---------------------------------------------------+
+  | UNINITIALIZED DATA (BSS)                          |
+  | (global & static variables uninitialized, set 0)  |
+  +---------------------------------------------------+
+  | INITIALIZED DATA                                  |
+  | (global & static variables initialized to values) |
+  +---------------------------------------------------+
+  | TEXT (CODE)                                       |
+  | (binary machine instructions, read-only)          |
+  +---------------------------------------------------+
+  Low Memory (0x00000000)
+
+• Concrete C Program Mapping Example:
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int x;              // -> Uninitialized Data (BSS)
+  int y = 15;         // -> Initialized Data
+
+  int main(int argc, char *argv[]) { // -> Arguments in High Memory
+      int *values;    // -> Stack (local pointer)
+      int i;          // -> Stack (local variable)
+
+      values = (int *)malloc(sizeof(int) * 5); // -> Heap (allocated block)
+      for (i = 0; i < 5; i++) {
+          values[i] = i;                       // -> Text (code execution)
+      }
+      return 0;
+  }
+
+--------------------------------------------------------------------------------
+Slide 16: Process State Model (5-State Lifecycle)
+--------------------------------------------------------------------------------
+• Silberschatz Figure 3.2: 5-State Transition Diagram:
+
+                         [ NEW ]
+                            |
+                            | admitted
+                            v
+   +---------------> [ READY ] <--------------------+
+   |                   |                            |
+   |                   | scheduler dispatch         |
+   |                   v                            |
+   |             [ RUNNING ] -----------------------+
+   |                   |        interrupt
+   |                   |
+   |                   | I/O or event wait
+   |                   v
+   |             [ WAITING ]
+   |                   |
+   +-------------------+
+    I/O or event completion
+
+   [ RUNNING ] --------> [ TERMINATED ]
+                 exit
+
+• State Definitions:
+  1. New: The process is being created/initialized.
+  2. Ready: The process is loaded in main memory and waiting to be assigned to a CPU core.
+  3. Running: Instructions are actively being executed on a CPU core.
+  4. Waiting (Blocked): The process is waiting for some event to occur (such as I/O completion or signal reception).
+  5. Terminated: The process has finished execution and is awaiting cleanup.
+
+--------------------------------------------------------------------------------
+Slide 17 & 18: Process Control Block (PCB / Task Control Block)
+--------------------------------------------------------------------------------
+• Definition:
+  - Each process is represented in the operating system kernel by a Process Control Block (PCB).
+  - Also called `task_struct` in the Linux kernel (defined in `<linux/sched.h>`).
+
+• Silberschatz Figure 3.3: PCB Internal Structure:
+  +---------------------------------------------------+
+  | Process State (Ready, Running, Waiting, etc.)     |
+  +---------------------------------------------------+
+  | Process Number / Process ID (PID)                 |
+  +---------------------------------------------------+
+  | Program Counter (PC - next instruction address)   |
+  +---------------------------------------------------+
+  | CPU Registers (Accumulator, Index, Stack Pointer) |
+  +---------------------------------------------------+
+  | CPU-Scheduling Info (Priority, Queue Pointers)    |
+  +---------------------------------------------------+
+  | Memory-Management Info (Page tables, base/limit)  |
+  +---------------------------------------------------+
+  | Accounting Info (CPU time used, time limits)      |
+  +---------------------------------------------------+
+  | I/O Status Info (Allocated devices, open files)   |
+  +---------------------------------------------------+
+
+• Linux Kernel Representation (`struct task_struct`):
+  - Contains `pid_t pid`, `volatile long state`, `struct mm_struct *mm` (memory mapping), `struct files_struct *files` (open file descriptor table), `struct task_struct *parent`, `struct list_head children`.
+
+--------------------------------------------------------------------------------
+Slide 19 & 20: Process Scheduling & Types of Processes
+--------------------------------------------------------------------------------
+• Scheduling Objective:
+  - Maximize CPU utilization and enable responsive time-sharing.
+  - The process scheduler selects among available processes for CPU dispatch.
+• Scheduling Queues:
+  - Job Queue: Set of all processes in the system.
+  - Ready Queue: Set of all processes residing in main memory that are ready and waiting to execute.
+  - Device / Waiting Queues: Set of processes waiting for a specific I/O device or event.
+• Process Characteristics:
+  - I/O-Bound Process: Spends more time doing I/O than computations; characterized by many short CPU bursts.
+  - CPU-Bound Process: Spends more time performing computations; characterized by few, very long CPU bursts.
+  - The scheduler strives to maintain a balanced process mix of I/O-bound and CPU-bound jobs.
+
+--------------------------------------------------------------------------------
+Slide 21: Queueing-Diagram Representation of Process Scheduling
+--------------------------------------------------------------------------------
+• Silberschatz Figure 3.4: Queueing Diagram of Process Scheduling:
+
+             +--------------------------------------+
+             |             READY QUEUE              |
+             +------------------+-------------------+
+                                |
+                                v
+                             [ CPU ]
+                                |
+        +-----------------------+-----------------------+-----------------------+
+        |                       |                       |                       |
+        v                       v                       v                       v
+   [I/O Request]         [Time Slice Expired]     [Fork a Child]      [Wait for Interrupt]
+        |                       |                       |                       |
+        v                       |                       v                       v
+  [ I/O Queue ]                 |                [Child Executes]      [ Interrupt Wait Queue ]
+        |                       |                       |                       |
+   (I/O Device)                 |                       |                       |
+        |                       |                       v                       v
+  [I/O Complete]                |               [Child Terminates]      [ Interrupt Occurs ]
+        |                       |                       |                       |
+        +---------------------->+<----------------------+<----------------------+
+                                |
+                                v
+                       (Back to Ready Queue)
+
+--------------------------------------------------------------------------------
+Slide 22: Context Switch from Process to Process
+--------------------------------------------------------------------------------
+• Silberschatz Figure 3.5: Context Switch Sequence between Process P0 and Process P1:
+
+  Process P0                  Operating System                 Process P1
+  -------------------------------------------------------------------------
+  Executing
+      |
+  [ Interrupt / Syscall ]
+      |
+      +---------------------> Save state into PCB_0
+                              (CPU idle for user)
+                              Reload state from PCB_1 ------> Executing
+                                                                  |
+                                                              [ Interrupt / Syscall ]
+                                                                  |
+                              Save state into PCB_1 <-------------+
+                              (CPU idle for user)
+  Executing <---------------- Reload state from PCB_0
+      |
+
+• Context Switch Details:
+  - Saving the state of the active process into its PCB and restoring the state of the scheduled process from its PCB.
+  - Context-switch time is pure system overhead; the CPU performs no productive user work while switching.
+  - Dependent on hardware architecture, register sets, and memory management complexity (e.g., flushing TLB).
+
+--------------------------------------------------------------------------------
+Slide 23 & 24: Schedulers & Medium-Term Scheduler (Swapping)
+--------------------------------------------------------------------------------
+• Scheduler Types:
+  1. Short-Term Scheduler (CPU Scheduler):
+     - Selects which ready process in memory executes next on the CPU.
+     - Invoked very frequently (milliseconds) -> must be extremely fast.
+  2. Long-Term Scheduler (Job Scheduler):
+     - Selects which processes from mass storage are admitted into memory into the ready queue.
+     - Invoked infrequently (seconds, minutes) -> controls the **Degree of Multiprogramming**.
+  3. Medium-Term Scheduler (Swapper):
+     - Added when the degree of multiprogramming needs to be reduced due to memory overcommitment.
+     - Temporarily removes processes from RAM and stores them on disk (Swap Out).
+     - Later brings the process back into RAM to continue execution (Swap In).
+
+• Silberschatz Figure 3.6: Swapping Architecture:
+  +---------------+        +-------+
+  |  READY QUEUE  | -----> |  CPU  |
+  +-------^-------+        +---+---+
+          |                    |
+          | (Swap In)          | (Swap Out)
+          |                    v
+  +-------+--------------------+---+
+  |    Partially Executed Processes|
+  |       (Swapped-out to Disk)    |
+  +--------------------------------+
+
+--------------------------------------------------------------------------------
+Slide 25: Context Switch Overhead
+--------------------------------------------------------------------------------
+• When switching processes, the OS must:
+  - Save general-purpose registers, program counter, stack pointer, floating-point registers.
+  - Flush or invalidate the Translation Lookaside Buffer (TLB).
+  - Switch memory address spaces (change page table base registers).
+• Overhead Factors:
+  - Modern CPUs provide multiple hardware register sets to speed up switching.
+  - Complexity of the operating system and PCB size directly determines switch latency.
+
+--------------------------------------------------------------------------------
+Slide 26: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 3.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

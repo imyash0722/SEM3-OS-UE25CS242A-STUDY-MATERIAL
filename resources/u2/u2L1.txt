@@ -1,0 +1,281 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 2: IPC, Threads and Concurrency
+Lecture 1: Inter-Process Communication (IPC) - Shared Memory & Message Passing
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Inter-Process Communication (IPC) Overview
+   - Independent vs. Cooperating Processes
+   - Reasons for Process Cooperation (Information Sharing, Speedup, Modularity, Convenience)
+   - Fundamental IPC Models: Shared Memory vs. Message Passing
+2. The Producer-Consumer Problem
+   - Unbounded Buffer vs. Bounded Buffer Paradigm
+   - Circular Buffer Implementation using 'in' and 'out' Pointers
+   - Producer and Consumer Code Implementations & (BUFFER_SIZE - 1) Limitation
+3. Shared Memory Model
+   - Architecture & Speed Advantages (Zero-Copy Transfer)
+   - User-Space Control & Synchronization Requirements (Semaphores / Mutexes)
+   - Linux Virtual Memory Layout with Shared Memory Segment Mapping
+4. Message Passing Model
+   - Architecture & Core Operations: send(message) and receive(message)
+   - Communication Link Properties: Physical vs. Logical Links
+   - Direct Communication (Symmetric vs. Asymmetric Naming)
+   - Indirect Communication (Mailboxes / Ports & Multiple Receiver Disambiguation)
+   - Synchronization Modes:
+     * Blocking (Synchronous) vs. Non-blocking (Asynchronous) Primitives
+     * Rendezvous Mechanism (Blocking Send + Blocking Receive)
+     * Simplified Producer-Consumer with Message Passing
+   - Link Buffering Capabilities: Zero Capacity, Bounded Capacity, Unbounded Capacity
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ARCHITECTURES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4 & 5: Independent vs. Cooperating Processes & IPC Needs
+--------------------------------------------------------------------------------
+• Process Classification:
+  1. **Independent Process**:
+     - Cannot affect or be affected by the execution of another process in the system.
+     - Shares no data or state with other processes.
+  2. **Cooperating Process**:
+     - Can affect or be affected by other executing processes.
+     - Actively shares data, memory, or messages with other processes.
+• Reasons for Process Cooperation:
+  - Information Sharing: Multiple users or processes need concurrent access to shared resources (files, databases).
+  - Computation Speedup: Breaking a complex computational task into subtasks running in parallel across multiple CPU cores.
+  - Modularity: Structuring the operating system and applications into discrete cooperating processes or threads (e.g. client-server, microservices).
+  - Convenience: Individual users running concurrent tasks (editing, printing, compiling).
+• To cooperate, processes require **Inter-Process Communication (IPC)** mechanisms:
+  1. Shared Memory
+  2. Message Passing
+
+--------------------------------------------------------------------------------
+Slide 6: Architectural Comparison of Communication Models
+--------------------------------------------------------------------------------
+• Silberschatz Figure 3.12: Shared Memory vs. Message Passing:
+
+  (a) SHARED MEMORY MODEL                       (b) MESSAGE PASSING MODEL
+
+  +-----------------------+                    +-----------------------+
+  |       Process A       |                    |       Process A       |
+  +-----------+-----------+                    +-----------+-----------+
+              |                                            |
+              v                                            v send(M)
+  +-----------------------+                    +=======================+
+  |     SHARED MEMORY     |                    |      OS KERNEL        |
+  |     [ Data Buffer ]   |                    | [M1] [M2] [M3] (Queue)|
+  +-----------+-----------+                    +=======================+
+              ^                                            |
+              |                                            v receive(M)
+  +-----------+-----------+                    +-----------------------+
+  |       Process B       |                    |       Process B       |
+  +-----------------------+                    +-----------------------+
+
+• Key Differences:
+  - Shared Memory:
+    * OS establishes a shared region of physical memory mapped into both address spaces.
+    * Subsequent reads/writes occur at memory speeds directly in user mode without OS intervention.
+    * Fastest form of IPC.
+  - Message Passing:
+    * Communication proceeds via system calls through the OS kernel (`send()` and `receive()`).
+    * Data is copied from sender memory to kernel space, then from kernel space to receiver memory.
+    * Preferred for distributed systems or exchanging smaller amounts of data.
+
+--------------------------------------------------------------------------------
+Slide 7, 8, 9 & 10: The Producer-Consumer Problem & Bounded-Buffer Solution
+--------------------------------------------------------------------------------
+• Problem Statement:
+  - Paradigm for cooperating processes: A Producer process generates information consumed by a Consumer process.
+  - Buffer Types:
+    * Unbounded Buffer: No fixed size limit; consumer waits if empty, producer never blocks.
+    * Bounded Buffer: Fixed buffer capacity; producer waits if full, consumer waits if empty.
+
+• Circular Array Implementation:
+  #define BUFFER_SIZE 10
+
+  typedef struct {
+      /* Data attributes */
+  } item;
+
+  item buffer[BUFFER_SIZE];
+  int in = 0;   // Points to the next free buffer slot
+  int out = 0;  // Points to the first full buffer slot
+
+• Buffer Conditions:
+  - Buffer is Empty: `in == out`
+  - Buffer is Full: `((in + 1) % BUFFER_SIZE) == out`
+  - Note: This algorithm can only use at most `BUFFER_SIZE - 1` elements simultaneously to distinguish full from empty.
+
+• Producer Process Code:
+  item next_produced;
+  while (true) {
+      /* Produce an item in next_produced */
+
+      while (((in + 1) % BUFFER_SIZE) == out)
+          ; /* Do nothing (busy wait while buffer is full) */
+
+      buffer[in] = next_produced;
+      in = (in + 1) % BUFFER_SIZE;
+  }
+
+• Consumer Process Code:
+  item next_consumed;
+  while (true) {
+      while (in == out)
+          ; /* Do nothing (busy wait while buffer is empty) */
+
+      next_consumed = buffer[out];
+      out = (out + 1) % BUFFER_SIZE;
+
+      /* Consume the item in next_consumed */
+  }
+
+--------------------------------------------------------------------------------
+Slide 11, 12 & 13: Shared Memory Architecture & Memory Layout
+--------------------------------------------------------------------------------
+• Characteristics:
+  - Once established by the OS, access and synchronization are under the control of user processes, NOT the operating system.
+  - Fastest form of IPC because data does not need to be repeatedly copied between user and kernel space.
+  - Primary Challenge: Process Synchronization:
+    * If a server is writing data to shared memory, the client must not read until the write is complete.
+    * Handled using synchronization primitives such as POSIX Semaphores, Mutex Locks, or File/Record Locking.
+
+• APUE Figure 15.29: Memory Layout on a 32-bit Linux System with Shared Memory:
+
+  High Address (0xC0000000 / Top of User Space)
+  +-------------------------------------------------------------+
+  | Command-line arguments & Environment variables              |
+  +-------------------------------------------------------------+
+  | STACK (Grows downwards)                                     |
+  |         |                                                   |
+  |         v                                                   |
+  |                                                             |
+  | 0x4017a6a0                                                  |
+  | +---------------------------------------------------------+ |
+  | | SHARED MEMORY SEGMENT (e.g. 100,000 bytes)              | |
+  | +---------------------------------------------------------+ |
+  | 0x40162000                                                  |
+  |                                                             |
+  |         ^                                                   |
+  |         |                                                   |
+  | HEAP (Grows upwards, e.g. malloc of 100,000 bytes)          |
+  +-------------------------------------------------------------+
+  | UNINITIALIZED DATA (BSS) (e.g. 40,000 byte array)           |
+  +-------------------------------------------------------------+
+  | INITIALIZED DATA                                            |
+  +-------------------------------------------------------------+
+  | TEXT (Binary Machine Instructions)                          |
+  +-------------------------------------------------------------+
+  Low Address (0x08048000)
+
+--------------------------------------------------------------------------------
+Slide 14, 15 & 16: Message Passing Architecture & Link Properties
+--------------------------------------------------------------------------------
+• Overview:
+  - Processes communicate and synchronize without sharing a common address space.
+  - Essential in distributed environments (where processes execute on different physical machines connected via network).
+• Core Primitives:
+  - `send(message)`
+  - `receive(message)`
+• Communication Link Design Questions:
+  1. How are communication links established?
+  2. Can a link be associated with more than two processes?
+  3. How many links can exist between a pair of communicating processes?
+  4. What is the message capacity of a link?
+  5. Are message sizes fixed or variable?
+  6. Is a link unidirectional or bidirectional?
+• Implementation Layers:
+  - Physical: Hardware bus, shared RAM, or network interfaces (TCP/IP).
+  - Logical: Direct vs. indirect, synchronous vs. asynchronous, buffered vs. unbuffered.
+
+--------------------------------------------------------------------------------
+Slide 17: Direct Communication
+--------------------------------------------------------------------------------
+• Explicit Naming:
+  - Both processes must explicitly identify each other:
+    * `send(P, message)`: Send a message directly to process P.
+    * `receive(Q, message)`: Receive a message directly from process Q.
+• Link Properties:
+  - A communication link is established automatically between communicating processes.
+  - A link is associated with exactly one pair of communicating processes.
+  - Between each pair, exactly one link exists.
+  - Usually bidirectional (can be unidirectional).
+• Disadvantage:
+  - Modularity problem: Hardcoded PIDs make code fragile; changing a process identifier requires modifying all references.
+
+--------------------------------------------------------------------------------
+Slide 18, 19 & 20: Indirect Communication (Mailboxes / Ports)
+--------------------------------------------------------------------------------
+• Mailbox / Port Semantics:
+  - Messages are sent to and received from mailboxes (ports), each having a unique identifier.
+  - Processes communicate only if they share a common mailbox.
+• Primitives:
+  - `send(A, message)`: Send a message to mailbox A.
+  - `receive(A, message)`: Receive a message from mailbox A.
+• Link Properties:
+  - Link is established only if processes share a common mailbox.
+  - A link may be associated with many processes.
+  - A pair of processes may share several different communication links (mailboxes).
+  - May be unidirectional or bidirectional.
+• Multi-Receiver Ambiguity Problem:
+  - Suppose processes P1, P2, and P3 share mailbox A.
+  - P1 sends a message to A. Both P2 and P3 execute `receive(A, ...)`.
+  - Solutions:
+    1. Restrict links to at most two processes.
+    2. Allow only one process at a time to execute a receive operation (mutual exclusion).
+    3. Allow the OS to arbitrate and select the receiver, notifying the sender of the chosen recipient.
+
+--------------------------------------------------------------------------------
+Slide 21 & 22: Message Passing Synchronization
+--------------------------------------------------------------------------------
+• Blocking vs. Non-blocking Primitives:
+  1. **Blocking (Synchronous)**:
+     - Blocking Send: The sending process is blocked until the message is received by the receiving process or mailbox.
+     - Blocking Receive: The receiving process is blocked until a message is available.
+  2. **Non-blocking (Asynchronous)**:
+     - Non-blocking Send: The sending process sends the message and immediately resumes execution.
+     - Non-blocking Receive: The receiver retrieves either a valid message or a null indicator without blocking.
+• Rendezvous:
+  - Occurs when BOTH `send()` and `receive()` are blocking.
+  - Senders and receivers synchronize tightly at the moment of message exchange.
+• Simplified Producer-Consumer using Message Passing:
+  - Producer:
+    message next_produced;
+    while (true) {
+        /* Produce an item in next_produced */
+        send(next_produced);
+    }
+  - Consumer:
+    message next_consumed;
+    while (true) {
+        receive(next_consumed);
+        /* Consume the item in next_consumed */
+    }
+
+--------------------------------------------------------------------------------
+Slide 23: Link Buffering Capacities
+--------------------------------------------------------------------------------
+• Message queues attached to communication links:
+  1. **Zero Capacity (No Buffering)**:
+     - The link queue has a maximum length of 0.
+     - The sender MUST block until the recipient is ready to receive the message (strict rendezvous).
+  2. **Bounded Capacity**:
+     - The queue has a finite length of $n$ messages.
+     - If the queue is not full, sender deposits message and continues.
+     - If the queue is full, sender is blocked until space becomes available.
+  3. **Unbounded Capacity**:
+     - The queue has infinite capacity.
+     - The sender is never blocked and can continuously transmit messages.
+
+--------------------------------------------------------------------------------
+Slide 24: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 1.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

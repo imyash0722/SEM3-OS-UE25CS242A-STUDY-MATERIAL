@@ -1,0 +1,459 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 1: Introduction and Process Management
+Lecture 1: Introduction & Computer System Organization
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS & COURSE INFORMATION
+--------------------------------------------------------------------------------
+• Slide Credits:
+  - "Operating System Concepts", Abraham Silberschatz, Peter Baer Galvin, Greg Gagne, 10th Edition, John Wiley & Sons, 2023.
+  - "Advanced Programming in the Unix Environment", Richard Stevens and Stephen A. Rago, Pearson, 3rd Edition, 2017.
+  - "Operating Systems: Internals and Design Principles", William Stallings, 9th Edition, Pearson, 2018.
+
+• Course Textbooks:
+  1. "Operating System Concepts", Silberschatz, Galvin, Gagne (10th Ed., Wiley, 2023)
+  2. "Advanced Programming in the Unix Environment", Stevens & Rago (3rd Ed., Pearson, 2017)
+
+• Course Reference Books:
+  1. "Operating Systems: Internals and Design Principles", William Stallings (9th Ed., Pearson, 2018)
+  2. "Modern Operating Systems", Andrew S. Tanenbaum (3rd Ed., Pearson, 2007)
+  3. "Learning the bash shell", Cameron Newham (3rd Ed., O'Reilly, 2005)
+
+• Course Objectives:
+  - Focus on fundamental Operating System concepts.
+  - Provide an understanding of various components of the Operating System (OS).
+  - Delve deeper into various algorithms and associated trade-offs for efficient resource management such as process, disk, and memory management.
+  - Introduce design principles and trade-offs in the design of Operating Systems.
+
+• Course Outcomes:
+  At the end of this course, the student will be able to:
+  1. Understand the principles and modules of Operating Systems.
+  2. Understand the design of various algorithms for scheduling and their relative performance.
+  3. Understand the concept of Deadlocks that typically occur in OS (Avoidance and Detection).
+  4. Implement Operating Systems Concepts related to process management, concurrent processes, threads, and memory management.
+
+• Course Outline:
+  - Unit 1: Introduction and Process Management (14 hours)
+    * What Operating Systems Do, Computer-System Organization, Computer-System Architecture, Operating System Structure & Operations, Operating-System Services.
+    * Process Concept: Process in Memory, Process State, Process Control Block (PCB), Process Creation and Termination, System Calls for Process Management, Life Cycle of I/O Requests.
+    * CPU Scheduling: Basic Concepts, Scheduling Criteria, Algorithms: FCFS, SJF, Priority Scheduling, Round-Robin, Multilevel Queue, Multilevel Feedback Queue.
+    * Introduction to Shell Programming: Variables, Control Flow, Shell Scripts, Scheduler (cron).
+  - Unit 2: IPC, Threads and Concurrency (14 hours)
+    * IPC: Shared Memory, Message Passing, Pipes (Named & Ordinary), System Calls for Shared Memory/Pipes/FIFOs, Linux Domain Sockets.
+    * Introduction to Threads: Types of Threads, Multicore Programming, Multithreading Models, Thread Control Block (TCB), Thread Creation, Thread Scheduling, Thread Libraries (POSIX Pthreads).
+    * Multicore Kernel Concepts: Symmetric Multiprocessing (SMP), Kernel Parallelism, CPU Affinity, Load Balancing, Multicore Scheduling.
+    * Mutual Exclusion and Synchronization: Software Approaches, Principles of Concurrency, Hardware Support, Mutex Locks, Semaphores, Scalable Synchronization (Spinlocks, Reader-Writer Locks, Lock Contention), Classic Synchronization Problems.
+    * Deadlocks: Principles, Characterization, Avoidance.
+    * Signals and Signal Handling.
+  - Unit 3: Memory Management (14 hours)
+    * Main Memory: Hardware and Control Structures, OS Support, Address Translation, Dynamic Loading, Dynamic Linking & Shared Libraries, Memory-Mapped Files and mmap(), Swapping, Fragmentation, Segmentation, Paging, Page Table Structures, TLB (Hits & Misses), Effective Access Time (EAT).
+    * Virtual Memory: Demand Paging, Page-Fault Handling, Copy-on-Write, Page Replacement Algorithms, Frame Allocation, Thrashing, NUMA Basics, Memory Locality, Clock Page Replacement.
+  - Unit 4: File Management, Storage Management and Security (14 hours)
+    * File Concept: Access Methods, Directory Structure, Driver Development, Flash Drives, File-System Sharing, Protection, System Calls for File Operations/Attributes/Directories.
+    * File System Implementation: Directory Implementation, Allocation Methods, Free-Space Management, Efficiency and Performance.
+    * Mass Storage Structure: Disk Structure, Disk Scheduling, Disk Management, RAID Structure.
+    * OS Security: Access Matrix & Implementation, Access Control, Revocation of Access Rights.
+    * Shell Programming: awk, sed.
+
+• Course Evaluation Policy:
+  +-------------------------------------------------+------------------+--------------+
+  | Component                                       | Conduction Marks | Scaled Marks |
+  +-------------------------------------------------+------------------+--------------+
+  | Internal Semester Assessment (ISA)-1            | 40               | 15           |
+  | Internal Semester Assessment (ISA)-2            | 40               | 15           |
+  | Experiential Learning / Continuous Assessment   | 70               | 20           |
+  | End Semester Assessment (ESA)                   | 100              | 50           |
+  +-------------------------------------------------+------------------+--------------+
+  | Total                                           | 250              | 100          |
+  +-------------------------------------------------+------------------+--------------+
+  Experiential Learning Breakdown:
+  - Level 1 Problem 1: 10 marks (scaled to 2)
+  - Level 1 Problem 2: 10 marks (scaled to 2)
+  - Level 2 Problem:   25 marks (scaled to 6)
+  - Level 3 Problem:   25 marks (scaled to 10)
+
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & CONCEPTS
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 10: Need for an Operating System
+--------------------------------------------------------------------------------
+• Question: "If an OS is not developed, then how will application developers access the hardware?"
+• Diagram Illustration:
+  [Application Developer / Programs]
+                  |
+                  v (Direct hardware manipulation without OS?)
+  [Hardware: Monitor, Keyboard, Mouse, Printer, Hard Disk]
+
+• Explanation:
+  Without an operating system, every programmer would need to write low-level code specific to every peripheral device (handling device registers, timing signals, interrupt lines, device controllers, etc.). Applications would conflict with each other when competing for resources like memory and disk storage. The OS abstracts hardware complexity and offers uniform interfaces.
+
+--------------------------------------------------------------------------------
+Slide 11: General Definition of Operating System
+--------------------------------------------------------------------------------
+• Definition:
+  - An Operating System is a program that acts as an intermediary between a user of a computer and the computer hardware.
+  - It provides a user-friendly environment in which a user may easily develop and execute programs.
+  - Otherwise, intricate hardware knowledge would be mandatory for computer programming.
+• Layered Hierarchy Diagram:
+  +---------------------------------------------------+
+  |                       User                        |
+  +---------------------------------------------------+
+                           |
+  +---------------------------------------------------+
+  |            Application Programs                   |
+  +---------------------------------------------------+
+                           |
+  +---------------------------------------------------+
+  |              Operating System                     |
+  +---------------------------------------------------+
+                           |
+  +---------------------------------------------------+
+  |                  Hardware                         |
+  +---------------------------------------------------+
+
+--------------------------------------------------------------------------------
+Slide 12: Operating System Goals
+--------------------------------------------------------------------------------
+• Primary Goals:
+  1. Execute user programs and make solving user problems easier.
+  2. Make the computer system convenient to use.
+  3. Use computer hardware in an efficient manner.
+  4. Manage resources such as:
+     - Memory (RAM allocation, deallocation, protection)
+     - Processor(s) (CPU scheduling, execution dispatch)
+     - I/O Devices (device drivers, controllers, buffering)
+
+--------------------------------------------------------------------------------
+Slide 13: Why Study Operating Systems?
+--------------------------------------------------------------------------------
+• Motivation:
+  - Only a small percentage of computer practitioners will be involved in the creation or modification of an operating system.
+  - However, almost all code runs on top of an operating system.
+  - Knowledge of how operating systems work is crucial to proper, efficient, effective, and secure programming.
+  - Understanding the fundamentals of operating systems allows developers to write optimized, high-performance software.
+
+--------------------------------------------------------------------------------
+Slide 14 & 15: Computer System Structure (Four Components - Abstract View)
+--------------------------------------------------------------------------------
+• Silberschatz Figure 1.1: Abstract view of the components of a computer system:
+  +-------------------------------------------------------------------------+
+  |    User 1            User 2            User 3      ...     User n       |
+  +-------------------------------------------------------------------------+
+         |                 |                 |                     |
+  +-------------------------------------------------------------------------+
+  |  Compiler          Assembler         Text Editor        Database System |
+  |                (System and Application Programs)                        |
+  +-------------------------------------------------------------------------+
+                                      |
+  +-------------------------------------------------------------------------+
+  |                           Operating System                              |
+  +-------------------------------------------------------------------------+
+                                      |
+  +-------------------------------------------------------------------------+
+  |                          Computer Hardware                              |
+  |                 (CPU, Main Memory, I/O Devices)                         |
+  +-------------------------------------------------------------------------+
+
+• Detailed Breakdown of the 4 Components:
+  1. Hardware: Provides basic computing resources (CPU, memory, I/O devices).
+  2. Operating System: Controls and coordinates the use of hardware among various applications and users.
+  3. Application Programs: Define the ways in which system resources are used to solve the computing problems of users (word processors, compilers, web browsers, database systems, video games).
+  4. Users: People, machines, or other computers issuing requests.
+
+--------------------------------------------------------------------------------
+Slide 16 & 17: What Operating Systems Do (User View vs. System View)
+--------------------------------------------------------------------------------
+• User View:
+  - Varies depending on the interface:
+    * PC / Workstation: Users desire convenience, ease of use, and high performance; resource utilization is secondary.
+    * Mainframe / Minicomputer / Servers: Must keep multiple concurrent users happy; maximize resource utilization so that CPU, memory, and I/O are used efficiently and no individual monopolizes shared resources.
+    * Workstations connected to servers: Dedicated personal resources combined with shared network resources (file, compute, print servers). The OS balances individual usability with resource utilization.
+    * Handheld devices (Mobile / Smart Devices): Resource-poor, optimized for usability, battery life, and touch interactions.
+    * Embedded computers (Automobiles, IoT, Appliances): Minimal or no user interface; run continuously without human intervention to control physical equipment.
+
+--------------------------------------------------------------------------------
+Slide 18 & 19: System View & Defining the Operating System
+--------------------------------------------------------------------------------
+• System View:
+  - OS as a Resource Allocator:
+    * Manages all resources (CPU time, memory space, file storage, I/O devices).
+    * Acts as a referee between conflicting requests from programs and users for efficient and fair resource use.
+  - OS as a Control Program:
+    * Controls execution of user programs to prevent errors and improper use of the computer.
+    * Especially concerned with the operation and control of I/O devices.
+• Defining the Operating System:
+  - The fundamental goal of computer systems is to execute user programs and make solving user problems easier.
+  - Common functions of controlling and allocating resources are consolidated into one piece of software: the Operating System.
+  - Technical Definition: "The one program running at all times on the computer" is the kernel.
+  - Everything else is categorized as:
+    1. A system program (ships with the OS, e.g., shell, file managers, editors).
+    2. An application program (developed by users/third-parties to solve domain-specific tasks).
+
+--------------------------------------------------------------------------------
+Slide 20 & 21: Computer-System Organization & Modern Architecture
+--------------------------------------------------------------------------------
+• Organization:
+  - A computer system consists of one or more CPUs and multiple device controllers connected through a common system bus providing access to shared memory.
+  - CPUs and device controllers execute concurrently, competing for memory cycles.
+  - A memory controller synchronizes access to the shared memory to ensure data integrity.
+
+• Silberschatz Figure 1.2: Modern Computer System Organization:
+  +-----------------------------------------------------------------------+
+  |                             SHARED MEMORY                             |
+  +-----------------------------------------------------------------------+
+                                     ^
+                                     |
+                          [ Memory Controller ]
+                                     |
+  =========================== SYSTEM BUS ==================================
+       |                    |                    |                   |
+       v                    v                    v                   v
+    [ CPU ]        [ Disk Controller ]  [ USB Controller ]  [ Graphics Adapter ]
+                            |                    |                   |
+                         (Disks)          +------+-------+       (Monitor)
+                                          |      |       |
+                                       [Mouse][Keybd][Printer]
+
+--------------------------------------------------------------------------------
+Slide 22: Computer-System Operation
+--------------------------------------------------------------------------------
+• Principles of Operation:
+  - I/O devices and the CPU execute concurrently.
+  - Each device controller is in charge of a specific device type (e.g., disk controller, USB controller).
+  - Each device controller maintains local buffer storage and a set of special-purpose registers (control, status, data).
+  - Data transfer process:
+    1. CPU moves data from/to main memory to/from device controller local buffers.
+    2. Device I/O operates between the physical device and the controller's local buffer.
+    3. The device controller informs the CPU that it has completed its operation by triggering an interrupt.
+
+--------------------------------------------------------------------------------
+Slide 23: System Bootstrapping (Boot Process)
+--------------------------------------------------------------------------------
+• Boot Sequence:
+  1. Power on / Reset: CPU register program counter (PC) is initialized to point to firmware.
+  2. Bootstrap Program:
+     - The first program that executes when a computer system is powered on or rebooted.
+     - Stored in Read-Only Memory (ROM) or Electrically Erasable Programmable Read-Only Memory (EEPROM).
+     - Known by the general term firmware.
+     - Initializes all aspects of the system: CPU registers, device controllers, memory contents.
+     - Locates the operating system kernel and loads it into main memory.
+  3. Kernel Initialization:
+     - The kernel sets up system services, interrupt vectors, and starts the initial process.
+  4. Init Process:
+     - The first user/system process created after the OS is booted (traditionally `init` or `systemd`).
+     - Waits for events (like user login, daemon requests) to occur.
+
+--------------------------------------------------------------------------------
+Slide 24 & 25: Interrupts and Interrupt Handling
+--------------------------------------------------------------------------------
+• Core Concepts:
+  - An modern operating system is interrupt-driven. If there are no processes to execute, no I/O devices to service, and no user input, the OS will sit idly waiting for events.
+  - Events are signaled by interrupts.
+
+• Classification of Interrupts:
+                    +-----------------------+
+                    |    Interrupt Event    |
+                    +-----------------------+
+                                |
+             +------------------+------------------+
+             |                                     |
+    [ Hardware Interrupt ]                [ Software Interrupt ]
+             |                                     |
+    +--------+--------+                            |
+    |                 |                            |
+[ Polling ]      [ Vectored ]            [ Trap / Exception ]
+                                         - Error (division by zero, invalid memory)
+                                         - System Call (user request for OS service)
+
+• Interrupt Handling Lifecycle:
+  1. Interrupt Generation:
+     - Hardware: Interrupt Request (IRQ) line sent by a device controller to the CPU.
+     - Software: Exception/Trap triggered by illegal instruction, or software interrupt instruction executed.
+  2. Processor Response:
+     - The processor halts the current thread of execution at the end of the current instruction cycle.
+  3. State Preservation:
+     - The processor automatically saves the current CPU state (program counter, processor status word, registers) onto the stack or kernel stack.
+  4. Interrupt Dispatching:
+     - Determines the interrupt type:
+       * Vectored Interrupt System: Hardware delivers an offset into an Interrupt Vector (array of pointers to specific interrupt service routines / ISRs).
+       * Polling: CPU queries each device controller in order of priority to determine who requested service.
+  5. Handler Execution:
+     - The corresponding Interrupt Service Routine (ISR) executes to handle the condition (e.g., reading characters from buffer).
+  6. State Restoration:
+     - The saved registers and program counter are restored.
+     - The interrupted thread resumes execution exactly where it was halted.
+
+--------------------------------------------------------------------------------
+Slide 26: Interrupt Timeline (I/O Cycle)
+--------------------------------------------------------------------------------
+• Silberschatz Figure 1.4: Timeline showing CPU state vs. I/O Device state for a single process doing I/O:
+
+  CPU State:
+  ------------------+                     +---------------+
+  User Process      |   I/O Interrupt     | User Process  |
+  Executing         |   Processing        | Resumes       |
+  ------------------+                     +---------------+
+                    \                     ^
+                     \                   /
+  I/O Device:         \                 /
+                       +---------------+
+                       | Transferring  |
+       (IDLE)          | Data          |        (IDLE)
+  ---------------------+---------------+------------------> Time
+                       ^               ^
+                   I/O Request     I/O Transfer
+                    Initiated        Complete
+                                (Generates Interrupt)
+
+• Key Observations:
+  - CPU initiates I/O request and can then execute other tasks or idle.
+  - Device transfers data into local buffer.
+  - Device causes interrupt upon completion.
+  - Interrupt processing time varies; device transfer time also varies.
+
+--------------------------------------------------------------------------------
+Slide 27 & 28: Storage Structure & Program Execution Model
+--------------------------------------------------------------------------------
+• Main Memory:
+  - The only large storage media that the CPU can access directly via memory bus.
+  - Random Access Memory (RAM), typically volatile (loses content upon power loss).
+  - Implemented using semiconductor Dynamic RAM (DRAM).
+  - Other memory types: ROM, EEPROM (used for firmware and non-volatile device storage, e.g. factory settings in smartphones).
+
+• Von Neumann Model of Computing (Instruction Execution Cycle):
+  - Architecture: CPU contains Control Unit, Arithmetic/Logic Unit (ALU), and Registers.
+  - Cycle:
+         +----------------------------------------------------+
+         |                 Main Memory (RAM)                  |
+         +----------------------------------------------------+
+                  | Fetch Instruction            ^ Store Data
+                  v                              |
+         +----------------------------------------------------+
+         |                      CPU                           |
+         |  [ Control Unit ] ------> [ ALU / Registers ]      |
+         |    (Decode)                   (Execute)            |
+         +----------------------------------------------------+
+  - Steps:
+    1. Fetch: The processor fetches an instruction from memory using the Program Counter (PC).
+    2. Decode: The Control Unit decodes what operation must be performed and loads required operands.
+    3. Execute: The Arithmetic/Logic Unit (ALU) performs the operation, updating registers and condition flags.
+    4. Store: Results are written back to registers or memory.
+    5. Repeat: Steps repeat until program terminates or halts.
+
+--------------------------------------------------------------------------------
+Slide 29 & 30: Secondary Storage & Storage Hierarchy
+--------------------------------------------------------------------------------
+• Secondary Storage:
+  - Extension of main memory providing large, nonvolatile storage capacity.
+  - Hard Disk Drives (HDD):
+    * Rigid metal or glass platters coated with magnetic recording material.
+    * Disk surface is logically organized into tracks, subdivided into sectors.
+    * Disk controller manages the physical and logical interactions.
+  - Solid-State Drives (SSD):
+    * Nonvolatile semiconductor memory (NAND flash).
+    * Much faster access times, no moving parts, widely used in mobile, laptops, and data centers.
+
+• Storage Hierarchy Principles:
+  Storage systems are organized hierarchically based on three fundamental trade-offs:
+  1. Speed (Access Time)
+  2. Cost (Cost per bit)
+  3. Volatility (Persistence of data across power cycles)
+
+--------------------------------------------------------------------------------
+Slide 31: Storage-Device Hierarchy Pyramid
+--------------------------------------------------------------------------------
+• Silberschatz Figure 1.6:
+
+               /\
+              /  \
+             /    \             [ REGISTERS ]
+            /------\
+           /        \           [ CACHE ]
+          /----------\                               PRIMARY / VOLATILE
+         /            \         [ MAIN MEMORY ]       STORAGE
+        /==============\ ==========================
+       /                \
+      /  NON-VOLATILE    \      [ NVRAM / SSD / FLASH ]
+     /     MEMORY         \
+    /----------------------\                          SECONDARY / NON-VOLATILE
+   /                        \   [ HARD-DISK DRIVES ]   STORAGE
+  /--------------------------\
+ /        OPTICAL DISK        \
+/------------------------------\                      TERTIARY STORAGE
+/       MAGNETIC TAPES          \
+----------------------------------
+
+  Directional Properties:
+  ▲ Upward: Higher cost per bit, faster access time, smaller capacity.
+  ▼ Downward: Lower cost per bit, slower access time, larger capacity.
+  - Volatile Storage (Registers, Cache, Main Memory): Loses data on power loss.
+  - Nonvolatile Storage (NVRAM, Hard Disks, Optical Disks, Tapes): Retains contents without power.
+
+--------------------------------------------------------------------------------
+Slide 32: Caching
+--------------------------------------------------------------------------------
+• Caching Principle:
+  - Information in use is copied temporarily from slower storage to faster storage.
+  - Performed at multiple levels: hardware (L1/L2/L3 CPU caches), operating system (disk cache, page cache in RAM), and software (browser cache, application cache).
+  - Workflow:
+    1. Check faster storage (cache) first.
+    2. If found (Cache Hit), data is read directly from fast cache.
+    3. If not found (Cache Miss), data is fetched from slower storage, copied into cache, and delivered to requester.
+  - Cache size is necessarily smaller than the backing store.
+  - Cache Management & Replacement Policies (LRU, FIFO, etc.) are central design challenges.
+
+--------------------------------------------------------------------------------
+Slide 33, 34 & 35: I/O Structure and Execution Modes
+--------------------------------------------------------------------------------
+• I/O Overview:
+  - A large portion of operating-system code is dedicated to managing I/O because system reliability and performance depend heavily on it.
+  - General-purpose computer consists of CPUs and multiple device controllers connected via a common bus.
+  - Device Driver:
+    * Software module written for each device controller.
+    * Provides a uniform interface between the controller hardware and the kernel.
+  - Small Computer-Systems Interface (SCSI):
+    * Controller architecture that supports daisy-chaining multiple devices.
+  - Device Controller Components:
+    * Local buffer storage.
+    * Special-purpose registers (command, status, data-in, data-out).
+    * Logic to move data between the peripheral device and the local buffer.
+
+• Synchronous vs. Asynchronous I/O Modes:
+  1. Synchronous I/O (Waiting for completion):
+     - After I/O starts, control returns to the user program only upon I/O completion.
+     - The CPU executes a wait instruction (or tight polling loop) idling until the next interrupt.
+     - At most one I/O request is processed at a time; no concurrent I/O.
+  2. Asynchronous I/O (Concurrent execution):
+     - After I/O starts, control returns immediately to the user program without waiting for I/O completion.
+     - A system call allows a user program to explicitly wait for I/O completion when needed.
+     - Device-Status Table:
+       * Kernel maintains a table containing an entry for each I/O device indicating device type, bus address, and current state (idle, busy, transferring).
+       * If device is busy, additional requests are queued.
+       * OS indexes into this table upon interrupt to locate the corresponding device handler.
+
+--------------------------------------------------------------------------------
+Slide 36: Direct Memory Access (DMA)
+--------------------------------------------------------------------------------
+• DMA Purpose and Architecture:
+  - Standard interrupt-driven I/O produces an interrupt per byte (or word), which wastes significant CPU cycles for high-speed devices (like gigabit Ethernet or NVMe/SATA disks).
+  - Direct Memory Access (DMA) solves this for high-speed I/O devices capable of transmitting information close to memory bus speeds.
+
+• DMA Operation:
+  1. Setup: CPU programs the DMA controller with source address, destination address, transfer direction, and transfer counter (number of bytes).
+  2. Block Transfer: The device controller transfers entire blocks of data directly between its buffer storage and main memory without any CPU intervention.
+  3. Completion: Only one interrupt is generated per block of data transferred, rather than one interrupt per byte.
+  4. Concurrency: The CPU continues executing user instructions in parallel while data movement occurs across the bus.
+
+--------------------------------------------------------------------------------
+Slide 37: Conclusion & Contact
+--------------------------------------------------------------------------------
+• End of Lecture 1.
+• Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

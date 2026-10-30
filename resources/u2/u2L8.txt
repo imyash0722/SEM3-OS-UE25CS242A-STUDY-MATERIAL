@@ -1,0 +1,223 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 2: IPC, Threads and Concurrency
+Lecture 8: Principles of Concurrency & Hardware-Assisted Synchronization
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Principles of Concurrency
+   - Non-Deterministic Execution Speeds & Asynchronous Interrupts
+   - Why Software Solutions (Peterson's Algorithm) Fail on Modern Hardware
+   - Compiler & CPU Instruction Reordering and Memory Barriers
+2. Hardware-Supported Synchronization
+   - Interrupt Disabling (Uniprocessor Only vs. Multiprocessor Overhead)
+   - Atomic Instructions Definition & Indivisibility
+3. Locks & Mutex Architecture
+   - Lock Abstraction: acquire() and release()
+   - POSIX Mutex API (pthread_mutex_t, PTHREAD_MUTEX_INITIALIZER)
+4. Atomic Hardware Instructions
+   - The test_and_set() Instruction (TSL):
+     * Hardware Semantic Definition
+     * Spinlock Implementation using test_and_set
+     * Limitation: Lack of Bounded Waiting
+   - The compare_and_swap() Instruction (CAS / CMPXCHG):
+     * Hardware Semantic Definition
+     * Mutual Exclusion Implementation
+     * Limitation: Lack of Bounded Waiting
+5. Complete Bounded-Waiting Mutual Exclusion Algorithm
+   - Data Structures: waiting[n] array and lock boolean
+   - Algorithmic Implementation using test_and_set
+   - Verification of the 3 Critical-Section Requirements (Mutual Exclusion, Progress, Bounded Waiting)
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & ALGORITHMS
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4, 5 & 6: Concurrency Principles & Why Software Solutions Fail
+--------------------------------------------------------------------------------
+• Review of Peterson's Solution:
+  - Requires sequential execution of:
+    flag[i] = true;
+    turn = j;
+    while (flag[j] && turn == j);
+• Failure on Modern Hardware Architectures:
+  - Modern out-of-order CPUs (x86, ARM, RISC-V) and optimizing compilers aggressively reorder independent read/write memory instructions to maximize pipeline utilization and cache efficiency.
+  - If the assignment `turn = j;` is reordered before `flag[i] = true;`, or if writes remain temporarily in CPU store buffers without cache synchronization, both processes can enter the critical section simultaneously!
+  - Software-only algorithms without memory barriers (fences) cannot guarantee mutual exclusion on modern multicore architectures.
+• Concurrency Principles:
+  - Relative speeds of execution of processes cannot be predicted.
+  - Asynchronous hardware interrupts occur unpredictably.
+  - Dynamic scheduling policies continuously alter dispatch ordering.
+
+--------------------------------------------------------------------------------
+Slide 7 & 8: Hardware-Supported Locking
+--------------------------------------------------------------------------------
+• Locking Mechanism:
+  - Protect critical regions through atomic lock acquisition:
+    1. Entry Section: Acquire lock (block if currently held by another thread).
+    2. Critical Section: Safely mutate shared state.
+    3. Exit Section: Release lock, allowing waiting threads to enter.
+    4. Remainder Section: Execute independent code.
+
+• Approach 1: Disabling Interrupts:
+  - On a uniprocessor, disabling hardware interrupts guarantees that currently running code executes without preemption until interrupts are re-enabled.
+  - Major Flaw on Multiprocessor Systems:
+    * Disabling interrupts on one CPU does not prevent code on other CPU cores from executing concurrently.
+    * Broadcasting an interrupt-disable message across all cores via Inter-Processor Interrupts (IPI) incurs massive latency overhead and degrades system scalability.
+• Approach 2: Atomic Hardware Instructions:
+  - Modern CPUs provide special hardware instructions executed atomically (indivisibly, non-interruptible at the hardware bus level):
+    1. `test_and_set` (TSL)
+    2. `compare_and_swap` (CAS)
+
+--------------------------------------------------------------------------------
+Slide 9, 10 & 11: Atomic Operations & Race Demonstration
+--------------------------------------------------------------------------------
+• Definition of Atomicity:
+  - An operation that runs to completion without interruption, or does not execute at all.
+  - Indivisible: State cannot be observed or modified by another thread in the middle of execution.
+  - Memory references (loads and stores) of aligned words are atomic on almost all modern CPUs.
+  - Compound operations (e.g. `i = i + 1`, `double` stores on some 32-bit buses, array copies) are NOT atomic.
+
+• Competing Threads Race Example:
+  Thread A:                            Thread B:
+  i = 0;                               i = 0;
+  while (i < 10)                       while (i > -10)
+      i = i + 1;                           i = i - 1;
+  printf("A wins!\n");                 printf("B wins!\n");
+
+  - Since `i = i + 1` and `i = i - 1` compile to non-atomic load-modify-store sequences, the outcome is completely non-deterministic and can loop infinitely.
+
+--------------------------------------------------------------------------------
+Slide 12 to 15: The Lock Abstraction & POSIX Mutex API
+--------------------------------------------------------------------------------
+• Lock Primitives:
+  - `acquire(&lock)`: Wait until lock is available, then atomically mark it busy.
+  - `release(&lock)`: Mark lock as free (must only be called by the thread holding the lock).
+• POSIX Threads Mutex API:
+  #include <pthread.h>
+  pthread_mutex_t my_lock = PTHREAD_MUTEX_INITIALIZER;
+
+  pthread_mutex_lock(&my_lock);
+  /* Critical Section */
+  pthread_mutex_unlock(&my_lock);
+
+--------------------------------------------------------------------------------
+Slide 16 to 19: The test_and_set() Hardware Instruction
+--------------------------------------------------------------------------------
+• Hardware Semantics:
+  boolean test_and_set(boolean *target) {
+      boolean rv = *target; // Read original value
+      *target = TRUE;       // Set memory location to true
+      return rv;            // Return original value
+  }
+  - Executed as a single atomic machine cycle (e.g. `xchg` on x86).
+
+• Spinlock Mutual Exclusion using test_and_set():
+  /* Shared variable initialized to false */
+  boolean lock = false;
+
+  do {
+      while (test_and_set(&lock))
+          ; /* Do nothing (busy wait / spin) */
+
+      /* CRITICAL SECTION */
+
+      lock = false;
+
+      /* REMAINDER SECTION */
+  } while (true);
+
+• Evaluation:
+  - Mutual Exclusion: Satisfied (only the thread that reads `false` exits the while loop).
+  - Progress: Satisfied (setting `lock = false` immediately frees the lock).
+  - Bounded Waiting: **NOT satisfied**. A spinning thread may be starved indefinitely if another thread continually grabs the lock first.
+
+--------------------------------------------------------------------------------
+Slide 20, 21 & 22: The compare_and_swap() Hardware Instruction
+--------------------------------------------------------------------------------
+• Hardware Semantics:
+  int compare_and_swap(int *value, int expected, int new_value) {
+      int temp = *value;
+      if (*value == expected)
+          *value = new_value;
+      return temp;
+  }
+  - Executed atomically by the hardware.
+  - Known on Intel x86 and Itanium architectures as `CMPXCHG` (Compare and Exchange).
+
+• Mutual Exclusion using compare_and_swap():
+  /* Shared variable initialized to 0 */
+  int lock = 0;
+
+  do {
+      while (compare_and_swap(&lock, 0, 1) != 0)
+          ; /* Do nothing (busy wait) */
+
+      /* CRITICAL SECTION */
+
+      lock = 0;
+
+      /* REMAINDER SECTION */
+  } while (true);
+
+• Evaluation:
+  - Mutual Exclusion: Satisfied.
+  - Progress: Satisfied.
+  - Bounded Waiting: **NOT satisfied** without additional queueing logic.
+
+--------------------------------------------------------------------------------
+Slide 23: Bounded-Waiting Mutual Exclusion Algorithm with test_and_set()
+--------------------------------------------------------------------------------
+• Design:
+  - Solves the critical section problem completely by guaranteeing **Bounded Waiting** in addition to Mutual Exclusion and Progress.
+  - Uses an array `waiting[n]` organized as a circular wait queue.
+
+• Shared Data Structures:
+  boolean waiting[n]; // Initialized to false for all processes
+  boolean lock;       // Initialized to false
+
+• Complete Algorithmic Implementation for Process $P_i$:
+  do {
+      waiting[i] = true;
+      key = true;
+
+      while (waiting[i] && key) {
+          key = test_and_set(&lock);
+      }
+      waiting[i] = false;
+
+      /* CRITICAL SECTION */
+
+      /* Search circularly for the next waiting process */
+      j = (i + 1) % n;
+      while ((j != i) && !waiting[j]) {
+          j = (j + 1) % n;
+      }
+
+      if (j == i) {
+          /* No other process is waiting; release lock */
+          lock = false;
+      } else {
+          /* Directly grant access to waiting process Pj */
+          waiting[j] = false;
+      }
+
+      /* REMAINDER SECTION */
+  } while (true);
+
+• Proof of the Three Criteria:
+  1. Mutual Exclusion: Process $P_i$ can enter CS only if `waiting[i] == false` or `key == false`. `key` becomes `false` only if `test_and_set(&lock)` returns 0 (original lock was free). Once $P_i$ enters, `lock == true`. No other process can exit the `while` loop until either `lock` is cleared or its `waiting[j]` is explicitly set to `false`.
+  2. Progress: When $P_i$ exits CS, it either clears `lock = false` or sets `waiting[j] = false`. Both actions allow an eligible process to enter without deadlock.
+  3. Bounded Waiting: The circular search scans processes in cyclic order: $i+1, i+2, \dots, n-1, 0, 1, \dots, i-1$. Any process waiting to enter will be serviced within at most $n - 1$ turns, guaranteeing bounded waiting and eliminating starvation.
+
+--------------------------------------------------------------------------------
+Slide 24: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 8.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

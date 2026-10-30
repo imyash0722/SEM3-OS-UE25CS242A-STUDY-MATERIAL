@@ -1,0 +1,292 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 1: Introduction and Process Management
+Lecture 7: CPU Scheduling - FCFS and SJF Scheduling
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. CPU Scheduling: Basic Concepts
+   - Multiprogramming Objective & Multicore Extension
+   - CPU-I/O Burst Cycle (Alternating Execution and Wait Phases)
+2. CPU Scheduler & Dispatcher
+   - Short-Term Scheduler Role and Ready Queue Organizations
+   - Preemptive vs. Non-Preemptive Scheduling (4 Decision Points)
+   - The Dispatcher Module & Dispatch Latency
+3. Scheduling Criteria (Performance Metrics)
+   - CPU Utilization, Throughput, Turnaround Time, Waiting Time, Response Time
+   - Optimization Goals
+4. First-Come, First-Served (FCFS) Scheduling
+   - Algorithm Definition & Non-Preemptive Property
+   - Numerical Example 1 (Order P1, P2, P3) & Gantt Chart
+   - Numerical Example 2 (Order P2, P3, P1) & Gantt Chart
+   - The Convoy Effect Explained
+5. Shortest-Job-First (SJF) Scheduling
+   - Non-Preemptive SJF Algorithm & Optimality Proof Concept
+   - Numerical Example & Gantt Chart (P1, P2, P3, P4)
+   - Comparison with FCFS
+6. Shortest-Remaining-Time-First (SRTF / Preemptive SJF)
+   - Preemption Mechanics with Arrival Times
+   - Complete Numerical Example, Step-by-Step Execution, Gantt Chart & Average Waiting Time
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & NUMERICAL EXAMPLES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4 & 5: CPU Scheduling - Basic Concepts
+--------------------------------------------------------------------------------
+• Motivation:
+  - In a system with a single CPU core, only one process can execute at any instant.
+  - All other processes must wait in the ready queue until the CPU is freed and rescheduled.
+  - Objective of Multiprogramming: Have some process running at all times to maximize CPU utilization.
+  - When the currently executing process must wait (e.g. for I/O completion), the OS scheduler intervenes, suspends the process, and switches CPU execution to another ready process.
+  - On multicore systems, this principle extends across all parallel cores simultaneously.
+
+--------------------------------------------------------------------------------
+Slide 6: Alternating Sequence of CPU and I/O Bursts
+--------------------------------------------------------------------------------
+• Silberschatz Figure 5.1: The CPU-I/O Burst Cycle:
+  - Process execution consists of alternating cycles of CPU computation (CPU burst) and waiting for I/O completion (I/O burst).
+  - An execution cycle begins with a CPU burst, followed by an I/O burst, followed by another CPU burst:
+
+    +------------------------------------------+
+    | CPU burst: load, store, add, store, read |
+    +------------------------------------------+
+                         |
+                         v
+    +------------------------------------------+
+    | I/O burst: wait for I/O                  |
+    +------------------------------------------+
+                         |
+                         v
+    +------------------------------------------+
+    | CPU burst: store, increment, write       |
+    +------------------------------------------+
+                         |
+                         v
+    +------------------------------------------+
+    | I/O burst: wait for I/O                  |
+    +------------------------------------------+
+  - CPU burst time distribution is a primary factor in designing efficient scheduling algorithms.
+
+--------------------------------------------------------------------------------
+Slide 7: The CPU Scheduler
+--------------------------------------------------------------------------------
+• Short-Term Scheduler:
+  - Selects from among the processes residing in memory in the ready queue and allocates the CPU to one of them.
+• Ready Queue Organization:
+  - Implemented as a FIFO queue, priority queue, balanced binary search tree, or unordered linked list.
+  - Queue records are Process Control Blocks (PCBs).
+
+--------------------------------------------------------------------------------
+Slide 8 & 9: Preemptive vs. Non-Preemptive Scheduling
+--------------------------------------------------------------------------------
+• Scheduling decisions occur under four specific state transitions:
+  1. Running State -> Waiting State (e.g., process invokes I/O or wait())
+  2. Running State -> Ready State (e.g., timer interrupt or higher-priority interrupt occurs)
+  3. Waiting State -> Ready State (e.g., completion of I/O or arrival of an event)
+  4. Running State -> Terminated (e.g., process calls exit())
+
+• Classification:
+  - **Non-Preemptive (Cooperative) Scheduling**:
+    * Scheduling ONLY occurs under conditions (1) and (4).
+    * Once a process is allocated the CPU, it keeps the CPU until it voluntarily releases it (by requesting I/O or terminating).
+    * Examples: Windows 3.x.
+  - **Preemptive Scheduling**:
+    * Scheduling occurs under conditions (2) and (3) as well as (1) and (4).
+    * The OS can forcibly preempt the currently executing process when its time quantum expires or a higher-priority process arrives.
+    * Examples: Windows 95 onwards, Linux, macOS, Unix.
+
+• Challenges of Preemptive Scheduling:
+  - Race conditions on shared user memory and shared kernel data structures.
+  - Preemption while executing in kernel mode requires kernel synchronization (mutex locks, spinlocks) to ensure data consistency.
+
+--------------------------------------------------------------------------------
+Slide 10 & 11: The Dispatcher & Dispatch Latency
+--------------------------------------------------------------------------------
+• Role of the Dispatcher:
+  - The module that gives control of the CPU to the process selected by the short-term scheduler.
+  - Functions performed:
+    1. Switching context (saving old PCB, restoring new PCB).
+    2. Switching from kernel mode to user mode (setting mode bit to 1).
+    3. Jumping to the proper instruction address in the user program to resume execution.
+• Dispatch Latency:
+  - The exact amount of elapsed time required for the dispatcher to stop one process and start another running.
+
+• Silberschatz Figure 5.3: Dispatch Latency Timeline:
+
+  Process P0                  Dispatcher / Kernel              Process P1
+  -----------------------------------------------------------------------
+  Executing
+      |
+  [ Interrupt / Syscall ]
+      |
+      +---------------------> Save state into PCB_0
+                              |
+                              | <--- DISPATCH LATENCY --->
+                              |
+                              Restore state from PCB_1 ------> Executing
+
+--------------------------------------------------------------------------------
+Slide 12 & 13: Scheduling Criteria & Optimization Goals
+--------------------------------------------------------------------------------
+• Key Metrics:
+  1. CPU Utilization: Percentage of time the CPU is actively performing work (typically 40% to 90%).
+  2. Throughput: Number of processes completed per unit of time (e.g. 10 processes/second).
+  3. Turnaround Time: Total elapsed time from process submission to process completion (Sum of: memory wait + ready queue wait + CPU execution + I/O execution).
+  4. Waiting Time: Total cumulative time a process spends waiting in the ready queue.
+  5. Response Time: Elapsed time from submission of a request until the first response is produced (critical for interactive/time-sharing systems).
+
+• Optimization Criteria:
+  - Maximize: CPU Utilization, Throughput.
+  - Minimize: Turnaround Time, Waiting Time, Response Time.
+
+--------------------------------------------------------------------------------
+Slide 14, 15, 16, 17 & 18: First-Come, First-Served (FCFS) Scheduling
+--------------------------------------------------------------------------------
+• Principles:
+  - The simplest scheduling algorithm: The process that requests the CPU first is allocated the CPU first using a FIFO ready queue.
+  - Strictly non-preemptive.
+
+• Example 1 (Arrival order: P1, P2, P3 at time t = 0):
+  Process   Burst Time
+  P1        24 ms
+  P2        3 ms
+  P3        3 ms
+
+  Gantt Chart:
+  +---------------------------------------------+---------+---------+
+  |                     P1                      |   P2    |   P3    |
+  +---------------------------------------------+---------+---------+
+  0                                            24        27        30
+
+  - Waiting Time:
+    * Waiting time for P1 = 0 ms
+    * Waiting time for P2 = 24 ms
+    * Waiting time for P3 = 27 ms
+  - Average Waiting Time:
+    * (0 + 24 + 27) / 3 = 51 / 3 = 17.0 ms
+
+• Example 2 (Arrival order: P2, P3, P1 at time t = 0):
+  Gantt Chart:
+  +---------+---------+---------------------------------------------+
+  |   P2    |   P3    |                     P1                      |
+  +---------+---------+---------------------------------------------+
+  0         3         6                                            30
+
+  - Waiting Time:
+    * Waiting time for P1 = 6 ms
+    * Waiting time for P2 = 0 ms
+    * Waiting time for P3 = 3 ms
+  - Average Waiting Time:
+    * (6 + 0 + 3) / 3 = 9 / 3 = 3.0 ms
+
+• The Convoy Effect:
+  - A major disadvantage of FCFS where short I/O-bound processes become queued behind a single long CPU-bound process.
+  - While the long process holds the CPU, all I/O devices sit idle.
+  - When the long process finally yields for I/O, all short processes quickly finish CPU bursts and queue up at the I/O device, leaving the CPU idle.
+  - Results in lower CPU and device utilization.
+
+--------------------------------------------------------------------------------
+Slide 19, 20, 21 & 22: Shortest-Job-First (SJF) Scheduling (Non-Preemptive)
+--------------------------------------------------------------------------------
+• Principles:
+  - Associates with each process the length of its next CPU burst.
+  - The CPU is assigned to the process with the smallest CPU burst time.
+  - If two processes have equal burst times, FCFS is used as a tie-breaker.
+  - **Optimality**: SJF is provably optimal because it generates the minimum average waiting time for a given set of stationary processes.
+
+• Numerical Example (All arrive at time t = 0):
+  Process   Burst Time
+  P1        6 ms
+  P2        8 ms
+  P3        7 ms
+  P4        3 ms
+
+  Scheduling Order based on shortest burst: P4 (3) -> P1 (6) -> P3 (7) -> P2 (8)
+
+  Gantt Chart:
+  +---------+---------------+-------------------+---------------------+
+  |   P4    |      P1       |        P3         |         P2          |
+  +---------+---------------+-------------------+---------------------+
+  0         3               9                  16                    24
+
+  - Waiting Times:
+    * P4 = 0 ms
+    * P1 = 3 ms
+    * P3 = 9 ms
+    * P2 = 16 ms
+  - Average Waiting Time:
+    * (0 + 3 + 9 + 16) / 4 = 28 / 4 = 7.0 ms
+  - Comparison with FCFS:
+    * Under FCFS (order P1, P2, P3, P4):
+      Waiting times: P1 = 0, P2 = 6, P3 = 14, P4 = 21.
+      Average waiting time = (0 + 6 + 14 + 21) / 4 = 41 / 4 = 10.25 ms.
+    * SJF achieves 7.0 ms vs. 10.25 ms.
+
+--------------------------------------------------------------------------------
+Slide 23: Preemptive SJF / Shortest-Remaining-Time-First (SRTF)
+--------------------------------------------------------------------------------
+• Concept:
+  - Preemptive version of SJF with dynamic arrival times.
+  - When a new process arrives with a CPU burst shorter than the remaining execution time of the currently running process, the current process is preempted.
+
+• Numerical Problem:
+  Process   Arrival Time   Burst Time
+  P1        0 ms           8 ms
+  P2        1 ms           4 ms
+  P3        2 ms           9 ms
+  P4        3 ms           5 ms
+
+• Step-by-Step Scheduling Timeline:
+  - t = 0: Only P1 is available. P1 begins executing (burst = 8).
+  - t = 1: P2 arrives with burst = 4.
+    * P1 has remaining burst = 8 - 1 = 7 ms.
+    * Since P2 (4 ms) < P1 remaining (7 ms), P1 is preempted.
+    * P2 is dispatched to the CPU.
+  - t = 2: P3 arrives (burst = 9). P2 has remaining burst = 3 ms. P2 continues.
+  - t = 3: P4 arrives (burst = 5). P2 has remaining burst = 2 ms. P2 continues.
+  - t = 5: P2 completes execution.
+    * Active processes in Ready Queue:
+      - P1 (remaining = 7 ms)
+      - P3 (remaining = 9 ms)
+      - P4 (remaining = 5 ms)
+    * Shortest remaining is P4 (5 ms). P4 is dispatched.
+  - t = 10: P4 completes execution.
+    * Active processes: P1 (7 ms), P3 (9 ms).
+    * Shortest is P1 (7 ms). P1 resumes execution.
+  - t = 17: P1 completes execution.
+    * Only P3 remains (9 ms). P3 is dispatched.
+  - t = 26: P3 completes execution.
+
+• Gantt Chart:
+  +-------+---------------+-------------------+-----------------------+---------------------+
+  |  P1   |      P2       |        P4         |          P1           |         P3          |
+  +-------+---------------+-------------------+-----------------------+---------------------+
+  0       1               5                  10                      17                    26
+
+• Waiting Time Calculations:
+  - Waiting Time = Completion Time - Arrival Time - Burst Time
+  - P1: Completion = 17, Arrival = 0, Burst = 8 -> Wait = 17 - 0 - 8 = 9 ms
+        (Alternatively: Waited from t=1 to t=10: 10 - 1 = 9 ms)
+  - P2: Completion = 5, Arrival = 1, Burst = 4  -> Wait = 5 - 1 - 4 = 0 ms
+        (Ran immediately at t=1: 1 - 1 = 0 ms)
+  - P3: Completion = 26, Arrival = 2, Burst = 9 -> Wait = 26 - 2 - 9 = 15 ms
+        (Waited from t=2 to t=17: 17 - 2 = 15 ms)
+  - P4: Completion = 10, Arrival = 3, Burst = 5 -> Wait = 10 - 3 - 5 = 2 ms
+        (Waited from t=3 to t=5: 5 - 3 = 2 ms)
+
+• Average Waiting Time:
+  - Sum of waiting times = 9 + 0 + 15 + 2 = 26 ms
+  - Average Waiting Time = 26 / 4 = 6.5 ms
+
+--------------------------------------------------------------------------------
+Slide 24: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 7.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

@@ -1,0 +1,133 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 1: Introduction and Process Management
+Lecture 10: Multilevel Queue & Multilevel Feedback Queue Scheduling
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Multilevel Queue (MLQ) Scheduling
+   - Concept & Motivation
+   - Queue Partitioning (Foreground Interactive vs. Background Batch)
+   - Intra-Queue Scheduling vs. Inter-Queue Scheduling
+   - Priority Hierarchy (System, Interactive, Interactive Editing, Batch, Student)
+   - Limitations (Permanent Assignment & Starvation Risks)
+2. Multilevel Feedback Queue (MLFQ) Scheduling
+   - Dynamic Process Migration between Queues
+   - Defining Parameters of an MLFQ Scheduler
+   - Concrete 3-Queue Architecture (Q0: RR q=8, Q1: RR q=16, Q2: FCFS)
+   - Promotion (Aging) and Demotion Policies
+   - Advantages of MLFQ (Adapting to Process Behavior & Preventing Starvation)
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & SCHEDULING ARCHITECTURES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4 & 5: Multilevel Queue (MLQ) Scheduling
+--------------------------------------------------------------------------------
+• Motivation:
+  - In situations where processes can be easily classified into distinct groups with fundamentally different response-time requirements, a single ready queue is inadequate.
+  - Common Partitioning:
+    * **Foreground Processes**: Interactive programs requiring low response time.
+    * **Background Processes**: Batch jobs where response time is secondary to throughput.
+• Permanent Assignment:
+  - Processes are permanently assigned to one specific queue upon creation, typically based on memory size, process priority, or process type.
+• Intra-Queue Scheduling:
+  - Each individual queue maintains its own independent scheduling algorithm:
+    * Foreground Queue: Round-Robin (RR) scheduling to provide responsive interactive feedback.
+    * Background Queue: First-Come, First-Served (FCFS) scheduling to minimize context-switch overhead for batch computations.
+
+• Silberschatz Figure 5.6: Multilevel Queue Priority Hierarchy:
+
+    HIGHEST PRIORITY
+       |   +-------------------------------------------+
+       |   | System Processes                          |
+       |   +-------------------------------------------+
+       |   | Interactive Processes                     |
+       |   +-------------------------------------------+
+       |   | Interactive Editing Processes             |
+       |   +-------------------------------------------+
+       |   | Batch Processes                           |
+       |   +-------------------------------------------+
+       v   | Student Processes                         |
+    LOWEST PRIORITY
+
+• Inter-Queue Scheduling Policies:
+  1. Fixed-Priority Preemptive Scheduling:
+     - Each queue has absolute priority over lower-priority queues.
+     - No process in a lower-priority queue (e.g. batch) can execute unless all higher-priority queues (system, interactive, editing) are completely empty.
+     - Preemption: If a batch process is executing and an interactive process enters the ready queue, the batch process is immediately preempted.
+     - Major drawback: High risk of **Starvation** for processes in low-priority queues if higher queues remain continuously populated.
+  2. Time-Sliced Scheduling:
+     - Each queue receives a predetermined fraction of the CPU time, which it distributes among its member processes.
+     - Example: 80% of CPU time allocated to foreground queue (using RR), 20% allocated to background queue (using FCFS).
+     - Prevents indefinite starvation.
+
+--------------------------------------------------------------------------------
+Slide 6, 7 & 8: Multilevel Feedback Queue (MLFQ) Scheduling
+--------------------------------------------------------------------------------
+• Core Innovation:
+  - Unlike standard Multilevel Queue where processes are permanently stuck in their initial queue, Multilevel Feedback Queue allows processes to **migrate between different queues**.
+  - Dynamically adapts to the runtime CPU-burst characteristics of processes.
+  - Implements **Aging** to prevent starvation.
+
+• Defining Parameters of an MLFQ Scheduler:
+  An MLFQ scheduler is strictly defined by the following five parameters:
+  1. The number of queues.
+  2. The scheduling algorithm for each individual queue.
+  3. The method used to determine when to upgrade (promote) a process to a higher-priority queue.
+  4. The method used to determine when to demote a process to a lower-priority queue.
+  5. The method used to determine which queue a newly arrived process will enter.
+
+• Silberschatz Figure 5.7: Concrete 3-Queue MLFQ Architecture:
+
+            [ New Process Enters ]
+                      |
+                      v
+      +-------------------------------+
+      | Queue 0 (Q0): RR, Quantum = 8 |
+      +---------------+---------------+
+                      | (If not completed within 8 ms)
+                      v
+      +-------------------------------+
+      | Queue 1 (Q1): RR, Quantum = 16|
+      +---------------+---------------+
+                      | (If not completed within 16 ms)
+                      v
+      +-------------------------------+
+      | Queue 2 (Q2): FCFS            |
+      +-------------------------------+
+
+• Execution & Demotion Rules in this Example:
+  1. Queue 0 ($Q_0$):
+     - Uses Round-Robin with a time quantum of 8 milliseconds.
+     - A newly created process always enters $Q_0$.
+     - When dispatched, it is granted up to 8 ms of CPU time.
+     - If it finishes within 8 ms or yields for I/O, it leaves the CPU cleanly.
+     - If it consumes its full 8 ms without yielding (indicating it is CPU-bound), it is preempted and demoted to the tail of Queue 1 ($Q_1$).
+  2. Queue 1 ($Q_1$):
+     - Uses Round-Robin with a time quantum of 16 milliseconds.
+     - Processes in $Q_1$ are scheduled ONLY when $Q_0$ is completely empty.
+     - When dispatched, a process is granted up to 16 ms.
+     - If it does not complete within 16 ms, it is preempted and demoted to the tail of Queue 2 ($Q_2$).
+  3. Queue 2 ($Q_2$):
+     - Uses First-Come, First-Served (FCFS) scheduling.
+     - Executes ONLY when both $Q_0$ and $Q_1$ are completely empty.
+  4. Preemption between Queues:
+     - An arrival in $Q_0$ immediately preempts any running process in $Q_1$ or $Q_2$.
+     - An arrival in $Q_1$ immediately preempts any running process in $Q_2$.
+
+• Promotion (Aging) Policy:
+  - If a CPU-bound process waits too long in $Q_2$ without CPU service, an aging timer triggers.
+  - The process is promoted upward to $Q_1$ or $Q_0$, guaranteeing that long-running jobs eventually make forward progress and cannot starve.
+
+--------------------------------------------------------------------------------
+Slide 9: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 10.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================

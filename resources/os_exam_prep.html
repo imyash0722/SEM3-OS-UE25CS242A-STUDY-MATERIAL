@@ -1,0 +1,2892 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OS Exam Prep — UE25CS242A Units 1–3</title>
+  <style>
+    /* CSS Variables for Light / Dark Mode */
+    :root {
+      --bg: #fafafa;
+      --fg: #111827;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --primary: #2563eb;
+      --primary-fg: #ffffff;
+      --accent: #16a34a;
+      --code-bg: #1e1e1e;
+      --code-fg: #d4d4d4;
+      --pointer-bg: #eff6ff;
+      --pointer-border: #2563eb;
+      --table-head: #f3f4f6;
+      --hover-bg: #f3f4f6;
+      --opt-hover: #e2e8f0;
+      --badge-bg: #2563eb;
+      --code-border: #334155;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --fg: #f1f5f9;
+        --muted: #94a3b8;
+        --card: #1e293b;
+        --border: #334155;
+        --primary: #3b82f6;
+        --primary-fg: #ffffff;
+        --accent: #22c55e;
+        --code-bg: #0d1117;
+        --code-fg: #e2e8f0;
+        --pointer-bg: #1e3a5f;
+        --pointer-border: #3b82f6;
+        --table-head: #1e293b;
+        --hover-bg: #1e293b;
+        --opt-hover: #334155;
+        --badge-bg: #3b82f6;
+        --code-border: #1e293b;
+      }
+    }
+    html.dark {
+      --bg: #0f172a;
+      --fg: #f1f5f9;
+      --muted: #94a3b8;
+      --card: #1e293b;
+      --border: #334155;
+      --primary: #3b82f6;
+      --primary-fg: #ffffff;
+      --accent: #22c55e;
+      --code-bg: #0d1117;
+      --code-fg: #e2e8f0;
+      --pointer-bg: #1e3a5f;
+      --pointer-border: #3b82f6;
+      --table-head: #1e293b;
+      --hover-bg: #1e293b;
+      --opt-hover: #334155;
+      --badge-bg: #3b82f6;
+      --code-border: #1e293b;
+    }
+    html.light {
+      --bg: #fafafa;
+      --fg: #111827;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --primary: #2563eb;
+      --primary-fg: #ffffff;
+      --accent: #16a34a;
+      --code-bg: #1e1e1e;
+      --code-fg: #d4d4d4;
+      --pointer-bg: #eff6ff;
+      --pointer-border: #2563eb;
+      --table-head: #f3f4f6;
+      --hover-bg: #f3f4f6;
+      --opt-hover: #e2e8f0;
+      --badge-bg: #2563eb;
+      --code-border: #334155;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.25rem 1rem;
+      line-height: 1.55;
+      background: var(--bg);
+      color: var(--fg);
+      transition: background 0.2s, color 0.2s;
+    }
+    h1 {
+      font-size: 1.6rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    h2 {
+      font-size: 1.25rem;
+      color: var(--primary);
+      margin-top: 2.5rem;
+      border-left: 4px solid var(--primary);
+      padding-left: 0.75rem;
+    }
+    h3 {
+      font-size: 1.02rem;
+      color: var(--primary);
+      margin-top: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .header-info {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .unit-badge {
+      display: inline-block;
+      background: var(--badge-bg);
+      color: var(--primary-fg);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+    .badge-sub {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .mcq {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      margin: 0.9rem 0;
+      background: var(--card);
+      transition: background 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .mcq:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+    }
+    .mcq-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+      font-size: 0.75rem;
+    }
+    .mcq-num {
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--pointer-bg);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+    }
+    .mcq-tag {
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .mcq-q {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    .mcq-options {
+      display: grid;
+      gap: 0.35rem;
+      margin: 0.6rem 0;
+    }
+    .mcq-opt {
+      padding: 0.4rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg);
+      font-size: 0.86rem;
+      transition: background 0.15s;
+    }
+    .mcq-opt:hover {
+      background: var(--opt-hover);
+    }
+    .opt-letter {
+      display: inline-block;
+      width: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .mcq-answer {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-top: 0.45rem;
+    }
+    .mcq-expl {
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      padding-top: 0.4rem;
+      border-top: 1px dashed var(--border);
+      line-height: 1.45;
+    }
+    .pointer {
+      background: var(--pointer-bg);
+      border-left: 3px solid var(--pointer-border);
+      padding: 0.55rem 0.9rem;
+      margin: 0.55rem 0;
+      font-size: 0.875rem;
+      line-height: 1.45;
+      border-radius: 0 4px 4px 0;
+    }
+    .pointer strong {
+      color: var(--primary);
+    }
+    .code {
+      background: var(--code-bg);
+      color: var(--code-fg);
+      padding: 0.75rem 0.9rem;
+      border-radius: 5px;
+      font-family: 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      line-height: 1.45;
+      margin: 0.75rem 0;
+      border: 1px solid var(--code-border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.825rem;
+      margin: 0.9rem 0;
+      background: var(--card);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.65rem;
+      text-align: left;
+    }
+    th {
+      background: var(--table-head);
+      font-weight: 600;
+      color: var(--fg);
+    }
+    tr:nth-child(even) {
+      background-color: var(--hover-bg);
+    }
+    .hidden-answer {
+      display: none;
+    }
+    .mcq:hover .hidden-answer,
+    .mcq.revealed .hidden-answer,
+    body.show-all .hidden-answer {
+      display: block;
+    }
+    .reveal-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: right;
+      font-style: italic;
+    }
+    .mcq:hover .reveal-hint,
+    .mcq.revealed .reveal-hint,
+    body.show-all .reveal-hint {
+      display: none;
+    }
+
+    /* Fixed Theme & Quiz Controls */
+    .top-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .ctrl-btn {
+      padding: 0.45rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--fg);
+      cursor: pointer;
+      font-size: 0.825rem;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .ctrl-btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+    }
+    .ctrl-btn.active {
+      background: var(--primary);
+      color: var(--primary-fg);
+      border-color: var(--primary);
+    }
+    #theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--fg);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    #theme-toggle:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+    }
+
+    nav.toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.85rem 1.15rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.86rem;
+    }
+    nav.toc ul {
+      margin: 0.4rem 0 0 1.2rem;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.35rem;
+    }
+    nav.toc a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav.toc a:hover {
+      text-decoration: underline;
+    }
+
+    @media print {
+      body { max-width: 100%; background: white !important; color: black !important; font-size: 10pt; padding: 0; }
+      #theme-toggle, .top-controls, nav.toc, .reveal-hint { display: none !important; }
+      .hidden-answer { display: block !important; }
+      .mcq { break-inside: avoid; border: 1px solid #ccc !important; background: white !important; margin: 0.5rem 0; padding: 0.5rem; }
+      .code { background: #f8fafc !important; color: black !important; border: 1px solid #ddd; }
+      table { break-inside: avoid; }
+      h2 { page-break-before: always; margin-top: 1rem; }
+      h2:first-of-type { page-break-before: avoid; }
+    }
+  </style>
+</head>
+<body class="show-all">
+  <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️ Light</button>
+
+  <h1>
+    OS Exam Prep — UE25CS242A (Units 1–3)
+    <span class="badge-sub">20 MCQs • 30 min • Target 20/20</span>
+  </h1>
+  <div class="header-info">
+    <strong>Course:</strong> Operating Systems (UE25CS242A) • <strong>Exam Date:</strong> Oct 28 2026 • <strong>Coverage:</strong> Units 1, 2, 3 Only (100 MCQs total: 35 Unit 1 + 35 Unit 2 + 30 Unit 3).
+    <br><strong>Focus:</strong> Lab C Programs, System Calls, Tracing, Timing Calculations, Synchronization & Memory Management.
+  </div>
+
+  <div class="top-controls">
+    <button id="study-btn" class="ctrl-btn active" onclick="toggleAnswers(this)">👁️ Quiz Mode: Revealed (Study)</button>
+    <button class="ctrl-btn" onclick="filterUnit('all')">Show All 100 MCQs</button>
+    <button class="ctrl-btn" onclick="filterUnit('u1')">Unit 1 (35)</button>
+    <button class="ctrl-btn" onclick="filterUnit('u2')">Unit 2 (35)</button>
+    <button class="ctrl-btn" onclick="filterUnit('u3')">Unit 3 (30)</button>
+    <button class="ctrl-btn" onclick="window.print()">🖨️ Print Exam Notes</button>
+  </div>
+
+  <nav class="toc">
+    <strong>Quick Unit Navigator:</strong>
+    <ul>
+      <li><a href="#u1-sec">Unit 1: Process Management & CPU Scheduling (Q1–35)</a></li>
+      <li><a href="#u1-tables">Unit 1 Tables: System Calls & Scheduling Algorithms</a></li>
+      <li><a href="#u2-sec">Unit 2: Threads, Synchronization & Deadlocks (Q36–70)</a></li>
+      <li><a href="#u2-tables">Unit 2 Tables: IPC, Primitives & Coffman Conditions</a></li>
+      <li><a href="#u3-sec">Unit 3: Memory Management & Virtual Memory (Q71–100)</a></li>
+      <li><a href="#u3-tables">Unit 3 Tables: Memory Allocation & Page Replacement</a></li>
+    </ul>
+  </nav>
+
+  <!-- ================= UNIT 1 ================= -->
+  <section id="u1-sec" class="unit-section" data-unit="u1">
+    <h2><span class="unit-badge">Unit 1</span> Process Management & CPU Scheduling (35 MCQs)</h2>
+
+    <h3>1. Ultra-Short Pointers: System Calls & Process Lifecycle</h3>
+    <div class="pointer">
+      <strong>fork() Return Value:</strong> Returns <code>0</code> in the child process, the child's <code>PID &gt; 0</code> in the parent process, and <code>-1</code> on failure. Parent and child receive duplicate but strictly <em>independent</em> address spaces.
+    </div>
+    <div class="pointer">
+      <strong>vfork() Memory Sharing:</strong> <code>vfork()</code> suspends the parent and shares the parent's address space with the child until the child calls <code>_exit()</code> or <code>exec*()</code>. Variable mutations in the child <strong>directly alter</strong> the parent's variables!
+    </div>
+    <div class="pointer">
+      <strong>wait(&amp;status) &amp; WEXITSTATUS:</strong> <code>wait(&amp;status)</code> blocks the parent until a child terminates. <code>WEXITSTATUS(status)</code> extracts the child's lowest 8-bit return code (<code>0–255</code>).
+    </div>
+    <div class="pointer">
+      <strong>Orphan vs Zombie:</strong><br>
+      • <em>Orphan:</em> Parent terminates while child continues running. Child is adopted by <code>init</code> / <code>systemd</code> (PID 1).<br>
+      • <em>Zombie (&lt;defunct&gt;):</em> Child terminates, but parent has not yet called <code>wait()</code>. Child's entry remains in process table.
+    </div>
+    <div class="pointer">
+      <strong>exec* Family:</strong> Overwrites the calling process image (code, data, heap, stack) with a new binary while preserving the same PID. Does <strong>not return</strong> on success.
+    </div>
+    <div class="pointer">
+      <strong>Process States:</strong> New, Ready, Running, Waiting (Blocked), Terminated. The <strong>Dispatcher</strong> moves a process from Ready to Running (performing context switch and loading PC).
+    </div>
+    <div class="pointer">
+      <strong>Dual-Mode &amp; Traps:</strong> User mode = bit 1, Kernel mode = bit 0. A <em>trap</em> is a software-generated interrupt caused by an error (e.g. division by zero) or system call, switching mode securely to 0.
+    </div>
+    <div class="pointer">
+      <strong>CPU Scheduling Formulas:</strong><br>
+      • $\text{Turnaround Time (TAT)} = \text{Completion Time (CT)} - \text{Arrival Time (AT)}$<br>
+      • $\text{Waiting Time (WT)} = \text{Turnaround Time (TAT)} - \text{Burst Time (BT)}$<br>
+      • $\text{Response Time (RT)} = \text{First CPU Allocation} - \text{Arrival Time (AT)}$
+    </div>
+    <div class="pointer">
+      <strong>Crontab 5-Field Format:</strong> <code>[min 0-59] [hour 0-23] [day-of-month 1-31] [month 1-12] [day-of-week 0-6 (0=Sun)] [command]</code>
+    </div>
+
+    <h3>2. Code Patterns from Lab (Process Control)</h3>
+    <div class="code">
+// Pattern 1: fork() independent address spaces (example1.c)
+int y = 0;
+pid_t p = fork();
+if (p > 0) { y -= 1; printf("Parent y=%d\n", y); } // prints -1
+else if (p == 0) { y += 1; printf("Child y=%d\n", y); } // prints +1
+
+// Pattern 2: vfork() shared memory & parent suspension (demo_vfork.c)
+pid_t p = vfork();
+if (p == 0) { for(i=0; i<5; i++) y++; _exit(0); } // Child runs first! y becomes 5
+else { for(i=0; i<5; i++) y--; } // Parent runs after child; y decrements from 5 to 0
+
+// Pattern 3: wait(&status) return code extraction (example2.c)
+wait(&status);
+int child_sum = WEXITSTATUS(status); // gets exit(val) from child (0-255)
+    </div>
+
+    <h3 id="u1-tables">3. Master Summary Tables: Unit 1</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>System Call / API</th>
+          <th>Process Action</th>
+          <th>Address Space Impact</th>
+          <th>Parent / Caller State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>fork()</code></td>
+          <td>Creates child clone</td>
+          <td>Duplicate copy (COW in modern OS)</td>
+          <td>Runs concurrently with child</td>
+        </tr>
+        <tr>
+          <td><code>vfork()</code></td>
+          <td>Creates child; expects quick <code>exec</code></td>
+          <td>Directly shares parent's address space</td>
+          <td>Suspended until child calls <code>_exit()</code> or <code>exec</code></td>
+        </tr>
+        <tr>
+          <td><code>exec*()</code></td>
+          <td>Overwrites image with new program</td>
+          <td>Replaces code, heap, stack; retains PID</td>
+          <td>Does not return on success; runs new program</td>
+        </tr>
+        <tr>
+          <td><code>wait(&amp;status)</code></td>
+          <td>Waits for any child to terminate</td>
+          <td>Reaps terminated child zombie PCB</td>
+          <td>Blocks until child state changes</td>
+        </tr>
+        <tr>
+          <td><code>exit(code)</code></td>
+          <td>Terminates process normally</td>
+          <td>Deallocates memory; keeps entry for parent</td>
+          <td>Notifies parent via <code>SIGCHLD</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Scheduling Algorithm</th>
+          <th>Preemptive?</th>
+          <th>Starvation Risk?</th>
+          <th>Convoy Effect?</th>
+          <th>Key Characteristic / Optimality</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FCFS</strong></td>
+          <td>No</td>
+          <td>No</td>
+          <td>Yes (severe)</td>
+          <td>Simple FIFO queue; highly sensitive to CPU-bound arrivals.</td>
+        </tr>
+        <tr>
+          <td><strong>SJF (Non-Preemptive)</strong></td>
+          <td>No</td>
+          <td>Yes (long jobs)</td>
+          <td>No</td>
+          <td>Optimal average waiting time for non-preemptive algorithms.</td>
+        </tr>
+        <tr>
+          <td><strong>SRTF (Preemptive SJF)</strong></td>
+          <td>Yes</td>
+          <td>Yes (long jobs)</td>
+          <td>No</td>
+          <td><strong>Optimal</strong> average waiting time overall; high context overhead.</td>
+        </tr>
+        <tr>
+          <td><strong>Round Robin (RR)</strong></td>
+          <td>Yes (Quantum $q$)</td>
+          <td>No</td>
+          <td>No</td>
+          <td>Fair sharing; $q 	o \infty$ becomes FCFS; small $q$ has high overhead.</td>
+        </tr>
+        <tr>
+          <td><strong>Priority Scheduling</strong></td>
+          <td>Both modes</td>
+          <td>Yes (low priority)</td>
+          <td>No</td>
+          <td>Starvation prevented via <em>Aging</em> (gradual priority boost).</td>
+        </tr>
+        <tr>
+          <td><strong>MLQ</strong></td>
+          <td>Preemptive</td>
+          <td>Yes (lower queues)</td>
+          <td>No</td>
+          <td>Fixed queues; processes cannot migrate between queues.</td>
+        </tr>
+        <tr>
+          <td><strong>MLFQ</strong></td>
+          <td>Preemptive</td>
+          <td>No (with Aging)</td>
+          <td>No</td>
+          <td>Processes migrate; penalizes CPU-bound, favors interactive I/O.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>4. Unit 1 High-Yield MCQs (Questions 1–35)</h3>
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q1</span>
+        <span class="mcq-tag">Lab example1.c Trace</span>
+      </div>
+      <div class="mcq-q">Consider the program from <code>example1.c</code> where <code>int y = 0;</code> is initialized before <code>fork()</code>. The parent executes <code>y = y - 1;</code> and prints <code>y</code>, while the child executes <code>y = y + 1;</code> and prints <code>y</code>. Assuming fork succeeds, what are the values of <code>y</code> printed by the parent and child respectively?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Parent: -1, Child: 1</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Parent: 0, Child: 1</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Parent: 1, Child: -1</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Parent: -1, Child: 0</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Parent: -1, Child: 1</div>
+        <div class="mcq-expl"><strong>Why:</strong> fork() duplicates the address space, giving parent and child independent copies of variable y; mutations in one process never alter the other.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q2</span>
+        <span class="mcq-tag">Lab demo_vfork.c Trace</span>
+      </div>
+      <div class="mcq-q">In <code>demo_vfork.c</code>, an integer <code>int y = 0;</code> is declared. The process calls <code>vfork()</code>. The child runs a loop <code>for (i = 0; i &lt; 5; i++) y = y + 1;</code> and terminates with <code>_exit(0);</code>. The parent then executes <code>for (i = 0; i &lt; 5; i++) y = y - 1;</code>. What is the final value of <code>y</code> after the parent completes its loop?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> y = 0</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> y = -5</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> y = 5</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> y = 10</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) y = 0</div>
+        <div class="mcq-expl"><strong>Why:</strong> vfork() suspends the parent and shares address space with the child; the child increments y from 0 to 5, and the parent then decrements y from 5 down to 0.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q3</span>
+        <span class="mcq-tag">Lab example2.c Exit Status</span>
+      </div>
+      <div class="mcq-q">In <code>example2.c</code>, a child process computes a partial array sum of 50 and terminates by calling <code>exit(50)</code>. The parent waits for the child using <code>wait(&amp;status)</code>. Which macro should the parent use to extract the child's return value of 50?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> WEXITSTATUS(status)</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> WIFEXITED(status)</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> WTERMSIG(status)</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> WSTOPSIG(status)</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) WEXITSTATUS(status)</div>
+        <div class="mcq-expl"><strong>Why:</strong> WEXITSTATUS(status) extracts the 8-bit exit code passed to exit(), while WIFEXITED(status) merely returns true if the child terminated normally.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q4</span>
+        <span class="mcq-tag">Lab example3.c Process Hierarchy</span>
+      </div>
+      <div class="mcq-q">In <code>example3.c</code>, a parent creates child P1 using <code>fork()</code>. Child P1 then creates grandchild P2 using <code>fork()</code>. If both parent and child P1 call <code>wait(NULL)</code> before exiting, what is the guaranteed completion sequence?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> P2 completes first, followed by P1, followed by Parent.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Parent completes first, followed by P1, followed by P2.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> P1 completes first, followed by P2, followed by Parent.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The execution order is completely non-deterministic.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) P2 completes first, followed by P1, followed by Parent.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Each process calling wait(NULL) blocks until its immediate child terminates, enforcing bottom-up termination: Grandchild -> Child -> Parent.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q5</span>
+        <span class="mcq-tag">Lab example4.c Exec Behavior</span>
+      </div>
+      <div class="mcq-q">A child process executes: <code>execl("/bin/ls", "/home/user", NULL); printf("Listing Complete\n"); exit(0);</code>. If <code>/bin/ls</code> executes successfully, what is the output?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The directory listing of /home/user is displayed; 'Listing Complete' is never printed.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> 'Listing Complete' is printed followed by the directory listing.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Both the directory listing and 'Listing Complete' are printed concurrently.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> A segmentation fault occurs because execv should be used instead of execl.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The directory listing of /home/user is displayed; 'Listing Complete' is never printed.</div>
+        <div class="mcq-expl"><strong>Why:</strong> A successful exec call overwrites the entire process address space with the new program image and does not return to execute following lines.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q6</span>
+        <span class="mcq-tag">Lab orphan.c Lifecycle</span>
+      </div>
+      <div class="mcq-q">In <code>orphan.c</code>, a parent process creates a child process. The parent calls <code>exit(0)</code> immediately, while the child executes <code>sleep(30)</code>. What happens to the child process during this sleep?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The child becomes an orphan process and is adopted by init / systemd (PID 1).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The child becomes a zombie process and remains suspended.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The child is immediately terminated by the operating system kernel.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The child continues running but cannot perform any I/O operations.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The child becomes an orphan process and is adopted by init / systemd (PID 1).</div>
+        <div class="mcq-expl"><strong>Why:</strong> When a parent terminates before its child, the child becomes an orphan and is re-parented to init/systemd (PID 1), which reaps it upon completion.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q7</span>
+        <span class="mcq-tag">Lab zombie.c Lifecycle</span>
+      </div>
+      <div class="mcq-q">In <code>zombie.c</code>, a child process calls <code>exit(0)</code> immediately while the parent process executes <code>sleep(50)</code> without calling <code>wait()</code>. What is the state of the child process during those 50 seconds?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Zombie (<defunct>) with its process table entry preserved to retain exit status.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Orphan process waiting to be assigned a new parent PID.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Completely deleted from memory and the process table.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Blocked in the waiting queue awaiting CPU rescheduling.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Zombie (<defunct>) with its process table entry preserved to retain exit status.</div>
+        <div class="mcq-expl"><strong>Why:</strong> A terminated process whose parent has not yet called wait() remains in the process table as a zombie to preserve its exit code.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q8</span>
+        <span class="mcq-tag">Lab example1a.c Non-Determinism</span>
+      </div>
+      <div class="mcq-q">In <code>example1a.c</code>, both parent and child execute loops with <code>sleep()</code> calls without synchronization. Why does the console output interleave unpredictably across repeated runs?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The OS CPU scheduler makes non-deterministic preemption and scheduling decisions based on runtime queue states.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The fork system call executes parent and child in random memory banks.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Variable y experiences a race condition that corrupts console standard output.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> printf() is a non-reentrant function that cannot be called by children.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The OS CPU scheduler makes non-deterministic preemption and scheduling decisions based on runtime queue states.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Unless explicit synchronization (like wait() or semaphores) is used, process interleaving depends entirely on the OS scheduler.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q9</span>
+        <span class="mcq-tag">Process Control Block (PCB)</span>
+      </div>
+      <div class="mcq-q">Which of the following data structures is maintained in the Process Control Block (PCB) to save process state across context switches?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Program Counter, CPU registers, process state, and CPU-scheduling information.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The compiler symbol table and syntax tree.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The CPU instruction cache and L1 data cache lines.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The hardware BIOS configuration table.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Program Counter, CPU registers, process state, and CPU-scheduling information.</div>
+        <div class="mcq-expl"><strong>Why:</strong> The PCB encapsulates all information necessary to stop a running process and resume it later exactly where it left off.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q10</span>
+        <span class="mcq-tag">5-State Process Model</span>
+      </div>
+      <div class="mcq-q">In the classical 5-state process lifecycle (New, Ready, Running, Waiting, Terminated), which transition is initiated strictly by the CPU scheduler/dispatcher?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Ready -> Running</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Running -> Waiting</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Waiting -> Ready</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Running -> Ready</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Ready -> Running</div>
+        <div class="mcq-expl"><strong>Why:</strong> The scheduler selects an eligible process from the ready queue and the dispatcher allocates the CPU to transition it from Ready to Running.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q11</span>
+        <span class="mcq-tag">Context Switch Overhead</span>
+      </div>
+      <div class="mcq-q">What occurs during a CPU context switch, and how does it affect system performance?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The kernel saves the state of the old process to its PCB and restores the state of the scheduled process; it represents pure overhead because the CPU does no useful user work.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The CPU switches to user mode and clears all secondary storage caches.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The kernel recompiles the newly scheduled process binary in RAM.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Memory bus bandwidth is doubled during the switch.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The kernel saves the state of the old process to its PCB and restores the state of the scheduled process; it represents pure overhead because the CPU does no useful user work.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Context-switch time is pure computational overhead; during the switch, the hardware does not execute any application logic.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q12</span>
+        <span class="mcq-tag">Monolithic vs Microkernel</span>
+      </div>
+      <div class="mcq-q">How does a Microkernel architecture (e.g. Mach, Minix) differ fundamentally from a Monolithic architecture (e.g. Linux)?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A microkernel moves non-essential components (file systems, device drivers) into user-space servers and relies on message passing.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> A microkernel executes all device drivers in kernel mode for higher speed.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A microkernel eliminates system calls entirely.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Monolithic kernels cannot support multiprogramming.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A microkernel moves non-essential components (file systems, device drivers) into user-space servers and relies on message passing.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Microkernels maintain only core IPC, minimal memory management, and primitive scheduling in kernel space, improving modularity and fault isolation.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q13</span>
+        <span class="mcq-tag">Dual-Mode Operation & Mode Bit</span>
+      </div>
+      <div class="mcq-q">What prevents an ordinary user-mode program from directly issuing privileged I/O instructions or disabling hardware timer interrupts?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The CPU hardware checks the mode bit; privileged instructions are only permitted when the mode bit indicates kernel mode (0).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The C compiler refuses to generate binary code for I/O functions.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> User programs run exclusively on secondary storage drives.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Hardware timers are only connected to the graphics card.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The CPU hardware checks the mode bit; privileged instructions are only permitted when the mode bit indicates kernel mode (0).</div>
+        <div class="mcq-expl"><strong>Why:</strong> The dual-mode bit (0=Kernel, 1=User) is verified by CPU hardware on every instruction; executing privileged commands in user mode causes a hardware trap.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q14</span>
+        <span class="mcq-tag">Traps vs Hardware Interrupts</span>
+      </div>
+      <div class="mcq-q">What is the principal difference between an interrupt and a trap (exception)?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> An interrupt is an asynchronous signal generated by external hardware (e.g. timer, disk), while a trap is synchronous software-generated event (e.g. syscall, division by zero).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Traps are always fatal crashes, while interrupts are ignored.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Interrupts can only be generated in kernel mode.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Traps are handled by the hard disk controller.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) An interrupt is an asynchronous signal generated by external hardware (e.g. timer, disk), while a trap is synchronous software-generated event (e.g. syscall, division by zero).</div>
+        <div class="mcq-expl"><strong>Why:</strong> Interrupts occur asynchronously relative to CPU execution; traps are synchronous exceptions triggered directly by instruction execution.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q15</span>
+        <span class="mcq-tag">System Call Parameter Passing</span>
+      </div>
+      <div class="mcq-q">When system call parameters are too large to fit directly into CPU registers, what standard mechanism does Linux use to pass them to the kernel?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Stores the parameters in a memory block/table and passes the memory block's address in a register.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Splits parameters across network sockets.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Writes parameters into the BIOS firmware ROM.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Aborts the system call with an error code.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Stores the parameters in a memory block/table and passes the memory block's address in a register.</div>
+        <div class="mcq-expl"><strong>Why:</strong> The block/table method places parameters in memory and passes a single pointer in a CPU register (e.g., EBX/RDI in Linux).</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q16</span>
+        <span class="mcq-tag">Cascading Termination (OS QA.pdf)</span>
+      </div>
+      <div class="mcq-q">What is 'Cascading Termination' in operating systems?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> If a parent process terminates (either normally or abnormally), the operating system automatically terminates all of its child processes.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> A child process continuously restarts its parent process upon crash.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A process terminates all other processes belonging to different users.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Processes terminate sequentially in order of their arrival time.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) If a parent process terminates (either normally or abnormally), the operating system automatically terminates all of its child processes.</div>
+        <div class="mcq-expl"><strong>Why:</strong> In systems enforcing cascading termination, the OS does not allow children to exist without their parent and terminates descendants recursively.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q17</span>
+        <span class="mcq-tag">OS Services Classification (Level 1 Problem 1)</span>
+      </div>
+      <div class="mcq-q">An operating system maintains detailed records of CPU burst time, memory consumption, and disk usage for every user account to generate monthly invoices. Which OS service performs this task?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Accounting</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Resource Allocation</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Protection and Security</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> File-System Manipulation</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Accounting</div>
+        <div class="mcq-expl"><strong>Why:</strong> The Accounting service tracks usage metrics for billing and resource capacity planning; Protection controls access, and Resource Allocation handles scheduling.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q18</span>
+        <span class="mcq-tag">Symmetric Clustering & DLM (OS QA.pdf)</span>
+      </div>
+      <div class="mcq-q">In a Symmetric Cluster where two independent server nodes write to the same database record on a shared Storage Area Network (SAN), why is a local OS semaphore insufficient to prevent data corruption?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Nodes have separate physical memories, so a local semaphore is invisible to other nodes; a Distributed Lock Manager (DLM) is required.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> SAN storage only supports read-only operations from clustered nodes.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Hardware interrupts cannot be delivered across fiber-channel SAN cables.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Semaphores cannot be used in multiprogrammed operating systems.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Nodes have separate physical memories, so a local semaphore is invisible to other nodes; a Distributed Lock Manager (DLM) is required.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Local semaphores reside in local RAM; multi-node clusters lack shared physical RAM, requiring DLM network messaging for mutual exclusion.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q19</span>
+        <span class="mcq-tag">CPU-I/O Burst Cycle</span>
+      </div>
+      <div class="mcq-q">An interactive text editor typically exhibits which kind of execution pattern?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> I/O-bound with many very short CPU bursts separated by frequent I/O waits.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> CPU-bound with very long CPU bursts and rare I/O operations.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Constant 100% CPU utilization without entering the waiting state.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Execution exclusively restricted to firmware ROM.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) I/O-bound with many very short CPU bursts separated by frequent I/O waits.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Interactive applications are I/O-bound: they perform brief processing per keystroke and spend most time waiting for user interaction.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q20</span>
+        <span class="mcq-tag">Dispatcher vs Scheduler Role</span>
+      </div>
+      <div class="mcq-q">Which component is specifically responsible for performing context switches, switching CPU execution to user mode, and jumping to the proper location in the program to restart it?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Dispatcher</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Short-term Scheduler</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Long-term Scheduler</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Medium-term Scheduler</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Dispatcher</div>
+        <div class="mcq-expl"><strong>Why:</strong> The scheduler selects which process runs; the dispatcher physically performs the low-level mechanism of giving CPU control to that process.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q21</span>
+        <span class="mcq-tag">Preemptive vs Non-Preemptive Circumstances</span>
+      </div>
+      <div class="mcq-q">Under which of the following process state transitions is CPU scheduling strictly non-preemptive (cooperative)?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Running state to Waiting state (e.g., issuing an I/O request)</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Running state to Ready state (e.g., timer interrupt)</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Waiting state to Ready state (e.g., I/O completion)</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Ready state to Running state (e.g., dispatcher selection)</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Running state to Waiting state (e.g., issuing an I/O request)</div>
+        <div class="mcq-expl"><strong>Why:</strong> Scheduling is non-preemptive only when a process voluntarily relinquishes the CPU: switching from Running to Waiting or terminating.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q22</span>
+        <span class="mcq-tag">FCFS Convoy Effect</span>
+      </div>
+      <div class="mcq-q">In a system using First-Come, First-Served (FCFS) scheduling, a CPU-bound process with a very long burst time arrives just before several short I/O-bound processes. What problem occurs?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Convoy effect, causing short processes to wait behind the long job and drastically reducing device utilization.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Deadlock, because the I/O-bound processes cannot claim the CPU.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Starvation of the CPU-bound process due to frequent context switching.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Belady's anomaly, where increasing ready queue capacity increases waiting time.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Convoy effect, causing short processes to wait behind the long job and drastically reducing device utilization.</div>
+        <div class="mcq-expl"><strong>Why:</strong> The convoy effect occurs in FCFS when small I/O-bound jobs queue behind a single heavy CPU-bound job, causing low device and CPU throughput.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q23</span>
+        <span class="mcq-tag">SJF Non-Preemptive Optimality</span>
+      </div>
+      <div class="mcq-q">Why is Shortest Job First (SJF) considered optimal for a given set of stationary processes?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> It gives the minimum average waiting time among all non-preemptive scheduling algorithms.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It completely eliminates context switching overhead.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It guarantees that no process will ever experience starvation.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It maximizes CPU burst lengths for all processes.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) It gives the minimum average waiting time among all non-preemptive scheduling algorithms.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Moving a short process ahead of a long process reduces the short process's waiting time more than it increases the long process's waiting time.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q24</span>
+        <span class="mcq-tag">SJF Starvation & Fairness (Level 1 Problem 1)</span>
+      </div>
+      <div class="mcq-q">In Shortest Job First (SJF) scheduling, a long-running batch job waits indefinitely because shorter jobs continuously arrive in the ready queue. Which mechanism resolves this problem without abandoning SJF principles?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Aging (gradually incrementing the priority of waiting processes over time)</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Switching the system permanently to FCFS scheduling</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Decreasing the CPU time quantum of long processes</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Immediately aborting newly arriving short processes</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Aging (gradually incrementing the priority of waiting processes over time)</div>
+        <div class="mcq-expl"><strong>Why:</strong> Aging gradually increases the priority/weight of long-waiting processes so they eventually become the highest priority and execute.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q25</span>
+        <span class="mcq-tag">SRTF (Preemptive SJF) Optimality</span>
+      </div>
+      <div class="mcq-q">How does Shortest Remaining Time First (SRTF) compare to non-preemptive SJF in terms of average waiting time?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> SRTF provides the absolute minimal average waiting time by preempting a running job if a new job arrives with shorter burst.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> SRTF always produces higher average waiting time than SJF.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> SRTF behaves identically to FCFS under all arrival patterns.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> SRTF eliminates the need for burst time prediction.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) SRTF provides the absolute minimal average waiting time by preempting a running job if a new job arrives with shorter burst.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Preemptive SJF (SRTF) is optimal because it immediately gives the CPU to any arriving job that can complete sooner than current work.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q26</span>
+        <span class="mcq-tag">SRTF Scheduling Numerical (Course Problem)</span>
+      </div>
+      <div class="mcq-q">Processes arrive as follows: P1 (AT=0, BT=8), P2 (AT=1, BT=4), P3 (AT=2, BT=2), P4 (AT=3, BT=1). Using preemptive SJF (SRTF), what is the completion time of P1?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> 15</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> 8</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> 12</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> 17</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) 15</div>
+        <div class="mcq-expl"><strong>Why:</strong> Timeline: [0-1] P1(rem=7); at t=1 P2(BT=4) preempts P1; at t=2 P3(BT=2) preempts P2; at t=3 P4(BT=1) runs [3-4]; P3 runs [4-5]; P2 runs [5-8]; P1 resumes [8-15]. CT of P1 = 15.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q27</span>
+        <span class="mcq-tag">FCFS Turnaround Calculation</span>
+      </div>
+      <div class="mcq-q">Three processes arrive at times 0, 1, and 2 with burst times 4, 3, and 1 respectively. Using FCFS, what is the Average Turnaround Time?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> 5.33</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> 4.00</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> 6.67</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> 3.33</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) 5.33</div>
+        <div class="mcq-expl"><strong>Why:</strong> Completion times: P1=4 (TAT=4-0=4), P2=7 (TAT=7-1=6), P3=8 (TAT=8-2=6). Average TAT = (4 + 6 + 6) / 3 = 16 / 3 = 5.33.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q28</span>
+        <span class="mcq-tag">Round Robin Quantum Extremes</span>
+      </div>
+      <div class="mcq-q">In Round Robin CPU scheduling, what happens as the time quantum $q$ approaches infinity ($q \to \infty$)?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> It degenerates into First-Come, First-Served (FCFS) scheduling.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It degenerates into Shortest Remaining Time First (SRTF) scheduling.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Context switching overhead increases exponentially.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> All processes run strictly in parallel without waiting.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) It degenerates into First-Come, First-Served (FCFS) scheduling.</div>
+        <div class="mcq-expl"><strong>Why:</strong> When quantum q is longer than any CPU burst, every process runs to completion on its first turn, behaving identically to FCFS.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q29</span>
+        <span class="mcq-tag">Round Robin 80% Rule of Thumb</span>
+      </div>
+      <div class="mcq-q">What is the standard design guideline for setting the Round Robin time quantum $q$ relative to CPU burst lengths?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> About 80% of CPU bursts should be shorter than the time quantum q.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The time quantum must be shorter than the context-switch latency.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The time quantum should exceed the total runtime of the longest process.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The time quantum must equal the clock tick rate.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) About 80% of CPU bursts should be shorter than the time quantum q.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Setting q so 80% of bursts finish within one quantum minimizes context switching while preserving responsive time-sharing.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q30</span>
+        <span class="mcq-tag">Priority Scheduling & Inversion</span>
+      </div>
+      <div class="mcq-q">A high-priority process is blocked waiting for a lock held by a low-priority process, while a medium-priority process runs and prevents the low-priority process from finishing. What is this phenomenon called?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Priority Inversion (solved via Priority Inheritance)</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Convoy Effect</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Belady's Anomaly</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Cascading Termination</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Priority Inversion (solved via Priority Inheritance)</div>
+        <div class="mcq-expl"><strong>Why:</strong> Priority inversion occurs when medium-priority jobs delay low-priority jobs holding resources needed by high-priority jobs.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q31</span>
+        <span class="mcq-tag">Multilevel Queue (MLQ) Rigidity</span>
+      </div>
+      <div class="mcq-q">What is a primary architectural limitation of standard Multilevel Queue (MLQ) scheduling?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Processes are permanently assigned to one queue upon entry and cannot migrate between queues, causing potential starvation in lower queues.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It requires hardware support for 64 queues.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It cannot execute Round Robin in any queue.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It disables multiprocessor scheduling.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Processes are permanently assigned to one queue upon entry and cannot migrate between queues, causing potential starvation in lower queues.</div>
+        <div class="mcq-expl"><strong>Why:</strong> MLQ has fixed queue allocations; low-priority queues (e.g. batch) can starve indefinitely if higher queues (interactive) remain occupied.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q32</span>
+        <span class="mcq-tag">Multilevel Feedback Queue (MLFQ) Principle</span>
+      </div>
+      <div class="mcq-q">Why does a Multilevel Feedback Queue (MLFQ) scheduler automatically downgrade a process that uses up its entire time quantum to a lower-priority queue?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> To identify CPU-bound processes and reserve top-priority queues for responsive, interactive I/O-bound processes.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> To prevent higher-priority queues from exceeding memory limits.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Because processes in lower queues require smaller time quanta.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> To enforce strict first-in, first-out execution across all levels.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) To identify CPU-bound processes and reserve top-priority queues for responsive, interactive I/O-bound processes.</div>
+        <div class="mcq-expl"><strong>Why:</strong> MLFQ learns process behavior dynamically: I/O-bound jobs release the CPU before quantum expiration and stay in high queues; CPU hogs sink to lower queues.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q33</span>
+        <span class="mcq-tag">Crontab Schedule Syntax</span>
+      </div>
+      <div class="mcq-q">A system administrator configures a cron job with the entry: <code>30 2 * * 1 /scripts/backup.sh</code>. When will this script execute?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> At 02:30 AM every Monday</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> At 01:02 AM on the 30th of every month</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Every 30 minutes past 2 AM on the 1st of every month</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> At 02:30 PM every Sunday</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) At 02:30 AM every Monday</div>
+        <div class="mcq-expl"><strong>Why:</strong> Crontab fields: min (30), hour (2 = 02:00), day-of-month (*), month (*), day-of-week (1 = Monday).</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q34</span>
+        <span class="mcq-tag">Bash Shell Execution Flow</span>
+      </div>
+      <div class="mcq-q">When a user types an external command like <code>ls -l</code> into a Bash shell terminal, what sequence of system calls does the shell execute?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> fork() to create child -> exec*() in child to run binary -> wait() in parent shell to await termination.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> exec*() directly in parent shell without creating a child.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> pipe() followed immediately by kill().</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> vfork() followed by mmap() without wait().</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) fork() to create child -> exec*() in child to run binary -> wait() in parent shell to await termination.</div>
+        <div class="mcq-expl"><strong>Why:</strong> The shell forks a child process, which invokes exec*() to replace its image with /bin/ls, while parent waits unless backgrounded with &.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q35</span>
+        <span class="mcq-tag">Mobile OS Lifecycle (Android vs Desktop)</span>
+      </div>
+      <div class="mcq-q">How does process lifecycle management in mobile operating systems (like Android) differ fundamentally from traditional desktop operating systems?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Mobile OSes actively terminate background processes based on an importance hierarchy (foreground, visible, service, cached) to reclaim scarce RAM.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Mobile OSes never terminate any process once launched.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Desktop OSes terminate processes after 10 minutes of inactivity.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Mobile OSes run only a single thread system-wide.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Mobile OSes actively terminate background processes based on an importance hierarchy (foreground, visible, service, cached) to reclaim scarce RAM.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Constrained mobile RAM requires aggressive, automatic background process killing according to application visibility and importance.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+  </section>
+  <!-- ================= UNIT 2 ================= -->
+  <section id="u2-sec" class="unit-section" data-unit="u2">
+    <h2><span class="unit-badge">Unit 2</span> Threads, Synchronization & Deadlocks (35 MCQs)</h2>
+
+    <h3>1. Ultra-Short Pointers: Threads, IPC & Synchronization</h3>
+    <div class="pointer">
+      <strong>Process vs Thread:</strong> Threads within the same process share the code section, data section, heap, and open files, but each thread has its <strong>own Thread ID, Program Counter (PC), Register set, and Stack</strong>.
+    </div>
+    <div class="pointer">
+      <strong>Multithreading Models:</strong><br>
+      • <em>Many-to-One:</em> Multiple user threads mapped to 1 kernel thread. Fast switching, but one blocking system call halts the entire process; no multicore parallelism.<br>
+      • <em>One-to-One (Linux):</em> Each user thread maps to a kernel thread. True multicore parallelism; kernel thread creation overhead.<br>
+      • <em>Many-to-Many:</em> Multiplexes many user threads to an equal or smaller number of kernel threads.
+    </div>
+    <div class="pointer">
+      <strong>Amdahl's Law Formula:</strong> $\text{Speedup} \le \frac{1}{S + \frac{1-S}{N}}$. If serial fraction $S = 0.20$ (20%), then on 4 cores ($N=4$): $\text{Speedup} = \frac{1}{0.20 + 0.80/4} = 2.5\times$. Max theoretical speedup as $N \to \infty$ is $1 / 0.20 = 5\times$.
+    </div>
+    <div class="pointer">
+      <strong>Ordinary Pipes (demo_pipe.c):</strong> <code>pipe(fd)</code> yields <code>fd[0]</code> (read) and <code>fd[1]</code> (write). Half-duplex (unidirectional). Shared ancestry required. For parent-to-child flow: parent closes <code>fd[0]</code>, child closes <code>fd[1]</code>.
+    </div>
+    <div class="pointer">
+      <strong>Named Pipes / FIFOs (fifo_read.c/write.c):</strong> Created with <code>mkfifo()</code>. Appears as a directory entry in the filesystem. Persists after process exits; allows communication between <em>unrelated</em> processes.
+    </div>
+    <div class="pointer">
+      <strong>Shared Memory vs Message Passing:</strong> Shared memory is the fastest IPC because processes read/write RAM directly with zero kernel system call intervention after setup. Message passing involves kernel system call overhead for every message.
+    </div>
+    <div class="pointer">
+      <strong>Critical Section Problem (3 Requirements):</strong> 1. <em>Mutual Exclusion</em> (only 1 inside CS), 2. <em>Progress</em> (selection cannot be postponed indefinitely), 3. <em>Bounded Waiting</em> (bound on times others can enter before request granted).
+    </div>
+    <div class="pointer">
+      <strong>Mutex vs Counting Semaphore:</strong> Mutex has <em>ownership</em> (only the locking thread can unlock it). Semaphore has no ownership (any thread can call <code>sem_post()</code>).
+    </div>
+    <div class="pointer">
+      <strong>Spinlocks:</strong> Busy-waiting locks. Optimal on multiprocessors for <em>very short</em> critical sections because they avoid the CPU latency of two context switches.
+    </div>
+    <div class="pointer">
+      <strong>Bounded Buffer Semaphores:</strong> Capacity $N$. Initial values: <code>mutex = 1</code>, <code>empty = N</code>, <code>full = 0</code>. Swapping to <code>wait(mutex); wait(empty);</code> in producer causes <strong>Deadlock</strong> when buffer is full!
+    </div>
+    <div class="pointer">
+      <strong>4 Deadlock Coffman Conditions:</strong> 1. Mutual Exclusion, 2. Hold and Wait, 3. No Preemption, 4. Circular Wait. (ALL 4 must hold simultaneously). Prevent Circular Wait by total resource ordering ($F: R \to \mathbb{N}$).
+    </div>
+    <div class="pointer">
+      <strong>Banker's Algorithm:</strong> $\text{Need} = \text{Max} - \text{Allocation}$. A safe state guarantees NO deadlock. An unsafe state means deadlock is <em>possible</em> (unsafe is not necessarily deadlocked).
+    </div>
+    <div class="pointer">
+      <strong>Uncatchable Signals:</strong> <code>SIGKILL</code> (signal 9) and <code>SIGSTOP</code> <strong>cannot</strong> be caught, blocked, or ignored. <code>SIGCHLD</code> is sent to parent upon child termination/stop.
+    </div>
+
+    <h3>2. Code Patterns from Lab (Pipes, Threads, Mutex, Semaphores)</h3>
+    <div class="code">
+// Pattern 1: Ordinary Pipe unidirectional closure (demo_pipe.c)
+int fd[2]; pipe(fd); // fd[0]=read, fd[1]=write
+if (fork() > 0) { close(fd[0]); write(fd[1], msg, len); close(fd[1]); }
+else { close(fd[1]); read(fd[0], buf, size); close(fd[0]); }
+
+// Pattern 2: Thread Variable Sharing (demo_threads.c)
+void *fn(void *arg) {
+    int l = 0; static int s = 0; // l is local (stack), s is static (data segment)
+    ++l; ++s; ++g; // l always 1; s and global g accumulate across threads
+}
+
+// Pattern 3: Circular Wait Deadlock vs Prevention (demo_deadlock.c / prevention.c)
+// Deadlock: T1 locks M1 then M2; T2 locks M2 then M1. (Circular wait)
+// Prevention: Both T1 and T2 lock M1 then M2. (Strict global ordering)
+
+// Pattern 4: POSIX Semaphore initialization (demo_semaphore_1.c)
+sem_t mutex;
+sem_init(&mutex, 0, 1); // 2nd arg 0 = thread shared; 3rd arg 1 = binary semaphore
+sem_wait(&mutex); /* Critical Section */ sem_post(&mutex);
+    </div>
+
+    <h3 id="u2-tables">3. Master Summary Tables: Unit 2</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>IPC Mechanism</th>
+          <th>Scope / Relationship</th>
+          <th>Data Flow</th>
+          <th>Persistence / Location</th>
+          <th>Kernel Involvement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ordinary Pipe</strong></td>
+          <td>Related (parent-child)</td>
+          <td>Half-duplex (unidirectional)</td>
+          <td>RAM / destroyed on close</td>
+          <td>Kernel buffer (system calls)</td>
+        </tr>
+        <tr>
+          <td><strong>Named Pipe (FIFO)</strong></td>
+          <td>Unrelated processes</td>
+          <td>Half/Full duplex</td>
+          <td>File system node (retained)</td>
+          <td>Kernel buffer</td>
+        </tr>
+        <tr>
+          <td><strong>Shared Memory</strong></td>
+          <td>Any agreeing process</td>
+          <td>Bidirectional direct access</td>
+          <td>Memory segment</td>
+          <td><strong>Fastest</strong> (zero kernel copy after setup)</td>
+        </tr>
+        <tr>
+          <td><strong>Message Queue</strong></td>
+          <td>Unrelated processes</td>
+          <td>Formatted message blocks</td>
+          <td>Kernel memory</td>
+          <td>System calls for each message</td>
+        </tr>
+        <tr>
+          <td><strong>Sockets</strong></td>
+          <td>Network / distributed or local</td>
+          <td>Full-duplex byte stream/datagram</td>
+          <td>Network endpoint / socket file</td>
+          <td>Full networking kernel stack</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Primitive</th>
+          <th>Value Range</th>
+          <th>Ownership?</th>
+          <th>Waiting Mechanism</th>
+          <th>Best Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Mutex Lock</strong></td>
+          <td>Binary (0 or 1)</td>
+          <td>Yes (locking thread must unlock)</td>
+          <td>Sleeps / blocks caller</td>
+          <td>Mutual exclusion for critical code</td>
+        </tr>
+        <tr>
+          <td><strong>Counting Semaphore</strong></td>
+          <td>$0$ to $N$</td>
+          <td>No (any thread can signal)</td>
+          <td>Sleeps / blocks caller</td>
+          <td>Resource counting (e.g. buffers)</td>
+        </tr>
+        <tr>
+          <td><strong>Spinlock</strong></td>
+          <td>Binary</td>
+          <td>Yes</td>
+          <td>Busy-waits (CPU spinning)</td>
+          <td>Short CS on Multiprocessor / Kernel</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Coffman Condition</th>
+          <th>System Meaning</th>
+          <th>Invalidation / Prevention Strategy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Mutual Exclusion</strong></td>
+          <td>Non-sharable resource access</td>
+          <td>Make resources sharable (read-only, spooling)</td>
+        </tr>
+        <tr>
+          <td><strong>2. Hold and Wait</strong></td>
+          <td>Process holds resource while requesting more</td>
+          <td>Request all resources at start, or release before requesting</td>
+        </tr>
+        <tr>
+          <td><strong>3. No Preemption</strong></td>
+          <td>Resources cannot be forcibly confiscated</td>
+          <td>If requested resource unavailable, preempt all held resources</td>
+        </tr>
+        <tr>
+          <td><strong>4. Circular Wait</strong></td>
+          <td>$P_0 	o P_1 	o \dots 	o P_0$ closed wait cycle</td>
+          <td><strong>Resource Ordering:</strong> Request in strictly increasing order $F(R_i)$</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>4. Unit 2 High-Yield MCQs (Questions 36–70)</h3>
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q36</span>
+        <span class="mcq-tag">Process vs Thread Architecture</span>
+      </div>
+      <div class="mcq-q">When multiple threads execute within the same process, which of the following resources is <strong>not</strong> shared among them?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Program counter, register set, and private execution stack.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Heap memory segment.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Global variables and static data.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Open file descriptors and sockets.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Program counter, register set, and private execution stack.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Each thread maintains its own independent control flow: private Program Counter, CPU registers, and stack frames for local function calls.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q37</span>
+        <span class="mcq-tag">Many-to-One Threading Model</span>
+      </div>
+      <div class="mcq-q">What is the major vulnerability of the Many-to-One multithreading model (where many user threads map to a single kernel thread)?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> If any user thread makes a blocking system call, the entire process blocks because the kernel sees only one thread.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> User threads cannot share global variables.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Context switching between user threads requires a kernel trap.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It consumes excessive kernel memory.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) If any user thread makes a blocking system call, the entire process blocks because the kernel sees only one thread.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Since the kernel is unaware of user-level threads, one blocking call stops the underlying kernel thread, freezing all other user threads in that process.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q38</span>
+        <span class="mcq-tag">One-to-One Threading Model</span>
+      </div>
+      <div class="mcq-q">What is the key advantage of the One-to-One multithreading model used by modern Linux and Windows operating systems?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> It allows true parallel execution of multiple threads across multiple CPU cores, and a blocking system call does not halt other threads.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It completely eliminates context switching overhead.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It allows an infinite number of user threads without consuming kernel resources.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It avoids the need for mutual exclusion primitives.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) It allows true parallel execution of multiple threads across multiple CPU cores, and a blocking system call does not halt other threads.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Mapping each user thread to a kernel thread enables the kernel scheduler to run threads concurrently on different processor cores.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q39</span>
+        <span class="mcq-tag">Many-to-Many Model</span>
+      </div>
+      <div class="mcq-q">How does the Many-to-Many threading model address the limitations of Many-to-One and One-to-One models?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> It multiplexes many user threads onto a smaller or equal number of kernel threads, avoiding process blocking while bounding kernel thread overhead.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It forces all threads to run on a single processor core.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It eliminates the need for user-space thread libraries.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It automatically synchronizes all shared memory access.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) It multiplexes many user threads onto a smaller or equal number of kernel threads, avoiding process blocking while bounding kernel thread overhead.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Many-to-Many combines user-level thread creation efficiency with kernel-level multi-core scheduling capability.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q40</span>
+        <span class="mcq-tag">Amdahl's Law Speedup Calculation</span>
+      </div>
+      <div class="mcq-q">An application has a 20% strictly serial portion ($S = 0.20$) and an 80% parallel portion. According to Amdahl's Law, what is the speedup on 4 CPU cores, and what is the maximum theoretical speedup on infinite cores?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Speedup on 4 cores = 2.5x; Maximum speedup = 5.0x</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Speedup on 4 cores = 4.0x; Maximum speedup = 10.0x</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Speedup on 4 cores = 3.2x; Maximum speedup = 4.0x</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Speedup on 4 cores = 1.6x; Maximum speedup = 2.0x</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Speedup on 4 cores = 2.5x; Maximum speedup = 5.0x</div>
+        <div class="mcq-expl"><strong>Why:</strong> Speedup = 1 / (0.20 + 0.80/4) = 1 / 0.40 = 2.5x. With infinite cores, Speedup = 1 / 0.20 = 5.0x.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q41</span>
+        <span class="mcq-tag">Lab demo_threads.c Variable Sharing</span>
+      </div>
+      <div class="mcq-q">In <code>demo_threads.c</code>, a worker function contains: <code>int l = 0; static int s = 0; ++l; ++s; ++g;</code> (where <code>g</code> is a global variable). The main thread launches three threads sequentially using <code>pthread_create()</code> and <code>pthread_join()</code>. What values of <code>l</code>, <code>s</code>, and <code>g</code> are printed by the third thread?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Local: 1, Static: 3, Global: 3</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Local: 3, Static: 3, Global: 3</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Local: 1, Static: 1, Global: 1</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Local: 3, Static: 1, Global: 3</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Local: 1, Static: 3, Global: 3</div>
+        <div class="mcq-expl"><strong>Why:</strong> Local automatic variables reside on the thread's private stack and reinitialize to 1; static and global variables reside in shared data segments and persist across threads.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q42</span>
+        <span class="mcq-tag">Lab demo_threads_tb.c pthread_join</span>
+      </div>
+      <div class="mcq-q">In POSIX threads programming (as demonstrated in <code>demo_threads_tb.c</code>), why does the parent thread execute <code>pthread_join(tid, NULL)</code> after launching a worker thread?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> To block until the target thread terminates, preventing race conditions when reading worker thread results in shared memory.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> To immediately cancel the target thread.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> To assign a higher scheduling priority to the target thread.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> To detach the thread from the process address space.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) To block until the target thread terminates, preventing race conditions when reading worker thread results in shared memory.</div>
+        <div class="mcq-expl"><strong>Why:</strong> pthread_join() synchronizes the parent thread with worker completion, ensuring the worker has finished writing its results.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q43</span>
+        <span class="mcq-tag">Lab demo_pipe.c Descriptors</span>
+      </div>
+      <div class="mcq-q">In <code>demo_pipe.c</code>, a pipe is created using <code>int fd[2]; pipe(fd);</code>. A parent sends data to a child process. Which file descriptors must be closed by the parent and child respectively before transferring data?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Parent closes fd[0] (read); Child closes fd[1] (write).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Parent closes fd[1] (write); Child closes fd[0] (read).</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Both parent and child close fd[0].</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Both parent and child keep both descriptors open.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Parent closes fd[0] (read); Child closes fd[1] (write).</div>
+        <div class="mcq-expl"><strong>Why:</strong> fd[0] is the read end and fd[1] is the write end; in unidirectional parent-to-child flow, parent closes read end and child closes write end.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q44</span>
+        <span class="mcq-tag">Ordinary Pipe Characteristics</span>
+      </div>
+      <div class="mcq-q">Which of the following is a fundamental characteristic of an ordinary UNIX pipe created via <code>pipe()</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> It is unidirectional (half-duplex) and requires communicating processes to share a common ancestor.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It appears as a permanent node in the file system.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It allows communication between unrelated processes over the Internet.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It stores messages permanently on the hard disk.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) It is unidirectional (half-duplex) and requires communicating processes to share a common ancestor.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Ordinary pipes exist only in kernel memory and can only be accessed through file descriptors inherited via fork().</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q45</span>
+        <span class="mcq-tag">Lab fifo_read.c vs Pipes</span>
+      </div>
+      <div class="mcq-q">What is the principal architectural difference between an ordinary pipe created with <code>pipe()</code> and a Named Pipe (FIFO) created with <code>mkfifo()</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> FIFOs have a pathname in the file system allowing communication between unrelated processes; ordinary pipes require shared ancestry.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Ordinary pipes persist after reboot; FIFOs exist only in process RAM.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> FIFOs do not require read() or write() system calls.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Ordinary pipes support multiple unrelated writers; FIFOs support only one parent.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) FIFOs have a pathname in the file system allowing communication between unrelated processes; ordinary pipes require shared ancestry.</div>
+        <div class="mcq-expl"><strong>Why:</strong> mkfifo() creates a special directory entry in the filesystem, enabling unrelated processes to open it by path; anonymous pipes require parent-child relationship.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q46</span>
+        <span class="mcq-tag">Shared Memory IPC Performance</span>
+      </div>
+      <div class="mcq-q">Why is Shared Memory considered the fastest inter-process communication mechanism available in UNIX systems?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Processes read and write directly to shared physical memory addresses with zero kernel system call overhead during data transfer.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The kernel automatically compresses all data transferred.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Shared memory bypasses CPU cache hierarchy completely.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Shared memory eliminates the need for synchronization locks.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Processes read and write directly to shared physical memory addresses with zero kernel system call overhead during data transfer.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Once shared memory is attached (shmat), data exchange occurs at memory bus speeds without context switching into the kernel.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q47</span>
+        <span class="mcq-tag">Message Passing IPC Characteristics</span>
+      </div>
+      <div class="mcq-q">In Message Passing IPC systems (e.g., POSIX Message Queues), which statement accurately describes communication behavior?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Each send and receive operation involves a kernel system call, making it slower than shared memory but simpler for distributed systems.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Communicating processes must share the same physical address space.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Message passing cannot operate across a local network.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Messages are never copied into kernel memory buffers.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Each send and receive operation involves a kernel system call, making it slower than shared memory but simpler for distributed systems.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Message passing delegates queuing and isolation to the OS kernel, incurring context-switch and copying costs for each transfer.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q48</span>
+        <span class="mcq-tag">Sockets IPC Endpoints</span>
+      </div>
+      <div class="mcq-q">In network socket programming, what two components uniquely identify an endpoint for inter-process network communication?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> An IP address and a Port number.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> A process ID and a thread ID.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A MAC address and a file descriptor number.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> A subnet mask and an inode number.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) An IP address and a Port number.</div>
+        <div class="mcq-expl"><strong>Why:</strong> The combination of IP address (host identity) and Port number (application service identity) uniquely identifies a socket endpoint.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q49</span>
+        <span class="mcq-tag">Race Condition Definition</span>
+      </div>
+      <div class="mcq-q">What is a 'Race Condition' in concurrent programming?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A situation where multiple concurrent threads access shared data and the final outcome depends on the execution order of instructions.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> A scheduling competition where short jobs starve long jobs.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A deadlock caused by processes running at different clock frequencies.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> An unhandled hardware interrupt that restarts the CPU.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A situation where multiple concurrent threads access shared data and the final outcome depends on the execution order of instructions.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Race conditions occur when unsynchronized threads read and write shared state concurrently, causing corrupted or unpredictable outcomes.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q50</span>
+        <span class="mcq-tag">Critical Section Problem: 3 Requirements</span>
+      </div>
+      <div class="mcq-q">Which three requirements must any valid solution to the Critical Section Problem strictly satisfy?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Mutual Exclusion, Progress, and Bounded Waiting.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Atomicity, Consistency, and Durability.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Preemption, Starvation, and Aging.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Deadlock, Livelock, and Concurrency.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Mutual Exclusion, Progress, and Bounded Waiting.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Mutual Exclusion (1 at a time), Progress (no indefinite postponement of selection), and Bounded Waiting (finite bypasses) are fundamental.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q51</span>
+        <span class="mcq-tag">Peterson's Solution Variables</span>
+      </div>
+      <div class="mcq-q">Peterson's algorithm is a classic software-based solution to the critical section problem for two processes. What shared variables does it utilize?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> An integer variable 'turn' and a boolean array 'flag[2]'.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> A single counting semaphore and a condition variable.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A ticket lock and a fetch-and-add hardware counter.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Two mutex locks initialized to 0.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) An integer variable 'turn' and a boolean array 'flag[2]'.</div>
+        <div class="mcq-expl"><strong>Why:</strong> flag[i] indicates process i wants to enter CS; turn indicates which process has priority if both request entry simultaneously.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q52</span>
+        <span class="mcq-tag">Hardware Synchronization: test_and_set</span>
+      </div>
+      <div class="mcq-q">The atomic hardware instruction <code>boolean test_and_set(boolean *target)</code> executes which operations atomically?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Returns the original value of *target and sets *target to true.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Sets *target to false and returns whether it was already false.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Increments *target and returns its new value.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Compares *target with a register and swaps if different.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Returns the original value of *target and sets *target to true.</div>
+        <div class="mcq-expl"><strong>Why:</strong> test_and_set atomically reads the current boolean flag and sets it to true, allowing callers to test if a lock was acquired.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q53</span>
+        <span class="mcq-tag">Hardware Synchronization: compare_and_swap</span>
+      </div>
+      <div class="mcq-q">The atomic hardware instruction <code>compare_and_swap(int *value, int expected, int new_value)</code> performs which action?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> If *value equals expected, it sets *value to new_value; it always returns the original *value.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It compares two integers and swaps them if they are unequal.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It locks the memory bus and halts other cores until release.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It decrements *value and checks if it reached zero.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) If *value equals expected, it sets *value to new_value; it always returns the original *value.</div>
+        <div class="mcq-expl"><strong>Why:</strong> compare_and_swap enables lock-free atomic updates: a thread verifies data has not changed before applying its update.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q54</span>
+        <span class="mcq-tag">Mutex vs Counting Semaphore Distinction</span>
+      </div>
+      <div class="mcq-q">Which property fundamentally distinguishes a mutex lock from a general counting semaphore?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A mutex has ownership: only the specific thread that locked the mutex is permitted to unlock it.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Semaphores cannot be used in multithreaded applications.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Mutex locks allow up to $N$ threads inside the critical section simultaneously.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Semaphores require hardware support while mutexes do not.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A mutex has ownership: only the specific thread that locked the mutex is permitted to unlock it.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Mutex ownership requires the locker to unlock it; semaphores have no owner, allowing thread A to signal thread B.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q55</span>
+        <span class="mcq-tag">Spinlock Suitability</span>
+      </div>
+      <div class="mcq-q">Why are spinlocks considered highly effective on multiprocessor systems for critical sections of very short duration?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> They eliminate the CPU overhead of two context switches (sleeping and waking up the thread).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> They eliminate all memory bus contention across CPU cores.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> They guarantee that priority inversion cannot occur.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> They prevent deadlock without requiring lock ordering.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) They eliminate the CPU overhead of two context switches (sleeping and waking up the thread).</div>
+        <div class="mcq-expl"><strong>Why:</strong> When wait time is shorter than context-switching latency, spinning on a dedicated core saves CPU cycles.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q56</span>
+        <span class="mcq-tag">Lab demo_semaphore_1.c sem_init</span>
+      </div>
+      <div class="mcq-q">In POSIX semaphores, the initialization call is <code>sem_init(&amp;mutex, 0, 1);</code>. What is the meaning of the second parameter <code>0</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The semaphore is shared between threads of the same process.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The initial value of the semaphore is zero.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The semaphore is shared across unrelated processes via shared memory.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The semaphore behaves as a counting semaphore rather than binary.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The semaphore is shared between threads of the same process.</div>
+        <div class="mcq-expl"><strong>Why:</strong> In sem_init(&sem, pshared, value), pshared=0 means thread-shared; pshared!=0 means shared across processes.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q57</span>
+        <span class="mcq-tag">Lab demo_semaphore_2.c vs demo_semaphore_3.c</span>
+      </div>
+      <div class="mcq-q">In <code>demo_semaphore_2.c</code>, two threads print characters without synchronization and produce interleaved output. In <code>demo_semaphore_3.c</code>, a semaphore protects the print loop. What is the outcome?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Each character output is protected within a critical section, ensuring mutual exclusion during each print operation.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Both threads print their complete string at the exact same microsecond.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A deadlock occurs because both threads sleep for 2 seconds.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The output is reversed into descending ASCII order.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Each character output is protected within a critical section, ensuring mutual exclusion during each print operation.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Wrapping putchar() in sem_wait() and sem_post() ensures only one thread writes to stdout at any single time.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q58</span>
+        <span class="mcq-tag">Producer-Consumer Semaphores (Level 1 Problem 2)</span>
+      </div>
+      <div class="mcq-q">For a bounded buffer of capacity $N$ shared between producer and consumer threads, what are the standard initial semaphore values for <code>mutex</code>, <code>empty</code>, and <code>full</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> mutex = 1, empty = N, full = 0</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> mutex = 0, empty = 0, full = N</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> mutex = 1, empty = 0, full = N</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> mutex = N, empty = N, full = 1</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) mutex = 1, empty = N, full = 0</div>
+        <div class="mcq-expl"><strong>Why:</strong> mutex=1 ensures mutual exclusion; empty=N starts with N free slots; full=0 starts with 0 filled items.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q59</span>
+        <span class="mcq-tag">Producer-Consumer Deadlock Hazard</span>
+      </div>
+      <div class="mcq-q">In the Producer routine of the bounded buffer problem, what happens if the programmer mistakenly writes: <code>wait(mutex); wait(empty);</code> instead of <code>wait(empty); wait(mutex);</code> when the buffer is currently completely full?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Deadlock occurs: the producer locks the mutex, blocks on empty, and prevents the consumer from acquiring the mutex to consume an item.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The producer safely overwrites the oldest element in the buffer.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The consumer consumes an empty slot, causing a buffer underflow.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The kernel automatically reorders the wait statements.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Deadlock occurs: the producer locks the mutex, blocks on empty, and prevents the consumer from acquiring the mutex to consume an item.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Acquiring mutex first holds the lock while waiting for empty space; the consumer can never enter the buffer to create space, deadlocking the system.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q60</span>
+        <span class="mcq-tag">Readers-Writers Problem Variations</span>
+      </div>
+      <div class="mcq-q">In the first Readers-Writers problem (reader preference), what condition can cause writer starvation?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> As long as at least one reader is actively reading, newly arriving readers are allowed to enter, keeping writers waiting indefinitely.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Writers preempt reading threads, aborting their execution.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Readers execute sem_post on the writer lock before entering.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Only one reader is permitted in the database at a time.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) As long as at least one reader is actively reading, newly arriving readers are allowed to enter, keeping writers waiting indefinitely.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Prioritizing readers allows a continuous stream of readers to hold the rw_mutex, completely starving any pending writers.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q61</span>
+        <span class="mcq-tag">Dining Philosophers Deadlock Prevention (Level 1 Problem 2)</span>
+      </div>
+      <div class="mcq-q">In the classical 5 Dining Philosophers problem, all five philosophers sit simultaneously and pick up their left chopstick first, causing deadlock. Which strategy prevents this deadlock?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Asymmetric chopstick pickup: odd-numbered philosophers pick up left then right; even-numbered pick up right then left.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Increasing the number of chopsticks from 5 to 6.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Forcing philosophers to hold their chopstick indefinitely until food arrives.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Removing the mutual exclusion requirement on chopsticks.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Asymmetric chopstick pickup: odd-numbered philosophers pick up left then right; even-numbered pick up right then left.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Asymmetric pickup breaks the Circular Wait condition because adjacent philosophers will never compete for the same initial chopstick simultaneously.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q62</span>
+        <span class="mcq-tag">4 Coffman Conditions for Deadlock</span>
+      </div>
+      <div class="mcq-q">Which of the following describes the 'Hold and Wait' condition for deadlock?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A process currently holding at least one resource is waiting to acquire additional resources held by other processes.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> A resource can only be released voluntarily by the process holding it.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A closed chain of processes exists such that each holds a resource needed by the next.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Resources cannot be shared simultaneously.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A process currently holding at least one resource is waiting to acquire additional resources held by other processes.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Hold and Wait requires processes to retain already-allocated resources while requesting additional locked resources.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q63</span>
+        <span class="mcq-tag">Deadlock Prevention: Eliminating Hold and Wait</span>
+      </div>
+      <div class="mcq-q">How can an operating system eliminate the Hold and Wait condition to prevent deadlocks?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Require a process to request and receive all required resources simultaneously before commencing execution, or release all resources before requesting new ones.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Preempt resources whenever a process requests another resource.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Enforce strict alphabetical ordering on resource IDs.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Allow infinite instances of every resource type.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Require a process to request and receive all required resources simultaneously before commencing execution, or release all resources before requesting new ones.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Preventing hold and wait ensures a process never holds resources while blocking for others, though it lowers resource utilization.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q64</span>
+        <span class="mcq-tag">Deadlock Prevention: Circular Wait (demo_deadlock_prevention.c)</span>
+      </div>
+      <div class="mcq-q">How does <code>demo_deadlock_prevention.c</code> prevent deadlock between threads competing for <code>first_mutex</code> and <code>second_mutex</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> It defines a global linear order of locks and requires all threads to acquire first_mutex before second_mutex.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It aborts thread 2 whenever thread 1 starts.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It converts all mutexes into spinlocks.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It sleeps for 10 seconds before checking if locks are free.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) It defines a global linear order of locks and requires all threads to acquire first_mutex before second_mutex.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Imposing a strict total order F: R -> N on resource acquisitions mathematically invalidates the Circular Wait condition.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q65</span>
+        <span class="mcq-tag">Resource Allocation Graph (RAG) Multi-Instance Rule</span>
+      </div>
+      <div class="mcq-q">In a Resource Allocation Graph where resources have <strong>multiple instances</strong>, what does the presence of a cycle signify?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A cycle is a necessary condition for deadlock, but not a sufficient condition (deadlock is not guaranteed).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> A cycle guarantees that deadlock has definitively occurred.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A cycle proves that the system is in a safe state.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> A cycle indicates that preemption has been successfully triggered.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A cycle is a necessary condition for deadlock, but not a sufficient condition (deadlock is not guaranteed).</div>
+        <div class="mcq-expl"><strong>Why:</strong> If resources have multiple instances, a cycle is necessary but not sufficient; if every resource has exactly 1 instance, a cycle is necessary and sufficient.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q66</span>
+        <span class="mcq-tag">Banker's Algorithm Need Matrix (Level 1 Problem 2)</span>
+      </div>
+      <div class="mcq-q">A system has 3 resource types (A, B, C). Process P0 has $\text{Max} = [4, 2, 3]$ and $\text{Allocation} = [1, 0, 1]$. What is the $\text{Need}$ vector for process P0?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> [3, 2, 2]</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> [5, 2, 4]</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> [4, 2, 3]</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> [1, 0, 1]</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) [3, 2, 2]</div>
+        <div class="mcq-expl"><strong>Why:</strong> Need = Max - Allocation = [4-1, 2-0, 3-1] = [3, 2, 2].</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q67</span>
+        <span class="mcq-tag">Banker's Algorithm Safe State Definition</span>
+      </div>
+      <div class="mcq-q">Under what condition is a system state declared 'safe' in Banker's Deadlock Avoidance algorithm?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> If there exists at least one sequence of processes <P1, P2, ..., Pn> such that each process's maximum need can be satisfied with currently available resources plus resources released by completed predecessors.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> If all processes are currently utilizing 100% of their allocated resources.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> If the number of running processes is strictly less than the number of CPU cores.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> If no resource has more than 1 instance.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) If there exists at least one sequence of processes <P1, P2, ..., Pn> such that each process's maximum need can be satisfied with currently available resources plus resources released by completed predecessors.</div>
+        <div class="mcq-expl"><strong>Why:</strong> A safe sequence guarantees that even under worst-case maximum claims, every process can run to completion without deadlocking.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q68</span>
+        <span class="mcq-tag">Safe State vs Unsafe State vs Deadlock</span>
+      </div>
+      <div class="mcq-q">In Banker's deadlock avoidance theory, which statement regarding system states is strictly correct?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> An unsafe state is not necessarily deadlocked, but all deadlocked states are unsafe states.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> An unsafe state guarantees that deadlock has already occurred.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A safe state guarantees that deadlock will occur unless processes are preempted.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Deadlock can occur from both safe and unsafe states.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) An unsafe state is not necessarily deadlocked, but all deadlocked states are unsafe states.</div>
+        <div class="mcq-expl"><strong>Why:</strong> A safe state guarantees no deadlock; an unsafe state means the system cannot prevent deadlock if processes request maximum claims.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q69</span>
+        <span class="mcq-tag">Deadlock Detection: Wait-For Graph</span>
+      </div>
+      <div class="mcq-q">When detecting deadlocks in systems with only single-instance resource types, what graph transformation is applied?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Resources are collapsed out of the Resource Allocation Graph to create a Wait-For Graph where edges go directly between processes; a cycle indicates deadlock.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Processes are removed, leaving only resource dependencies.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> A bipartite graph is converted into a directed tree.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> All edges are reversed and tested for topological sorting.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Resources are collapsed out of the Resource Allocation Graph to create a Wait-For Graph where edges go directly between processes; a cycle indicates deadlock.</div>
+        <div class="mcq-expl"><strong>Why:</strong> In a Wait-For graph, Pi -> Pj means Pi is waiting for Pj to release a resource; a cycle is necessary and sufficient for deadlock.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q70</span>
+        <span class="mcq-tag">Linux Signal Immunity</span>
+      </div>
+      <div class="mcq-q">Which Linux signals can <strong>neither</strong> be caught by a custom signal handler, nor blocked by a signal mask, nor ignored?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> SIGKILL and SIGSTOP</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> SIGINT and SIGTERM</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> SIGSEGV and SIGFPE</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> SIGCHLD and SIGALRM</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) SIGKILL and SIGSTOP</div>
+        <div class="mcq-expl"><strong>Why:</strong> The Linux kernel guarantees that SIGKILL (9) and SIGSTOP always immediately terminate or suspend a process respectively without user interception.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+  </section>
+  <!-- ================= UNIT 3 ================= -->
+  <section id="u3-sec" class="unit-section" data-unit="u3">
+    <h2><span class="unit-badge">Unit 3</span> Memory Management & Virtual Memory (30 MCQs)</h2>
+
+    <h3>1. Ultra-Short Pointers: Memory, Paging, Page Replacement</h3>
+    <div class="pointer">
+      <strong>Base &amp; Limit Registers:</strong> Base = starting physical address; Limit = range/size of logical address space. Legal condition: $0 \le \text{Logical Address} &lt; \text{Limit}$. Physical address = $\text{Base} + \text{Logical Address}$. If $\text{Logical} \ge \text{Limit} \implies$ <strong>Hardware Trap</strong> (Addressing/Segmentation fault).
+    </div>
+    <div class="pointer">
+      <strong>Contiguous Allocation Strategies:</strong><br>
+      • <em>First Fit:</em> Allocate first hole that is big enough (fastest).<br>
+      • <em>Best Fit:</em> Allocate smallest hole that is big enough (leaves smallest leftover hole).<br>
+      • <em>Worst Fit:</em> Allocate largest hole (leaves largest leftover hole; worst utilization).
+    </div>
+    <div class="pointer">
+      <strong>Fragmentation:</strong><br>
+      • <em>External:</em> Total memory exists to satisfy request, but is non-contiguous (solved by compaction or paging). 50% rule: $0.5N$ blocks lost.<br>
+      • <em>Internal:</em> Allocated block is slightly larger than requested (paging has internal fragmentation on last page, average $0.5 \times \text{page size}$).
+    </div>
+    <div class="pointer">
+      <strong>Paging Structure:</strong> Logical address split into Page Number ($p$) and Offset ($d$). Physical address = Frame Number ($f$) + Offset ($d$). Frame size = Page size ($2^d$ bytes). Paging completely eliminates external fragmentation.
+    </div>
+    <div class="pointer">
+      <strong>Page Table Size:</strong> Number of entries = $2^{\text{address bits} - \text{offset bits}}$. Size = $\text{Entries} \times \text{PTE size}$. For 32-bit address, 4KB page ($d=12$), 4-byte PTE: $2^{20} \times 4\text{ B} = 4\text{ MB}$ per process.
+    </div>
+    <div class="pointer">
+      <strong>Two-Level Paging:</strong> 32-bit address with 4KB page ($12$ bits offset): $p_1$ (10 bits) + $p_2$ (10 bits) + $d$ (12 bits). Without TLB, 1 memory access requires <strong>3 physical memory accesses</strong> (outer table, inner table, data frame).
+    </div>
+    <div class="pointer">
+      <strong>TLB Effective Access Time (EAT):</strong> $\text{EAT} = \alpha \times (t_{\text{TLB}} + t_{\text{RAM}}) + (1-\alpha) \times (t_{\text{TLB}} + 2 \times t_{\text{RAM}})$ where $\alpha$ is TLB hit ratio.
+    </div>
+    <div class="pointer">
+      <strong>Copy-on-Write (COW):</strong> <code>fork()</code> shares pages read-only. When parent or child attempts to write, a page-protection trap occurs; OS copies <em>only that page</em> to a new frame and marks it read-write.
+    </div>
+    <div class="pointer">
+      <strong>Minor vs Major Page Fault:</strong> Minor fault = page is already in RAM (shared library, free list, COW copy) with zero disk I/O. Major fault = page must be read from disk (high latency).
+    </div>
+    <div class="pointer">
+      <strong>Dirty Bit (Modify Bit):</strong> Indicates if page was written to. If clean (0), overwrite immediately on page replacement. If dirty (1), must write back to disk before replacement (doubles fault time).
+    </div>
+    <div class="pointer">
+      <strong>Belady's Anomaly (FIFO):</strong> Increasing the number of frame allocations causes the number of page faults to <strong>increase</strong>! (e.g., string <code>1,2,3,4,1,2,5,1,2,3,4,5</code>: 3 frames = 9 faults, 4 frames = 10 faults).
+    </div>
+    <div class="pointer">
+      <strong>Stack Algorithms (LRU &amp; Optimal):</strong> The set of pages in memory for $n$ frames is always a subset of pages for $n+1$ frames. Therefore, LRU and Optimal <strong>never</strong> suffer from Belady's Anomaly.
+    </div>
+    <div class="pointer">
+      <strong>Clock Algorithm (Second Chance):</strong> Circular queue of frames with a 1-bit reference bit. On fault: if bit is 0, replace frame; if bit is 1, clear bit to 0, advance clock hand, and continue searching.
+    </div>
+    <div class="pointer">
+      <strong>Thrashing:</strong> High paging activity where CPU spends more time swapping than executing. Occurs when $\sum \text{WSS}_i &gt; \text{Total Physical Memory}$. Prevented via Working Set Model or Page Fault Frequency (PFF).
+    </div>
+    <div class="pointer">
+      <strong>NUMA Memory Locality:</strong> In Non-Uniform Memory Access, CPUs access local memory directly on their own socket (fastest); remote memory requires crossing the interconnect bus (slow).
+    </div>
+
+    <h3>2. Code Patterns from Lab (Page Replacement Tracing)</h3>
+    <div class="code">
+// Pattern 1: FIFO Replacement (demo_fifo.c)
+if (not_found_in_frames) {
+    frames[count] = rs[i]; // count circular: count = (count + 1) % num_frames
+    page_faults++;
+}
+
+// Pattern 2: LRU Replacement with timestamps (demo_lru.c)
+if (found) { count[frame_idx] = ++next; } // update recent access counter
+else {
+    victim = find_min(count); // frame with smallest counter is Least Recently Used
+    frames[victim] = rs[i]; count[victim] = ++next; page_faults++;
+}
+
+// Pattern 3: Optimal Replacement looking ahead (demo_optimal.c)
+// Scan future references: pick victim frame whose next use is farthest in the future
+// (or never referenced again). Theoretical optimum benchmark.
+    </div>
+
+    <h3 id="u3-tables">3. Master Summary Tables: Unit 3</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Strategy</th>
+          <th>Search Criterion</th>
+          <th>Advantages</th>
+          <th>Disadvantages</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>First Fit</strong></td>
+          <td>First hole that is large enough</td>
+          <td>Fastest allocation; minimal search</td>
+          <td>Accumulates small holes at start of memory</td>
+        </tr>
+        <tr>
+          <td><strong>Best Fit</strong></td>
+          <td>Smallest hole that is large enough</td>
+          <td>Leaves smallest leftover fragment</td>
+          <td>Must search entire list; creates tiny unusable holes</td>
+        </tr>
+        <tr>
+          <td><strong>Worst Fit</strong></td>
+          <td>Largest available hole</td>
+          <td>Produces largest remaining hole</td>
+          <td>Poor storage utilization; worst performance</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Metric / Concept</th>
+          <th>Paging</th>
+          <th>Segmentation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Division Unit</strong></td>
+          <td>Fixed-size blocks (pages / frames)</td>
+          <td>Variable-size logical blocks (code, stack, heap)</td>
+        </tr>
+        <tr>
+          <td><strong>Programmer View</strong></td>
+          <td>Invisible to programmer (physical abstraction)</td>
+          <td>Visible to programmer (logical modules)</td>
+        </tr>
+        <tr>
+          <td><strong>Internal Fragmentation</strong></td>
+          <td>Yes (on last page of process)</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><strong>External Fragmentation</strong></td>
+          <td>No (pages map anywhere)</td>
+          <td>Yes (variable segments leave holes)</td>
+        </tr>
+        <tr>
+          <td><strong>Hardware Table</strong></td>
+          <td>Page Table (Page $	o$ Frame)</td>
+          <td>Segment Table (Segment Base + Limit)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Algorithm</th>
+          <th>Victim Selection</th>
+          <th>Belady's Anomaly?</th>
+          <th>Hardware Support / Overhead</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FIFO</strong></td>
+          <td>Oldest loaded page in memory</td>
+          <td><strong>Yes</strong></td>
+          <td>Simple circular queue; very low overhead</td>
+        </tr>
+        <tr>
+          <td><strong>Optimal (OPT)</strong></td>
+          <td>Page not used for longest future time</td>
+          <td><strong>No</strong> (Stack algorithm)</td>
+          <td>Impossible in practice (benchmark only)</td>
+        </tr>
+        <tr>
+          <td><strong>LRU</strong></td>
+          <td>Page not used for longest past time</td>
+          <td><strong>No</strong> (Stack algorithm)</td>
+          <td>Counters or stack; high hardware overhead</td>
+        </tr>
+        <tr>
+          <td><strong>Clock (Second Chance)</strong></td>
+          <td>First page with reference bit = 0</td>
+          <td>No</td>
+          <td>1 reference bit per frame; low overhead LRU approx</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>4. Unit 3 High-Yield MCQs (Questions 71–100)</h3>
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q71</span>
+        <span class="mcq-tag">Base and Limit Register Protection</span>
+      </div>
+      <div class="mcq-q">A CPU hardware architecture protects process memory using Base and Limit registers. A process has a Base register set to <code>14000</code> and a Limit register set to <code>2500</code>. What action occurs if the user process generates logical address <code>2600</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A hardware trap is triggered (segmentation/addressing violation) because logical address >= limit.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Physical memory address 16600 is accessed normally.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The operating system dynamically expands the limit register to 3000.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The CPU wraps the address modulo 2500, accessing address 14100.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A hardware trap is triggered (segmentation/addressing violation) because logical address >= limit.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Hardware checks if 0 <= Logical < Limit; since 2600 >= 2500, a trap to the OS kernel is immediately generated.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q72</span>
+        <span class="mcq-tag">Address Binding Timing</span>
+      </div>
+      <div class="mcq-q">Which address binding method allows a process to be swapped out to disk and reloaded into a completely different physical memory location during its execution?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Execution (Run) time binding using an MMU relocation register.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Compile-time binding.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Load-time binding.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Link-time static binding.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Execution (Run) time binding using an MMU relocation register.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Execution-time binding calculates physical addresses dynamically at runtime (Physical = Relocation + Logical), enabling dynamic relocation in RAM.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q73</span>
+        <span class="mcq-tag">Contiguous Memory Allocation Search</span>
+      </div>
+      <div class="mcq-q">Which contiguous memory allocation policy searches memory to allocate the partition that results in the <strong>smallest leftover hole</strong>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Best Fit</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> First Fit</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Worst Fit</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Next Fit</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Best Fit</div>
+        <div class="mcq-expl"><strong>Why:</strong> Best Fit selects the smallest hole that satisfies the request, leaving the smallest possible leftover fragment.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q74</span>
+        <span class="mcq-tag">External Fragmentation & 50% Rule</span>
+      </div>
+      <div class="mcq-q">According to the 50-percent rule of memory allocation under First Fit contiguous allocation, if $N$ blocks are allocated, approximately how much memory is lost to external fragmentation?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> 0.5 N blocks (meaning roughly 1/3 of total memory becomes unusable).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Exactly 50% of the entire physical RAM is lost.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Zero blocks, because contiguous allocation has no external fragmentation.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> N / 2 bytes are reserved for the kernel.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) 0.5 N blocks (meaning roughly 1/3 of total memory becomes unusable).</div>
+        <div class="mcq-expl"><strong>Why:</strong> The 50% rule states that for every N allocated blocks, another 0.5N blocks are lost to fragmentation, leaving 1/3 of memory unusable.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q75</span>
+        <span class="mcq-tag">Paging Fragmentation Characteristics</span>
+      </div>
+      <div class="mcq-q">Why does standard paging eliminate external fragmentation while still suffering from internal fragmentation?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Frames are fixed in size and can be allocated anywhere non-contiguously, but a process's final page rarely fills a frame completely.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Paging compacts memory dynamically every second.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Page tables convert all internal fragments into shared library code.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Pages are variable-sized blocks allocated exactly matching program requests.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Frames are fixed in size and can be allocated anywhere non-contiguously, but a process's final page rarely fills a frame completely.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Because any frame satisfies any page, no external holes exist; internal fragmentation occurs only in the last page (averaging 0.5 page size).</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q76</span>
+        <span class="mcq-tag">32-Bit Paging Address Breakdown</span>
+      </div>
+      <div class="mcq-q">In a 32-bit logical address architecture with a page size of 4 KB ($2^{12}$ bytes), how is the 32-bit virtual address divided into page number ($p$) and page offset ($d$)?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> p = 20 bits, d = 12 bits</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> p = 12 bits, d = 20 bits</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> p = 16 bits, d = 16 bits</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> p = 22 bits, d = 10 bits</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) p = 20 bits, d = 12 bits</div>
+        <div class="mcq-expl"><strong>Why:</strong> Page size 4 KB requires 12 bits offset (2^12 = 4096); remaining bits for page number = 32 - 12 = 20 bits.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q77</span>
+        <span class="mcq-tag">Page Table Size Calculation</span>
+      </div>
+      <div class="mcq-q">In a 32-bit paging system with 4 KB pages and 4 bytes per page table entry (PTE), what is the total size of a conventional single-level page table for a process?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> 4 MB</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> 1 MB</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> 2 MB</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> 512 KB</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) 4 MB</div>
+        <div class="mcq-expl"><strong>Why:</strong> Number of pages = 2^(32-12) = 2^20 entries = 1,048,576. Size = 2^20 * 4 bytes = 4 MB per process.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q78</span>
+        <span class="mcq-tag">Translation Lookaside Buffer (TLB)</span>
+      </div>
+      <div class="mcq-q">What is the functional purpose of a Translation Lookaside Buffer (TLB) in a paging hardware architecture?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> It serves as a fast associative hardware cache that stores recent virtual-to-physical page translations, avoiding a main memory lookup on a hit.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It stores the actual executable machine instructions of the operating system.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It acts as a replacement for secondary disk storage.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It stores thread stacks to prevent page faults.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) It serves as a fast associative hardware cache that stores recent virtual-to-physical page translations, avoiding a main memory lookup on a hit.</div>
+        <div class="mcq-expl"><strong>Why:</strong> TLB associative lookup checks entries in parallel in sub-nanosecond time; a TLB hit bypasses the in-memory page table access.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q79</span>
+        <span class="mcq-tag">TLB Effective Access Time (EAT) Calculation</span>
+      </div>
+      <div class="mcq-q">A paging system features a TLB with an 80% hit ratio. TLB lookup takes 20 ns and main memory access takes 100 ns. What is the Effective Access Time (EAT)?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> 140 ns</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> 120 ns</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> 100 ns</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> 220 ns</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) 140 ns</div>
+        <div class="mcq-expl"><strong>Why:</strong> EAT = 0.80 * (20 + 100) + (1 - 0.80) * (20 + 2 * 100) = 0.80 * 120 + 0.20 * 220 = 96 + 44 = 140 ns.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q80</span>
+        <span class="mcq-tag">Two-Level Paging Memory Access Count</span>
+      </div>
+      <div class="mcq-q">In a two-level hierarchical paging scheme where Translation Lookaside Buffer (TLB) caching is disabled or misses, how many physical memory references are required to fetch a single data word?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> 3 accesses (outer page table, inner page table, physical memory frame)</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> 2 accesses (page table, physical memory frame)</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> 1 access (direct translation)</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> 4 accesses (base register, outer table, inner table, frame)</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) 3 accesses (outer page table, inner page table, physical memory frame)</div>
+        <div class="mcq-expl"><strong>Why:</strong> Without TLB: access 1 reads outer page table; access 2 reads inner page table; access 3 reads actual data in frame.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q81</span>
+        <span class="mcq-tag">Inverted Page Table Architecture</span>
+      </div>
+      <div class="mcq-q">Why do 64-bit operating systems often implement Inverted Page Tables rather than traditional multi-level hierarchical page tables?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> An inverted page table has one entry per physical frame of memory rather than per logical page, drastically reducing page table memory footprint.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Inverted page tables completely eliminate page faults.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> They eliminate the need for an associative TLB cache.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> They allow user processes to modify kernel memory.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) An inverted page table has one entry per physical frame of memory rather than per logical page, drastically reducing page table memory footprint.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Hierarchical page tables for 64-bit address spaces require 4-5 levels and huge memory; inverted tables scale with physical RAM size.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q82</span>
+        <span class="mcq-tag">Segmentation vs Paging</span>
+      </div>
+      <div class="mcq-q">What is the fundamental architectural difference between Paging and Segmentation?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Paging allocates fixed-sized physical blocks transparent to the user; Segmentation allocates variable-sized logical units (code, stack, heap) matching the programmer's view.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Paging causes external fragmentation while segmentation does not.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Segmentation cannot be implemented with virtual memory.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Paging requires limit registers while segmentation does not.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Paging allocates fixed-sized physical blocks transparent to the user; Segmentation allocates variable-sized logical units (code, stack, heap) matching the programmer's view.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Paging is a physical memory management scheme; segmentation is a logical memory scheme reflecting modular programming constructs.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q83</span>
+        <span class="mcq-tag">Segmentation Address Translation</span>
+      </div>
+      <div class="mcq-q">In a segmentation system, a logical address is specified as $\langle s, d \rangle$. The segment table entry for segment $s$ has $\text{Limit} = 400$ and $\text{Base} = 1000$. What happens if the program references offset $d = 450$?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A trap to the operating system occurs (Segmentation Fault) because offset exceeds segment limit (450 >= 400).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Physical address 1450 is accessed normally.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The segment limit is automatically increased to 500.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The CPU wraps the offset modulo 400, accessing address 1050.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A trap to the operating system occurs (Segmentation Fault) because offset exceeds segment limit (450 >= 400).</div>
+        <div class="mcq-expl"><strong>Why:</strong> Hardware checks d < Limit; since 450 >= 400, a segmentation violation trap is triggered immediately.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q84</span>
+        <span class="mcq-tag">Virtual Memory & Demand Paging Concept</span>
+      </div>
+      <div class="mcq-q">What is the core operating philosophy of Demand Paging in a virtual memory system?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Pages are loaded into physical memory only when they are referenced during program execution (lazy loading).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> All pages of an executable are preloaded into memory before execution begins.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Pages are automatically swapped to disk every 10 milliseconds.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Virtual memory disables hardware interrupts during memory reads.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Pages are loaded into physical memory only when they are referenced during program execution (lazy loading).</div>
+        <div class="mcq-expl"><strong>Why:</strong> Demand paging brings pages into physical RAM only upon reference (on-demand), conserving physical frames and reducing startup time.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q85</span>
+        <span class="mcq-tag">Page Fault Handling Sequence</span>
+      </div>
+      <div class="mcq-q">When an instruction references a virtual page whose Valid-Invalid bit in the page table is set to 'i' (invalid), what hardware event occurs first?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The MMU generates a page fault trap to the operating system.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The CPU aborts the process immediately with an unrecoverable error.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The secondary storage drive boots the kernel.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The instruction restarts without OS intervention.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The MMU generates a page fault trap to the operating system.</div>
+        <div class="mcq-expl"><strong>Why:</strong> An invalid bit indicates the page is not in RAM; the MMU traps to the OS page-fault handler to fetch the page from swap disk.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q86</span>
+        <span class="mcq-tag">Copy-on-Write (COW) fork Mechanics</span>
+      </div>
+      <div class="mcq-q">When a process creates a child via <code>fork()</code> using Copy-on-Write (COW), what happens when the child attempts to modify a shared page?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A protection violation trap occurs; the OS allocates a new physical frame, copies the page contents, marks it read-write, and restarts the instruction.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The write directly mutates the parent's memory.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The child process is aborted with a segmentation fault.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The OS copies the entire process address space immediately.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A protection violation trap occurs; the OS allocates a new physical frame, copies the page contents, marks it read-write, and restarts the instruction.</div>
+        <div class="mcq-expl"><strong>Why:</strong> COW marks shared pages read-only; writing traps to the OS, which duplicates only that specific modified page frame.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q87</span>
+        <span class="mcq-tag">Minor vs Major Page Faults</span>
+      </div>
+      <div class="mcq-q">What is the key performance distinction between a Minor Page Fault and a Major Page Fault?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A minor page fault resolves without secondary storage I/O (e.g. page already in RAM or COW copy), whereas a major page fault requires reading from disk.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Minor page faults occur in kernel mode; major page faults occur in user mode.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Minor page faults terminate the process; major page faults restart it.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Minor faults require flushing the entire TLB; major faults do not.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A minor page fault resolves without secondary storage I/O (e.g. page already in RAM or COW copy), whereas a major page fault requires reading from disk.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Minor faults resolve within RAM (zero disk I/O, microsecond latency); major faults require disk read (millisecond latency).</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q88</span>
+        <span class="mcq-tag">Dirty Bit (Modify Bit) Role</span>
+      </div>
+      <div class="mcq-q">What is the operational purpose of the Dirty Bit (Modify Bit) associated with each page frame in virtual memory?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> To record if the page was modified while in RAM; if 0 (clean), it does not need to be written back to disk upon replacement.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> To check whether the page belongs to the kernel or user space.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> To trigger an interrupt when a page is read consecutively.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> To identify whether a page contains malicious code.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) To record if the page was modified while in RAM; if 0 (clean), it does not need to be written back to disk upon replacement.</div>
+        <div class="mcq-expl"><strong>Why:</strong> If dirty bit = 0, the victim frame can be overwritten without disk write, cutting page-replacement overhead in half.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q89</span>
+        <span class="mcq-tag">Lab demo_fifo.c & Belady's Anomaly</span>
+      </div>
+      <div class="mcq-q">For the reference string <code>1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</code>, increasing the frame allocation from 3 frames to 4 frames under FIFO page replacement causes:</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Belady's Anomaly (page faults increase from 9 to 10).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Page faults to decrease from 10 to 9.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Page faults to remain unchanged at 8.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Thrashing to occur immediately.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Belady's Anomaly (page faults increase from 9 to 10).</div>
+        <div class="mcq-expl"><strong>Why:</strong> Belady's anomaly occurs in FIFO when adding more physical frames increases the total number of page faults (9 -> 10).</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q90</span>
+        <span class="mcq-tag">Lab demo_optimal.c Replacement Policy</span>
+      </div>
+      <div class="mcq-q">When a page fault occurs under the Optimal (OPT/MIN) page replacement algorithm implemented in <code>demo_optimal.c</code>, which page frame is chosen for replacement?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The page that will not be used for the longest period of time in the future.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The page that was loaded earliest into memory.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The page that has been accessed least frequently in the past.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> The page currently occupying the lowest frame number.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The page that will not be used for the longest period of time in the future.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Optimal replacement looks ahead into the reference string and evicts the page with the farthest next reference.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q91</span>
+        <span class="mcq-tag">Lab demo_lru.c Stack Algorithm Property</span>
+      </div>
+      <div class="mcq-q">Why are Least Recently Used (LRU) and Optimal page replacement algorithms mathematically immune to Belady's Anomaly?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> They belong to the class of stack algorithms where the set of pages for n frames is always a subset of pages for n+1 frames.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> They enforce equal allocation of frames across all processes.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> They use a hardware reference bit to prevent frame thrashing.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> They prohibit pages from being referenced more than once.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) They belong to the class of stack algorithms where the set of pages for n frames is always a subset of pages for n+1 frames.</div>
+        <div class="mcq-expl"><strong>Why:</strong> In stack algorithms, memory for n frames is strictly a subset of memory for n+1 frames, guaranteeing faults never increase with added frames.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q92</span>
+        <span class="mcq-tag">Stack Algorithm Property</span>
+      </div>
+      <div class="mcq-q">Mathematically, a page replacement algorithm is classified as a 'Stack Algorithm' if it satisfies which condition?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The set of pages in memory for N frames is always a strict subset of the set of pages in memory for N+1 frames.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It can only be implemented using a hardware LIFO stack.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It executes with O(1) time complexity per page fault.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It guarantees zero page faults for strings of length less than 100.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The set of pages in memory for N frames is always a strict subset of the set of pages in memory for N+1 frames.</div>
+        <div class="mcq-expl"><strong>Why:</strong> This inclusion property guarantees that adding more frames will never cause a page fault on an access that hit with fewer frames.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q93</span>
+        <span class="mcq-tag">Clock (Second-Chance) Algorithm Logic</span>
+      </div>
+      <div class="mcq-q">In the Clock page replacement algorithm, when the clock hand encounters a candidate frame whose reference bit is currently set to <code>1</code>, what action is taken?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The reference bit is reset to 0, and the clock hand advances to inspect the next frame without replacing it.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The page is immediately evicted to disk.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The reference bit is set to 2 and the process is suspended.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> A page fault is declared and the CPU restarts.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The reference bit is reset to 0, and the clock hand advances to inspect the next frame without replacing it.</div>
+        <div class="mcq-expl"><strong>Why:</strong> The clock algorithm gives a second chance: if bit=1, it resets it to 0 and steps to the next frame; only if bit=0 does it replace the page.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q94</span>
+        <span class="mcq-tag">Enhanced Second-Chance Page Replacement</span>
+      </div>
+      <div class="mcq-q">The Enhanced Second-Chance page replacement algorithm classifies pages into four categories based on $\langle \text{reference}, \text{modify} \rangle$ bits. Which category is the highest priority candidate for replacement?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> (0, 0) — neither recently referenced nor modified.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> (0, 1) — not recently referenced, but modified.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> (1, 0) — recently referenced, but clean.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> (1, 1) — recently referenced and modified.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) (0, 0) — neither recently referenced nor modified.</div>
+        <div class="mcq-expl"><strong>Why:</strong> (0, 0) is optimal to evict because it has not been used recently and requires zero write-back I/O to secondary storage.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q95</span>
+        <span class="mcq-tag">Frame Allocation: Equal vs Proportional</span>
+      </div>
+      <div class="mcq-q">A system has 62 available frames to allocate between Process 1 (virtual size 10 pages) and Process 2 (virtual size 127 pages). Using proportional frame allocation, how many frames are assigned to Process 1?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Approximately 4 or 5 frames (proportional to its relative virtual size: 10/137 * 62).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Exactly 31 frames (equal split).</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> 0 frames, because it is below the minimum threshold.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> 62 frames.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Approximately 4 or 5 frames (proportional to its relative virtual size: 10/137 * 62).</div>
+        <div class="mcq-expl"><strong>Why:</strong> Proportional allocation distributes frames based on size: a_i = (s_i / S) * m = (10 / 137) * 62 ≈ 4.5 frames.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q96</span>
+        <span class="mcq-tag">Global vs Local Page Replacement</span>
+      </div>
+      <div class="mcq-q">What is a major risk when using Global Page Replacement across multiple multiprogrammed processes?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> A single poorly behaving process can steal frames from other processes and drag the entire system into thrashing.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Processes cannot share read-only libraries.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Page replacement execution time grows exponentially with the number of processes.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> CPU scheduling must be permanently switched to FCFS.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) A single poorly behaving process can steal frames from other processes and drag the entire system into thrashing.</div>
+        <div class="mcq-expl"><strong>Why:</strong> Under global replacement, high faulting processes can allocate frames away from well-behaved processes, causing cascading page faults.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q97</span>
+        <span class="mcq-tag">Thrashing Cause & Working Set Threshold</span>
+      </div>
+      <div class="mcq-q">A system is described as <strong>thrashing</strong> when processes spend more time paging than executing instructions. What is the fundamental cause of thrashing?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> The sum of the working-set sizes of active processes exceeds total physical memory capacity (sum(WSS_i) > D).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> The CPU scheduler assigns time quanta that are too short.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> The page size is configured larger than the average process code size.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Multiple processes share a single non-reentrant library.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) The sum of the working-set sizes of active processes exceeds total physical memory capacity (sum(WSS_i) > D).</div>
+        <div class="mcq-expl"><strong>Why:</strong> When total working sets exceed physical RAM, processes constantly steal pages from each other, triggering cascading page faults.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q98</span>
+        <span class="mcq-tag">Working Set Model Principle</span>
+      </div>
+      <div class="mcq-q">The Working Set model of process execution is grounded upon which fundamental empirical property of programs?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Locality of Reference (spatial and temporal locality).</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Amdahl's Law.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Belady's Anomaly.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> Moore's Law.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Locality of Reference (spatial and temporal locality).</div>
+        <div class="mcq-expl"><strong>Why:</strong> Processes execute within clusters of localized pages (routines, loops, local data); defining working sets preserves these active pages in RAM.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q99</span>
+        <span class="mcq-tag">Page Fault Frequency (PFF) Strategy</span>
+      </div>
+      <div class="mcq-q">How does the Page Fault Frequency (PFF) strategy prevent thrashing?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> It establishes upper and lower page fault rate bounds: if a process's rate exceeds the upper bound, it is granted more frames; if below the lower bound, frames are revoked.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> It stops the clock timer whenever a page fault occurs.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> It limits every process to a strict maximum of 3 frames.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> It forces all pages to be swapped to disk every minute.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) It establishes upper and lower page fault rate bounds: if a process's rate exceeds the upper bound, it is granted more frames; if below the lower bound, frames are revoked.</div>
+        <div class="mcq-expl"><strong>Why:</strong> PFF directly monitors page fault rates, dynamically allocating frames to hungry processes and reclaiming them from idle processes.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+
+    <div class="mcq" onclick="toggleMCQ(this)">
+      <div class="mcq-meta">
+        <span class="mcq-num">Q100</span>
+        <span class="mcq-tag">NUMA Memory Locality Advantage (Unit 3 Slide 8)</span>
+      </div>
+      <div class="mcq-q">In Non-Uniform Memory Access (NUMA) multiprocessor architectures, why do operating system memory managers aggressively prioritize allocating memory from a thread's local node?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-letter">A</span> Local memory is attached directly to the CPU's local bus, providing substantially lower latency and higher bandwidth than remote memory across the interconnect.</div>
+        <div class="mcq-opt"><span class="opt-letter">B</span> Remote memory nodes cannot store page tables.</div>
+        <div class="mcq-opt"><span class="opt-letter">C</span> Local memory prevents virtual memory fragmentation entirely.</div>
+        <div class="mcq-opt"><span class="opt-letter">D</span> CPUs cannot execute instructions located in remote memory nodes.</div>
+      </div>
+      <div class="hidden-answer">
+        <div class="mcq-answer">✓ Correct Answer: A) Local memory is attached directly to the CPU's local bus, providing substantially lower latency and higher bandwidth than remote memory across the interconnect.</div>
+        <div class="mcq-expl"><strong>Why:</strong> In NUMA, local memory access is fast; remote memory requires traversing the interconnect bus, adding significant latency.</div>
+      </div>
+      <div class="reveal-hint">Hover or tap to reveal answer</div>
+    </div>
+  </section>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        html.classList.add('light');
+        btn.textContent = '🌙 Dark';
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.remove('light');
+        html.classList.add('dark');
+        btn.textContent = '☀️ Light';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Initialize theme based on preference or saved setting
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      document.getElementById('theme-toggle').textContent = '🌙 Dark';
+    } else {
+      document.documentElement.classList.add('dark');
+      document.getElementById('theme-toggle').textContent = '☀️ Light';
+    }
+
+    function toggleAnswers(btn) {
+      const body = document.body;
+      if (body.classList.contains('show-all')) {
+        body.classList.remove('show-all');
+        btn.classList.remove('active');
+        btn.innerHTML = '🙈 Quiz Mode: Hidden (Test Yourself)';
+      } else {
+        body.classList.add('show-all');
+        btn.classList.add('active');
+        btn.innerHTML = '👁️ Quiz Mode: Revealed (Study)';
+      }
+    }
+
+    function toggleMCQ(el) {
+      el.classList.toggle('revealed');
+    }
+
+    function filterUnit(unit) {
+      const sections = document.querySelectorAll('.unit-section');
+      sections.forEach(sec => {
+        if (unit === 'all' || sec.getAttribute('data-unit') === unit) {
+          sec.style.display = 'block';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

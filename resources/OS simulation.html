@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17365d">
+<title>OS Synchronization Student Game Lab</title>
+<style>
+:root{--navy:#17365d;--blue:#2563eb;--cyan:#0891b2;--green:#16a34a;--red:#dc2626;--amber:#d97706;--purple:#7c3aed;--ink:#172033;--muted:#64748b;--bg:#f4f7fb;--card:#fff;--line:#dce4ef}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px Arial,sans-serif;overflow-x:hidden}
+button,input,select{font:inherit}button{touch-action:manipulation}
+.top{background:linear-gradient(135deg,#17365d,#285a92);color:#fff;padding:18px 14px}
+.top h1{font-size:23px;line-height:1.2;margin:0 0 7px}.top p{margin:4px 0;font-size:13px;line-height:1.4}
+.fac{margin-top:10px;font-size:12px;line-height:1.5}
+#nav{display:flex;overflow-x:auto;gap:7px;padding:9px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;scrollbar-width:none}
+#nav::-webkit-scrollbar{display:none}#nav button{flex:0 0 auto;min-height:44px;padding:9px 13px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--navy);font-weight:700}
+#nav button.active{background:#eaf2ff;border-color:#8db3eb}
+main{max-width:760px;margin:auto;padding:12px 9px 30px}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+h2{color:var(--navy);font-size:20px;margin:0 0 9px}h3{margin:12px 0 7px;font-size:16px;color:var(--navy)}
+p{line-height:1.5}.muted{color:var(--muted);font-size:13px}
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:11px 0}
+.btn{min-height:48px;border:0;border-radius:12px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}.btn.secondary{background:#e9eef6;color:var(--navy)}.btn.good{background:var(--green)}.btn.warn{background:#fff0d3;color:#784600}.btn.danger{background:#ffe5e5;color:#991b1b}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.stat{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;background:#fbfdff}.stat b{display:block;color:var(--navy);font-size:21px}.stat span{font-size:11px;color:var(--muted)}
+.threadgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.thread{border:2px solid #cbd5e1;border-radius:13px;padding:11px;background:#fff;min-height:96px}.thread.run{border-color:var(--blue);background:#eef5ff}.thread.cs{border-color:var(--red);background:#fff0f0}.thread.block{border-color:var(--amber);background:#fff7e6}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#e8eef7;color:var(--navy);font-size:11px;font-weight:800;margin:2px}
+.lock{height:125px;width:125px;border-radius:24px;border:5px solid #94a3b8;display:grid;place-items:center;text-align:center;margin:12px auto;font-weight:900}.lock.held{border-color:var(--red);background:#ffe8e8;color:#991b1b}
+.memory{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.cell{height:44px;border:1px solid #cbd5e1;border-radius:7px;display:grid;place-items:center;font-size:12px;background:#fff}.cell.hot{background:#fff0d3;border-color:#e4a33c}
+.trace{background:#0f172a;color:#dbeafe;border-radius:12px;padding:11px;min-height:160px;max-height:230px;overflow:auto;white-space:pre-wrap;font:12px Consolas,monospace}
+.question{border-left:5px solid var(--blue);background:#eef5ff;border-radius:9px;padding:11px;margin:9px 0}.question input{width:100%;margin-top:8px;min-height:44px;padding:9px;border:1px solid #bdc9da;border-radius:8px}
+.heroBtn{width:100%;min-height:56px;border:0;border-radius:14px;background:var(--blue);color:#fff;font-weight:900;font-size:16px}
+select,input{min-height:44px;padding:9px;border:1px solid #bdc9da;border-radius:8px;background:#fff;max-width:100%}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.row label{display:flex;align-items:center;gap:6px}
+.bar{height:15px;background:#e7edf5;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--blue)}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choice button{min-height:48px;border:1px solid var(--line);background:#fff;border-radius:10px;font-weight:800}
+.success{color:#166534;background:#eaf8ef;border:1px solid #b7e1c5;padding:9px;border-radius:9px}.error{color:#991b1b;background:#fff0f0;border:1px solid #efb2b2;padding:9px;border-radius:9px}
+@media(min-width:600px){.actions{grid-template-columns:repeat(4,1fr)}.stats{grid-template-columns:repeat(4,1fr)}.threadgrid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header class="top">
+<h1>🎮 OS Synchronization Student Game Lab</h1>
+<p>Learn by predicting → stepping → competing → explaining.</p>
+<div class="fac"><b>Dr. Gokulakrishnan S</b> · Associate Professor<br>Department of Computer Science and Engineering<br>PES University, Electronic City Campus · Bengaluru–560100-Karnataka-India</div>
+</header>
+<nav id="nav"></nav><div id="jsStatus" style="padding:7px 10px;background:#eaf8ef;color:#166534;text-align:center;font-size:12px">Simulator loading…</div>
+<main id="main"></main>
+<script>
+const tabs=[
+["home","🏠 Home"],["race","🏁 Race"],["critical","🎯 Critical Section"],["peterson","🧠 Peterson"],
+["mutex","🔒 Mutex"],["semaphore","🚦 Semaphore"],["atomic","⚡ Atomic"],["tas","🔐 Test-and-Set"],["cas","🔄 CAS"],["challenge","🏆 Challenge"]
+];
+const nav=document.getElementById("nav"),main=document.getElementById("main");
+tabs.forEach(([id,label])=>{let b=document.createElement("button");b.textContent=label;b.dataset.id=id;b.onclick=()=>openTab(id);nav.appendChild(b)});
+function openTab(id){document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===id));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.id===id));window.scrollTo({top:0,behavior:"smooth"})}
+main.innerHTML=`
+<section id="home" class="panel active">
+<div class="card"><h2>👋 Welcome, Students!</h2><p>This mobile-first simulator is designed for your classroom practice session. Every experiment has <b>Step</b>, <b>Run</b>, <b>Pause</b> and <b>Reset</b>.</p><button class="heroBtn" onclick="openTab('race')">START PRACTICE ▶</button></div>
+<div class="card"><h2>📚 Practice Mission</h2><div class="question"><b>Mission:</b> Find out why a race condition happens, then use synchronization mechanisms to prevent it.</div><p class="muted">Recommended: Race → Critical Section → Peterson → Mutex → Semaphore → Atomic → Test-and-Set → CAS → Challenge.</p></div>
+</section>
+<section id="race" class="panel"><div class="card"><h2>🏁 Race Condition</h2><p>Two threads increment one shared counter. In unsafe mode, the sequence <b>READ → WRITE</b> can overlap.</p>
+<div class="actions"><button class="btn" onclick="Race.step()">STEP</button><button class="btn good" onclick="Race.run()">▶ RUN</button><button class="btn secondary" onclick="Race.pause()">PAUSE</button><button class="btn warn" onclick="Race.toggle()">SAFE / UNSAFE</button></div>
+<div class="stats"><div class="stat"><b id="rval">0</b><span>Counter</span></div><div class="stat"><b id="rmode">UNSAFE</b><span>Mode</span></div><div class="stat"><b id="rstep">0</b><span>Steps</span></div><div class="stat"><b id="rlost">0</b><span>Lost updates</span></div></div>
+<div id="rthreads" class="threadgrid" style="margin-top:10px"></div><h3>Shared Memory</h3><div id="rmemory" class="memory"></div><h3>Trace</h3><div id="rtrace" class="trace"></div></div></section>
+<section id="critical" class="panel"><div class="card"><h2>🎯 Critical Section & Mutual Exclusion</h2><p>Try unsafe mode and deliberately allow both threads to enter. Then enable mutual exclusion.</p>
+<div class="actions"><button class="btn" onclick="CS.step()">STEP</button><button class="btn good" onclick="CS.run()">▶ RUN</button><button class="btn secondary" onclick="CS.pause()">PAUSE</button><button class="btn warn" onclick="CS.toggle()">SAFE / UNSAFE</button><button class="btn danger" onclick="CS.reset()">RESET</button></div>
+<div class="stats"><div class="stat"><b id="co">FREE</b><span>Owner</span></div><div class="stat"><b id="cv">0</b><span>Violations</span></div><div class="stat"><b id="ce">0</b><span>Entries</span></div><div class="stat"><b id="cm">SAFE</b><span>Mode</span></div></div><div id="clock" class="lock">CRITICAL<br>SECTION<br>FREE</div><div id="cthreads" class="threadgrid"></div><h3>Trace</h3><div id="ctrace" class="trace"></div></div></section>
+<section id="peterson" class="panel"><div class="card"><h2>🧠 Peterson's Solution</h2><p>Two-process software solution using <b>flag[0]</b>, <b>flag[1]</b> and <b>turn</b>.</p>
+<div class="actions"><button class="btn" onclick="Pet.step()">STEP</button><button class="btn good" onclick="Pet.run()">▶ RUN</button><button class="btn secondary" onclick="Pet.pause()">PAUSE</button><button class="btn warn" onclick="Pet.contend()">CONTENT</button><button class="btn danger" onclick="Pet.reset()">RESET</button></div>
+<div class="stats"><div class="stat"><b id="pf0">0</b><span>flag[0]</span></div><div class="stat"><b id="pf1">0</b><span>flag[1]</span></div><div class="stat"><b id="ptu">0</b><span>turn</span></div><div class="stat"><b id="pvi">0</b><span>Violations</span></div></div><div id="pthreads" class="threadgrid" style="margin-top:10px"></div><div id="pcondition" class="question"></div><h3>Trace</h3><div id="ptrace" class="trace"></div></div></section>
+<section id="mutex" class="panel"><div class="card"><h2>🔒 Mutex Lock</h2><p>Only the owner can enter the protected critical section. A competing thread blocks.</p>
+<div class="actions"><button class="btn" onclick="Mutex.step()">STEP</button><button class="btn good" onclick="Mutex.run()">▶ RUN</button><button class="btn secondary" onclick="Mutex.pause()">PAUSE</button><button class="btn warn" onclick="Mutex.contend()">FORCE CONTENTION</button><button class="btn danger" onclick="Mutex.reset()">RESET</button></div>
+<div class="stats"><div class="stat"><b id="mo">FREE</b><span>Owner</span></div><div class="stat"><b id="mb">0</b><span>Blocked</span></div><div class="stat"><b id="me">0</b><span>Entries</span></div><div class="stat"><b id="ms">FREE</b><span>Mutex</span></div></div><div id="mlock" class="lock">MUTEX<br>FREE</div><div id="mthreads" class="threadgrid"></div><h3>Trace</h3><div id="mtrace" class="trace"></div></div></section>
+<section id="semaphore" class="panel"><div class="card"><h2>🚦 Counting Semaphore</h2><p>Set the number of available resources. Observe <b>wait(S)</b> and <b>signal(S)</b>.</p>
+<div class="row"><label>Initial S <input id="sinit" type="number" min="0" max="5" value="2"></label></div>
+<div class="actions"><button class="btn" onclick="Sem.step()">STEP</button><button class="btn good" onclick="Sem.run()">▶ RUN</button><button class="btn secondary" onclick="Sem.pause()">PAUSE</button><button class="btn danger" onclick="Sem.reset()">RESET</button></div>
+<div class="stats"><div class="stat"><b id="sv">2</b><span>S value</span></div><div class="stat"><b id="si">0</b><span>Inside</span></div><div class="stat"><b id="sb">0</b><span>Blocked</span></div><div class="stat"><b id="se">0</b><span>Entries</span></div></div><div id="sthreads" class="threadgrid"></div><h3>Trace</h3><div id="strace" class="trace"></div></div></section>
+<section id="atomic" class="panel"><div class="card"><h2>⚡ Atomic Operations</h2><p>Compare a normal non-atomic increment with an atomic read-modify-write operation.</p><select id="amode"><option value="unsafe">Non-atomic</option><option value="atomic">Atomic</option></select>
+<div class="actions"><button class="btn" onclick="Atomic.step()">STEP</button><button class="btn good" onclick="Atomic.run()">▶ RUN</button><button class="btn secondary" onclick="Atomic.pause()">PAUSE</button><button class="btn danger" onclick="Atomic.reset()">RESET</button></div>
+<div class="stats"><div class="stat"><b id="av">0</b><span>Shared value</span></div><div class="stat"><b id="ao">0</b><span>Operations</span></div><div class="stat"><b id="al">0</b><span>Lost updates</span></div><div class="stat"><b id="ax">NON-ATOMIC</b><span>Mode</span></div></div><div id="athreads" class="threadgrid"></div><h3>Trace</h3><div id="atrace" class="trace"></div></div></section>
+<section id="tas" class="panel"><div class="card"><h2>🔐 Test-and-Set</h2><p>Atomic instruction: <b>old = TestAndSet(lock)</b>. It returns the old value and sets lock to 1.</p>
+<div class="actions"><button class="btn" onclick="TAS.step()">STEP</button><button class="btn good" onclick="TAS.run()">▶ RUN</button><button class="btn secondary" onclick="TAS.pause()">PAUSE</button><button class="btn danger" onclick="TAS.reset()">RESET</button></div>
+<div class="stats"><div class="stat"><b id="tl">0</b><span>Lock</span></div><div class="stat"><b id="to">FREE</b><span>Owner</span></div><div class="stat"><b id="ts">0</b><span>Spin attempts</span></div><div class="stat"><b id="te">0</b><span>Entries</span></div></div><div id="tthreads" class="threadgrid"></div><div class="question">Think: If Test-and-Set returns <b>1</b>, should the thread enter the critical section? <b>No — it spins.</b></div><div id="ttrace" class="trace"></div></div></section>
+<section id="cas" class="panel"><div class="card"><h2>🔄 Compare-and-Swap (CAS)</h2><p>CAS succeeds only if current memory equals the expected value.</p>
+<div class="row"><label>Expected <input id="cex" type="number" value="0"></label><label>New <input id="cnew" type="number" value="1"></label></div>
+<div class="actions"><button class="btn" onclick="CAS.step()">CAS STEP</button><button class="btn danger" onclick="CAS.reset()">RESET</button></div>
+<div class="stats"><div class="stat"><b id="cval">0</b><span>Memory</span></div><div class="stat"><b id="cres">READY</b><span>Result</span></div><div class="stat"><b id="cok">0</b><span>Success</span></div><div class="stat"><b id="cf">0</b><span>Failure</span></div></div><div class="question">Prediction: memory = 0, Expected = 0 → CAS should <b>SUCCEED</b>.</div><div id="ctrace2" class="trace"></div></div></section>
+<section id="challenge" class="panel"><div class="card"><h2>🏆 Student Challenge</h2><p>Answer before checking. Score yourself.</p><div id="quiz"></div><div class="actions"><button class="btn" onclick="Quiz.check()">CHECK ANSWERS</button><button class="btn secondary" onclick="Quiz.reset()">NEW QUIZ</button></div><div id="qresult"></div></div></section>`;
+
+function trace(id,a){$(id).textContent=a.slice(-30).join("\\n")}
+function $(id){return document.getElementById(id)}
+function timer(fn){let x=null;return{run(){if(!x)x=setInterval(fn,520)},pause(){if(x)clearInterval(x);x=null}}}
+
+const Race=(()=>{let s,t=timer(()=>Race.step());function render(){$("rval").textContent=s.v;$("rmode").textContent=s.safe?"SAFE":"UNSAFE";$("rstep").textContent=s.n;$("rlost").textContent=s.lost;$("rthreads").innerHTML=[0,1].map(i=>`<div class="thread ${s.pc[i]?"run":""}"><b>Thread T${i}</b><br>${s.pc[i]?"WRITE":"READ"}<br>local = ${s.l[i]}</div>`).join("");$("rmemory").innerHTML=Array.from({length:8},(_,i)=>`<div class="cell ${i==s.v%8?"hot":""}">${i==s.v%8?"counter":"—"}</div>`).join("");trace("rtrace",s.log)}
+function reset(){t.pause();s={v:0,n:0,lost:0,safe:false,pc:[0,0],l:[0,0],log:["Reset: both threads READY."]};render()}function toggle(){s.safe=!s.safe;s.log.push("Mode → "+(s.safe?"SAFE":"UNSAFE"));render()}function step(){let i=s.n%2;if(s.safe){s.v++;s.n++;s.log.push(`T${i}: atomic-style increment → ${s.v}`)}else if(!s.pc[i]){s.l[i]=s.v;s.pc[i]=1;s.log.push(`T${i}: READ counter=${s.v}`)}else{s.v=s.l[i]+1;s.pc[i]=0;s.n++;s.log.push(`T${i}: WRITE counter=${s.v}`);if(s.pc[1-i])s.lost++}render()}return{reset,toggle,step,run:t.run,pause:t.pause}})();Race.reset();
+
+const CS=(()=>{let s,t=timer(()=>CS.step());function render(){$("co").textContent=s.o==null?"FREE":"T"+s.o;$("cv").textContent=s.v;$("ce").textContent=s.e;$("cm").textContent=s.safe?"SAFE":"UNSAFE";$("clock").className="lock"+(s.o!=null?" held":"");$("clock").innerHTML=s.o==null?"CRITICAL<br>SECTION<br>FREE":"T"+s.o+" IN<br>CRITICAL<br>SECTION";$("cthreads").innerHTML=[0,1].map(i=>`<div class="thread ${s.o==i?"cs":""}"><b>T${i}</b><br>${s.o==i?"INSIDE CS":s.safe?"WAIT / READY":"CAN TRY ENTRY"}</div>`).join("");trace("ctrace",s.log)}
+function reset(){t.pause();s={o:null,v:0,e:0,k:0,safe:true,log:["Mutual exclusion SAFE."]};render()}function toggle(){s.safe=!s.safe;s.log.push("Mode → "+(s.safe?"SAFE":"UNSAFE"));render()}function step(){let i=s.k++%2;if(s.o==null){s.o=i;s.e++;s.log.push(`T${i}: ENTER critical section`)}else if(s.o==i){s.o=null;s.log.push(`T${i}: EXIT critical section`)}else if(s.safe)s.log.push(`T${i}: BLOCKED — T${s.o} owns CS`);else{s.v++;s.e++;s.log.push(`T${i}: UNSAFE ENTRY → violation ${s.v}`)}render()}return{reset,toggle,step,run:t.run,pause:t.pause}})();CS.reset();
+
+const Pet=(()=>{let s,t=timer(()=>Pet.step());function render(){$("pf0").textContent=s.f[0];$("pf1").textContent=s.f[1];$("ptu").textContent=s.turn;$("pvi").textContent=s.v;$("pthreads").innerHTML=[0,1].map(i=>`<div class="thread ${s.in==i?"cs":""}"><b>T${i}</b><br>${["SET FLAG","WAIT","CRITICAL","EXIT"][s.pc[i]]}<br>flag=${s.f[i]}</div>`).join("");$("pcondition").innerHTML=`Entry rule: <b>flag[j] = 0 OR turn = i</b><br>Current: T0=${s.pc[0]}, T1=${s.pc[1]}, turn=${s.turn}`;trace("ptrace",s.log)}
+function reset(){t.pause();s={f:[0,0],turn:0,pc:[0,0],in:null,v:0,k:0,log:["Peterson initialized."]};render()}function contend(){s.f=[0,0];s.pc=[0,0];s.log.push("Contention created: both processes request entry.");render()}function step(){let i=s.k++%2,j=1-i;if(s.pc[i]==0){s.f[i]=1;s.turn=j;s.pc[i]=1;s.log.push(`T${i}: flag[${i}]=1; turn=${j}`)}else if(s.pc[i]==1){if(!s.f[j]||s.turn==i){s.pc[i]=2;s.in=i;s.log.push(`T${i}: condition TRUE → ENTER`)}else s.log.push(`T${i}: condition FALSE → WAIT`)}else{s.f[i]=0;s.pc[i]=0;s.in=null;s.log.push(`T${i}: EXIT → flag[${i}]=0`)}render()}return{reset,contend,step,run:t.run,pause:t.pause}})();Pet.reset();
+
+const Mutex=(()=>{let s,t=timer(()=>Mutex.step());function render(){$("mo").textContent=s.o==null?"FREE":"T"+s.o;$("mb").textContent=s.b;$("me").textContent=s.e;$("ms").textContent=s.o==null?"FREE":"LOCKED";$("mlock").className="lock"+(s.o!=null?" held":"");$("mlock").innerHTML=s.o==null?"MUTEX<br>FREE":"LOCKED<br>BY T"+s.o;$("mthreads").innerHTML=[0,1].map(i=>`<div class="thread ${s.o==i?"cs":s.bl[i]?"block":""}"><b>T${i}</b><br>${s.o==i?"CRITICAL":s.bl[i]?"BLOCKED":"READY"}</div>`).join("");trace("mtrace",s.log)}
+function reset(){t.pause();s={o:null,b:0,e:0,k:0,bl:[0,0],log:["mutex unlocked."]};render()}function contend(){s.o=0;s.bl[1]=1;s.b=1;s.log.push("T0 owns mutex; T1 attempts lock → BLOCKED.");render()}function step(){let i=s.k++%2;if(s.o==null){s.o=i;s.e++;s.log.push(`T${i}: mutex_lock() SUCCESS`)}else if(s.o==i){s.o=null;s.log.push(`T${i}: mutex_unlock()`)}else{s.b++;s.bl[i]=1;s.log.push(`T${i}: mutex_lock() → BLOCKED`)}render()}return{reset,contend,step,run:t.run,pause:t.pause}})();Mutex.reset();
+
+const Sem=(()=>{let s,t=timer(()=>Sem.step());function render(){$("sv").textContent=s.v;$("si").textContent=s.ins;$("sb").textContent=s.b;$("se").textContent=s.e;$("sthreads").innerHTML=[0,1,2].map(i=>`<div class="thread ${s.inT.includes(i)?"cs":s.blT.includes(i)?"block":""}"><b>T${i}</b><br>${s.inT.includes(i)?"RESOURCE":s.blT.includes(i)?"BLOCKED":"READY"}</div>`).join("");trace("strace",s.log)}
+function reset(){t.pause();s={v:Math.max(0,Math.min(5,+$("sinit").value||0)),ins:0,b:0,e:0,k:0,inT:[],blT:[],log:["Semaphore initialized."]};render()}function step(){let i=s.k++%3;if(s.inT.includes(i)){s.inT=s.inT.filter(x=>x!=i);s.ins--;s.v++;s.log.push(`T${i}: signal(S) → S=${s.v}`)}else if(s.v>0){s.v--;s.ins++;s.e++;s.inT.push(i);s.log.push(`T${i}: wait(S) SUCCESS → S=${s.v}`)}else{s.b++;s.blT.push(i);s.log.push(`T${i}: wait(S) → BLOCKED`)}render()}return{reset,step,run:t.run,pause:t.pause}})();Sem.reset();
+
+const Atomic=(()=>{let s,t=timer(()=>Atomic.step());function render(){$("av").textContent=s.v;$("ao").textContent=s.o;$("al").textContent=s.l;$("ax").textContent=$("amode").value=="atomic"?"ATOMIC":"NON-ATOMIC";$("athreads").innerHTML=[0,1].map(i=>`<div class="thread ${s.pc[i]?"run":""}"><b>T${i}</b><br>${s.pc[i]?"WRITE":"READ"}<br>local=${s.lc[i]}</div>`).join("");trace("atrace",s.log)}
+function reset(){t.pause();s={v:0,o:0,l:0,pc:[0,0],lc:[0,0],k:0,log:["Reset."]};render()}function step(){let i=s.k++%2;if($("amode").value=="atomic"){s.v++;s.o++;s.log.push(`T${i}: atomic read-modify-write → ${s.v}`)}else if(!s.pc[i]){s.lc[i]=s.v;s.pc[i]=1;s.log.push(`T${i}: READ ${s.v}`)}else{s.v=s.lc[i]+1;s.pc[i]=0;s.o++;s.log.push(`T${i}: WRITE ${s.v}`);if(s.pc[1-i])s.l++}render()}return{reset,step,run:t.run,pause:t.pause}})();Atomic.reset();
+
+const TAS=(()=>{let s,t=timer(()=>TAS.step());function render(){$("tl").textContent=s.l;$("to").textContent=s.o==null?"FREE":"T"+s.o;$("ts").textContent=s.sp;$("te").textContent=s.e;$("tthreads").innerHTML=[0,1].map(i=>`<div class="thread ${s.o==i?"cs":""}"><b>T${i}</b><br>${s.o==i?"CRITICAL":"TRY TEST-AND-SET"}</div>`).join("");trace("ttrace",s.log)}
+function reset(){t.pause();s={l:0,o:null,sp:0,e:0,k:0,log:["lock=0."]};render()}function step(){let i=s.k++%2;if(s.o==i){s.l=0;s.o=null;s.log.push(`T${i}: EXIT → lock=0`)}else{let old=s.l;s.l=1;if(old==0){s.o=i;s.e++;s.log.push(`T${i}: TestAndSet returned 0 → ACQUIRE`)}else{s.sp++;s.log.push(`T${i}: TestAndSet returned 1 → SPIN`)}}render()}return{reset,step,run:t.run,pause:t.pause}})();TAS.reset();
+
+const CAS=(()=>{let s;function render(){$("cval").textContent=s.v;$("cok").textContent=s.ok;$("cf").textContent=s.f;trace("ctrace2",s.log)}function reset(){s={v:0,ok:0,f:0,log:["Memory initialized to 0."]};$("cres").textContent="READY";render()}function step(){let e=+$("cex").value,n=+$("cnew").value;if(s.v==e){s.v=n;s.ok++;$("cres").textContent="SUCCESS";s.log.push(`CAS(${e},${n}) → SUCCESS; memory=${n}`)}else{s.f++;$("cres").textContent="FAILURE";s.log.push(`CAS(${e},${n}) → FAILURE; actual=${s.v}`)}render()}return{reset,step}})();CAS.reset();
+
+const Quiz=(()=>{const q=[["Two processes access shared data and the final result depends on timing. This is a ______.","race condition"],["Only one process may be in the critical section at a time. This property is ______.","mutual exclusion"],["Peterson uses flag[] and ______.","turn"],["A mutex is used to protect a ______.","critical section"],["wait(S) when S=0 normally makes a process ______.","block"],["Test-and-Set returns the old value and sets the lock to ______.","1"],["CAS succeeds when memory equals the ______ value.","expected"]];function reset(){$("quiz").innerHTML=q.map((x,i)=>`<div class="question"><b>${i+1}. ${x[0]}</b><input id="qq${i}" placeholder="Type your answer"></div>`).join("");$("qresult").textContent=""}function check(){let n=0;q.forEach((x,i)=>{let a=$("qq"+i).value.trim().toLowerCase();if(a==x[1])n++});$("qresult").className=n>=6?"success":"question";$("qresult").textContent=`Score: ${n}/${q.length}. ${n==q.length?"🏆 Perfect!":n>=6?"Excellent! Review one missed concept.":"Keep practicing — use the simulators and try again."}`}return{reset,check}})();Quiz.reset();document.getElementById("jsStatus").textContent="✓ Simulator ready — tap a topic above to begin";
+</script></body></html>

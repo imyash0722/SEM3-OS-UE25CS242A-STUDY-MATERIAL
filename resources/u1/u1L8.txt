@@ -1,0 +1,189 @@
+================================================================================
+OPERATING SYSTEMS (UE25CS242A)
+Unit 1: Introduction and Process Management
+Lecture 8: Priority & Round-Robin (RR) Scheduling Algorithms
+Instructor: Dr. Anitha K (anithak@pes.edu), Department of CSE
+Acknowledgement: Prof. Pavan A C
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Priority Scheduling
+   - Priority Association & Conventions (Smallest Integer vs. Highest Integer)
+   - Preemptive vs. Non-Preemptive Priority Scheduling
+   - Starvation (Indefinite Blocking) & Aging Solution
+   - Numerical Example 1: Non-Preemptive Priority Scheduling (Gantt Chart & Wait Times)
+   - Numerical Example 2: Preemptive Priority Scheduling (Gantt Chart & Wait Times)
+2. Round-Robin (RR) Scheduling
+   - Design Principles for Time-Sharing Systems
+   - Time Quantum (Time Slice) & Circular Ready Queue
+   - Numerical Example: RR Scheduling (q = 4 ms) & Gantt Chart
+   - RR Performance Analysis:
+     * Maximum Wait Formula: (n - 1) * q
+     * Trade-off: Large Quantum (Degenerates to FCFS) vs. Small Quantum (Context-Switch Overhead)
+     * Rule of Thumb for Quantum Selection
+
+================================================================================
+SLIDE-BY-SLIDE CONTENT & NUMERICAL EXAMPLES
+================================================================================
+
+--------------------------------------------------------------------------------
+Slide 4: Priority Scheduling Concepts
+--------------------------------------------------------------------------------
+• Definition:
+  - An integer priority number is associated with each process.
+  - The CPU is allocated to the process with the highest priority.
+  - Conventions:
+    * In standard Silberschatz text: Smallest integer = Highest priority.
+    * Note: Some systems (and certain problem formulations) define largest integer = highest priority. Always verify the convention used.
+• Execution Modes:
+  - **Non-Preemptive**: Once the CPU is given to a process, it runs to completion (or yields for I/O).
+  - **Preemptive**: If a newly arrived process has a higher priority than the currently running process, the current process is immediately preempted.
+• Relationship with SJF:
+  - Shortest-Job-First (SJF) is simply a special case of priority scheduling where priority $p$ is the inverse of the predicted next CPU burst length ($p = 1 / \tau$).
+• Major Problem: Starvation (Indefinite Blocking):
+  - A low-priority process can be left waiting indefinitely in the ready queue if a steady stream of higher-priority processes continuously arrives.
+  - Real-world case: When MIT's IBM 7094 was shut down in 1973, a low-priority process submitted in 1967 was discovered still waiting to run.
+• Solution: **Aging**:
+  - Gradually increase the priority of processes that wait in the system for long durations (e.g., increase priority by 1 every 15 minutes) until the process eventually achieves high enough priority to execute.
+
+--------------------------------------------------------------------------------
+Slide 5: Example of Non-Preemptive Priority Scheduling
+--------------------------------------------------------------------------------
+• Convention: Smallest integer = Highest priority (1 is highest).
+• Process Table (All arrive at time t = 0):
+  Process   Burst Time   Priority
+  P1        10 ms        3
+  P2        1 ms         1  (Highest)
+  P3        2 ms         4
+  P4        1 ms         5  (Lowest)
+  P5        5 ms         2
+
+• Priority Ordering:
+  P2 (Pri 1) -> P5 (Pri 2) -> P1 (Pri 3) -> P3 (Pri 4) -> P4 (Pri 5)
+
+• Gantt Chart:
+  +---------+---------------+-----------------------------+---------+---------+
+  |   P2    |      P5       |             P1              |   P3    |   P4    |
+  +---------+---------------+-----------------------------+---------+---------+
+  0         1               6                            16        18        19
+
+• Waiting Times:
+  - P1: 6 ms
+  - P2: 0 ms
+  - P3: 16 ms
+  - P4: 18 ms
+  - P5: 1 ms
+
+• Average Waiting Time:
+  - Sum = 6 + 0 + 16 + 18 + 1 = 41 ms
+  - Average Waiting Time = 41 / 5 = 8.2 ms
+
+--------------------------------------------------------------------------------
+Slide 6: Example of Preemptive Priority Scheduling
+--------------------------------------------------------------------------------
+• Convention: Higher number = Higher priority (5 is highest).
+• Process Table:
+  Process   Arrival Time   Burst Time   Priority
+  P1        0 ms           4 ms         2
+  P2        1 ms           3 ms         3
+  P3        2 ms           1 ms         4
+  P4        3 ms           5 ms         5  (Highest)
+  P5        4 ms           2 ms         5  (Highest)
+
+• Step-by-Step Scheduling Timeline:
+  - t = 0: Only P1 is present (pri 2). P1 begins execution.
+  - t = 1: P2 arrives (pri 3). Since 3 > 2, P1 is preempted (P1 remaining = 4 - 1 = 3 ms).
+    P2 begins execution.
+  - t = 2: P3 arrives (pri 4). Since 4 > 3, P2 is preempted (P2 remaining = 3 - 1 = 2 ms).
+    P3 begins execution.
+  - t = 3: P3 finishes its 1 ms burst and terminates at t = 3.
+    P4 arrives (pri 5). P4 begins execution.
+  - t = 4: P5 arrives (pri 5). Since P4 and P5 have equal priority (5), FCFS tie-breaking keeps P4 running.
+  - t = 8: P4 completes its 5 ms burst and terminates at t = 8.
+    Highest priority among ready processes: P5 (pri 5, burst 2 ms). P5 runs from 8 to 10.
+  - t = 10: P5 completes and terminates at t = 10.
+    Ready processes: P2 (pri 3, remaining 2 ms) and P1 (pri 2, remaining 3 ms).
+    P2 has higher priority (3 > 2), so P2 resumes from 10 to 12.
+  - t = 12: P2 completes and terminates at t = 12.
+    P1 resumes and runs from 12 to 15.
+  - t = 15: P1 completes.
+
+• Gantt Chart:
+  +-------+-------+-------+-------------------+-----------+-----------+---------------+
+  |  P1   |  P2   |  P3   |        P4         |    P5     |    P2     |      P1       |
+  +-------+-------+-------+-------------------+-----------+-----------+---------------+
+  0       1       2       3                   8          10          12              15
+
+• Waiting Times:
+  - Waiting Time = Completion Time - Arrival Time - Burst Time
+  - P1: Completion = 15, Arrival = 0, Burst = 4 -> Wait = 15 - 0 - 4 = 11 ms
+        (Waited: 12 - 1 = 11 ms)
+  - P2: Completion = 12, Arrival = 1, Burst = 3 -> Wait = 12 - 1 - 3 = 8 ms
+        (Waited: [2 to 10] = 8 ms)
+  - P3: Completion = 3,  Arrival = 2, Burst = 1 -> Wait = 3 - 2 - 1 = 0 ms
+  - P4: Completion = 8,  Arrival = 3, Burst = 5 -> Wait = 8 - 3 - 5 = 0 ms
+  - P5: Completion = 10, Arrival = 4, Burst = 2 -> Wait = 10 - 4 - 2 = 4 ms
+        (Waited: [4 to 8] = 4 ms)
+
+• Average Waiting Time:
+  - Sum = 11 + 8 + 0 + 0 + 4 = 23 ms
+  - Average Waiting Time = 23 / 5 = 4.6 ms
+
+--------------------------------------------------------------------------------
+Slide 7, 8 & 9: Round-Robin (RR) Scheduling
+--------------------------------------------------------------------------------
+• Design Principles:
+  - Designed specifically for time-sharing / interactive multitasking systems.
+  - Preemptive algorithm based on FCFS principles.
+  - Defines a small unit of time called a **Time Quantum** (or time slice), typically 10 to 100 milliseconds.
+  - Ready queue is managed as a circular FIFO queue.
+  - Scheduler allocates the CPU to each process in FIFO order for up to 1 time quantum.
+  - If process finishes before quantum expires, it releases CPU voluntarily.
+  - If process is still running at the end of the quantum, a timer interrupt preempts it, and the process is appended to the tail of the ready queue.
+
+• Numerical Example (All arrive at time t = 0, Quantum q = 4 ms):
+  Process   Burst Time
+  P1        24 ms
+  P2        3 ms
+  P3        3 ms
+
+  - Execution:
+    * t = 0: P1 runs for 4 ms (remaining = 20 ms). Put at tail of queue.
+    * t = 4: P2 runs for 3 ms (needs only 3 ms). Terminates at t = 7.
+    * t = 7: P3 runs for 3 ms (needs only 3 ms). Terminates at t = 10.
+    * t = 10 onwards: Only P1 remains in ready queue. P1 executes in remaining 4 ms quanta until completion at t = 30.
+
+• Gantt Chart:
+  +---------+------+------+---------+---------+---------+---------+---------+
+  |   P1    |  P2  |  P3  |   P1    |   P1    |   P1    |   P1    |   P1    |
+  +---------+------+------+---------+---------+---------+---------+---------+
+  0         4      7     10        14        18        22        26        30
+
+• Waiting Times:
+  - P1: Runs [0 to 4], waits [4 to 10], then runs to finish. Wait = 10 - 4 = 6 ms.
+  - P2: Waits [0 to 4]. Wait = 4 ms.
+  - P3: Waits [0 to 7]. Wait = 7 ms.
+
+• Average Waiting Time:
+  - Sum = 6 + 4 + 7 = 17 ms
+  - Average Waiting Time = 17 / 3 = 5.66 ms
+
+• Round-Robin Performance Analysis:
+  - Maximum Waiting Bound:
+    * If there are $n$ processes in the ready queue and time quantum is $q$:
+    * Each process gets $1/n$ of the CPU time in chunks of at most $q$.
+    * No process waits longer than $(n - 1) \times q$ time units until its next time slice.
+  - Impact of Time Quantum $q$:
+    * If $q$ is extremely large ($\to \infty$): RR degenerates into simple FCFS.
+    * If $q$ is extremely small (e.g. 1 $\mu$s): Produces the illusion of processor sharing (each of $n$ processes running on a CPU at $1/n$ speed), BUT excessive context switches consume nearly all CPU cycles in dispatch latency overhead.
+  - Practical Rule of Thumb:
+    * About 80% of CPU bursts should be shorter than the time quantum $q$ to avoid frequent preemptions for typical interactive tasks.
+
+--------------------------------------------------------------------------------
+Slide 10: Conclusion
+--------------------------------------------------------------------------------
+• End of Lecture 8.
+• Instructor: Dr. Anitha K. (anithak@pes.edu), Department of CSE, PES University.
+================================================================================
