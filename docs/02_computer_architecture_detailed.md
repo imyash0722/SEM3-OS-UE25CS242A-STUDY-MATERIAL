@@ -12,12 +12,21 @@
 - Special-purpose processors: disk controller, keyboard controller, GPU
 - Run limited instruction sets; offload main CPU (e.g., disk controller handles scheduling)
 
+### Special-Purpose Processors
+- Device-specific: disk, keyboard, graphics controller
+- Run limited instruction sets
+- Low-level components built into hardware, managed by OS
+- OS monitors their status
+- **Example**: Disk controller microprocessor
+  - Receives request sequences from CPU
+  - Implements own disk queue and scheduling algorithm
+  - Relieves main CPU of disk scheduling overhead
+
 ---
 
 ## 2.2 Multiprocessor Systems
 
 ### Characteristics
-
 - Two or more processors in close communication
 - Share: system bus, clock, memory, peripheral devices
 
@@ -106,9 +115,30 @@ cat /proc/cpuinfo | more
 | **NUMA** | Non-Uniform Memory Access — latency varies by CPU-memory distance; scheduler must consider locality |
 | **big.LITTLE** | Heterogeneous cores (performance + efficiency); scheduler migrates tasks based on workload |
 
+### Clustered Systems Details
+- Multiple systems working together, sharing storage via SAN
+- **Asymmetric clustering**: one machine in hot-standby mode
+- **Symmetric clustering**: multiple nodes running applications, monitoring each other
+- **HPC clusters**: apps must use parallelization (MPI/OpenMP)
+- **DLM (Distributed Lock Manager)**: avoids conflicting operations when multiple hosts access shared storage on SAN
+
 ---
 
-## 2.6 OS Operations: Dual-Mode & System Calls
+## 2.6 OS Operations: Multiprogramming, Multitasking & Dual-Mode
+
+### Multiprogramming (Batch System)
+- Single user cannot keep CPU and I/O busy at all times
+- Multiprogramming organizes jobs so CPU always has one to execute
+- Subset of total jobs kept in memory
+- One job selected and run via job scheduling
+- When it waits (I/O), OS switches to another job
+
+### Multitasking (Time-Sharing)
+- Logical extension: CPU switches jobs frequently so users can interact
+- Response time < 1 second
+- Each user has at least one program executing in memory → process
+- If several jobs ready → CPU scheduling
+- If processes don't fit in memory → swapping moves them in/out
 
 ### Dual-Mode Operation
 
@@ -143,7 +173,6 @@ USER MODE (bit=1)                 KERNEL MODE (bit=0)
 7. Control returns to user process
 
 ### Privileged Instructions (Kernel Mode Only)
-
 - Direct I/O manipulation
 - Clearing interrupts
 - Setting timer counters
@@ -152,12 +181,32 @@ USER MODE (bit=1)                 KERNEL MODE (bit=0)
 
 ---
 
+## 2.7 Interrupt-Driven Operations
+
+### Hardware vs Software Interrupts
+
+| Type | Source | Examples |
+|------|--------|----------|
+| **Hardware Interrupt** | Devices | Disk I/O complete, network packet, timer |
+| **Software Interrupt (Trap/Exception)** | Current instruction | Division by zero, invalid memory access (SIGSEGV), system call |
+
+### Dual-Mode Transition
+- **Trap/Interrupt**: Hardware switches from user → kernel mode (mode bit = 0)
+- **Return**: System switches back to user mode (mode bit = 1) before returning to user program
+
+### Multi-Mode Operation (Modern CPUs)
+- Increasingly support multi-mode operations
+- e.g., Virtual Machine Manager (VMM) mode for guest VMs
+
+---
+
 ## 2.7 Timer & CPU Protection
 
-**Purpose**: Prevent user programs from hogging CPU (infinite loops)
+### Purpose
+Prevent user programs from hogging CPU (infinite loops)
 
+### Mechanism
 ```
-Mechanism:
 1. Hardware timer set to interrupt after interval (fixed or variable)
 2. Variable timers: fixed-rate clock + internal counter
 3. OS loads initial counter via PRIVILEGED INSTRUCTION before dispatch
@@ -165,6 +214,29 @@ Mechanism:
 5. Counter reaches 0 → hardware timer interrupt
 6. Interrupt → OS scheduler → preempt current process → assign CPU to another
 ```
+
+### Timer Details
+- Fixed interval (e.g., 1/60 sec) or variable (1 msec to 1 sec)
+- Variable timer: fixed-rate clock + counter
+- OS sets counter via privileged instruction
+- Each clock tick decrements counter
+- Counter = 0 → hardware timer interrupt
+- Can terminate program running too long
+
+---
+
+## 2.8 OS Structure & Operations
+
+### Interrupt-Driven Operations
+- **Hardware interrupt** by devices
+- **Software interrupt** (exception/trap):
+  - Software error (division by zero)
+  - Request for OS service (system call)
+  - Infinite loop, processes modifying each other or OS
+
+### Other Process Problems
+- Infinite loop
+- Processes modifying each other or the OS
 
 ---
 
@@ -190,10 +262,14 @@ Mechanism:
 | What do cores share on-chip? | L2/L3 cache |
 | What prevents user program from executing privileged instruction? | Hardware checks mode bit; traps if user mode (bit=1) |
 | How does timer enable preemption? | Counter decrements each tick; at 0 → interrupt → scheduler runs |
+| What is the difference between AMP and SMP? | AMP: master-worker; SMP: all peers |
+| What does a disk controller do? | Implements own queue/scheduling; relieves main CPU |
+| What is a blade server? | Multiple processor/I/O boards in one chassis; each boots independently |
+| What is DLM in clustered systems? | Distributed Lock Manager for shared storage access |
 
 ---
 
-## 2.10 Exam-Relevant MCQ Patterns
+## 2.9 Exam-Relevant MCQ Patterns
 
 - **Q4**: Special-purpose processors (disk controller, GPU) offload main CPU
 - **Q5**: Multiprocessor advantages — throughput, economy of scale, fault tolerance (graceful degradation)
@@ -209,16 +285,18 @@ Mechanism:
 
 ---
 
-## 2.11 Practice Problems
+## 2.10 Practice Problems
 
 ### Problem 1: AMP vs SMP
 ```
 Describe the bottleneck in AMP and how SMP solves it.
+Answer: AMP master CPU becomes bottleneck scheduling all work; SMP makes all CPUs peers with own run queues.
 ```
 
 ### Problem 2: Multicore
 ```
 Explain why SMT (Hyper-Threading) improves utilization.
+Answer: Two threads on one core fill memory stall cycles of each other; near 100% core utilization.
 ```
 
 ### Problem 3: Dual-Mode
@@ -229,11 +307,13 @@ Draw the user/kernel mode transition diagram for a system call.
 ### Problem 4: Timer
 ```
 Explain how the timer interrupt enables preemptive scheduling.
+Answer: Counter decrements each tick; at 0 → interrupt → scheduler preempts current process.
 ```
 
 ### Problem 5: NUMA
 ```
 What is NUMA and why does the scheduler need to be NUMA-aware?
+Answer: Memory latency varies by CPU-node distance; scheduler must prefer local memory allocation.
 ```
 
 ---

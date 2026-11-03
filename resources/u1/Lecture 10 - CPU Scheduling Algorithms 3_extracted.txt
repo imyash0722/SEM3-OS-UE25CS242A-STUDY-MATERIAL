@@ -1,0 +1,122 @@
+OPERATING SYSTEMS 
+UE25CS242A
+Scheduling Algorithms
+Acknowledgement, Prof. Pavan A C
+Depart ment of Comput er Science & Engineering
+Dr. Anitha 
+K
+Slides Credits for all the PPTs of this course 
+• The 
+slides/diagrams 
+in 
+t his 
+course 
+are 
+an 
+adaptation, 
+combination, and enhancement of mat erial f rom t he following 
+resources:
+1. “Operat ing Syst em Concept s”, Abraham Silberschat z, Pet er Baer 
+Galvin, Greg Gagne 10t h Edit ion, John Wiley & Sons, Global 
+Edit ion, 2023.
+2. “Advanced Programming in t he Unix Environment ”, Richard 
+St evens and St ephen A Rago, Pearson, 3rd edit ion, 2017.
+3. Some concept ual t ext and diagram f rom “Operat ing Syst ems, 
+Int ernals and Design Principles”, William St allings, 9t h Edit ion, 
+Pearson 2018
+OPERATING SYSTEMS
+OPERATING SYSTEMS
+Multi-level Queue & Feedback Queue Scheduling
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+Multilevel Queue
+OPERATING SYSTEMS
+•
+Ready queue is part it ioned int o separat e queues:
+•
+foreground (int eract ive)
+•
+background (bat ch)
+•
+Process permanent ly assigned t o a queue
+•
+Each queue has it s own scheduling algorit hm:
+•
+foreground – RR
+•
+background – FCFS
+•
+In addit ion, scheduling must be done bet ween t he queues
+•
+Fixed priorit y scheduling; (serve all f rom foreground t hen f rom background).  
+Possibilit y of st arvat ion.
+•
+Time slice – each queue get s a cert ain amount of CPU t ime which it can schedule 
+t it
+i
+80%t
+f
+d i
+RR 20%t
+b
+k
+d i
+FCFS
+Multilevel Queue Scheduling
+OPERATING SYSTEMS
+• Each queue has absolut e priorit y over 
+lower-priorit y queues
+• No process in t he bat ch queue, for 
+example, could run unless t he queues 
+for syst em processes, int eract ive 
+processes, and int eract ive edit ing 
+processes were all empt y
+• If an int eract ive edit ing process ent ered 
+t he ready queue while a bat ch process 
+was running t he bat ch process would
+Multilevel Feedback Queue
+OPERATING SYSTEMS
+• A process can move bet ween t he various queues; aging can be 
+implement ed t his way
+• Mult ilevel-feedback-queue scheduler defined by t he following 
+paramet ers:
+•
+Number of queues
+•
+Scheduling algorit hms for each queue
+•
+Met hod used t o det ermine when t o upgrade a process
+•
+Met hod used t o det ermine when t o demot e a process
+•
+Met hod used t o det ermine which queue a process will ent er when t hat 
+process needs service
+Example of Multilevel Feedback Queue
+OPERATING SYSTEMS
+Multilevel feedback queues 
+Multilevel Feedback Queue
+OPERATING SYSTEMS
+•
+Three queues: 
+•
+Q0 – RR wit h t ime quant um 8 milliseconds
+•
+Q1 – RR t ime quant um 16 milliseconds
+•
+Q2 – FCFS
+•
+The scheduler first execut es all processes in queue 0. 
+•
+Only when queue 0 is empt y will it execut e processes in queue 1. 
+•
+Processes in queue 2 will be execut ed only if queues 0 and 1 are empt y. 
+•
+A process t hat arrives for queue 1 will preempt a process in queue 2. 
+•
+A process in queue 1 will in t urn be preempt ed by a process arriving in queue 
+0.
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Depart ment of Comput er Science and 
+Engineering

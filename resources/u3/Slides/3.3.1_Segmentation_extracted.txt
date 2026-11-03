@@ -1,0 +1,119 @@
+OPERATING SYSTEMS 
+UE25CS242A
+Segmentation
+Pavan A C
+Department of Computer Science & Engineering
+Slides Credits for all the PPTs of this course 
+The slides/diagrams in this course are an adaptation, combination, and enhancement of material from the following resources and persons:
+
+Slides of Operating System Concepts, Abraham Silberschatz, Peter Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 10th edition 2018
+Some conceptual text and diagram from Operating Systems - Internals and Design Principles, William Stallings, 9th edition 2018
+Some presentation transcripts from A. Frank – P. Weisberg
+Some conceptual text from Operating Systems: Three Easy Pieces, Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+OPERATING SYSTEMS
+Segmentation
+Pavan A C
+
+Department of Computer Science & Engineering
+Segmentation
+OPERATING SYSTEMS
+Memory-management scheme that supports user view of memory 
+A program is a collection of segments
+A segment is a logical unit such as:
+		main program
+		procedure 
+		function
+		method
+		object
+		local variables, global variables
+		common block
+		stack
+		symbol table
+		arrays
+User’s View of a Program
+OPERATING SYSTEMS
+Segmentation is a memory-management scheme that supports this programmer view of memory
+Each segment has a name and a length.
+Addresses specify segment name + offset within the segment
+Logical View of Segmentation
+OPERATING SYSTEMS
+physical memory space
+Segmentation Basics 
+OPERATING SYSTEMS
+Segmentation is a technique for breaking memory up into logical pieces
+Each “piece” is a grouping of related information
+data segments for each process
+code segments for each process
+data segments for the OS
+etc.
+Segmentation permits the physical address space of a process to be non-contiguous.
+Segmentation Architecture 
+OPERATING SYSTEMS
+Logical address consists of a two tuple:
+		<segment-number s, offset d>,
+Segment table – maps two-dimensional physical addresses; each table entry has:
+Segment base – contains the starting physical address where the segments reside in memory
+Segment limit – specifies the length of the segment
+Segment-table base register (STBR) points to the segment table’s location in memory
+Segment-table length register (STLR) indicates number of segments used by a program;
+	                  segment number s is legal if s < STLR
+Segmentation Hardware
+OPERATING SYSTEMS
+A logical address consists of two parts: a segment number, s, and an offset into that segment, d.
+The segment number is used as an index to the segment table. The offset d of the logical address must be between 0 and the segment limit. If it is not, we trap to the operating system (logical addressing attempt beyond end of segment).
+When an offset is legal, it is added to the segment base to produce the address in physical memory of the desired byte. The segment table is thus essentially an array of base–limit register pairs.
+Segmentation Hardware (Cont.)
+OPERATING SYSTEMS
+Segmentation Example 
+OPERATING SYSTEMS
+Segmentation Example (Cont.)
+OPERATING SYSTEMS
+We have five segments numbered from 0 through 4. The segments are stored in physical memory as shown. 
+The segment table has a separate entry for each segment, giving the beginning address of the segment in physical memory (or base) and the length of that segment (or limit). 
+Segmentation: Examples
+OPERATING SYSTEMS
+Consider the following segment table:
+What are the physical addresses for the following logical addresses?
+a. 0,430
+b. 1,10
+c. 2,500
+d. 3,400
+e. 4,112
+Segmentation: Examples
+OPERATING SYSTEMS
+Consider the following segment table:
+What are the physical addresses for the following logical addresses?
+a. 0,430
+b. 1,10
+c. 2,500
+d. 3,400
+e. 4,112
+Solution:
+0, 430 🡪219 + 430 = 649 
+1, 10 🡪2300 + 10 = 2310
+2, 500 Illegal address since size of segment 2 is 100 and the offset in logical address is 500.
+3, 400 🡪1327 + 400 = 1727 
+4, 112 Illegal address since size of segment 4 is 96 and the offset in logical address is 112.
+Shared Segments
+OPERATING SYSTEMS
+How will you implement shared memory using segmentation?
+Two processes may have segments with same base address 🡪 Segments will be mapped to both and hence shared.
+Linux Angle
+OPERATING SYSTEMS
+The Legacy of x86: Classic Intel processors utilized explicit segmentation registers (CS for Code, DS for Data, SS for Stack).
+Linux Flat Memory Model: Modern Linux on 64-bit systems essentially neutralizes segmentation. The kernel sets the base address of all segments to 0x00000000 and the limit to the maximum addressable space.
+What would be most common disadvantage of Segmentation? 
+External Fragmentation
+This leads us to the Paging mechanism
+Questions
+OPERATING SYSTEMS
+Q1: In a segmented memory system, what two components make up a logical address?
+Q2: When the CPU translates a logical address in a segmented system, what causes a "trap to the operating system" (a Segmentation Fault)?
+Q3: Why is it advantageous to separate the Stack and the Code into different segments?
+Q4: What is the "Flat Memory Model" used by modern Linux on x86-64 architectures?
+Q5: During process execution, which hardware component performs the addition of the segment base and the logical offset?
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering

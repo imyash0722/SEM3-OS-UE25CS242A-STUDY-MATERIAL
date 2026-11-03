@@ -1,0 +1,278 @@
+OPERATING SYSTEMS 
+UE25CS242A
+Operating-System Services and 
+Process Concept 
+Dr. Anitha K
+Depart ment of Comput er Science & Engineering
+Acknowledgement, Prof. 
+Pavan A C
+Slides Credits for all the PPTs of this course 
+• The 
+slides/diagrams 
+in 
+t his 
+course 
+are 
+an 
+adaptation, 
+combination, and enhancement of mat erial f rom t he following 
+resources:
+1. “Operat ing Syst em Concept s”, Abraham Silberschat z, Pet er Baer 
+Galvin, Greg Gagne 10t h Edit ion, John Wiley & Sons, Global 
+Edit ion, 2023.
+2. “Advanced Programming in t he Unix Environment ”, Richard 
+St evens and St ephen A Rago, Pearson, 3rd edit ion, 2017.
+3. Some concept ual t ext and diagram f rom “Operat ing Syst ems, 
+Int ernals and Design Principles”, William St allings, 9t h Edit ion, 
+Pearson 2018
+OPERATING SYSTEMS
+OPERATING SYSTEMS
+Operating-System Services and Process 
+Concept
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+A View of Operating System Services 
+OPERATING SYSTEMS
+Services
+OPERATING SYSTEMS
+•
+Operat ing syst ems provide an environment for execution of programs and services to 
+programs and users
+•
+Set of operat ing-syst em services provides f unct ions t hat are helpf ul t o t he user:
+•
+User interface - Almost all operat ing syst ems have a user int erf ace (UI).
+•
+Command-Line (CLI) - Command int erpret ers (shells)
+•
+Graphics User Interface (GUI)
+•
+Batch
+•
+Program execution - The syst em must be able t o load a program int o memory and t o 
+run t hat program, end execut ion, eit her normally or abnormally (indicat ing an error)
+•
+I/O operations -  A running program may require I/O, which may involve a file or an I/O 
+Services
+OPERATING SYSTEMS
+• File-system manipulation -  The file syst em is of part icular int erest . 
+Programs need t o read and writ e files and direct ories, creat e and 
+delet e t hem, search t hem, list file Informat ion, permission 
+management .
+• Communications – Processes may exchange informat ion, on t he same 
+comput er or bet ween comput ers over a net work
+• Communicat ions may be via shared memory or t hrough message 
+passing (packet s moved by t he OS)
+Services
+OPERATING SYSTEMS
+• Error detection – OS needs t o be constantly aware of possible 
+errors
+• May occur in t he CPU and memory hardware, in I/O devices, 
+or in a user program.
+• For each t ype of error, OS should t ake t he appropriate 
+action to ensure correct and consistent computing.
+• Debugging f acilit ies can great ly enhance the user’s and 
+programmer’s abilities to efficiently use the system.
+Services
+OPERATING SYSTEMS
+• Anot her set of OS f unct ions exist s for ensuring t he efficient operat ion of 
+t he syst em it self via resource sharing
+• Resource allocation – When mult iple users or mult iple jobs are running 
+concurrent ly, resources must be allocat ed t o each of t hem.
+• Many t ypes of resources -   CPU cycles, main memory, file st orage, I/O 
+devices.
+• Accounting - To keep t rack of which users use how much and what 
+kinds of computer resources.
+Services
+OPERATING SYSTEMS
+• Protection and security - The owners of informat ion st ored in a 
+mult iuser or net worked comput er syst em may want to control use of 
+that information. Concurrent processes should not interfere with each 
+other.
+• Protection involves ensuring t hat all access to system resources is 
+controlled.
+• Security of t he syst em f rom out siders requires user 
+authentication ,which  ext ends t o defending ext ernal I/O devices 
+f
+i
+lid
+t t
+t
+System calls
+OPERATING SYSTEMS
+• System calls provide an interface to the 
+services made available by an operat ing 
+syst em.
+• These calls are generally available as 
+routines 
+writ ten 
+in 
+a 
+higher 
+level 
+programming 
+language 
+or 
+assembly-
+language.
+• Example: Sequence of syst em calls used 
+for copying cont ent s f rom one file t o
+Types of System calls
+OPERATING SYSTEMS
+Syst em calls can be grouped roughly int o six major 
+cat egories:
+1. Process cont rol
+2. File manipulat ion
+3. Device manipulat ion
+4. Informat ion maint enance
+5. Communicat ions
+6. Prot ect ion
+Example of a system call
+OPERATING SYSTEMS
+• A C program invokes t he print f () 
+st at ement .
+• The C library int ercept s t his call and 
+invokes t he necessary syst em call 
+write() in t he operat ing syst em.
+• The C library t akes t he value ret urned 
+by writ e() and passes it back t o t he 
+user program.
+Process Concept
+OPERATING SYSTEMS
+•
+An operat ing syst em execut es a variet y of programs:
+•
+Bat ch syst em – jobs
+•
+Time-shared syst ems – user programs or tasks
+•
+Text book uses t he t erms job and process almost int erchangeably
+•
+Process – a program in execut ion; process execut ion must progress in 
+sequent ial f ashion
+•
+Program is passive ent it y st ored on disk (executable file), process is active 
+•
+Program becomes process when execut able file loaded int o memory
+•
+Execut ion of program st art ed via GUI mouse clicks, command line ent ry of it s 
+name, et c
+•
+One program can be several processes
+•
+Consider mult iple users execut ing t he same program
+Process Concept
+OPERATING SYSTEMS
+Structure of a process in memory
+• The program code, also called text section. 
+• Includes current act ivit y including program counter, 
+processor regist ers
+• Stack cont aining t emporary dat a
+• Funct ion paramet ers, ret urn addresses, local variables
+• Data section cont aining global variables
+• Heap cont aining memory dynamically allocat ed during 
+run t ime
+Memory Layout of a C Program
+OPERATING SYSTEMS
+Process State
+OPERATING SYSTEMS
+As a process execut es, it changes state
+• New:  The process is being creat ed
+• Running:  Inst ruct ions are being 
+execut ed
+• Waiting:  The process is wait ing for 
+some event t o occur
+• Ready:  The process is wait ing t o be 
+assigned t o a processor
+• Terminated:  The process has 
+finished execut ion
+Diagram of process 
+state.
+Process Control Block (PCB)
+OPERATING SYSTEMS
+Each process is represent ed in t he operat ing syst em by a 
+Process Cont rol Block (also called task control block)
+• Process st at e – running, wait ing, et c
+• Program count er – locat ion of inst ruct ion t o next execut e
+• CPU regist ers – cont ent s of all process-cent ric regist ers
+• CPU scheduling informat ion- priorit ies, scheduling queue 
+point ers
+• Memory-management informat ion – memory allocat ed t o t he 
+process
+• Account ing informat ion – CPU used, clock t ime elapsed since 
+st art , t ime limit s
+• I/O st at us informat ion – I/O devices allocat ed t o process, list 
+Process control block (PCB).
+Process Control Block (PCB)
+OPERATING SYSTEMS
+Process Scheduling
+OPERATING SYSTEMS
+• Maximize CPU use, quickly swit ch processes ont o CPU for t ime 
+sharing
+• Process scheduler select s among available processes for next 
+execut ion on CPU
+• Maint ains scheduling queues of processes
+• Job queue – set of all processes in t he syst em
+• Ready queue – set of all processes residing in main memory, 
+ready and wait ing t o execut e
+• Device queues – set of processes wait ing for an I/O device
+• Processes migrat e among t he various queues
+Schedulers
+OPERATING SYSTEMS
+• Processes can be described as eit her:
+• I/O-bound process – spends more t ime doing I/O t han 
+comput at ions, many short CPU burst s
+• CPU-bound process – spends more t ime doing comput at ions; 
+few very long CPU burst s
+• Long-t erm scheduler st rives for good process mix
+Representation of Process Scheduling
+OPERATING SYSTEMS
+Queueing-diagram representation of process scheduling
+CPU switch from process to process
+OPERATING SYSTEMS
+Diagram showing context switch from process to process.
+Schedulers
+OPERATING SYSTEMS
+• Short-term scheduler  (or CPU scheduler) – select s which process 
+should be execut ed next and allocat es CPU
+• Somet imes t he only scheduler in a syst em
+• Short -t erm scheduler is invoked f requent ly (milliseconds) 
+ 
+⇒
+(must be f ast )
+• Long-term scheduler  (or job scheduler) – select s which processes 
+should be brought int o t he ready queue
+• Long-t erm scheduler is invoked  inf requent ly (seconds, 
+minut es) 
+ (may be slow)
+⇒
+• The long-t erm scheduler cont rols t he degree of 
+multiprogramming
+Representation of Process Scheduling
+OPERATING SYSTEMS
+• Medium-term scheduler  can be added if degree of mult iple 
+programming needs t o decrease
+• Remove process f rom memory, st ore on disk, bring back in 
+f rom disk t o cont inue execut ion: swapping
+Context Switch
+OPERATING SYSTEMS
+• When CPU swit ches t o anot her process, t he syst em must save the state 
+of t he old process and load t he saved state for t he new process via a 
+context switch
+• Context of a process represent ed in t he PCB
+• Cont ext -swit ch t ime is overhead; t he syst em does no usef ul work while 
+swit ching
+• The more complex t he OS and t he PCB  t he longer t he cont ext 
+🡺
+swit ch
+Ti
+d
+d
+t
+h
+d
+t
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Depart ment of Comput er Science & Engineeri

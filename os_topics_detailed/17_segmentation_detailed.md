@@ -6,30 +6,41 @@
 
 ## 17.1 Segmentation Basics
 
-### Logical Address
+### Concept
+- Memory-management scheme supporting **programmer's view of memory**
+- Program = collection of **segments** (logical units):
+  - Main program, procedure, function, method, object
+  - Local/global variables, common block, stack, symbol table, arrays
 
+### Programmer's View
 ```
-<segment-number, offset>
+Logical address = <segment-number s, offset d>
 ```
-
-### Segment Table
-
-- Base + Limit per segment
-- Supports user view of memory (code, data, stack segments)
-
-### Characteristics
-
-| Aspect | Details |
-|--------|---------|
-| **Division Unit** | Variable-size logical blocks (code, stack, heap) |
-| **Programmer View** | Visible — matches modular programming |
-| **Internal Fragmentation** | No |
-| **External Fragmentation** | Yes (variable segments leave holes) |
-| **Hardware Table** | Segment Table (Segment Base + Limit) |
+- Segment = logical unit (code, data, stack, etc.)
+- Addresses: segment name + offset within segment
 
 ---
 
-## 17.2 Address Translation
+## 17.2 Segmentation Architecture
+
+### Logical Address
+```
+<segment-number s, offset d>
+```
+
+### Segment Table
+Each entry contains:
+- **Segment base**: Starting physical address of segment
+- **Segment limit**: Length of segment
+
+### Registers
+- **STBR** (Segment Table Base Register): Points to segment table in memory
+- **STLR** (Segment Table Length Register): Number of segments used
+  - Valid segment: `s < STLR`
+
+---
+
+## 17.3 Address Translation
 
 ```
 Logical:  s (segment #) | d (offset)
@@ -43,17 +54,49 @@ Logical:  s (segment #) | d (offset)
            Physical = Base + d
 ```
 
+### Example
+```
+Segment Table:
+Seg 0: Base=219, Limit=600
+Seg 1: Base=2300, Limit=14
+Seg 2: Base=90, Limit=100
+Seg 3: Base=1327, Limit=580
+Seg 4: Base=1952, Limit=96
+
+Logical → Physical:
+0,430  → 219+430=649        ✓
+1,10   → 2300+10=2310       ✓
+2,500  → Limit=100, offset=500 → TRAP!
+3,400  → 1327+400=1727      ✓
+4,112  → Limit=96, offset=112 → TRAP!
+```
+
 ---
 
 ## 17.3 Segmentation vs Paging
 
 | Metric / Concept | Paging | Segmentation |
 |------------------|--------|--------------|
-| **Division Unit** | Fixed-size blocks (pages / frames) | Variable-size logical blocks (code, stack, heap) |
+| **Division Unit** | Fixed-size blocks (pages/frames) | Variable-size logical blocks (code, stack, heap) |
 | **Programmer View** | Invisible (physical abstraction) | Visible (logical modules) |
 | **Internal Fragmentation** | Yes (on last page) | No |
 | **External Fragmentation** | No (pages map anywhere) | Yes (variable segments leave holes) |
 | **Hardware Table** | Page Table (Page → Frame) | Segment Table (Segment Base + Limit) |
+
+---
+
+## 17.4 Shared Segments
+- Two processes can have segments with same base address
+- Segments mapped to both → shared memory
+
+---
+
+## 17.5 Linux Angle: Flat Memory Model
+- **Legacy x86**: Explicit segmentation registers (CS, DS, SS)
+- **Modern Linux (x86-64)**: Flat memory model
+  - Kernel sets all segment bases to `0x00000000`
+  - Limit = maximum addressable space
+  - Effectively neutralizes segmentation
 
 ---
 
@@ -74,7 +117,7 @@ Logical:  s (segment #) | d (offset)
 
 ---
 
-## 17.5 Practice Problems
+## 17.6 Practice Problems
 
 ### Problem 1: Address Translation
 ```
@@ -96,12 +139,12 @@ Why does segmentation have external fragmentation but paging doesn't?
 Why is segmentation considered "visible" to the programmer?
 ```
 
-### Problem 3: Segment Table
+### Problem 4: Segment Table
 ```
 What does each entry in segment table contain?
 ```
 
-### Problem 4: Segmentation Fault
+### Problem 5: Segmentation Fault
 ```
 When does a segmentation fault occur in segmentation?
 ```

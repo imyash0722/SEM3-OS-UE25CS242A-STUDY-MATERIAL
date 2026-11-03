@@ -1,0 +1,286 @@
+OPERATING SYSTEMS 
+UE25CS242A
+CPU Scheduling- FCFS and SJF 
+Scheduling
+Dr. Anitha K
+Depart ment of Comput er Science & Engineering
+Acknowledgement, Prof. 
+Pavan A C
+Slides Credits for all the PPTs of this course 
+• The 
+slides/diagrams 
+in 
+t his 
+course 
+are 
+an 
+adaptation, 
+combination, and enhancement of mat erial f rom t he following 
+resources:
+1. “Operat ing Syst em Concept s”, Abraham Silberschat z, Pet er Baer 
+Galvin, Greg Gagne 10t h Edit ion, John Wiley & Sons, Global 
+Edit ion, 2023.
+2. “Advanced Programming in t he Unix Environment ”, Richard 
+St evens and St ephen A Rago, Pearson, 3rd edit ion, 2017.
+3. Some concept ual t ext and diagram f rom “Operat ing Syst ems, 
+Int ernals and Design Principles”, William St allings, 9t h Edit ion, 
+Pearson 2018
+OPERATING SYSTEMS
+OPERATING SYSTEMS
+CPU Scheduling -FCFS and SJF 
+Scheduling
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+CPU Scheduling - Basic Concepts
+OPERATING SYSTEMS
+•
+In a syst em wit h a single CPU core, only one process can run at a t ime. 
+Ot hers must wait unt il t he CPU is f ree and can be rescheduled. 
+•
+The object ive of mult iprogramming is t o have some process running at all 
+t imes, t o maximize CPU ut ilizat ion. 
+•
+Several processes are kept in memory at one t ime. 
+•
+When one process has t o wait , t he operat ing syst em t akes t he CPU away 
+f rom t hat process and gives t he CPU t o anot her process. This pat tern 
+cont inues. 
+•
+Every t ime one process has t o wait , anot her process can t ake over use of 
+t he CPU. On a mult icore syst em, t his concept of keeping t he CPU busy is 
+ext ended t o all processing cores on t he syst em.
+CPU Scheduling - Basic Concepts (Contd)
+OPERATING SYSTEMS
+• A process is execut ed unt il it must wait , t ypically for t he 
+complet ion of some I/O request . 
+• In a simple comput er syst em, t he CPU t hen just sit s idle. 
+All t his wait ing t ime is wast ed; no usef ul work is 
+accomplished. Wit h mult iprogramming, we t ry t o use t his 
+t ime product ively.
+• Scheduling of t his kind is a f undament al operat ing-
+syst em f unct ion.
+Alternating Sequence of CPU and I/O bursts
+OPERATING SYSTEMS
+• Maximum CPU ut ilizat ion obt ained 
+wit h mult iprogramming
+• CPU–I/O Burst Cycle – Process 
+execut ion consist s of a cycle of 
+CPU execut ion and I/O wait
+• CPU burst followed by I/O burst
+• CPU burst dist ribut ion is of main 
+concern
+CPU Scheduler
+OPERATING SYSTEMS
+• Short-term 
+scheduler 
+select s 
+f rom 
+among 
+t he 
+processes in ready queue, and allocat es t he CPU t o 
+one of t hem
+• Queue may be ordered in various ways
+• It can be FIFO, Priorit y, queue, t ree, unordered 
+linked list
+• The records in t he queue are PCB’s of t he 
+processes
+Preemptive Scheduling
+OPERATING SYSTEMS
+•
+CPU scheduling decisions may t ake place when a process
+1. Swit ches f rom running t o wait ing st at e
+2. Swit ches f rom running t o ready st at e
+3. Swit ches f rom wait ing t o ready
+4. Terminat es
+•
+Scheduling under 1 and 4 is non-preemptive
+•
+All ot her scheduling is preemptive
+•
+Consider access t o shared dat a
+•
+Consider preempt ion while in kernel mode
+•
+Consider int errupt s occurring during crucial OS act ivit ies
+•
+Scheduling algorit hms used in windows3.x, non-preempt ive
+•
+Win 95 onwards used preempt ive
+•
+Preempt ive Scheduling Algorit hm is used in Macint osh OS
+Preemptive vs Non-Preemptive Scheduling
+OPERATING SYSTEMS
+• Unfort unat ely, pre-empt ive scheduling can result in race 
+condit ions when dat a are shared among several processes. Ex: 
+While one process is updat ing t he shared dat a, it is pre-empt ed 
+so t hat t he second process can run. The second process t hen 
+t ries t o read t he dat a, which are in an inconsist ent st at e.
+• A pre-empt ive kernel requires mechanisms such as mut ex locks 
+t o prevent race condit ions when accessing shared kernel dat a 
+st ruct ures. Most modern operat ing syst ems are now f ully pre-
+empt ive when running in kernel mode
+Dispatcher
+OPERATING SYSTEMS
+• Dispat cher module gives cont rol of t he CPU t o t he process 
+select ed by t he short -t erm scheduler; t his involves:
+• swit ching cont ext
+• swit ching t o user mode
+• jumping t o t he proper locat ion in t he user program t o 
+rest art t hat program
+• Dispatch latency – t ime it t akes for t he dispat cher t o st op one 
+process and st art anot her running
+Dispatcher
+OPERATING SYSTEMS
+The role of the dispatcher.
+Scheduling Criteria
+OPERATING SYSTEMS
+• CPU utilization – keep t he CPU as busy as possible
+• Throughput – # of processes t hat complet e t heir execut ion per t ime unit
+• Turnaround time – amount of t ime t o execut e a part icular process 
+(performance met ric)
+• Waiting time – amount of t ime a process has been wait ing in t he ready 
+queue
+• Response time – amount of t ime it t akes f rom when a request was 
+submit ted unt il t he first response is produced, not out put  (for t ime-
+sharing environment )
+Scheduling Algorithm Optimization Criteria
+OPERATING SYSTEMS
+• Max CPU ut ilizat ion
+• Max t hroughput
+• Min t urnaround t ime 
+• Min wait ing t ime 
+• Min response t ime
+First- Come, First-Served (FCFS) Scheduling
+OPERATING SYSTEMS
+Process
+Burst Time
+P1
+24
+P2
+3
+P3
+3
+First- Come, First-Served (FCFS) Scheduling
+OPERATING SYSTEMS
+Process
+Burst Time
+P1
+24
+P2
+3
+P3
+3
+First- Come, First-Served (FCFS) Scheduling
+OPERATING SYSTEMS
+• Suppose t hat t he processes arrive in t he order: P1 , P2 , P3  
+The Gant t Chart for t he schedule is:
+Wait ing t ime for P1  = 0; P2  = 24; P3 = 27
+• Average wait ing t ime:  (0 + 24 + 27)/3 = 17
+Process
+Burst Time
+P1
+24
+P2
+3
+P3
+3
+FCFS Scheduling (Cont.)
+OPERATING SYSTEMS
+• Suppose t hat t he processes arrive in t he order: P2 , P3 , P1  
+The Gant t Chart for t he schedule is:
+• Wait ing t ime for P1 = 6; P2 = 0 ; P3 = 3
+• Average wait ing t ime:   (6 + 0 + 3)/3 = 3
+• The average waiting time under an FCFS policy is generally not minimal 
+and may vary substantially if the processes’ CPU burst times vary greatly
+FCFS Scheduling (Cont.)
+OPERATING SYSTEMS
+• Convoy effect - short process behind long process
+• Consider one CPU-bound and many I/O-bound processes
+• FCFS scheduling algorit hm is non-preempt ive. Once t he CPU has been 
+allocat ed t o a process, t hat process keeps t he CPU unt il it releases t he 
+CPU
+• FCFS algorit hm is t hus part icularly t roublesome for t ime-sharing syst ems, 
+where it is import ant t hat each process t o get a share of t he CPU at 
+regular int ervals. 
+• It is not desirable t o allow one process t o keep t he CPU for an ext ended 
+Shortest-Job-First (SJF) Scheduling
+OPERATING SYSTEMS
+• Associat e wit h each process t he length of its next CPU burst
+• Use t hese lengt hs t o schedule t he process wit h t he short est 
+t ime
+• SJF is opt imal – gives minimum average wait ing t ime for a given set 
+of processes
+• The difficult y is knowing t he lengt h of t he next CPU request
+• Comput e an approximat ion of t he lengt h of t he next CPU burst
+Example of SJF Scheduling
+OPERATING SYSTEMS
+●SJF scheduling chart
+Process
+Burst Time
+P1
+6
+P2
+8
+P3
+7
+P4
+3
+Example of SJF Scheduling
+OPERATING SYSTEMS
+●SJF scheduling chart
+Process
+Burst Time
+P1
+6
+P2
+8
+P3
+7
+P4
+3
+Example of SJF Scheduling
+OPERATING SYSTEMS
+●SJF scheduling chart
+●Average wait ing t ime = (3 + 16 + 9 + 0) / 
+4 = 7
+Not e: If FCFS scheduling is used, average wait ing t ime = (0 + 6 + 14 + 21) / 
+4 = 10.25 ms.
+Process
+Burst Time
+P1
+6
+P2
+8
+P3
+7
+P4
+3
+Example of Shortest-remaining-time-first
+OPERATING SYSTEMS
+• Preempt ive SJF Gant t Chart
+• Average wait ing t ime = [(10-1)+(1-1)+(17-2)+(5-3)]/4 = 26/4 = 6.5 
+msec
+• Preempt ive SJF Scheduling is somet imes called SRTF
+• Now we add t he concept s of varying arrival t imes and preempt ion t o t he 
+analysis
+Process
+Arrival Time
+Burst 
+Time
+ P1
+0
+8
+ P2 
+1
+4
+ P3
+2
+9
+ P4
+3
+5
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Depart ment of Comput er Science and 
+Engineering

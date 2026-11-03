@@ -1,0 +1,137 @@
+OPERATING SYSTEMS 
+UE25CS242A
+Scheduling Algorithms
+Acknowledgement, Prof. Pavan A C
+Department of Computer Science & Engineering
+Dr. Anitha K
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, and 
+enhancement of material from the following resources:
+1. “Operating System Concepts”, Abraham Silberschatz, Peter Baer Galvin, Greg 
+Gagne 10th Edition, John Wiley & Sons, Global Edition, 2023.
+2. “Advanced Programming in the Unix Environment”, Richard Stevens and 
+Stephen A Rago, Pearson, 3rd edition, 2017.
+3. Some conceptual text and diagram from “Operating Systems, Internals and 
+Design Principles”, William Stallings, 9th Edition, Pearson, 2018.
+OPERATING SYSTEMS
+OPERATING SYSTEMS
+Priority and Round Robin Scheduling
+Dr. Anitha K 
+Department of Computer Science and Engineering
+Priority Scheduling
+OPERATING SYSTEMS
+• A priority number (integer) is associated with each process
+• The CPU is allocated to the process with the highest priority (smallest integer ≡ highest 
+priority)
+• Preemptive
+• Nonpreemptive
+• SJF is priority scheduling where priority is the inverse of predicted next CPU burst time
+• Problem ≡ Starvation – low priority processes may never execute
+• Solution ≡ Aging – as time progresses increase the priority of the process
+Example of Non preemptive Priority Scheduling
+OPERATING SYSTEMS
+Process
+Burst TimeT
+Priority
+ P1
+10
+3
+ P2 
+1
+1
+ P3
+2
+4
+ P4
+1
+5
+ P5
+5
+2
+●Non preemptive Priority Scheduling Gantt chart
+●Average waiting time = (6 + 0 + 16 + 18 + 1) / 5 = 41/5 = 8.2
+Example of Preemptive Priority Scheduling
+OPERATING SYSTEMS
+Process 
+ Arrival TimeT Arr Burst TimeT
+Priority
+ P1
+0
+    4
+   2
+ P2 
+1
+    3
+   3
+ P3
+2
+    1
+   4
+ P4
+3
+     5
+   5
+ P5
+4
+     2
+   5
+●Higher number represents higher priority
+●Average waiting time = (11 + 8 + 0 + 0 + 4) / 5 = 23/5 = 4.6
+●Preemptive Priority Scheduling Gantt chart
+Round-Robin Scheduling
+OPERATING SYSTEMS
+• Round-robin (RR) scheduling algorithm is designed especially for timesharing 
+systems. 
+• It is similar to FCFS scheduling, but preemption is added to enable the 
+system to switch between processes
+• A small unit of time, called a time quantum or time slice, is defined. 
+• A time quantum is generally from 10 to 100 milliseconds in length
+• The ready queue is treated as a circular queue
+• The CPU scheduler goes around the ready queue, allocating the CPU to each 
+process for a time interval of up to 1 time quantum
+Round-Robin Scheduling Example
+OPERATING SYSTEMS
+•
+Consider the following set of processes that arrive at time 0, with the length of the CPU 
+burst given in milliseconds: 
+•
+RR scheduling Gantt chart using a time quantum of 4 milliseconds
+•
+P1 waits for 6 milliseconds (10 - 4)
+•
+P2 waits for 4 milliseconds
+•
+P3 waits for 7 milliseconds. 
+•
+The average waiting time = (6 + 4 + 7)/3 = 5.66 milliseconds
+Process
+Burst TimeT
+     P1
+       24
+     P2 
+       3
+     P3
+       3
+Round-Robin Scheduling Performance
+OPERATING SYSTEMS
+•
+If there are n processes in the ready queue and the time quantum is q, then each 
+process gets 1/n of the CPU time in chunks of at most q time units. 
+•
+Each process must wait no longer than (n − 1) × q time units until its next time 
+quantum. 
+•
+For example, with five processes and a time quantum of 20 milliseconds, each process 
+will get up to 20 milliseconds every 100 milliseconds.
+•
+Performance of the RR algorithm depends heavily on the size of the time quantum
+•
+If the time quantum is extremely large, the RR policy is the same as the FCFS 
+policy
+•
+If the time quantum is extremely small, the RR approach can result in a large 
+number of context switches
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Department of Computer Science and Engineering
