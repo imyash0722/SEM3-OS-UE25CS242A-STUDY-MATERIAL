@@ -7,13 +7,28 @@
         <loc>https://example.com/os-exam-prep/01_os_introduction/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/01_os_introduction_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/02_computer_architecture/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/02_computer_architecture_detailed/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/03_os_services_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/03_os_services_process_concept/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/04_process_creation_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/04_process_creation_termination/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/05_cpu_scheduling_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/05_cpu_scheduling_fcfs_sjf/</loc>
@@ -22,19 +37,40 @@
         <loc>https://example.com/os-exam-prep/06_cpu_scheduling_priority_rr/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/06_cpu_scheduling_priority_rr_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/07_cpu_scheduling_mlq_mlfq/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/07_cpu_scheduling_mlq_mlfq_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/08_shell_cron/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/08_shell_cron_detailed/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/09_ipc_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/09_ipc_shared_memory_message_passing/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/10_threads_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/10_threads_multicore/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/11_multicore_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/11_multicore_kernel_concepts/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/12_synchronization_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/12_synchronization_software_approaches/</loc>
@@ -43,28 +79,58 @@
         <loc>https://example.com/os-exam-prep/13_deadlocks/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/13_deadlocks_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/14_signals/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/14_signals_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/15_main_memory/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/15_main_memory_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/16_swapping_fragmentation/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/16_swapping_fragmentation_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/17_segmentation/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/17_segmentation_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/18_paging/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/18_paging_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/19_page_table_tlb_eat/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/19_page_table_tlb_eat_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/20_virtual_memory_demand_paging/</loc>
       </url>
       <url>
+        <loc>https://example.com/os-exam-prep/20_virtual_memory_detailed/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/21_page_replacement_detailed/</loc>
+      </url>
+      <url>
         <loc>https://example.com/os-exam-prep/21_page_replacement_thrashing/</loc>
+      </url>
+      <url>
+        <loc>https://example.com/os-exam-prep/22_numa_clock_detailed/</loc>
       </url>
       <url>
         <loc>https://example.com/os-exam-prep/22_numa_clock_replacement/</loc>
