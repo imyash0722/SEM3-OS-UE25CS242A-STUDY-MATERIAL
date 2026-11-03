@@ -1168,6 +1168,45 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Concept
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programmers-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Programmer's View
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#172-segmentation-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        17.2 Segmentation Architecture
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17.2 Segmentation Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#logical-address" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1190,10 +1229,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#characteristics" class="md-nav__link">
+  <a href="#registers" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Characteristics
+        Registers
       </span>
     </span>
   </a>
@@ -1206,13 +1245,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#172-address-translation" class="md-nav__link">
+  <a href="#173-address-translation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        17.2 Address Translation
+        17.3 Address Translation
       </span>
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="17.3 Address Translation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Example
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1221,6 +1277,28 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         17.3 Segmentation vs Paging
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#174-shared-segments" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        17.4 Shared Segments
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#175-linux-angle-flat-memory-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        17.5 Linux Angle: Flat Memory Model
       </span>
     </span>
   </a>
@@ -1250,15 +1328,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#175-practice-problems" class="md-nav__link">
+  <a href="#176-practice-problems" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        17.5 Practice Problems
+        17.6 Practice Problems
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="17.5 Practice Problems">
+    <nav class="md-nav" aria-label="17.6 Practice Problems">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1295,10 +1373,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#problem-3-segment-table" class="md-nav__link">
+  <a href="#problem-4-segment-table" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Problem 3: Segment Table
+        Problem 4: Segment Table
       </span>
     </span>
   </a>
@@ -1306,10 +1384,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#problem-4-segmentation-fault" class="md-nav__link">
+  <a href="#problem-5-segmentation-fault" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Problem 4: Segmentation Fault
+        Problem 5: Segmentation Fault
       </span>
     </span>
   </a>
@@ -1345,56 +1423,59 @@
 <p><strong>Source</strong>: Lecture 3.3 (Unit 3) + Textbook Ch. 8 (Silberschatz Ch. 8)</p>
 <hr />
 <h2 id="171-segmentation-basics">17.1 Segmentation Basics<a class="headerlink" href="#171-segmentation-basics" title="Permanent link">&para;</a></h2>
+<h3 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Memory-management scheme supporting <strong>programmer's view of memory</strong></li>
+<li>Program = collection of <strong>segments</strong> (logical units):</li>
+<li>Main program, procedure, function, method, object</li>
+<li>Local/global variables, common block, stack, symbol table, arrays</li>
+</ul>
+<h3 id="programmers-view">Programmer's View<a class="headerlink" href="#programmers-view" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Logical address = &lt;segment-number s, offset d&gt;
+</span></code></pre></div>
+- Segment = logical unit (code, data, stack, etc.)
+- Addresses: segment name + offset within segment</p>
+<hr />
+<h2 id="172-segmentation-architecture">17.2 Segmentation Architecture<a class="headerlink" href="#172-segmentation-architecture" title="Permanent link">&para;</a></h2>
 <h3 id="logical-address">Logical Address<a class="headerlink" href="#logical-address" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;segment-number, offset&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;segment-number s, offset d&gt;
 </span></code></pre></div>
 <h3 id="segment-table">Segment Table<a class="headerlink" href="#segment-table" title="Permanent link">&para;</a></h3>
+<p>Each entry contains:
+- <strong>Segment base</strong>: Starting physical address of segment
+- <strong>Segment limit</strong>: Length of segment</p>
+<h3 id="registers">Registers<a class="headerlink" href="#registers" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Base + Limit per segment</li>
-<li>Supports user view of memory (code, data, stack segments)</li>
+<li><strong>STBR</strong> (Segment Table Base Register): Points to segment table in memory</li>
+<li><strong>STLR</strong> (Segment Table Length Register): Number of segments used</li>
+<li>Valid segment: <code>s &lt; STLR</code></li>
 </ul>
-<h3 id="characteristics">Characteristics<a class="headerlink" href="#characteristics" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Details</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Division Unit</strong></td>
-<td>Variable-size logical blocks (code, stack, heap)</td>
-</tr>
-<tr>
-<td><strong>Programmer View</strong></td>
-<td>Visible — matches modular programming</td>
-</tr>
-<tr>
-<td><strong>Internal Fragmentation</strong></td>
-<td>No</td>
-</tr>
-<tr>
-<td><strong>External Fragmentation</strong></td>
-<td>Yes (variable segments leave holes)</td>
-</tr>
-<tr>
-<td><strong>Hardware Table</strong></td>
-<td>Segment Table (Segment Base + Limit)</td>
-</tr>
-</tbody>
-</table>
 <hr />
-<h2 id="172-address-translation">17.2 Address Translation<a class="headerlink" href="#172-address-translation" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Logical:  s (segment #) | d (offset)
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                │
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                ▼
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        Segment Table[s] → Base, Limit
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                │
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                ├── Check: d &lt; Limit? → if not → Trap (Segmentation Fault)
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>                │
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>                ▼
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>           Physical = Base + d
+<h2 id="173-address-translation">17.3 Address Translation<a class="headerlink" href="#173-address-translation" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Logical:  s (segment #) | d (offset)
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>                │
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>                ▼
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        Segment Table[s] → Base, Limit
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>                │
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>                ├── Check: d &lt; Limit? → if not → Trap (Segmentation Fault)
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>                │
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>                ▼
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>           Physical = Base + d
+</span></code></pre></div>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Segment Table:
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Seg 0: Base=219, Limit=600
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Seg 1: Base=2300, Limit=14
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Seg 2: Base=90, Limit=100
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Seg 3: Base=1327, Limit=580
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Seg 4: Base=1952, Limit=96
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>Logical → Physical:
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>0,430  → 219+430=649        ✓
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>1,10   → 2300+10=2310       ✓
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>2,500  → Limit=100, offset=500 → TRAP!
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>3,400  → 1327+400=1727      ✓
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>4,112  → Limit=96, offset=112 → TRAP!
 </span></code></pre></div>
 <hr />
 <h2 id="173-segmentation-vs-paging">17.3 Segmentation vs Paging<a class="headerlink" href="#173-segmentation-vs-paging" title="Permanent link">&para;</a></h2>
@@ -1409,7 +1490,7 @@
 <tbody>
 <tr>
 <td><strong>Division Unit</strong></td>
-<td>Fixed-size blocks (pages / frames)</td>
+<td>Fixed-size blocks (pages/frames)</td>
 <td>Variable-size logical blocks (code, stack, heap)</td>
 </tr>
 <tr>
@@ -1435,6 +1516,21 @@
 </tbody>
 </table>
 <hr />
+<h2 id="174-shared-segments">17.4 Shared Segments<a class="headerlink" href="#174-shared-segments" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Two processes can have segments with same base address</li>
+<li>Segments mapped to both → shared memory</li>
+</ul>
+<hr />
+<h2 id="175-linux-angle-flat-memory-model">17.5 Linux Angle: Flat Memory Model<a class="headerlink" href="#175-linux-angle-flat-memory-model" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Legacy x86</strong>: Explicit segmentation registers (CS, DS, SS)</li>
+<li><strong>Modern Linux (x86-64)</strong>: Flat memory model</li>
+<li>Kernel sets all segment bases to <code>0x00000000</code></li>
+<li>Limit = maximum addressable space</li>
+<li>Effectively neutralizes segmentation</li>
+</ul>
+<hr />
 <h2 id="174-key-takeaways">17.4 Key Takeaways<a class="headerlink" href="#174-key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Segmentation</strong> = variable-size logical units matching programmer view</li>
@@ -1450,26 +1546,26 @@
 <li><strong>Q83</strong>: Segmentation address translation — offset ≥ limit → trap (segmentation fault)</li>
 </ul>
 <hr />
-<h2 id="175-practice-problems">17.5 Practice Problems<a class="headerlink" href="#175-practice-problems" title="Permanent link">&para;</a></h2>
+<h2 id="176-practice-problems">17.6 Practice Problems<a class="headerlink" href="#176-practice-problems" title="Permanent link">&para;</a></h2>
 <h3 id="problem-1-address-translation">Problem 1: Address Translation<a class="headerlink" href="#problem-1-address-translation" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Segment Table:
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Seg 0: Base=1000, Limit=500
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Seg 1: Base=5000, Limit=1000
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Logical &lt;0, 200&gt; → Physical?
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Logical &lt;1, 1200&gt; → Trap?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Segment Table:
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Seg 0: Base=1000, Limit=500
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Seg 1: Base=5000, Limit=1000
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Logical &lt;0, 200&gt; → Physical?
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Logical &lt;1, 1200&gt; → Trap?
 </span></code></pre></div>
 <h3 id="problem-2-fragmentation">Problem 2: Fragmentation<a class="headerlink" href="#problem-2-fragmentation" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Why does segmentation have external fragmentation but paging doesn't?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Why does segmentation have external fragmentation but paging doesn't?
 </span></code></pre></div>
 <h3 id="problem-3-programmer-view">Problem 3: Programmer View<a class="headerlink" href="#problem-3-programmer-view" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Why is segmentation considered "visible" to the programmer?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Why is segmentation considered "visible" to the programmer?
 </span></code></pre></div>
-<h3 id="problem-3-segment-table">Problem 3: Segment Table<a class="headerlink" href="#problem-3-segment-table" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>What does each entry in segment table contain?
+<h3 id="problem-4-segment-table">Problem 4: Segment Table<a class="headerlink" href="#problem-4-segment-table" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>What does each entry in segment table contain?
 </span></code></pre></div>
-<h3 id="problem-4-segmentation-fault">Problem 4: Segmentation Fault<a class="headerlink" href="#problem-4-segmentation-fault" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>When does a segmentation fault occur in segmentation?
+<h3 id="problem-5-segmentation-fault">Problem 5: Segmentation Fault<a class="headerlink" href="#problem-5-segmentation-fault" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>When does a segmentation fault occur in segmentation?
 </span></code></pre></div>
 <hr />
 <p><em>Next: Topic 18 (Paging)</em></p>

@@ -1156,22 +1156,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#191-multi-level-page-tables" class="md-nav__link">
+  <a href="#191-hardware-support-for-page-table" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        19.1 Multi-Level Page Tables
+        19.1 Hardware Support for Page Table
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="19.1 Multi-Level Page Tables">
+    <nav class="md-nav" aria-label="19.1 Hardware Support for Page Table">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#2-level-32-bit-4kb-pages" class="md-nav__link">
+  <a href="#page-table-in-memory" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        2-Level (32-bit, 4KB pages)
+        Page Table in Memory
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tlb-translation-lookaside-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        TLB (Translation Lookaside Buffer)
       </span>
     </span>
   </a>
@@ -1184,13 +1195,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#192-inverted-page-table" class="md-nav__link">
+  <a href="#192-effective-access-time-eat" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        19.2 Inverted Page Table
+        19.2 Effective Access Time (EAT)
       </span>
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="19.2 Effective Access Time (EAT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Formula
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Example
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-2-level-paging-on-miss" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        With 2-Level Paging on Miss
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Practice Problems
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1228,25 +1289,281 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tlb-vs-cpu-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        TLB vs CPU Cache
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#194-effective-access-time-eat" class="md-nav__link">
+  <a href="#194-memory-protection" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        19.4 Effective Access Time (EAT)
+        19.4 Memory Protection
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="19.4 Effective Access Time (EAT)">
+    <nav class="md-nav" aria-label="19.4 Memory Protection">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#formula" class="md-nav__link">
+  <a href="#protection-bits" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Protection Bits
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validinvalid-bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Valid/Invalid Bit
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#195-validinvalid-bit-demand-paging" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        19.5 Valid/Invalid Bit &amp; Demand Paging
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.5 Valid&#x2f;Invalid Bit &amp; Demand Paging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demand-paging" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Demand Paging
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Shared Pages
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#196-page-table-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        19.6 Page Table Structures
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.6 Page Table Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-page-table-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem: Page Table Size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#197-hierarchical-multi-level-page-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        19.7 Hierarchical (Multi-Level) Page Tables
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.7 Hierarchical (Multi-Level) Page Tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-level-paging-32-bit-4kb" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2-Level Paging (32-bit, 4KB)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-bit-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        64-bit Systems
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#198-hashed-page-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        19.8 Hashed Page Tables
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#197-inverted-page-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        19.7 Inverted Page Table
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.7 Inverted Page Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inverted-pte-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Inverted PTE Structure
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lookup" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Lookup
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Trade-offs
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#198-tlb-translation-lookaside-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        19.8 TLB (Translation Lookaside Buffer)
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.8 TLB (Translation Lookaside Buffer)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Purpose
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structure_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Structure
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#199-effective-access-time-eat" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        19.9 Effective Access Time (EAT)
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.9 Effective Access Time (EAT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formula_1" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         Formula
@@ -1257,7 +1574,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#example_1" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         Example
@@ -1268,10 +1585,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#with-2-level-paging-on-miss" class="md-nav__link">
+  <a href="#with-2-level-paging-on-miss_1" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         With 2-Level Paging on Miss
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practice-problems_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Practice Problems
       </span>
     </span>
   </a>
@@ -1284,10 +1612,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#195-key-takeaways" class="md-nav__link">
+  <a href="#199-tlb-translation-lookaside-buffer" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        19.5 Key Takeaways
+        19.9 TLB (Translation Lookaside Buffer)
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.9 TLB (Translation Lookaside Buffer)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Purpose
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structure_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Structure
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1910-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        19.10 Key Takeaways
       </span>
     </span>
   </a>
@@ -1295,10 +1662,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#196-exam-relevant-mcq-patterns" class="md-nav__link">
+  <a href="#1910-exam-relevant-mcq-patterns" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        19.6 Exam-Relevant MCQ Patterns
+        19.10 Exam-Relevant MCQ Patterns
       </span>
     </span>
   </a>
@@ -1306,15 +1673,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#197-practice-problems" class="md-nav__link">
+  <a href="#1911-practice-problems" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        19.7 Practice Problems
+        19.11 Practice Problems
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="19.7 Practice Problems">
+    <nav class="md-nav" aria-label="19.11 Practice Problems">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1400,27 +1767,47 @@
 <h1 id="topic-19-detailed-page-table-structures-tlb-effective-access-time-eat">Topic 19 (Detailed): Page Table Structures, TLB &amp; Effective Access Time (EAT)<a class="headerlink" href="#topic-19-detailed-page-table-structures-tlb-effective-access-time-eat" title="Permanent link">&para;</a></h1>
 <p><strong>Source</strong>: Lecture 3.5 (Unit 3) + Textbook Ch. 8 (Silberschatz Ch. 8, Stallings Ch. 7)</p>
 <hr />
-<h2 id="191-multi-level-page-tables">19.1 Multi-Level Page Tables<a class="headerlink" href="#191-multi-level-page-tables" title="Permanent link">&para;</a></h2>
-<h3 id="2-level-32-bit-4kb-pages">2-Level (32-bit, 4KB pages)<a class="headerlink" href="#2-level-32-bit-4kb-pages" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>p1 (10 bits) | p2 (10 bits) | d (12 bits)
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    │            │           │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    ▼            ▼           ▼
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Page Dir    Page Table    Frame
-</span></code></pre></div>
-<p><strong>Without TLB</strong>: 1 memory access requires <strong>3 physical memory accesses</strong> (outer table, inner table, data frame)</p>
-<hr />
-<h2 id="192-inverted-page-table">19.2 Inverted Page Table<a class="headerlink" href="#192-inverted-page-table" title="Permanent link">&para;</a></h2>
+<h2 id="191-hardware-support-for-page-table">19.1 Hardware Support for Page Table<a class="headerlink" href="#191-hardware-support-for-page-table" title="Permanent link">&para;</a></h2>
+<h3 id="page-table-in-memory">Page Table in Memory<a class="headerlink" href="#page-table-in-memory" title="Permanent link">&para;</a></h3>
 <ul>
-<li>One entry <strong>per physical frame</strong> (not per logical page)</li>
-<li>Used in 64-bit systems (PowerPC, UltraSPARC)</li>
-<li>Lookup via hash table (slower than direct indexing)</li>
-<li>Saves enormous memory for sparse 64-bit address spaces</li>
+<li><strong>PTBR</strong> (Page Table Base Register): Points to page table</li>
+<li><strong>PTLR</strong> (Page Table Length Register): Indicates page table size</li>
+<li>Without TLB: every access = 2 memory accesses (page table + data)</li>
 </ul>
+<h3 id="tlb-translation-lookaside-buffer">TLB (Translation Lookaside Buffer)<a class="headerlink" href="#tlb-translation-lookaside-buffer" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Special fast-lookup hardware cache (associative memory)</li>
+<li>Solves two-memory-access problem</li>
+<li>Stores recent <code>&lt;VPN, PPN&gt;</code> mappings</li>
+</ul>
+<hr />
+<h2 id="192-effective-access-time-eat">19.2 Effective Access Time (EAT)<a class="headerlink" href="#192-effective-access-time-eat" title="Permanent link">&para;</a></h2>
+<h3 id="formula">Formula<a class="headerlink" href="#formula" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>EAT = α × (t_TLB + t_RAM) + (1-α) × (t_TLB + 2 × t_RAM)
+</span></code></pre></div>
+Where:
+- α = TLB hit ratio
+- t_TLB = TLB lookup time
+- t_RAM = Main memory access time</p>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>α = 80%, t_TLB = 20 ns, t_RAM = 100 ns
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>EAT = 0.80 × 120 + 0.20 × 220 = 140 ns
+</span></code></pre></div>
+<h3 id="with-2-level-paging-on-miss">With 2-Level Paging on Miss<a class="headerlink" href="#with-2-level-paging-on-miss" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>EAT = α(t_TLB + t_RAM) + (1-α)(t_TLB + 3×t_RAM)
+</span></code></pre></div>
+(outer page table + inner page table + data frame)</p>
+<h3 id="practice-problems">Practice Problems<a class="headerlink" href="#practice-problems" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>TLB hit ratio = 90%, t_TLB=10ns, t_RAM=100ns, 2-level paging → EAT?</strong></li>
+<li><strong>32-bit, 4KB pages, TLB size 64, 1000 accesses, 95% hit → memory accesses saved?</strong></li>
+<li><strong>3-level paging, no TLB → memory accesses for one translation?</strong></li>
+</ol>
 <hr />
 <h2 id="193-tlb-translation-lookaside-buffer">19.3 TLB (Translation Lookaside Buffer)<a class="headerlink" href="#193-tlb-translation-lookaside-buffer" title="Permanent link">&para;</a></h2>
 <h3 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Hardware cache for page table entries</li>
+<li>Hardware associative cache for page table entries</li>
 <li><strong>TLB Hit</strong>: Translation in TLB → fast (bypass page table)</li>
 <li><strong>TLB Miss</strong>: Walk page table → slow (2+ memory accesses)</li>
 </ul>
@@ -1429,32 +1816,183 @@
 <li>Associative hardware cache (parallel lookup)</li>
 <li>Stores recent <code>&lt;VPN, PPN&gt;</code> mappings</li>
 <li>Typical size: 64-512 entries</li>
+<li><strong>ASID</strong> (Address Space ID): Distinguishes processes in TLB</li>
+</ul>
+<h3 id="tlb-vs-cpu-cache">TLB vs CPU Cache<a class="headerlink" href="#tlb-vs-cpu-cache" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>TLB</th>
+<th>CPU Cache</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purpose</td>
+<td>Speed up address translation</td>
+<td>Speed up memory access</td>
+</tr>
+<tr>
+<td>Timing</td>
+<td>At MMU translation</td>
+<td>At CPU memory access</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="194-memory-protection">19.4 Memory Protection<a class="headerlink" href="#194-memory-protection" title="Permanent link">&para;</a></h2>
+<h3 id="protection-bits">Protection Bits<a class="headerlink" href="#protection-bits" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Protection bit per frame: read-only / read-write</li>
+<li>Execute-only bits possible</li>
+</ul>
+<h3 id="validinvalid-bit">Valid/Invalid Bit<a class="headerlink" href="#validinvalid-bit" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Valid (1)</strong>: Page in address space, legal</li>
+<li><strong>Invalid (0)</strong>: Page not in address space / on disk</li>
+<li>Alternative: PTLR (Page Table Length Register)</li>
 </ul>
 <hr />
-<h2 id="194-effective-access-time-eat">19.4 Effective Access Time (EAT)<a class="headerlink" href="#194-effective-access-time-eat" title="Permanent link">&para;</a></h2>
-<h3 id="formula">Formula<a class="headerlink" href="#formula" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>EAT = α × (t_TLB + t_RAM) + (1-α) × (t_TLB + 2 × t_RAM)
+<h2 id="195-validinvalid-bit-demand-paging">19.5 Valid/Invalid Bit &amp; Demand Paging<a class="headerlink" href="#195-validinvalid-bit-demand-paging" title="Permanent link">&para;</a></h2>
+<h3 id="demand-paging">Demand Paging<a class="headerlink" href="#demand-paging" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Mark pages <strong>invalid</strong> intentionally</li>
+<li>Page fault triggers OS to load page</li>
+<li>Pure demand paging: start process with no pages in memory</li>
+</ul>
+<h3 id="shared-pages">Shared Pages<a class="headerlink" href="#shared-pages" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Code sharing</strong>: Read-only (reentrant) code shared (text editors, compilers)</li>
+<li><strong>Reentrant code</strong>: Non-self-modifying, reusable simultaneously</li>
+<li><strong>Example</strong>: 40 users, 150KB code + 50KB data → 8,000KB without sharing → 2,150KB with sharing</li>
+</ul>
+<hr />
+<h2 id="196-page-table-structures">19.6 Page Table Structures<a class="headerlink" href="#196-page-table-structures" title="Permanent link">&para;</a></h2>
+<h3 id="problem-page-table-size">Problem: Page Table Size<a class="headerlink" href="#problem-page-table-size" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>32-bit, 4KB pages:
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Entries = 2^20 = 1,048,576
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>4-byte PTE → 4 MB per process
 </span></code></pre></div>
-<p>Where:
+<hr />
+<h2 id="197-hierarchical-multi-level-page-tables">19.7 Hierarchical (Multi-Level) Page Tables<a class="headerlink" href="#197-hierarchical-multi-level-page-tables" title="Permanent link">&para;</a></h2>
+<h3 id="2-level-paging-32-bit-4kb">2-Level Paging (32-bit, 4KB)<a class="headerlink" href="#2-level-paging-32-bit-4kb" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>p1 (10 bits) | p2 (10 bits) | d (12 bits)
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    │            │           │
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    ▼            ▼           ▼
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Page Dir    Page Table    Frame
+</span></code></pre></div>
+- Only allocate page tables for used regions
+- Reduces memory for sparse address spaces</p>
+<h3 id="64-bit-systems">64-bit Systems<a class="headerlink" href="#64-bit-systems" title="Permanent link">&para;</a></h3>
+<ul>
+<li>2-level insufficient → 3, 4, or 5-level paging</li>
+<li>Linux x86-64: 4-level (PML4 → PDPT → PD → PT)</li>
+</ul>
+<hr />
+<h2 id="198-hashed-page-tables">19.8 Hashed Page Tables<a class="headerlink" href="#198-hashed-page-tables" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Hash function on virtual page number</li>
+<li>Handle collisions via chaining</li>
+<li>Used when address space &gt; physical memory</li>
+</ul>
+<hr />
+<h2 id="197-inverted-page-table">19.7 Inverted Page Table<a class="headerlink" href="#197-inverted-page-table" title="Permanent link">&para;</a></h2>
+<ul>
+<li>One entry <strong>per physical frame</strong> (not per logical page)</li>
+<li>Used in 64-bit systems (PowerPC, UltraSPARC)</li>
+<li>Lookup via hash table (slower than direct indexing)</li>
+<li>Saves enormous memory for sparse 64-bit address spaces</li>
+</ul>
+<h3 id="inverted-pte-structure">Inverted PTE Structure<a class="headerlink" href="#inverted-pte-structure" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>struct {
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    int pid;        // Owning process
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    int vpn;        // Virtual page number
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    int frame;      // Physical frame
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    // ... protection, ref, dirty bits
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>}
+</span></code></pre></div>
+<h3 id="lookup">Lookup<a class="headerlink" href="#lookup" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>hash(pid, vpn) → bucket → linear search for (pid, vpn) match
+</span></code></pre></div>
+<h3 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scales with RAM (not virtual space)</td>
+<td>Hash lookup slower than array index</td>
+</tr>
+<tr>
+<td>One table for all processes</td>
+<td>Collisions → chain traversal</td>
+</tr>
+<tr>
+<td>Saves massive memory for 64-bit</td>
+<td>Need separate per-process table for TLB shootdowns</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="198-tlb-translation-lookaside-buffer">19.8 TLB (Translation Lookaside Buffer)<a class="headerlink" href="#198-tlb-translation-lookaside-buffer" title="Permanent link">&para;</a></h2>
+<h3 id="purpose_1">Purpose<a class="headerlink" href="#purpose_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Hardware cache for page table entries</li>
+<li><strong>TLB Hit</strong>: Translation in TLB → fast</li>
+<li><strong>TLB Miss</strong>: Walk page table → slow (2+ memory accesses)</li>
+</ul>
+<h3 id="structure_1">Structure<a class="headerlink" href="#structure_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Associative hardware cache (parallel lookup)</li>
+<li>Stores recent <code>&lt;VPN, PPN&gt;</code> mappings</li>
+<li>Typical size: 64-512 entries</li>
+</ul>
+<hr />
+<h2 id="199-effective-access-time-eat">19.9 Effective Access Time (EAT)<a class="headerlink" href="#199-effective-access-time-eat" title="Permanent link">&para;</a></h2>
+<h3 id="formula_1">Formula<a class="headerlink" href="#formula_1" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>EAT = α × (t_TLB + t_RAM) + (1-α) × (t_TLB + 2 × t_RAM)
+</span></code></pre></div>
+Where:
 - α = TLB hit ratio
 - t_TLB = TLB lookup time
 - t_RAM = Main memory access time</p>
-<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
-<ul>
-<li>α = 80% (0.80)</li>
-<li>t_TLB = 20 ns</li>
-<li>t_RAM = 100 ns</li>
-</ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>EAT = 0.80 × (20 + 100) + 0.20 × (20 + 2×100)
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    = 0.80 × 120 + 0.20 × 220
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    = 96 + 44 = 140 ns
+<h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>α = 80% (0.80)
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>t_TLB = 20 ns
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>t_RAM = 100 ns
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>EAT = 0.80 × 120 + 0.20 × 220 = 140 ns
 </span></code></pre></div>
-<h3 id="with-2-level-paging-on-miss">With 2-Level Paging on Miss<a class="headerlink" href="#with-2-level-paging-on-miss" title="Permanent link">&para;</a></h3>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>EAT = α(t_TLB + t_RAM) + (1-α)(t_TLB + 3×t_RAM)
+<h3 id="with-2-level-paging-on-miss_1">With 2-Level Paging on Miss<a class="headerlink" href="#with-2-level-paging-on-miss_1" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>EAT = α(t_TLB + t_RAM) + (1-α)(t_TLB + 3×t_RAM)
 </span></code></pre></div>
 (outer page table + inner page table + data frame)</p>
+<h3 id="practice-problems_1">Practice Problems<a class="headerlink" href="#practice-problems_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>TLB hit ratio = 90%, t_TLB=10ns, t_RAM=100ns, 2-level paging → EAT?</strong></li>
+<li><strong>32-bit, 4KB pages, TLB size 64, 1000 accesses, 95% hit → memory accesses saved?</strong></li>
+<li><strong>3-level paging, no TLB → memory accesses for one translation?</strong></li>
+</ol>
 <hr />
-<h2 id="195-key-takeaways">19.5 Key Takeaways<a class="headerlink" href="#195-key-takeaways" title="Permanent link">&para;</a></h2>
+<h2 id="199-tlb-translation-lookaside-buffer">19.9 TLB (Translation Lookaside Buffer)<a class="headerlink" href="#199-tlb-translation-lookaside-buffer" title="Permanent link">&para;</a></h2>
+<h3 id="purpose_2">Purpose<a class="headerlink" href="#purpose_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Hardware cache for page table entries</li>
+<li><strong>TLB Hit</strong>: Translation in TLB → fast (bypass page table)</li>
+<li><strong>TLB Miss</strong>: Walk page table → slow (2+ memory accesses)</li>
+</ul>
+<h3 id="structure_2">Structure<a class="headerlink" href="#structure_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Associative hardware cache (parallel lookup)</li>
+<li>Stores recent <code>&lt;VPN, PPN&gt;</code> mappings</li>
+<li>Typical size: 64-512 entries</li>
+</ul>
+<hr />
+<h2 id="1910-key-takeaways">19.10 Key Takeaways<a class="headerlink" href="#1910-key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Multi-level paging</strong> = reduces page table memory; 2-level = 3 memory accesses without TLB</li>
 <li><strong>Inverted page table</strong> = one entry per physical frame; scales with RAM not virtual space</li>
@@ -1462,7 +2000,7 @@
 <li><strong>EAT</strong> = α(t_TLB + t_RAM) + (1-α)(t_TLB + k×t_RAM) where k = page table levels + 1</li>
 </ol>
 <hr />
-<h2 id="196-exam-relevant-mcq-patterns">19.6 Exam-Relevant MCQ Patterns<a class="headerlink" href="#196-exam-relevant-mcq-patterns" title="Permanent link">&para;</a></h2>
+<h2 id="1910-exam-relevant-mcq-patterns">19.10 Exam-Relevant MCQ Patterns<a class="headerlink" href="#1910-exam-relevant-mcq-patterns" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Q78</strong>: TLB = fast associative cache for virtual-to-physical translations</li>
 <li><strong>Q79</strong>: EAT calculation with given hit ratio, TLB time, RAM time</li>
@@ -1470,37 +2008,37 @@
 <li><strong>Q81</strong>: Inverted page table = one entry per physical frame</li>
 </ul>
 <hr />
-<h2 id="197-practice-problems">19.7 Practice Problems<a class="headerlink" href="#197-practice-problems" title="Permanent link">&para;</a></h2>
+<h2 id="1911-practice-problems">19.11 Practice Problems<a class="headerlink" href="#1911-practice-problems" title="Permanent link">&para;</a></h2>
 <h3 id="problem-1-eat-calculation">Problem 1: EAT Calculation<a class="headerlink" href="#problem-1-eat-calculation" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>TLB hit ratio = 90%
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>t_TLB = 10 ns
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>t_RAM = 100 ns
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>2-level paging
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Calculate EAT.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>TLB hit ratio = 90%
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>t_TLB = 10 ns
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>t_RAM = 100 ns
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>2-level paging
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>Calculate EAT.
 </span></code></pre></div>
 <h3 id="problem-2-tlb-vs-page-table">Problem 2: TLB vs Page Table<a class="headerlink" href="#problem-2-tlb-vs-page-table" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>32-bit system, 4KB pages
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>TLB size: 64 entries
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Page table in memory
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Process accesses 1000 pages, TLB hit rate 95%
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>How many memory accesses saved by TLB?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>32-bit system, 4KB pages
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>TLB size: 64 entries
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Page table in memory
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Process accesses 1000 pages, TLB hit rate 95%
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>How many memory accesses saved by TLB?
 </span></code></pre></div>
 <h3 id="problem-3-multi-level-page-walk">Problem 3: Multi-Level Page Walk<a class="headerlink" href="#problem-3-multi-level-page-walk" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>3-level paging, no TLB
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>How many memory accesses for one virtual address translation?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>3-level paging, no TLB
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>How many memory accesses for one virtual address translation?
 </span></code></pre></div>
 <h3 id="problem-4-inverted-page-table">Problem 4: Inverted Page Table<a class="headerlink" href="#problem-4-inverted-page-table" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>64-bit system, 4KB pages, 16GB RAM
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Inverted table entry size: 16 bytes
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Size of inverted page table?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>64-bit system, 4KB pages, 16GB RAM
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Inverted table entry size: 16 bytes
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Size of inverted page table?
 </span></code></pre></div>
 <h3 id="problem-5-tlb-hit-ratio">Problem 5: TLB Hit Ratio<a class="headerlink" href="#problem-5-tlb-hit-ratio" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Process runs for 1000 memory references
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>TLB hits: 920
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>TLB hit ratio? If TLB doubled, what happens to hit ratio?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Process runs for 1000 memory references
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>TLB hits: 920
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>TLB hit ratio? If TLB doubled, what happens to hit ratio?
 </span></code></pre></div>
 <hr />
-<p><em>All 22 detailed topics complete! Ready for compilation into final study guide.</em></p>
+<p><em>Next: Topic 20 (Virtual Memory — Demand Paging, Page Faults, Copy-on-Write)</em></p>
 
 
 

@@ -1156,16 +1156,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#151-address-translation" class="md-nav__link">
+  <a href="#151-background-memory-basics" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        15.1 Address Translation
+        15.1 Background: Memory Basics
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="15.1 Address Translation">
+    <nav class="md-nav" aria-label="15.1 Background: Memory Basics">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What is Memory?
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#program-execution-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Program Execution Requirements
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#152-address-translation-hardware-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        15.2 Address Translation &amp; Hardware Support
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15.2 Address Translation &amp; Hardware Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#address-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Address Binding
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-management-unit-mmu" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Memory-Management Unit (MMU)
+      </span>
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#logical-vs-physical-address" class="md-nav__link">
@@ -1179,10 +1240,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#hardware-support" class="md-nav__link">
+  <a href="#base-limit-registers-protection-relocation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Hardware Support
+        Base &amp; Limit Registers (Protection &amp; Relocation)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-relocation-relocation-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Dynamic Relocation (Relocation Register)
       </span>
     </span>
   </a>
@@ -1195,15 +1267,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#152-os-support" class="md-nav__link">
+  <a href="#153-os-support" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        15.2 OS Support
+        15.3 OS Support
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="15.2 OS Support">
+    <nav class="md-nav" aria-label="15.3 OS Support">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1245,15 +1317,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#153-dynamic-loading-linking" class="md-nav__link">
+  <a href="#154-dynamic-loading-linking" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        15.3 Dynamic Loading &amp; Linking
+        15.4 Dynamic Loading &amp; Linking
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="15.3 Dynamic Loading &amp; Linking">
+    <nav class="md-nav" aria-label="15.4 Dynamic Loading &amp; Linking">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1278,21 +1350,32 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#static-vs-dynamic-linking" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Static vs Dynamic Linking
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#154-memory-mapped-files-mmap" class="md-nav__link">
+  <a href="#155-memory-mapped-files-mmap" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        15.4 Memory-Mapped Files (<code>mmap()</code>)
+        15.5 Memory-Mapped Files (<code>mmap()</code>)
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="15.4 Memory-Mapped Files (mmap())">
+    <nav class="md-nav" aria-label="15.5 Memory-Mapped Files (mmap())">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1307,10 +1390,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
+  <a href="#map_shared-vs-map_private" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use Cases
+        MAP_SHARED vs MAP_PRIVATE
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mmap-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        mmap() Lifecycle
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Advantages
       </span>
     </span>
   </a>
@@ -1439,27 +1544,56 @@
 <h1 id="topic-15-detailed-main-memory-hardware-address-translation-dynamic-loadinglinking-mmap">Topic 15 (Detailed): Main Memory — Hardware, Address Translation, Dynamic Loading/Linking, mmap<a class="headerlink" href="#topic-15-detailed-main-memory-hardware-address-translation-dynamic-loadinglinking-mmap" title="Permanent link">&para;</a></h1>
 <p><strong>Source</strong>: Lecture 3.1 (Unit 3) + Textbook Ch. 8 (Silberschatz Ch. 8, Stallings Ch. 7)</p>
 <hr />
-<h2 id="151-address-translation">15.1 Address Translation<a class="headerlink" href="#151-address-translation" title="Permanent link">&para;</a></h2>
-<h3 id="logical-vs-physical-address">Logical vs Physical Address<a class="headerlink" href="#logical-vs-physical-address" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Logical Address (CPU) → MMU → Physical Address (Memory)
-</span></code></pre></div>
-<h3 id="hardware-support">Hardware Support<a class="headerlink" href="#hardware-support" title="Permanent link">&para;</a></h3>
+<h2 id="151-background-memory-basics">15.1 Background: Memory Basics<a class="headerlink" href="#151-background-memory-basics" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-memory">What is Memory?<a class="headerlink" href="#what-is-memory" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Base/Limit Registers</strong>: Simple relocation + protection</li>
-<li>Base = starting physical address</li>
-<li>Limit = range/size of logical address space</li>
-<li>Legal: <code>0 ≤ Logical Address &lt; Limit</code></li>
-<li>Physical = <code>Base + Logical Address</code></li>
-<li>
-<p>If <code>Logical ≥ Limit</code> → <strong>Hardware Trap</strong> (Addressing/Segmentation fault)</p>
-</li>
-<li>
-<p><strong>Memory Management Unit (MMU)</strong>: Hardware for translation</p>
-</li>
-<li><strong>Page Table Base Register (PTBR)</strong>: Points to current process page table</li>
+<li>Memory consists of a large array of bytes, each with its own address</li>
+<li>Execution: Fetch instruction → Decode → Fetch operands → Execute → Store results</li>
+<li>Memory unit sees stream of addresses; doesn't know how generated</li>
+</ul>
+<h3 id="program-execution-requirements">Program Execution Requirements<a class="headerlink" href="#program-execution-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Program must be brought from disk into memory, placed in ready queue</li>
+<li>Main memory and registers: only storage CPU accesses directly</li>
+<li>Register access: 1 CPU clock; Main memory: many cycles (stall)</li>
+<li>Cache between registers and main memory speeds up access (no OS control)</li>
 </ul>
 <hr />
-<h2 id="152-os-support">15.2 OS Support<a class="headerlink" href="#152-os-support" title="Permanent link">&para;</a></h2>
+<h2 id="152-address-translation-hardware-support">15.2 Address Translation &amp; Hardware Support<a class="headerlink" href="#152-address-translation-hardware-support" title="Permanent link">&para;</a></h2>
+<h3 id="address-binding">Address Binding<a class="headerlink" href="#address-binding" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Compile time</strong>: Absolute code; if start address changes → recompile (MS-DOS .COM)</li>
+<li><strong>Load time</strong>: Relocatable code; final binding at load time</li>
+<li><strong>Execution time</strong>: Process can move during execution; binding delayed until run time; needs hardware support (MMU)</li>
+</ul>
+<h3 id="memory-management-unit-mmu">Memory-Management Unit (MMU)<a class="headerlink" href="#memory-management-unit-mmu" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Hardware device mapping virtual → physical address at run time</li>
+<li>Multiple methods: will be discussed</li>
+</ul>
+<h3 id="logical-vs-physical-address">Logical vs Physical Address<a class="headerlink" href="#logical-vs-physical-address" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Logical Address (CPU) → MMU → Physical Address (Memory)
+</span></code></pre></div>
+- <strong>Logical (virtual)</strong>: Generated by CPU
+- <strong>Physical</strong>: Seen by memory unit
+- Same in compile/load-time binding; differ in execution-time binding</p>
+<h3 id="base-limit-registers-protection-relocation">Base &amp; Limit Registers (Protection &amp; Relocation)<a class="headerlink" href="#base-limit-registers-protection-relocation" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Base register = relocation register = starting physical address
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Limit register = range/size of logical address space
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Legal: 0 ≤ Logical &lt; Limit
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Physical = Base + Logical
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>If Logical ≥ Limit → Hardware Trap (Addressing/Segmentation fault)
+</span></code></pre></div>
+- Base/limit loaded only by OS via privileged instruction (kernel mode)
+- Prevents user programs from modifying OS or other users' memory</p>
+<h3 id="dynamic-relocation-relocation-register">Dynamic Relocation (Relocation Register)<a class="headerlink" href="#dynamic-relocation-relocation-register" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Value in relocation register added to every user address at time sent to memory</li>
+<li>Example: base=14000, user address 0 → physical 14000; address 346 → 14346</li>
+<li>User program deals with logical addresses; never sees real physical addresses</li>
+</ul>
+<hr />
+<h2 id="153-os-support">15.3 OS Support<a class="headerlink" href="#153-os-support" title="Permanent link">&para;</a></h2>
 <h3 id="memory-allocation-strategies">Memory Allocation Strategies<a class="headerlink" href="#memory-allocation-strategies" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1471,11 +1605,11 @@
 <tbody>
 <tr>
 <td><strong>First Fit</strong></td>
-<td>Allocate first hole that is big enough (fastest)</td>
+<td>Allocate first hole big enough (fastest)</td>
 </tr>
 <tr>
 <td><strong>Best Fit</strong></td>
-<td>Allocate smallest hole that is big enough (leaves smallest leftover)</td>
+<td>Allocate smallest hole big enough (leaves smallest leftover)</td>
 </tr>
 <tr>
 <td><strong>Worst Fit</strong></td>
@@ -1494,26 +1628,59 @@
 <li>Copy-on-write (COW) for fork()</li>
 </ul>
 <hr />
-<h2 id="153-dynamic-loading-linking">15.3 Dynamic Loading &amp; Linking<a class="headerlink" href="#153-dynamic-loading-linking" title="Permanent link">&para;</a></h2>
+<h2 id="154-dynamic-loading-linking">15.4 Dynamic Loading &amp; Linking<a class="headerlink" href="#154-dynamic-loading-linking" title="Permanent link">&para;</a></h2>
 <h3 id="dynamic-loading">Dynamic Loading<a class="headerlink" href="#dynamic-loading" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Load routine <strong>only when called</strong> (not at startup)</li>
+<li>Routine loaded <strong>only when called</strong> (not at startup)</li>
 <li>Reduces memory footprint, faster startup</li>
 </ul>
 <h3 id="dynamic-linking">Dynamic Linking<a class="headerlink" href="#dynamic-linking" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Linking <strong>postponed until execution</strong> (shared libraries)</li>
 <li>Single library copy in memory shared by multiple processes</li>
-<li><strong>Shared Libraries</strong>: <code>.so</code> files on Linux, <code>.dll</code> on Windows</li>
+<li><strong>Shared Libraries</strong>: <code>.so</code> (Linux), <code>.dll</code> (Windows)</li>
+<li><strong>Stub</strong>: Small code piece locates library routine; replaces itself with routine address</li>
 </ul>
+<h3 id="static-vs-dynamic-linking">Static vs Dynamic Linking<a class="headerlink" href="#static-vs-dynamic-linking" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Static</th>
+<th>Dynamic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Libraries</td>
+<td>Embedded in executable</td>
+<td>Loaded at runtime</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>Each program has copy</td>
+<td>Single copy shared</td>
+</tr>
+<tr>
+<td>Disk Space</td>
+<td>Wasted (duplicate libs)</td>
+<td>Efficient</td>
+</tr>
+<tr>
+<td>Updates</td>
+<td>Recompile needed</td>
+<td>Auto-use new library</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="154-memory-mapped-files-mmap">15.4 Memory-Mapped Files (<code>mmap()</code>)<a class="headerlink" href="#154-memory-mapped-files-mmap" title="Permanent link">&para;</a></h2>
-<div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/mman.h&gt;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">mmap</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">prot</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">flags</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="kt">off_t</span><span class="w"> </span><span class="n">offset</span><span class="p">);</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">// Map file into memory — treats file I/O as memory access</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">munmap</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span><span class="w">  </span><span class="c1">// Unmap</span>
+<h2 id="155-memory-mapped-files-mmap">15.5 Memory-Mapped Files (<code>mmap()</code>)<a class="headerlink" href="#155-memory-mapped-files-mmap" title="Permanent link">&para;</a></h2>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/mman.h&gt;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">mmap</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">prot</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">flags</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="kt">off_t</span><span class="w"> </span><span class="n">offset</span><span class="p">);</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">// Map file into memory — treats file I/O as memory access</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">munmap</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span><span class="w">  </span><span class="c1">// Unmap</span>
 </span></code></pre></div>
 <h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h3>
 <table>
@@ -1526,7 +1693,7 @@
 <tbody>
 <tr>
 <td><code>addr</code></td>
-<td>Hint address (NULL = let kernel choose)</td>
+<td>Hint address (NULL = kernel chooses)</td>
 </tr>
 <tr>
 <td><code>len</code></td>
@@ -1538,7 +1705,7 @@
 </tr>
 <tr>
 <td><code>flags</code></td>
-<td><code>MAP_SHARED</code> (changes visible to others, written to file) / <code>MAP_PRIVATE</code> (COW, changes not written to file)</td>
+<td><code>MAP_SHARED</code> (changes to file, visible to others) / <code>MAP_PRIVATE</code> (COW)</td>
 </tr>
 <tr>
 <td><code>fd</code></td>
@@ -1550,12 +1717,41 @@
 </tr>
 </tbody>
 </table>
-<h3 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h3>
+<h3 id="map_shared-vs-map_private">MAP_SHARED vs MAP_PRIVATE<a class="headerlink" href="#map_shared-vs-map_private" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAP_SHARED</code></td>
+<td>Writes modify file on disk; visible to other processes</td>
+</tr>
+<tr>
+<td><code>MAP_PRIVATE</code></td>
+<td>COW; changes stay in memory, not written to file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mmap-lifecycle">mmap() Lifecycle<a class="headerlink" href="#mmap-lifecycle" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>First access</strong>: Demand-paging fault; page-sized chunk read from disk</li>
+<li><strong>Subsequent access</strong>: Memory accesses — no <code>read()</code>/<code>write()</code> overhead</li>
+<li><strong>Deferred write-back</strong>: Modified pages paged to swap under memory pressure</li>
+<li><strong>On close</strong>: Data written back to disk, unmapped</li>
+</ol>
+<h3 id="advantages">Advantages<a class="headerlink" href="#advantages" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Fast file I/O (memory access instead of read/write syscalls)</li>
-<li>Shared memory between processes (<code>MAP_SHARED</code> + <code>MAP_ANONYMOUS</code>)</li>
-<li>Loading executables (dynamic linker uses mmap)</li>
-<li>Large data files (databases, video)</li>
+<li><strong>High Performance</strong>: Bypasses <code>read()</code>/<code>write()</code> overhead</li>
+<li><strong>Zero-Copy I/O</strong>: Direct disk cache → user space</li>
+<li><strong>Random Access</strong>: Direct address access, no sequential reads</li>
+<li><strong>Efficient for Large Files</strong>: Demand paging loads only needed pages</li>
+<li><strong>Easy Programming</strong>: <code>data[100]</code> accesses file location</li>
+<li><strong>Sharing</strong>: Multiple processes map same file → share physical pages</li>
+<li><strong>IPC</strong>: Memory-mapped shared memory for fast IPC</li>
 </ul>
 <hr />
 <h2 id="155-key-takeaways">15.5 Key Takeaways<a class="headerlink" href="#155-key-takeaways" title="Permanent link">&para;</a></h2>
@@ -1575,24 +1771,25 @@
 <hr />
 <h2 id="157-practice-problems">15.7 Practice Problems<a class="headerlink" href="#157-practice-problems" title="Permanent link">&para;</a></h2>
 <h3 id="problem-1-baselimit">Problem 1: Base/Limit<a class="headerlink" href="#problem-1-baselimit" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Base = 10000, Limit = 5000
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Logical address 3000 → Physical?
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Logical address 6000 → Trap?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Base = 10000, Limit = 5000
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Logical address 3000 → Physical?
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Logical address 6000 → Trap?
 </span></code></pre></div>
 <h3 id="problem-2-mmap">Problem 2: mmap()<a class="headerlink" href="#problem-2-mmap" title="Permanent link">&para;</a></h3>
-<div class="language-c highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Map file for read/write, changes written to file</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1">// What flags?</span>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// Map file for read/write, changes written to file</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">// What flags?</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">// MAP_SHARED | PROT_READ | PROT_WRITE</span>
 </span></code></pre></div>
 <h3 id="problem-3-dynamic-linking">Problem 3: Dynamic Linking<a class="headerlink" href="#problem-3-dynamic-linking" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Explain how dynamic linking saves memory.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Explain how dynamic linking saves memory.
 </span></code></pre></div>
 <h3 id="problem-4-shared-pages">Problem 4: Shared Pages<a class="headerlink" href="#problem-4-shared-pages" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>How does COW work with shared library code pages?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>How does COW work with shared library code pages?
 </span></code></pre></div>
 <h3 id="problem-5-allocation-strategies">Problem 5: Allocation Strategies<a class="headerlink" href="#problem-5-allocation-strategies" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Holes: 100, 500, 200, 300, 600
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Request: 250
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>First Fit? Best Fit? Worst Fit?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Holes: 100, 500, 200, 300, 600
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Request: 250
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>First Fit? Best Fit? Worst Fit?
 </span></code></pre></div>
 <hr />
 <p><em>Next: Topic 16 (Swapping &amp; Fragmentation)</em></p>
