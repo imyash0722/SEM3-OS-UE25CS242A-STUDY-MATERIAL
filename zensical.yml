@@ -1,9 +1,9 @@
 site_name: OS Exam Prep — UE25CS242A (Units 1–3)
 site_description: Complete study guide for Operating Systems (UE25CS242A) covering Units 1, 2, and 3
 site_author: Course Materials
-site_url: https://example.com/os-exam-prep
+site_url: https://imyash0722.github.io/SEM3-OS-UE25CS242A-STUDY-MATERIAL/
 
-repo_url: https://github.com/example/os-exam-prep
+repo_url: https://github.com/imyash0722/SEM3-OS-UE25CS242A-STUDY-MATERIAL
 repo_name: GitHub
 
 theme:
@@ -79,7 +79,7 @@ extra:
   generator: false
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com
+      link: https://github.com/imyash0722/SEM3-OS-UE25CS242A-STUDY-MATERIAL
     - icon: fontawesome/brands/python
       link: https://python.org
 
