@@ -1,0 +1,204 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+Pavan A C
+Department of Computer Science & Engineering
+Mass-Storage Structure
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+Overview of Mass Storage Structure
+OPERATING SYSTEMS
+●Magnetic disks provide bulk of secondary storage of modern computers.
+●Each disk platter has a flat circular shape, like a CD. Common platter 
+diameters range from 1.8 to 3.5 inches.
+●The two surfaces of a platter are covered with a magnetic material.
+●The heads are attached to a disk arm that moves all the heads as a unit.
+●The surface of a platter is logically divided into circular tracks, which are 
+subdivided into sectors. 
+●The set of tracks that are at one arm position makes up a cylinder.
+UNIVERSITY
+
+--- Slide / Page 5 ---
+Moving-head Disk Mechanism
+OPERATING SYSTEMS
+track t
+spindle
+PES
+UNIVERSITY
+-|
+~~
+Inside 5,25" desktop computer hard disk dive =
+>=—_
+e
+===
+arm assembly
+BC chr TW
+= gman
+sector s
+|
+~~
+|
+ps
+ui:
+1}
+cylinder ¢ —
+|
+read-write
+i
+8
+25
+i,
+rig
+|
+|
+/ head
+h
+EP
+|
+Iran
+Ll:
+Ea
+aC YU
+fo | =
+i
+adie
+Tre =
+[3
+|
+Readhwrite head
+—
+=
+i
+¥
+platter
+Lo
+H
+1g
+\
+Platter
+f =
+rotation
+fo
+3
+Chemis
+—
+-
+BJ
+‘
+*
+|
+Hh Com
+pA 2m
+
+--- Slide / Page 6 ---
+Overview of Mass Storage Structure
+OPERATING SYSTEMS
+●When the disk is in use, a drive motor spins it at high speed. Most drives rotate 
+60 to 250 times per second.
+ Disk speed has two parts.
+●The transfer rate is the rate at which data flow between the drive and the 
+computer.
+● The positioning time, or random-access time, consists of two parts
+●The time necessary to move the disk arm to the desired cylinder, called the 
+seek time.
+● the time necessary for the desired sector to rotate to the disk head, called 
+the rotational latency.
+Disk Latency = Seek time + Rotational latency + Transfer time
+UNIVERSITY
+
+--- Slide / Page 7 ---
+Overview of Mass Storage Structure
+OPERATING SYSTEMS
+●Disk head flies on an extremely thin cushion of air.
+●Head will sometimes damage the magnetic surface when it 
+makes contact with it.
+●Head crash
+●Not recoverable
+●A disk can be removable.
+●Removable magnetic disks generally consist of one platte
+●Examples CDs, DVDs, and Blu-ray discs as well as removable 
+flash-memory
+UNIVERSITY
+>
+FZ
+4
+/
+Hl
+5
+
+--- Slide / Page 8 ---
+Mass Storage Structure (Cont.)
+OPERATING SYSTEMS
+●Drive attached to computer via I/O bus
+●Busses vary, including EIDE, ATA, SATA, USB, Fiber Channel, SCSI, SAS, 
+Firewire
+●Host controller in computer uses bus to talk to disk controller built into 
+drive or storage array
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Solid-State Disks
+OPERATING SYSTEMS
+●Nonvolatile memory used like a hard drive
+●Can be more reliable than HDDs
+●More expensive per MB
+●Maybe have shorter life span 
+●Less capacity
+●But much faster
+●Standard Bus interfaces can be too slow -> connect directly to 
+the system bus (PCI, for example)
+●No moving parts, so no seek time or rotational latency
+&
+b
+immE
+©
+Em
+HDD
+SSD
+
+--- Slide / Page 10 ---
+Magnetic Tape
+OPERATING SYSTEMS
+●Was early secondary-storage medium
+●Relatively permanent and holds large 
+quantities of data
+●Access time slow
+●Random access ~1000 times slower than disk
+●Mainly used for backup, storage of 
+infrequently-used data, transfer medium 
+between systems
+UNIVERSITY
+G
+TE— 8
+\
+
+--- Slide / Page 11 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

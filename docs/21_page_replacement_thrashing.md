@@ -95,11 +95,11 @@ Based on **Locality of Reference** (spatial + temporal):
 1. **FIFO** = Belady's Anomaly YES; **LRU/OPT** = Belady's Anomaly NO (stack algorithms)
 2. **Clock/Second-Chance** = circular queue + reference bit; approximates LRU
 3. **Enhanced Clock** = (ref, dirty) priority: (0,0) > (0,1) > (1,0) > (1,1)
-4. **Frame Allocation**: Equal, Proportional, Priority, Working Set
-5. **Thrashing** = Σ WSSᵢ > D; detected by high paging + low CPU
-6. **Working Set** = pages referenced in last Δ time; based on locality
-7. **PFF** = upper/lower fault rate bounds → dynamic frame adjustment
-8. **Global replacement** = thrashing contagion risk; **Local** = isolates
+3. **Frame Allocation**: Equal, Proportional, Priority, Working Set
+4. **Thrashing** = Σ WSSᵢ > D; detected by high paging + low CPU
+5. **Working Set** = pages referenced in last Δ time; based on locality
+6. **PFF** = upper/lower fault rate bounds → grant/revoke frames
+6. **Global replacement** = thrashing contagion risk; **Local** = isolates
 
 ---
 
@@ -116,3 +116,51 @@ Based on **Locality of Reference** (spatial + temporal):
 - **Q97**: Thrashing cause = Σ WSSᵢ > D
 - **Q98**: Working Set principle = Locality of Reference
 - **Q99**: PFF strategy = upper/lower fault rate bounds → grant/revoke frames
+
+---
+
+## 21.9 Practice Problems
+
+### Problem 1: FIFO Trace
+```
+Ref: 7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1
+Frames: 3
+```
+Trace FIFO. How many faults?
+
+### Problem 2: Optimal Trace
+```
+Ref: 1,2,3,4,1,2,5,1,2,3,4,5
+Frames: 3
+```
+Trace OPT step by step.
+
+### Problem 3: Clock Algorithm
+```
+Ref: 1,2,3,4,1,2,5,1,2,3,4,5
+Frames: 3
+```
+Trace Clock. Show reference bit changes.
+
+### Problem 4: Belady's Anomaly
+Prove FIFO has Belady's Anomaly for string: `1,2,3,4,1,2,5,1,2,3,4,5`
+
+### Problem 5: Frame Allocation
+```
+Total frames: 64
+P1: 16 pages
+P2: 48 pages
+P3: 32 pages
+```
+Equal allocation? Proportional allocation?
+
+### Problem 6: Thrashing Detection
+```
+System: 100 frames
+Process working sets: WSS1=40, WSS2=35, WSS3=30
+```
+Is system thrashing? What to do?
+
+---
+
+*Next: Topic 22 (NUMA, Memory Locality & Clock Page Replacement)*

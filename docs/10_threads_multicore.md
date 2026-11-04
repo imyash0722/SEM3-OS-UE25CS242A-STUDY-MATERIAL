@@ -95,14 +95,14 @@ void *my_thread_func(void *arg) {
 ### Critical: Stack-Escape Bug
 ```c
 // ❌ WRONG - passes address of LOCAL variable
-void start_thread(int value) {
+void start_thread_wrong(int value) {
     pthread_create(&tid, NULL, worker, &value); // DANGER!
-    // if start_thread() returns before worker runs...
+    // if start_thread_wrong() returns before worker runs...
     // value is gone! Stack frame destroyed!
 }
 
 // ✅ CORRECT - allocate on heap
-void start_thread(int value) {
+void start_thread_correct(int value) {
     int *arg = malloc(sizeof(int));
     *arg = value;
     pthread_create(&tid, NULL, worker, arg);
@@ -290,16 +290,41 @@ queue_push(&queue, new_task);  // Wakes one worker
 - **Q55**: Spinlock effective on multiprocessor for short CS — avoids context switch overhead
 - **Q56**: `sem_init(&mutex, 0, 1)` — 2nd arg 0 = thread-shared; 3rd = binary semaphore
 - **Q57**: `demo_semaphore_2.c` vs `3.c` — without sync: interleaved; with: mutual exclusion
-- **Q58**: Producer-consumer semaphores — mutex=1, empty=N, full=0
-- **Q59**: Wrong order `wait(mutex); wait(empty)` → DEADLOCK when buffer full
-- **Q60**: Readers-writers — reader preference starves writers
-- **Q61**: Dining philosophers — asymmetric pickup (odd left→right, even right→left)
-- **Q62**: Hold and Wait — process holds resource while requesting more
-- **Q63**: Eliminate Hold and Wait — request all at once, or release before requesting
-- **Q64**: Deadlock prevention — global linear lock ordering
-- **Q65**: RAG multi-instance — cycle = necessary but not sufficient
-- **Q66**: Banker's Need = Max - Allocation
-- **Q67**: Safe state — exists sequence where all can finish
-- **Q68**: Unsafe ≠ deadlocked; all deadlocked are unsafe
-- **Q69**: Wait-for graph — collapse RAG, cycle = deadlock
-- **Q70**: Uncatchable signals — SIGKILL, SIGSTOP
+
+---
+
+## 10.10 Practice Problems
+
+### Problem 1: Race Condition
+```c
+// counter++ without mutex - trace the race
+```
+Show how counter gets wrong value.
+
+### Problem 2: Condition Variable
+```c
+// Producer-consumer with bounded buffer using cond vars
+```
+Write complete code.
+
+### Problem 3: Thread Pool
+```c
+// Submit 100 tasks to 4-thread pool
+```
+Implement queue and workers.
+
+### Problem 4: Cancellation
+```c
+// Long-running thread that can be cancelled safely
+```
+Use deferred cancellation with cleanup handlers.
+
+### Problem 5: Thread-Local Storage
+```c
+// Each thread needs its own error buffer
+```
+Use `__thread` or `pthread_key_create`.
+
+---
+
+*Next: Topic 11 (Multicore Kernel Concepts & SMP Scheduling)*

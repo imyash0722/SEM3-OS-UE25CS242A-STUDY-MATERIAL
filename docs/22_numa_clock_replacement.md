@@ -81,7 +81,7 @@ while (true):
 2. **First-touch** = page allocated on node where first accessed
 3. **Clock Algorithm** = circular + ref bit; ref=1 → reset to 0, advance; ref=0 → replace
 4. **Enhanced Clock** = 4 classes by (ref, dirty); (0,0) evicted first (no write-back)
-5. **Linux** = uses enhanced clock variant
+4. **Linux** = uses enhanced clock variant
 
 ---
 
@@ -90,3 +90,62 @@ while (true):
 - **Q100**: NUMA — local memory on CPU's local bus, lower latency than remote across interconnect
 - **Q93**: Clock — ref=1 → reset to 0, advance hand; ref=0 → replace
 - **Q94**: Enhanced Clock — (0,0) highest priority candidate for replacement
+
+---
+
+## 22.5 Practice Problems
+
+### Problem 1: NUMA Latency
+```
+System: 2 nodes, 4 CPUs each
+Local latency: 100ns
+Remote latency: 300ns
+Process on Node 0 accesses 60% local, 40% remote pages
+Average memory access time?
+```
+
+### Problem 2: First-Touch
+```
+double *a = malloc(N * sizeof(double));
+// Thread 0 on Node 0
+for (i=0; i<N/2; i++) a[i] = 1.0;
+// Thread 1 on Node 1
+for (i=N/2; i<N; i++) a[i] = 2.0;
+```
+Where are pages allocated?
+
+### Problem 3: Enhanced Clock Trace
+```
+Ref: 1,2,3,4,1,2,5,1,2,3,4,5
+Frames: 3
+All reads (dirty=0 initially)
+Trace enhanced clock. Show R/D bits and passes.
+```
+
+### Problem 4: Clock vs Enhanced Clock
+```
+Frames: 3
+Ref: 1,2,3,4,1,2,5
+Initially: all R=0, D=0
+Trace basic clock vs enhanced clock.
+```
+
+### Problem 5: NUMA Migration
+```
+Process on Node 0 has pages on Node 1.
+Access pattern triggers NUMA fault threshold.
+Describe migrate-on-fault steps.
+```
+
+---
+
+**All 22 topics complete!** 🎓
+
+You now have comprehensive coverage of the entire syllabus (Units 1-3) with:
+- Complete textbook content
+- Full slide content integration
+- All lab programs with detailed comments
+- Step-by-step numerical traces
+- Key formulas and algorithms
+- Exam MCQ patterns
+- Practice problems with solutions

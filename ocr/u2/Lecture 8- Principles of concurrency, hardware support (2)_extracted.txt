@@ -1,0 +1,294 @@
+OPERATING SYSTEMS 
+UE25CS242A
+Principles of concurrency
+Synchronization Hardware
+Depart ment of Comput er Science and 
+Engineering
+Dr. Anitha K
+Acknowledgement, Prof. 
+Pavan A C
+Slides Credits for all the PPTs of this course 
+• The 
+slides/diagrams 
+in 
+t his 
+course 
+are 
+an 
+adaptation, 
+combination, and enhancement of mat erial f rom t he following 
+resources:
+1. “Operat ing Syst em Concept s”, Abraham Silberschat z, Pet er Baer 
+Galvin, Greg Gagne 10t h Edit ion, John Wiley & Sons, Global 
+Edit ion, 2023.
+2. “Advanced Programming in t he Unix Environment ”, Richard 
+St evens and St ephen A Rago, Pearson, 3rd edit ion, 2017.
+3. Some concept ual t ext and diagram f rom “Operat ing Syst ems, 
+Int ernals and Design Principles”, William St allings, 9t h Edit ion, 
+Pearson, 2018.
+OPERATING SYSTEMS
+OPERATING SYSTEMS
+Principles of concurrency
+Synchronization Hardware
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+Review of Peterson’s solution
+OPERATING SYSTEMS
+Code for process i
+do{
+flag[i]=TRUE
+turn=j
+while(flag[j]&&turn==j);//Do-nop
+   critical section
+flag[i]=FALSE;
+Reminder section
+}while(TRUE)
+Code for process j
+do{
+flag[j]=TRUE
+turn=i
+while(flag[i]&&turn==i);//Do-nop
+   critical section
+flag[j]=FALSE;
+Reminder section
+}while(TRUE)
+Observations
+OPERATING SYSTEMS
+●Atomic Instructions: Software solutions like Peterson's are difficult on 
+modern architectures because CPUs often reorder instructions for 
+performance.
+●Solution: HW assisted Synchronization mechanisms
+Principles of concurrency
+OPERATING SYSTEMS
+●Principles of Concurrency
+• Relative speed of execution of processes is not predictable.
+• System interrupts are not predictable
+• Scheduling policies may vary
+Synchronization Hardware
+OPERATING SYSTEMS
+●Soft ware based solut ions are not guarant eed t o work on modern comput er 
+archit ect ures.
+●Many syst ems provide hardware support for implement ing t he crit ical 
+sect ion code.
+●All solut ions below based on idea of locking.
+●Prot ect ing crit ical regions via locks.
+●Synchronizat ion can be done t hrough Lock & Unlock t echnique.
+●Locking part is done in t he Ent ry Sect ion. Aft er locking t he process ent er 
+crit ical sect ion.
+●The process is moved t o t he Exit Sect ion aft er it is done wit h execut ion in 
+CS.
+●Unlock is done in exit sect ion.
+●This process is designed in such a way t hat all t he t hree condit ions of t he 
+Crit ical Sect ions are sat isfied.
+Synchronization Hardware
+OPERATING SYSTEMS
+●Uniprocessors – could disable int errupt s
+●Current ly running code would execut e wit hout preempt ion
+●Generally t oo inefficient on mult iprocessor syst ems
+⮚Operat ing syst ems using t his not broadly scalable
+●Modern machines provide special at omic hardware 
+inst ruct ions
+⮚Atomic = non-int errupt ible
+●Eit her t est memory word and set value
+●Or swap cont ent s of t wo memory words
+Atomic Operations
+OPERATING SYSTEMS
+• An operat ion t hat always runs t o complet ion, or not at all.
+• It is indivisible: it cannot be st opped in t he middle, and st at e 
+cannot be modified by someone else in t he middle.
+• Fundament al building block - If no at omic operat ions, t hen 
+have no way for t hreads t o work t oget her.
+Atomic Operations
+OPERATING SYSTEMS
+• On most machines, memory references and assignment s (i.e. 
+loads and st ores) of words are at omic.
+• Consequent ly – weird examples wit h part ial writ es t o int s 
+can’t happen.
+• Many inst ruct ions are not at omic.
+– Double-precision float ing point st ore oft en not at omic
+– VAX and IBM 360 had an inst ruct ion t o copy a whole array
+Another Concurrent Program Example
+OPERATING SYSTEMS
+Two t hreads, A and B, compet e wit h each ot her
+Thread A
+i = 0;
+while (i < 10)
+i = i + 1;
+printf(“A 
+wins!”);
+Thread B
+i = 0;
+while (i > -10)
+i = i - 1;
+printf(“B wins!”);
+• Assume t hat memory loads and st ores are at omic, but increment ing 
+and decrement ing are not at omic.
+Definitions
+OPERATING SYSTEMS
+• Synchronization - Using at omic operat ions t o ensure 
+cooperat ion bet ween t hreads.
+• Mutual Exclusion - Ensuring t hat only one t hread does a 
+part icular t hing at a t ime.
+• Critical Section - Piece of code t hat only one t hread can 
+execut e at once. Only one t hread at a t ime will get int o t his 
+sect ion of code.
+Locks
+OPERATING SYSTEMS
+• Prevent s someone f rom doing somet hing.
+• Lock() before ent ering crit ical sect ion and before 
+accessing shared dat a.
+• Unlock() when leaving, aft er accessing shared dat a.
+• Wait if locked.
+API for Locks
+OPERATING SYSTEMS
+• Locks need t o be allocat ed and init ialized:
+– st ruct Lock mylock or pt hread_mut ex_t mylock;
+– 
+lock_init (&mylock) 
+or 
+mylock 
+= 
+PTHREAD_MUTEX_INITIALIZER;
+• Locks provide t wo at omic operat ions:
+– acquire(&mylock) – wait unt il lock is f ree; t hen mark it as 
+busy
+– release(&mylock) – mark lock as f ree
+Not e - Should only be called by a process/t hread t hat current ly 
+holds t he lock
+Fix Race Condition problem with Locks
+OPERATING SYSTEMS
+• Threads serialized by lock t hrough crit ical sect ion.
+• Only one t hread at a t ime.
+How to Implement Locks?
+OPERATING SYSTEMS
+• At omic inst ruct ion sequences
+– These inst ruct ions read a value and writ e a new value at omically
+– Hardware is responsible for implement ing t his correct ly
+• on bot h uniprocessors (not t oo hard)
+• and mult iprocessors (requires help f rom cache coherence prot ocol)
+test_and_set  Instruction 
+OPERATING SYSTEMS
+• Test and Set Lock (TSL) is a synchronizat ion mechanism.
+• It uses a t est and set inst ruct ion t o provide t he synchronizat ion among t he 
+processes execut ing concurrent ly.
+• It is an inst ruct ion t hat ret urns t he old value of a memory locat ion and set s 
+t he memory locat ion value t o 1 as a single at omic operat ion.
+• If one process is current ly execut ing a t est -and-set , no ot her process is 
+allowed t o begin anot her t est -and-set unt il t he first process t est -and-set 
+is finished.
+test_and_set  Instruction 
+OPERATING SYSTEMS
+   Definit ion:
+       boolean test_and_set (boolean *target)
+          {
+               boolean rv = *target;
+               *target = TRUE;
+               return rv:
+          }
+1. Execut ed at omically
+2. Ret urns t he original value of passed paramet er
+3. Set t he new value of passed paramet er t o “TRUE”.
+Solution using test_and_set()
+OPERATING SYSTEMS
+●Solut ion:
+       do {
+          while (test_and_set(&lock)) 
+             ; /* do nothing * / 
+                 /* critical section */ 
+          lock = false; 
+                 /* remainder section */ 
+       } while (true); 
+               
+ Definit ion:
+       boolean test_and_set (boolean 
+* target)
+          {
+               boolean rv = * target;
+               * target = TRUE;
+               return rv:
+          }
+compare_and_swap Instruction
+OPERATING SYSTEMS
+Definit ion:
+     int compare _and_swap(int * value, int expected, int new_value) { 
+         int temp = * value; 
+         if (* value == expected) 
+            * value = new_value; 
+      return temp; 
+     } 
+do{
+while(compare_and_swap(&lock,0,1)
+!=0);
+Crit ical sect ion
+lock=0
+Remainder sect ion
+}while(t rue)
+compare_and_swap Instruction
+OPERATING SYSTEMS
+Definit ion:
+     int compare _and_swap(int * value, int expected, int new_value) { 
+         int temp = * value; 
+         if (* value == expected) 
+            * value = new_value; 
+      return temp; 
+     } 
+1. Execut ed at omically
+2. Ret urns t he original value of passed paramet er “value”
+3. Set  t he variable “value”  t he value of t he passed paramet er 
+“new_value” but only if *value == expect ed. That is, t he swap t akes 
+place only under t his condit ion.
+4. In t he x86  and It anium archit ect ures t his is implement ed as compare 
+and exchange (CMPXCHG) inst ruct ion 
+do{
+while(compare_and_swap(&lock,0,1)
+!=0);
+Crit ical sect ion
+lock=0
+Remainder sect ion
+}while(t rue)
+Solution using compare_and_swap()
+OPERATING SYSTEMS
+●Shared int eger  “lock”  init ialized t o 0; 
+●Solut ion:
+      do {
+         while (compare_and_swap(&lock, 0, 1) != 0) 
+            ; /* do nothing * / 
+          /* critical section * / 
+       lock = 0; 
+          /* remainder section * / 
+      } while (true); 
+               
+• Mut ual exclusion is sat isfied
+• Do not sat isf y bounded wait ing requirement
+Bounded-waiting Mutual Exclusion with 
+test_and_set
+OPERATING SYSTEMS
+do {
+/* critical section */ 
+/* remainder section */ 
+} while (true); 
+This 
+t est _and_set 
+algorit hm 
+sat isfies all t he crit ical sect ion 
+requirement s
+The common dat a st ruct ures are
+boolean waiting[n];
+boolean lock;
+waiting[i] = true;
+   key = true;
+   while (waiting[i] && key) 
+      key = test_and_set(&lock); 
+   waiting[i] = false; 
+ j = (i + 1) % n; 
+   while ((j != i) && !waiting[j]) 
+      j = (j + 1) % n; 
+   if (j == i) 
+      lock = false; 
+   else 
+      waiting[j] = false; 
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Depart ment of Comput er Science and 
+Engineering

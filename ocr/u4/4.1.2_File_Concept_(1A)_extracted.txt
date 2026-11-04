@@ -1,0 +1,249 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+Storage Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+File System
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+File Concept
+OPERATING SYSTEMS
+●Computers can store information on various storage media, such as 
+magnetic disks, magnetic tapes, and optical disks.
+●File is logical storage where as disks are physical storage unit
+●What is a File?
+●Collection of related information
+●Data cannot to be written to disk unless they are in files
+●Data can be Numeric, alphabetic, alphanumeric, binary
+●A file is a sequence of bits, bytes, lines, or records, the meaning of which is 
+defined by the file’s creator and user
+●Contents  of file can be source or executable programs, numeric or text data, 
+photos, music, video, and so on.
+UNIVERSITY
+
+--- Slide / Page 5 ---
+File Attributes
+OPERATING SYSTEMS
+Files are named and are referred by their names by the human users.
+Attributes of files
+●Name – only information kept in human-readable form
+●Identifier – unique tag (number) identifies file within file system
+●Type – needed for systems that support different types
+●Location – pointer to file location on device
+●Size – current file size
+●Protection – controls who can do reading, writing, executing
+●Time, date, and user identification – data for protection, security, and usage 
+monitoring
+●Information about files are kept in the directory structure, which is maintained 
+on the disk.
+UNIVERSITY
+
+--- Slide / Page 6 ---
+File Operations
+OPERATING SYSTEMS
+File is an abstract data type.
+File Operations
+●Create
+●Write – Use the system call to write to a file. A write pointer points to the location 
+in the file, where the next write is to take place.
+●Read – – Use the system call to write to a file. A read pointer points to the location 
+in the file from where the next read is to take place
+●Reposition within file - Repositioning within a file need not involve any actual I/O. 
+It is done with system call lseek. Repositioning is also called seek to location in a 
+file
+●Delete: Use the system call to delete/remove a file. 
+●File to be deleted is searched in the directory.
+●Release the memory allocated after deletion
+UNIVERSITY
+
+--- Slide / Page 7 ---
+File Operations
+OPERATING SYSTEMS
+●Truncate: The user may want to erase the contents of a file but keep its 
+attributes.
+●Instead of deleting the file and then recreating it, use the function that sets 
+the size of file to zero.
+●Appending to the end of a existing file
+●Open a file –  use a system call open()
+●Open-file table: tracks open files
+●File pointer:  pointer to last read/write location, per process that has the 
+file open
+●File-open count: counter of number of times a file is open – to allow 
+removal of data from open-file table when last processes closes it
+●Close: When a file is actively not used close it.
+UNIVERSITY
+
+--- Slide / Page 8 ---
+File Operations
+OPERATING SYSTEMS
+●Several pieces of information are associated with an open file.
+●File pointer
+●File-open count.
+●Disk location of the file.
+●Access rights
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Open Files
+OPERATING SYSTEMS
+●Provided by some operating systems and file systems
+●Similar to reader-writer locks
+●Shared lock similar to reader lock – several processes can 
+acquire concurrently
+●Exclusive lock similar to writer lock
+●OS mediates access to a file
+●Mandatory or advisory:
+●Mandatory – access is denied depending on locks held and 
+requested
+●Advisory – processes can find status of locks and decide 
+what to do
+UNIVERSITY
+
+--- Slide / Page 10 ---
+File Types – Name, Extension
+OPERATING SYSTEMS
+file type
+executable
+exe, com, bin
+ready-to-run machine-
+or none
+language program
+UNIVERSITY
+object
+obj, o
+compiled, machine
+150YEARS.
+language, not linked
+source code
+c, cc, java, pas,
+source code in various
+asm, a
+languages
+batch
+bat, sh
+commands to the command
+interpreter
+textual data, documents
+word processor|
+wp, tex,
+rtf,
+various word-processor
+doc
+formats
+library
+lib, a, so, dll
+libraries of routines for
+programmers
+print or view
+ps. pdf, jpg
+ASCII or binary file in a
+format for printing or
+viewing
+archive
+arc, zip, tar
+related files grouped into
+one file, sometimes com-
+pressed, for archiving
+or storage
+multimedia
+mpeg, mov, rm,
+binary file containing
+mp3, avi
+audio or A/V information
+
+--- Slide / Page 11 ---
+File Structure
+OPERATING SYSTEMS
+●None - sequence of words, bytes
+●Simple record structure
+●Lines 
+●Fixed length
+●Variable length
+●Complex Structures
+●Formatted document
+●Relocatable load file
+●Can simulate last two with first method by inserting appropriate 
+control characters
+●Who decides:
+●Operating system
+●Program
+UNIVERSITY
+
+--- Slide / Page 12 ---
+Access Methods
+OPERATING SYSTEMS
+——
+current position
+d
+EES
+ginning
+en
+UNIVERSITY
+Ea ala
+$G=rewindS—
+}
+read or write =>
+
+--- Slide / Page 13 ---
+Sequential-access File
+OPERATING SYSTEMS
+●Sequential Access
+read next
+write next 
+reset
+●Direct Access (or relative access)  – file is fixed length logical records
+read n
+write n
+position to n
+read next
+write next 
+n = relative block number (i.e. index relative to the beginning of the file)
+●Relative block numbers allow OS to decide where file should be placed
+UNIVERSITY
+
+--- Slide / Page 14 ---
+Simulation of Sequential Access on Direct-access File
+OPERATING SYSTEMS
+●
+cp = current position
+●
+Some systems allow only sequential file access; others allow only direct access
+UNIVERSITY
+implementation for direct access
+read next
+read cp;
+cp=cp +1;
+write next
+write cp;
+cp=cp +1;
+
+--- Slide / Page 15 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY

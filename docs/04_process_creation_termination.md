@@ -1,6 +1,6 @@
 # Topic 4: Process Creation, Termination & System Calls
 
-**Source**: Lecture 5 + Textbook Ch. 3 (Silberschatz §3.4-3.5, Stevens & Rago Ch. 8)
+**Source**: Lecture 5 (Unit 1) + Textbook Ch. 3 (Silberschatz §3.4-3.5, Stevens & Rago Ch. 8)
 
 ---
 
@@ -135,7 +135,7 @@ int main() {
 ```c
 #include <sys/wait.h>
 
-pid_t wait(int *statloc);           // Blocks until ANY child terminates
+pid_t wait(int *statloc);           // blocks until ANY child terminates
 pid_t waitpid(pid_t pid, int *statloc, int options);
 ```
 
@@ -156,21 +156,19 @@ int child_code = WEXITSTATUS(status);  // Gets 0-255 from child's exit()
 
 ---
 
-## 4.6 Race Conditions Post-fork()
+## 4.4 Race Conditions Post-fork()
 
 ```c
 // After fork(), parent and child run CONCURRENTLY
 // NEVER assume which runs first!
 
-// FLAWED POLLING (never do this):
-while (getppid() != 1) {  // Wait for reparenting to init
-    sleep(1);  // Wastes CPU, induces latency
-}
+// FLAWED POLLING (never do this!):
+while (getppid() != 1) { sleep(1); }  // BAD - wastes CPU, induces latency
 ```
 
 ---
 
-## 4.7 I/O Request Life Cycle (I/O-Bound Process)
+## 4.6 I/O Request Life Cycle (I/O-Bound Process)
 
 ```
 1. Running: Process executes until I/O syscall (read/write)
@@ -184,19 +182,19 @@ while (getppid() != 1) {  // Wait for reparenting to init
 
 ---
 
-## 4.8 Key Takeaways (Memorize)
+## 4.7 Key Takeaways
 
 1. **`fork()`** = creates child (COW), returns 0 to child, PID to parent, -1 on error
 2. **`exec()`** = replaces process image with new program; **never returns** on success
 3. **`wait()`/`waitpid()`** = reap zombies, get exit status via `WEXITSTATUS`
-4. **Zombie** = child dead, parent hasn't waited; **Orphan** = parent dead, child reparented to init
-5. **COW** = pages shared read-only until write → then duplicated
+3. **Zombie** = child dead, parent hasn't waited; **Orphan** = parent dead, child reparented to init
+4. **COW** = pages shared read-only until write → then duplicated
 6. **Never assume** parent/child execution order post-fork()
 7. **Normal exit**: `return`/`exit()`/`_exit()`; **Abnormal**: signals/`abort()`
 
 ---
 
-## 4.9 Quick Self-Test
+## 4.8 Quick Self-Test
 
 | Question | Answer |
 |----------|--------|
@@ -212,12 +210,12 @@ while (getppid() != 1) {  // Wait for reparenting to init
 
 ---
 
-## 4.10 Exam-Relevant MCQ Patterns (from prep file)
+## 4.9 Exam-Relevant MCQ Patterns (from your prep file)
 
 - **Q1**: `fork()` with `int y=0` — parent `y=-1`, child `y=+1` (independent copies)
 - **Q2**: `vfork()` — child runs FIRST, increments `y` 0→5, parent decrements 5→0 (shared memory)
 - **Q3**: `wait(&status)` + `WEXITSTATUS` extracts exit code (0-255)
-- **Q4**: Multi-level fork hierarchy — bottom-up: Grandchild → Child → Parent
+- **Q4**: Multi-level `fork()` hierarchy — bottom-up: Grandchild → Child → Parent
 - **Q5**: Successful `execl()` — code after exec **never executes**
 - **Q6**: Parent exits first → child becomes orphan → adopted by init (PID 1)
 - **Q7**: Child exits, parent sleeps without wait → child = zombie (`<defunct>`)
@@ -225,7 +223,7 @@ while (getppid() != 1) {  // Wait for reparenting to init
 
 ---
 
-## 4.11 Lab Programs to Trace
+## 4.10 Lab Programs to Trace
 
 | File | Pattern |
 |------|---------|
@@ -237,3 +235,80 @@ while (getppid() != 1) {  // Wait for reparenting to init
 | `orphan.c` | Parent exits first → child adopted by init |
 | `zombie.c` | Child exits, parent sleeps → `<defunct>` |
 | `example1a.c` | No sync → non-deterministic output |
+
+---
+
+## 4.11 Practice Programs to Write
+
+### 1. Fork-Exec-Wait Pattern
+```c
+// Basic fork-exec-wait with error handling
+```
+
+### 2. Zombie Creator
+```c
+// Child exits immediately, parent sleeps 30s without wait
+// Observe with: ps aux | grep Z
+```
+
+### 3. Orphan Creator
+```c
+// Parent exits immediately, child sleeps 30s
+// Observe PPID becomes 1
+```
+
+### 4. Multi-Level Fork
+```c
+// Parent → Child → Grandchild, each waits for child
+// Observe bottom-up termination order
+```
+
+### 5. Exec Failure Handling
+```c
+// execl() with non-existent path
+// Must use _exit() in child on exec failure
+```
+
+---
+
+## 4.12 Key Takeaways
+
+1. **`fork()`** = creates child (COW), returns 0 to child, PID to parent, -1 on error
+2. **`exec()`** = replaces process image with new program; **never returns** on success
+3. **`wait()`/`waitpid()`** = reap zombies, get exit status via `WEXITSTATUS`
+3. **Zombie** = child dead, parent hasn't waited; **Orphan** = parent dead, child reparented to init
+4. **COW** = pages shared read-only until write → then duplicated
+6. **Never assume** parent/child execution order post-fork()
+7. **Normal exit**: `return`/`exit()`/`_exit()`; **Abnormal**: signals/`abort()`
+
+---
+
+## 4.13 Exam-Relevant MCQ Patterns (from your prep file)
+
+- **Q1**: `fork()` with `int y=0` — parent `y=-1`, child `y=+1` (independent copies)
+- **Q2**: `vfork()` — child runs FIRST, increments `y` 0→5, parent decrements 5→0 (shared memory)
+- **Q3**: `wait(&status)` + `WEXITSTATUS` extracts exit code (0-255)
+- **Q4**: Multi-level `fork()` hierarchy — bottom-up: Grandchild → Child → Parent
+- **Q5**: Successful `execl()` — code after exec **never executes**
+- **Q6**: Parent exits first → child becomes orphan → adopted by init (PID 1)
+- **Q7**: Child exits, parent sleeps without wait → child = zombie (`<defunct>`)
+- **Q8**: No synchronization → output interleaves non-deterministically (OS scheduler)
+
+---
+
+## 4.13 Lab Programs to Trace
+
+| File | Pattern |
+|------|---------|
+| `example1.c` | `fork()` independent address spaces |
+| `demo_vfork.c` | `vfork()` shared memory + parent suspended |
+| `example2.c` | `wait()` + `WEXITSTATUS` extraction |
+| `example3.c` | Multi-level fork hierarchy (grandchild) |
+| `example4.c` | `execl()` never returns on success |
+| `orphan.c` | Parent exits first → child adopted by init |
+| `zombie.c` | Child exits, parent sleeps → `<defunct>` |
+| `example1a.c` | No sync → non-deterministic output |
+
+---
+
+*Next: Topic 5 (CPU Scheduling: FCFS & SJF — Lecture 7)*

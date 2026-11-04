@@ -1327,6 +1327,89 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#219-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        21.9 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.9 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-fifo-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: FIFO Trace
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-optimal-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: Optimal Trace
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-clock-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Clock Algorithm
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-beladys-anomaly" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: Belady's Anomaly
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-frame-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: Frame Allocation
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-6-thrashing-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 6: Thrashing Detection
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1611,6 +1694,89 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#219-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        21.9 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.9 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-fifo-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: FIFO Trace
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-optimal-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: Optimal Trace
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-clock-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Clock Algorithm
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-beladys-anomaly" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: Belady's Anomaly
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-frame-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: Frame Allocation
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-6-thrashing-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 6: Thrashing Detection
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1788,7 +1954,7 @@
 <li><strong>Frame Allocation</strong>: Equal, Proportional, Priority, Working Set</li>
 <li><strong>Thrashing</strong> = Σ WSSᵢ &gt; D; detected by high paging + low CPU</li>
 <li><strong>Working Set</strong> = pages referenced in last Δ time; based on locality</li>
-<li><strong>PFF</strong> = upper/lower fault rate bounds → dynamic frame adjustment</li>
+<li><strong>PFF</strong> = upper/lower fault rate bounds → grant/revoke frames</li>
 <li><strong>Global replacement</strong> = thrashing contagion risk; <strong>Local</strong> = isolates</li>
 </ol>
 <hr />
@@ -1806,6 +1972,39 @@
 <li><strong>Q98</strong>: Working Set principle = Locality of Reference</li>
 <li><strong>Q99</strong>: PFF strategy = upper/lower fault rate bounds → grant/revoke frames</li>
 </ul>
+<hr />
+<h2 id="219-practice-problems">21.9 Practice Problems<a class="headerlink" href="#219-practice-problems" title="Permanent link">&para;</a></h2>
+<h3 id="problem-1-fifo-trace">Problem 1: FIFO Trace<a class="headerlink" href="#problem-1-fifo-trace" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Ref: 7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Frames: 3
+</span></code></pre></div>
+Trace FIFO. How many faults?</p>
+<h3 id="problem-2-optimal-trace">Problem 2: Optimal Trace<a class="headerlink" href="#problem-2-optimal-trace" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Ref: 1,2,3,4,1,2,5,1,2,3,4,5
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Frames: 3
+</span></code></pre></div>
+Trace OPT step by step.</p>
+<h3 id="problem-3-clock-algorithm">Problem 3: Clock Algorithm<a class="headerlink" href="#problem-3-clock-algorithm" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Ref: 1,2,3,4,1,2,5,1,2,3,4,5
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Frames: 3
+</span></code></pre></div>
+Trace Clock. Show reference bit changes.</p>
+<h3 id="problem-4-beladys-anomaly">Problem 4: Belady's Anomaly<a class="headerlink" href="#problem-4-beladys-anomaly" title="Permanent link">&para;</a></h3>
+<p>Prove FIFO has Belady's Anomaly for string: <code>1,2,3,4,1,2,5,1,2,3,4,5</code></p>
+<h3 id="problem-5-frame-allocation">Problem 5: Frame Allocation<a class="headerlink" href="#problem-5-frame-allocation" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Total frames: 64
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>P1: 16 pages
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>P2: 48 pages
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>P3: 32 pages
+</span></code></pre></div>
+Equal allocation? Proportional allocation?</p>
+<h3 id="problem-6-thrashing-detection">Problem 6: Thrashing Detection<a class="headerlink" href="#problem-6-thrashing-detection" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>System: 100 frames
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Process working sets: WSS1=40, WSS2=35, WSS3=30
+</span></code></pre></div>
+Is system thrashing? What to do?</p>
+<hr />
+<p><em>Next: Topic 22 (NUMA, Memory Locality &amp; Clock Page Replacement)</em></p>
 
 
 

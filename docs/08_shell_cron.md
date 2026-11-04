@@ -1,6 +1,6 @@
 # Topic 8: Shell Programming & Cron Scheduling
 
-**Source**: Lecture 11 + Textbook Ch. 10 (Stevens & Rago Ch. 9-10)
+**Source**: Lecture 11 (Unit 1) + Textbook Ch. 10 (Stevens & Rago Ch. 9-10)
 
 ---
 
@@ -171,7 +171,10 @@ done
 sudo systemctl status cron.service  # Check status
 ```
 
-### Crontab Management
+---
+
+## 8.6 Crontab Management
+
 | Command | Action |
 |---------|--------|
 | `crontab -l` | List current user's jobs |
@@ -180,7 +183,7 @@ sudo systemctl status cron.service  # Check status
 
 ---
 
-### Crontab Syntax (5 Fields)
+## 8.7 Crontab Syntax (5 Fields)
 
 ```
 * * * * *  command_to_execute
@@ -197,7 +200,7 @@ sudo systemctl status cron.service  # Check status
 |------------|---------|
 | `5 0 * 8 *` | 00:05 every day in August |
 | `5 4 * * 6` | 04:05 every Saturday |
-| `0 22 * * 1-5` | 22:00 Mon-Fri (weekdays) |
+| `0 22 * * 1-5` | 22:00 Mon-Fri |
 | `*/1 * * * *` | Every minute |
 
 ### Example with Output Redirection
@@ -257,3 +260,45 @@ pclose(fp);
 - **Q33**: Crontab `30 2 * * 1` → 02:30 AM every Monday
 - **Q34**: Bash shell execution flow — `fork()` → `exec*()` in child → `wait()` in parent
 - **Q35**: Mobile OS lifecycle — Android kills background processes by importance hierarchy
+
+---
+
+## 8.8 Practice Problems
+
+### Problem 1: Variable Scope
+```bash
+MY_VAR="Hello"
+bash              # Spawn child subshell
+echo $MY_VAR      # What prints?
+```
+
+### Problem 2: Crontab
+```
+Run script at 02:30 AM every Monday
+```
+
+### Problem 3: Loop Control
+```bash
+for i in {1..5}; do
+    if [ $i -eq 3 ]; then continue; fi
+    # What prints for i=3?
+done
+```
+
+### Problem 4: Nested Loop Output
+```bash
+for i in 1 2; do
+    for j in a b; do
+        echo "$i$j"
+    done
+done
+```
+
+### Problem 5: Cron Verification
+```
+How to verify cron job executed?
+```
+
+---
+
+*Next: Topic 9 (Inter-Process Communication — Lecture 1, Unit 2)*

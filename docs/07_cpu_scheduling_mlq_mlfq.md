@@ -1,6 +1,6 @@
 # Topic 7: CPU Scheduling — Multilevel Queue & Multilevel Feedback Queue
 
-**Source**: Lecture 10 + Textbook Ch. 4 (Silberschatz Ch. 5)
+**Source**: Lecture 10 (Unit 1) + Textbook Ch. 4 (Silberschatz Ch. 5)
 
 ---
 
@@ -103,3 +103,7 @@ LOWEST PRIORITY
 
 - **Q31**: MLQ rigidity — processes permanently assigned, cannot migrate
 - **Q32**: MLFQ demotion — CPU-bound processes use full quantum → demoted; I/O-bound release early → stay high
+
+---
+
+*Next: Topic 8 (Shell Programming & Cron Scheduling — Lecture 11)*

@@ -1013,6 +1013,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#1010-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        10.10 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.10 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-race-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: Race Condition
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-condition-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: Condition Variable
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-thread-pool" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Thread Pool
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-cancellation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: Cancellation
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-thread-local-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: Thread-Local Storage
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1699,6 +1771,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#1010-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        10.10 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.10 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-race-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: Race Condition
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-condition-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: Condition Variable
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-thread-pool" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Thread Pool
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-cancellation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: Cancellation
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-thread-local-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: Thread-Local Storage
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1882,14 +2026,14 @@
 </blockquote>
 <h3 id="critical-stack-escape-bug">Critical: Stack-Escape Bug<a class="headerlink" href="#critical-stack-escape-bug" title="Permanent link">&para;</a></h3>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// ❌ WRONG - passes address of LOCAL variable</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">start_thread</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">start_thread_wrong</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tid</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">worker</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">value</span><span class="p">);</span><span class="w"> </span><span class="c1">// DANGER!</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="c1">// if start_thread() returns before worker runs...</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="c1">// if start_thread_wrong() returns before worker runs...</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="c1">// value is gone! Stack frame destroyed!</span>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">}</span>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1">// ✅ CORRECT - allocate on heap</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="kt">void</span><span class="w"> </span><span class="nf">start_thread</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="kt">void</span><span class="w"> </span><span class="nf">start_thread_correct</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">arg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="o">*</span><span class="n">arg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
 </span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tid</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">worker</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
@@ -2100,20 +2244,31 @@
 <li><strong>Q55</strong>: Spinlock effective on multiprocessor for short CS — avoids context switch overhead</li>
 <li><strong>Q56</strong>: <code>sem_init(&amp;mutex, 0, 1)</code> — 2nd arg 0 = thread-shared; 3rd = binary semaphore</li>
 <li><strong>Q57</strong>: <code>demo_semaphore_2.c</code> vs <code>3.c</code> — without sync: interleaved; with: mutual exclusion</li>
-<li><strong>Q58</strong>: Producer-consumer semaphores — mutex=1, empty=N, full=0</li>
-<li><strong>Q59</strong>: Wrong order <code>wait(mutex); wait(empty)</code> → DEADLOCK when buffer full</li>
-<li><strong>Q60</strong>: Readers-writers — reader preference starves writers</li>
-<li><strong>Q61</strong>: Dining philosophers — asymmetric pickup (odd left→right, even right→left)</li>
-<li><strong>Q62</strong>: Hold and Wait — process holds resource while requesting more</li>
-<li><strong>Q63</strong>: Eliminate Hold and Wait — request all at once, or release before requesting</li>
-<li><strong>Q64</strong>: Deadlock prevention — global linear lock ordering</li>
-<li><strong>Q65</strong>: RAG multi-instance — cycle = necessary but not sufficient</li>
-<li><strong>Q66</strong>: Banker's Need = Max - Allocation</li>
-<li><strong>Q67</strong>: Safe state — exists sequence where all can finish</li>
-<li><strong>Q68</strong>: Unsafe ≠ deadlocked; all deadlocked are unsafe</li>
-<li><strong>Q69</strong>: Wait-for graph — collapse RAG, cycle = deadlock</li>
-<li><strong>Q70</strong>: Uncatchable signals — SIGKILL, SIGSTOP</li>
 </ul>
+<hr />
+<h2 id="1010-practice-problems">10.10 Practice Problems<a class="headerlink" href="#1010-practice-problems" title="Permanent link">&para;</a></h2>
+<h3 id="problem-1-race-condition">Problem 1: Race Condition<a class="headerlink" href="#problem-1-race-condition" title="Permanent link">&para;</a></h3>
+<p><div class="language-c highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">// counter++ without mutex - trace the race</span>
+</span></code></pre></div>
+Show how counter gets wrong value.</p>
+<h3 id="problem-2-condition-variable">Problem 2: Condition Variable<a class="headerlink" href="#problem-2-condition-variable" title="Permanent link">&para;</a></h3>
+<p><div class="language-c highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">// Producer-consumer with bounded buffer using cond vars</span>
+</span></code></pre></div>
+Write complete code.</p>
+<h3 id="problem-3-thread-pool">Problem 3: Thread Pool<a class="headerlink" href="#problem-3-thread-pool" title="Permanent link">&para;</a></h3>
+<p><div class="language-c highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">// Submit 100 tasks to 4-thread pool</span>
+</span></code></pre></div>
+Implement queue and workers.</p>
+<h3 id="problem-4-cancellation">Problem 4: Cancellation<a class="headerlink" href="#problem-4-cancellation" title="Permanent link">&para;</a></h3>
+<p><div class="language-c highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// Long-running thread that can be cancelled safely</span>
+</span></code></pre></div>
+Use deferred cancellation with cleanup handlers.</p>
+<h3 id="problem-5-thread-local-storage">Problem 5: Thread-Local Storage<a class="headerlink" href="#problem-5-thread-local-storage" title="Permanent link">&para;</a></h3>
+<p><div class="language-c highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">// Each thread needs its own error buffer</span>
+</span></code></pre></div>
+Use <code>__thread</code> or <code>pthread_key_create</code>.</p>
+<hr />
+<p><em>Next: Topic 11 (Multicore Kernel Concepts &amp; SMP Scheduling)</em></p>
 
 
 

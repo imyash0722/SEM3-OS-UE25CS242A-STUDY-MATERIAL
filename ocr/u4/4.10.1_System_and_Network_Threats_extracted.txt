@@ -1,0 +1,153 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+System and Network Threats 
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+System Threats 
+OPERATING SYSTEMS
+●System threats are attacks that target the system services, resources, or operating 
+environment.
+●The goal may be to:
+○
+Make system resources unavailable
+○
+Consume excessive CPU, memory, or storage
+○
+Gain unauthorized access
+○
+Exploit weaknesses in system services
+○
+Disrupt normal system operation
+Common System Threats
+1. Denial-of-Service (DoS) - Attempts to make a system or service unavailable to legitimate 
+users.
+2. Port Scanning - Systematically checks network ports to identify available services and 
+potential entry points.
+UNIVERSITY
+
+--- Slide / Page 5 ---
+Denial-of-Service (DoS) 
+OPERATING SYSTEMS
+A Denial-of-Service (DoS) attack attempts to make a system or network service 
+unavailable to legitimate users.
+The attacker overwhelms a system by consuming its:
+●CPU resources
+●Memory
+●Network bandwidth
+●Connection capacity
+●Other system resources
+UNIVERSITY
+
+--- Slide / Page 6 ---
+Port Scanning 
+OPERATING SYSTEMS
+●Port scanning is a technique used to examine a computer or network 
+system to identify open network ports and the services associated with 
+them.
+●Network services listen on specific port numbers for incoming connections.
+●Attackers may use port scanning to discover potential entry points and 
+vulnerable services.
+●Administrators also use port scanning for network security auditing and 
+troubleshooting.
+UNIVERSITY
+
+--- Slide / Page 7 ---
+Network Threats 
+OPERATING SYSTEMS
+●
+Network threats are attacks that exploit vulnerabilities in network communication, protocols, or 
+connected systems.
+●
+Attackers may attempt to:
+a. Intercept network communication
+b. Steal sensitive information
+c. Impersonate legitimate systems or users
+d. Modify transmitted data
+e. Disrupt network services
+Common Network Threats
+1. IP Spoofing - Attacker sends packets using a forged source IP address.
+2. Man-in-the-Middle (MITM) - Attacker secretly positions themselves between two communicating 
+parties and may observe or modify communication.
+3. Packet Sniffing - Attacker captures and analyzes network packets to obtain information.
+UNIVERSITY
+
+--- Slide / Page 8 ---
+IP Spoofing & Man-in-the-Middle (MITM) Attack 
+OPERATING SYSTEMS
+●IP spoofing is a technique in which an attacker forges the source IP address 
+of network packets.
+●The packet appears to come from a trusted or different system.
+●The actual sender's IP address is hidden or replaced with a false address.
+●A Man-in-the-Middle (MITM) attack occurs when an attacker secretly 
+positions themselves between two communicating parties.
+●The attacker can potentially intercept, read, or modify the communication.
+●The sender and receiver may believe they are communicating directly with 
+each other
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Packet Sniffing 
+OPERATING SYSTEMS
+●Packet sniffing is the process of capturing and analyzing network packets as they 
+travel through a network.
+●A packet sniffer is a software or hardware tool used to inspect network traffic.
+●Packet sniffing can be:
+○Legitimate — network monitoring, troubleshooting, and security analysis.
+○Malicious — capturing sensitive information without authorization.
+Information That May Be Exposed
+●Usernames and passwords
+●Network addresses
+●Communication data
+●Session information
+●Other unencrypted information
+UNIVERSITY
+
+--- Slide / Page 10 ---
+Network Security & Protection Mechanisms 
+OPERATING SYSTEMS
+How Can Systems Be Protected?
+1. Firewalls
+●Control incoming and outgoing network traffic based on security rules.
+●Can block unauthorized connections and services.
+2. Encryption
+●Converts readable data into unreadable ciphertext.
+●Protects information during network transmission.
+●Helps prevent attackers from understanding captured data.
+3. Authentication
+●Verifies the identity of users or systems.
+●Examples: passwords, certificates, and multi-factor authentication.
+UNIVERSITY
+
+--- Slide / Page 11 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

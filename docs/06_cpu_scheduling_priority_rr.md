@@ -1,6 +1,6 @@
 # Topic 6: CPU Scheduling — Priority & Round Robin
 
-**Source**: Lecture 8 + Textbook Ch. 4 (Silberschatz Ch. 5, Stallings Ch. 9)
+**Source**: Lecture 8 (Unit 1) + Textbook Ch. 4 (Silberschatz Ch. 5, Stallings Ch. 9)
 
 ---
 
@@ -163,8 +163,12 @@ No process waits longer than (n - 1) × q time units
 
 ---
 
-## 6.7 Exam-Relevant MCQ Patterns (from prep file)
+## 6.7 Exam-Relevant MCQ Patterns (from your prep file)
 
 - **Q28**: RR quantum → ∞ → degenerates to FCFS
 - **Q29**: 80% rule for quantum selection
 - **Q30**: Priority inversion — high blocked on low, medium runs → fix: **Priority Inheritance**
+
+---
+
+*Next: Topic 7 (Multilevel Queue & Multilevel Feedback Queue — Lecture 10)*

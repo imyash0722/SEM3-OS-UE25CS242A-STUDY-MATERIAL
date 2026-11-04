@@ -1,0 +1,3787 @@
+================================================================================
+
+OPERATING SYSTEMS (UE25CS242A) - UNIT 4 COMPLETE COMPENDIUM
+
+UNIT 4: FILE MANAGEMENT, STORAGE MANAGEMENT AND SECURITY
+
+================================================================================
+
+
+TABLE OF CONTENTS:
+1. SOURCE DOCUMENT SLIDES & OCR EXTRACTED TEXT:
+   - 1.1 Topic 4.1.1: Directory and Disk Structure
+   - 1.2 Topic 4.1.2: File Concept
+   - 1.3 Topic 4.2.1: File-System Sharing and Protection
+   - 1.4 Topic 4.3.1: Driver Development, Flash Drives, FS Implementation
+   - 1.5 Topic 4.4.1: Allocation Methods (Contiguous, Linked, Indexed)
+   - 1.6 Topic 4.5.1: Free-Space Management, Efficiency and Performance
+   - 1.7 Topic 4.6.1: Mass-Storage Structure and Disk Structure
+   - 1.8 Topic 4.7.1: Disk Scheduling Algorithms and Disk Management
+   - 1.9 Topic 4.8.1: RAID Structure (RAID 0, 1, 4, 5, 6, 1+0, 0+1)
+   - 1.10 Topic 4.9.1: OS Security Problems & Program Threats
+   - 1.11 Topic 4.10.1: System and Network Threats
+   - 1.12 Topic 4.11.1: Access Matrix and Implementation Models
+   - 1.13 Topic 4.12.1: Access Control & Revocation of Access Rights
+   - 1.14 Topic 4.13.1: Shell Programming with awk and sed
+
+
+================================================================================
+
+PART 1: SOURCE DOCUMENT SLIDES & OCR EXTRACTED TEXT
+
+================================================================================
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.1.1 - Directory and Disk Structure
+
+# File: resources/u4/Slides/4.1.1_Directory_and_Disk_Structure_(1B).pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+File System
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Directory Structure
+OPERATING SYSTEMS
+●A collection of nodes containing information about all files
+F 
+1
+F 
+2
+F 
+3
+F 
+4
+F 
+n
+Directory
+Files
+Both the directory structure and the files reside on disk
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+Disk Structure
+OPERATING SYSTEMS
+●Disk can be subdivided into partitions
+●Disks or partitions can be RAID protected against failure
+●Disk or partition can be used raw – without a file system, or 
+formatted with a file system
+●Partitions also known as minidisks, slices
+●Entity containing file system known as a volume
+●Each volume containing file system also tracks that file system’s 
+info in device directory or volume table of contents
+●As well as general-purpose file systems there are many special-
+purpose file systems, frequently all within the same operating 
+system or computer
+UNIVERSITY
+LVM
+:
+Ihome
+Idata
+File Systems
+(ext3)
+(xfs)
+Logical Volume (LV) [TEFr
+Physical Volumes | /dev/sdb1
+Idevisdc2
+Partitions | /dev/sdb1
+Idevisdc2
+
+--- [Slide / Page 6] ---
+A Typical File-system Organization
+OPERATING SYSTEMS
+PES
+UNIVERSITY
+partition A
+disk 2
+disk 1
+partition C
+files
+partition B
+disk 3
+
+--- [Slide / Page 7] ---
+Operations Performed on Directory
+OPERATING SYSTEMS
+●Search for a file
+●Create a file
+●Delete a file
+●List a directory
+●Rename a file
+●Traverse the file system
+UNIVERSITY
+
+--- [Slide / Page 8] ---
+Directory Organization
+OPERATING SYSTEMS
+●Efficiency – locating a file quickly
+●Naming – convenient to users
+●Two users can have same name for different files
+●The same file can have several different names
+●Grouping – logical grouping of files by properties, (e.g., all Java 
+programs, all games, …)
+The directory is organized logically  to obtain 
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Single-Level Directory
+OPERATING SYSTEMS
+●A single directory for all users
+●Naming problem
+●Grouping problem
+UNIVERSITY
+diecory | cat| bo| a | test] da] mail| cont] hex |ecord
+
+--- [Slide / Page 10] ---
+Two-Level Directory
+OPERATING SYSTEMS
+●Separate directory for each user
+●Path name
+●Can have the same file name for different user
+●Efficient searching
+●No grouping capability
+rte i)
+vis
+gree
+oo a row] [ome Lor] x [oe]
+QOO0OO0 00 00 000
+
+--- [Slide / Page 11] ---
+Tree-Structured Directories
+OPERATING SYSTEMS
+•
+A tree structure is the most common 
+directory structure. 
+•
+The tree has a root directory, and 
+every file in the system have a unique 
+path.
+—
+PES
+Cow Ter [ar | [io Tom]
+oc Jose] [Tv [ow]
+@
+OO
+QQ
+0
+QO
+©
+O
+oa[wml
+or [or]
+fms
+4 [ior] [ror feo]
+©
+®
+©
+@
+Q
+OQ
+[Cio To [oro J o0 [i To]
+0
+0
+0
+©
+©
+
+--- [Slide / Page 12] ---
+Tree-Structured Directories (Cont.)
+OPERATING SYSTEMS
+●Efficient searching
+●Grouping Capability
+●Current directory (working directory)
+●cd /spell/mail/prog
+●type list
+●We cannot share files
+UNIVERSITY
+
+--- [Slide / Page 13] ---
+Tree-Structured Directories (Cont.)
+OPERATING SYSTEMS
+●Absolute or relative path name
+●Creating a new file is done in current directory
+●Delete a file
+rm <file-name>
+●Creating a new subdirectory is done in current directory
+mkdir <dir-name>
+❑Example:  if in current directory   /mail
+mkdir count
+Deleting “mail” 
+ deleting the entire subtree rooted by “mail”
+⇒
+UNIVERSITY
+mail
+prog | copy
+count
+
+--- [Slide / Page 14] ---
+Acyclic-Graph Directories
+OPERATING SYSTEMS
+●An acyclic graph is a graph with no cycle and allows to 
+share subdirectories and files.
+●The same file or subdirectories may be in two 
+different directories
+●It is used in a situation like when two programmers 
+are working on a joint project and they need to 
+access files.
+PES
+UNIVERSITY
+fie
+oR
+© 0 O
+
+--- [Slide / Page 15] ---
+Acyclic-Graph Directories (Cont.)
+OPERATING SYSTEMS
+●Two different names (aliasing)
+●If dict deletes list 
+ dangling pointer
+⇒
+Solutions:
+●Backpointers, so we can delete all pointers
+Variable size records a problem
+●Backpointers using a daisy chain organization
+●Entry-hold-count solution
+●New directory entry type
+●Link – another name (pointer) to an existing file
+●Resolve the link – follow pointer to locate the file
+UNIVERSITY
+
+--- [Slide / Page 16] ---
+General Graph Directory 
+OPERATING SYSTEMS
+Advantages:
+It allows cycles  within a dir structure.
+Multiple directories can be derived 
+from more than one parent dir.
+Disadvantages:
+It is more costly than others.
+It needs garbage collection (traversing 
+the entire file system, marking 
+everything that can be accessed)
+Root
+UNIVERSITY
+[uw [uw
+Directory
+[oo [oz [os | [oe |oos | [oe [ or | oe |
+Files
+NL
+
+--- [Slide / Page 17] ---
+General Graph Directory (Contd.)
+OPERATING SYSTEMS
+●How do we guarantee no cycles?
+●Allow only links to file not 
+subdirectories
+●Garbage collection
+●Every time a new link is added use 
+a cycle detection algorithm to 
+determine whether it is OK
+TAL
+UNIVERSITY
+Db A
+
+--- [Slide / Page 18] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.1.2 - File Concept
+
+# File: resources/u4/Slides/4.1.2_File_Concept_(1A).pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+Storage Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+File System
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+File Concept
+OPERATING SYSTEMS
+●Computers can store information on various storage media, such as 
+magnetic disks, magnetic tapes, and optical disks.
+●File is logical storage where as disks are physical storage unit
+●What is a File?
+●Collection of related information
+●Data cannot to be written to disk unless they are in files
+●Data can be Numeric, alphabetic, alphanumeric, binary
+●A file is a sequence of bits, bytes, lines, or records, the meaning of which is 
+defined by the file’s creator and user
+●Contents  of file can be source or executable programs, numeric or text data, 
+photos, music, video, and so on.
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+File Attributes
+OPERATING SYSTEMS
+Files are named and are referred by their names by the human users.
+Attributes of files
+●Name – only information kept in human-readable form
+●Identifier – unique tag (number) identifies file within file system
+●Type – needed for systems that support different types
+●Location – pointer to file location on device
+●Size – current file size
+●Protection – controls who can do reading, writing, executing
+●Time, date, and user identification – data for protection, security, and usage 
+monitoring
+●Information about files are kept in the directory structure, which is maintained 
+on the disk.
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+File Operations
+OPERATING SYSTEMS
+File is an abstract data type.
+File Operations
+●Create
+●Write – Use the system call to write to a file. A write pointer points to the location 
+in the file, where the next write is to take place.
+●Read – – Use the system call to write to a file. A read pointer points to the location 
+in the file from where the next read is to take place
+●Reposition within file - Repositioning within a file need not involve any actual I/O. 
+It is done with system call lseek. Repositioning is also called seek to location in a 
+file
+●Delete: Use the system call to delete/remove a file. 
+●File to be deleted is searched in the directory.
+●Release the memory allocated after deletion
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+File Operations
+OPERATING SYSTEMS
+●Truncate: The user may want to erase the contents of a file but keep its 
+attributes.
+●Instead of deleting the file and then recreating it, use the function that sets 
+the size of file to zero.
+●Appending to the end of a existing file
+●Open a file –  use a system call open()
+●Open-file table: tracks open files
+●File pointer:  pointer to last read/write location, per process that has the 
+file open
+●File-open count: counter of number of times a file is open – to allow 
+removal of data from open-file table when last processes closes it
+●Close: When a file is actively not used close it.
+UNIVERSITY
+
+--- [Slide / Page 8] ---
+File Operations
+OPERATING SYSTEMS
+●Several pieces of information are associated with an open file.
+●File pointer
+●File-open count.
+●Disk location of the file.
+●Access rights
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Open Files
+OPERATING SYSTEMS
+●Provided by some operating systems and file systems
+●Similar to reader-writer locks
+●Shared lock similar to reader lock – several processes can 
+acquire concurrently
+●Exclusive lock similar to writer lock
+●OS mediates access to a file
+●Mandatory or advisory:
+●Mandatory – access is denied depending on locks held and 
+requested
+●Advisory – processes can find status of locks and decide 
+what to do
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+File Types – Name, Extension
+OPERATING SYSTEMS
+file type
+executable
+exe, com, bin
+ready-to-run machine-
+or none
+language program
+UNIVERSITY
+object
+obj, o
+compiled, machine
+150YEARS.
+language, not linked
+source code
+c, cc, java, pas,
+source code in various
+asm, a
+languages
+batch
+bat, sh
+commands to the command
+interpreter
+textual data, documents
+word processor|
+wp, tex,
+rtf,
+various word-processor
+doc
+formats
+library
+lib, a, so, dll
+libraries of routines for
+programmers
+print or view
+ps. pdf, jpg
+ASCII or binary file in a
+format for printing or
+viewing
+archive
+arc, zip, tar
+related files grouped into
+one file, sometimes com-
+pressed, for archiving
+or storage
+multimedia
+mpeg, mov, rm,
+binary file containing
+mp3, avi
+audio or A/V information
+
+--- [Slide / Page 11] ---
+File Structure
+OPERATING SYSTEMS
+●None - sequence of words, bytes
+●Simple record structure
+●Lines 
+●Fixed length
+●Variable length
+●Complex Structures
+●Formatted document
+●Relocatable load file
+●Can simulate last two with first method by inserting appropriate 
+control characters
+●Who decides:
+●Operating system
+●Program
+UNIVERSITY
+
+--- [Slide / Page 12] ---
+Access Methods
+OPERATING SYSTEMS
+——
+current position
+d
+EES
+ginning
+en
+UNIVERSITY
+Ea ala
+$G=rewindS—
+}
+read or write =>
+
+--- [Slide / Page 13] ---
+Sequential-access File
+OPERATING SYSTEMS
+●Sequential Access
+read next
+write next 
+reset
+●Direct Access (or relative access)  – file is fixed length logical records
+read n
+write n
+position to n
+read next
+write next 
+n = relative block number (i.e. index relative to the beginning of the file)
+●Relative block numbers allow OS to decide where file should be placed
+UNIVERSITY
+
+--- [Slide / Page 14] ---
+Simulation of Sequential Access on Direct-access File
+OPERATING SYSTEMS
+●
+cp = current position
+●
+Some systems allow only sequential file access; others allow only direct access
+UNIVERSITY
+implementation for direct access
+read next
+read cp;
+cp=cp +1;
+write next
+write cp;
+cp=cp +1;
+
+--- [Slide / Page 15] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.2.1 - File-System Sharing and File System Protection
+
+# File: resources/u4/Slides/4.2.1_File-System_sharing,_File_system_protection.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+File System – File-System Mounting, File Sharing and File Protection
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+File System Mounting
+OPERATING SYSTEMS
+●A file system must be mounted before it can be accessed
+●Fig (a) shows Existing File System
+●A unmounted file system (i.e., Fig. (b)) is mounted at a mount point 
+●Fig (c) shows the effect of mounting
+(c) 
+UNIVERSITY
+/
+/
+Q
+users
+(users
+bill 3
+0) fred
+sue
+jane
+sue
+Jane
+AR
+AR
+fl I
+A
+AN
+4
+a
+0) help
+doc
+doc
+:
+prog
+prog
+(a)
+(0)
+
+--- [Slide / Page 5] ---
+File Sharing
+OPERATING SYSTEMS
+●Sharing of files on multi-user systems is desirable
+●Sharing may be done through a protection scheme
+●On distributed systems, files may be shared across a network
+●Network File System (NFS) is a common distributed file-sharing method
+●If multi-user system
+●User IDs identify users, allowing permissions and protections to be per-user
+Group IDs allow users to be in groups, permitting group access rights
+●Owner of a file / directory
+●Group of a file / directory
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+File Sharing – Remote File Systems
+OPERATING SYSTEMS
+●Uses networking to allow file system access between systems
+●Manually via programs like FTP
+●Automatically, seamlessly using distributed file systems
+●Semi automatically via the world wide web
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+File Sharing – Remote File Systems (Cont.)
+OPERATING SYSTEMS
+●Client-server model allows clients to mount remote file 
+systems from servers
+●Server can serve multiple clients
+●Client and user-on-client identification is insecure or 
+complicated
+●NFS is standard UNIX client-server file sharing protocol
+●CIFS is standard Windows protocol
+●Standard operating system file calls are translated into 
+remote calls
+●Distributed Information Systems (distributed naming 
+services) such as LDAP, DNS, NIS, Active Directory 
+implement unified access to information needed for remote 
+computing
+UNIVERSITY
+NES architecture
+Client computer
+Server computer
+UNIX
+system calls
+UNIX kemnel=—
+UNIX komo
+==
+il
+UNIX
+NFS
+NF
+UNIX
+fle
+| NFS.
+(ES:
+file
+i
+NFS
+protocol
+RPC (UDP
+or TCP)
+
+--- [Slide / Page 8] ---
+Protection
+OPERATING SYSTEMS
+●File owner/creator should be able to control:
+●what can be done
+●by whom
+●Types of access
+●Read
+●Write
+●Execute
+●Append
+●Delete
+●List
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Access Lists and Groups
+OPERATING SYSTEMS
+●Mode of access:  read, write, execute
+●Three classes of users on Unix / Linux
+RWX
+a) owner access 7
+⇒
+1 1 1
+RWX
+b) group access 6
+ ⇒
+1 1 0
+RWX
+c) public access
+1
+ ⇒
+0 0 1
+●Ask manager to create a group (unique name), 
+say G, and add some users to the group.
+●For a particular file (say game) or subdirectory, 
+define an appropriate access.
+Attach a group to a file
+chgrp  G  game
+UNIVERSITY
+"Tow
+chmod 761 game
+
+--- [Slide / Page 10] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.3.1 - Driver Development, Flash Drives, File System Implementation, Directory Implementation
+
+# File: resources/u4/Slides/4.3.1_Driver_Development,_Flash_Drives_,_File_system_implementation,_Directory_implementation.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+Driver Development, Flash Drives , File system
+implementation, Directory implementation
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Device Driver 
+OPERATING SYSTEMS
+●A device driver is a specialized software component that enables the 
+Operating System (OS) to communicate with and control a hardware device.
+●It acts as a translator between the OS and the hardware.
+●The OS does not need to understand the internal details of every hardware 
+device.
+●The driver provides a standard interface through which the OS can access 
+the device.
+Examples - Keyboard Driver, Mouse Driver, Printer Driver, Disk/Storage Driver, 
+Network Card Driver, USB Driver
+UNIVERSITY
+User
+system | Operating
+Device
+Hardware
+Application
+Call
+System
+Driver
+Device
+Es
+&
+[a]
+©
+
+--- [Slide / Page 5] ---
+Types of Device Drivers & Architecture 
+OPERATING SYSTEMS
+1. Character Device Drivers
+●Transfer data one character/byte at a time
+●Used for devices such as keyboards, mice, and serial ports
+2. Block Device Drivers
+●Transfer data in fixed-size blocks
+●Used for storage devices such as HDDs, SSDs, and USB drives
+3. Network Device Drivers
+●Enable communication between the OS and network hardware
+●Used for Ethernet cards and Wi-Fi adapters
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+How Does a Device Driver Work? 
+OPERATING SYSTEMS
+Device Driver Workflow
+1. Application Request - A user application requests an operation such as read, write, or print.
+2. System Call - The application uses a system call to request the service from the OS.
+3. Kernel Processing - The OS kernel receives the request and determines which device and driver are 
+required.
+4. Device Driver - The driver converts the OS request into device-specific commands.
+5. Hardware Operation - The hardware performs the requested operation.
+6. Interrupt / Response
+○The device may generate an interrupt when the operation is completed.
+○
+The driver informs the OS, which then returns the result to the application.
+Example
+Application → read() → Kernel → Disk Driver → SSD/HDD → Interrupt → Kernel → Application
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+Driver Development in Linux 
+OPERATING SYSTEMS
+●Driver development is the process of creating software that allows the OS to 
+communicate with and control a specific hardware device.
+●In Linux, many device drivers run as part of the kernel.
+●Drivers can be built into the kernel or loaded dynamically as Kernel Modules.
+Basic Linux Driver Development
+1. Device Identification - Understand the hardware and its communication interface.
+2. Driver Implementation - Write the driver using C and Linux Kernel APIs.
+3. Driver Registration - Register the driver with the Linux kernel.
+UNIVERSITY
+
+--- [Slide / Page 8] ---
+Driver Development in Linux 
+OPERATING SYSTEMS
+4. Device Communication - Implement operations such as open, read, write and 
+close.
+5. Testing & Debugging - Test communication between the driver and hardware.
+Example
+User Program → System Call → Linux Kernel → Device Driver → Hardware
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Flash Drives & Flash Memory 
+OPERATING SYSTEMS
+What is Flash Storage?
+●Flash memory is a non-volatile memory that retains data even when power is 
+turned off.
+●It is widely used in USB flash drives, SSDs, memory cards, and smartphones.
+●Flash storage has no moving mechanical parts, making it faster and more 
+resistant to physical shock than HDDs.
+NAND Flash
+●Most modern flash storage uses NAND flash memory.
+●Data is organized into Pages and Blocks.
+●Page: Smallest unit for read/write operations.
+●Block: Collection of pages; erase operations occur at block level.
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+Flash Drives & Flash Memory 
+OPERATING SYSTEMS
+What is Flash Storage?
+●Flash memory is a non-volatile memory that retains data even when power is 
+turned off.
+●It is widely used in USB flash drives, SSDs, memory cards, and smartphones.
+●Flash storage has no moving mechanical parts, making it faster and more 
+resistant to physical shock than HDDs.
+UNIVERSITY
+Flash Memory |—>( Blocks ]—»( Pages J—»(
+pata |
+-
+4
+Page Data
+=.
+R
+.
+5
+.
+WN
+Spare Area
+NS
+&
+\
+8
+Ne
+(Metadata, ECC, etc.)
+
+--- [Slide / Page 11] ---
+NAND Flash 
+OPERATING SYSTEMS
+NAND Flash
+●Most modern flash storage uses NAND flash memory.
+●Data is organized into Pages and Blocks.
+●Page: Smallest unit for read/write operations.
+●Block: Collection of pages; erase operations occur at block level.
+Types of NAND Flash 
+Type
+Bits / Cell
+Key Feature
+SLC
+1 bit
+Fast, reliable, high endurance
+MLC
+2 bits
+Higher capacity, moderate endurance
+TLC
+3 bits
+High capacity, widely used
+QLC
+4 bits
+Very high capacity, lower endurance
+UNIVERSITY
+
+--- [Slide / Page 12] ---
+NAND Flash 
+OPERATING SYSTEMS
+Flash Organization
+●Page: Basic unit for read/write operations.
+●Block: Collection of pages; erase operation is performed at block level.
+●Multiple blocks form a Flash Memory Chip.
+Important Concept
+Read/Write → Page level
+Erase → Block level
+Example:
+If a block contains 256 pages, data can be written to individual pages, but the 
+entire block must be erased before its pages can be reused.
+UNIVERSITY
+
+--- [Slide / Page 13] ---
+Flash Storage Management 
+OPERATING SYSTEMS
+Why is Flash Storage Management Required?
+Flash memory has limitations:
+●A flash cell has a limited number of write/erase cycles.
+●Data cannot be overwritten directly like a magnetic disk.
+●Erasing is performed at the block level, while writing is performed at the 
+page level.
+UNIVERSITY
+
+--- [Slide / Page 14] ---
+Flash Storage Management 
+OPERATING SYSTEMS
+Key Management Techniques
+1. Flash Translation Layer (FTL)
+●
+Maps logical addresses from the OS to physical locations in flash memory.
+●
+Hides the internal organization of flash from the OS.
+2. Wear Leveling
+●
+Distributes write/erase operations across blocks.
+●
+Prevents some blocks from wearing out earlier than others.
+3. Garbage Collection
+●
+Identifies blocks containing obsolete data.
+●
+Moves valid data and frees blocks for future writes.
+4. Bad Block Management
+●
+Detects unusable flash blocks.
+●
+Prevents the system from storing data in damaged blocks.
+UNIVERSITY
+Operating System
+Block Device Driver
+i
+Flash Translation Layer (FTL)
+|
+ii
+i
+Wear Leveling
+Mapping Tables
+Garbage Collection
+i
+{|e Distributes write/erase
+Maps logical addresses
++ Identifies blocks with
+i
+i
+operations across blocks
+to physical pages/blocks
+obsolete data
+{
+{|e Prevents
+early wear out
+* Maintains address mapping
+* Moves valid data to new blocks | |
+|
+information
+« Frees blocks
+for future writes | |
+{
+|
+Emer
+ari)
+NAND Flash
+T°Blockor
+(CTBlockal|
+CTBlockm
+
+--- [Slide / Page 15] ---
+Flash Storage and the Operating System 
+OPERATING SYSTEMS
+How Does the OS Interact with Flash Storage?
+●The OS views an SSD/flash drive as a block storage device.
+●The file system manages files and directories using logical block addresses.
+●The block device driver communicates with the storage device.
+●The Flash Translation Layer (FTL) converts logical addresses into physical flash locations.
+Important Operations
+Read - OS requests data → Driver → FTL → Flash page → Data returned
+Write - OS sends data → FTL selects a suitable page → Data is written
+Erase - Flash memory erases entire blocks, not individual pages.
+TRIM - The OS informs the SSD that certain blocks/pages are no longer in use and also, helps 
+the SSD perform garbage collection more efficiently.
+UNIVERSITY
+
+--- [Slide / Page 16] ---
+Flash Storage and the Operating System 
+OPERATING SYSTEMS
+Feature
+HDD
+SSD / Flash
+Moving Parts
+Yes
+No
+Access Time
+Higher
+Lower
+Noise
+Mechanical
+Silent
+Shock Resistance
+Lower
+Higher
+Erase Requirement
+No
+Yes
+UNIVERSITY
+[CELEBRATING
+80
+YEARS.
+
+--- [Slide / Page 17] ---
+Layered File System
+OPERATING SYSTEMS
+Device drivers and interrupt handlers
+Issues generic commands to  the device driver, 
+manages mem buffers
+Translates logical to physical block addresses
+Manages metadata information, and the dir 
+structure to provide the file-org module. Also 
+responsible for protection
+—
+application programs
+[
+logical file system ]
+$
+file-organization module 1]
+J
+J
+J
+devices
+
+--- [Slide / Page 18] ---
+File-System Structure
+OPERATING SYSTEMS
+●File structure
+●Logical storage unit
+●Collection of related information
+●File system resides on secondary storage (disks)
+●Provided user interface to storage, mapping logical to physical
+●Provides efficient and convenient access to disk by allowing data to be 
+stored, located retrieved easily
+●File control block (FCB) – storage structure consisting of information about a file 
+including ownership, permissions, and location of the file contents
+●Device driver controls the physical device 
+●File system organized into layers
+UNIVERSITY
+
+--- [Slide / Page 19] ---
+File System Layers
+OPERATING SYSTEMS
+●Device drivers manage I/O devices at the I/O control layer
+●Basic file system given command like “retrieve block 123” translates to 
+device driver
+●Also manages memory buffers and caches (allocation, freeing, replacement) 
+●Buffers hold data in transit
+●Caches hold frequently used data
+UNIVERSITY
+
+--- [Slide / Page 20] ---
+File System Layers (Cont.)
+OPERATING SYSTEMS
+●File organization module understands files, logical address, and physical 
+blocks
+●Translates logical block # to physical block #
+●Manages free space, disk allocation
+●Logical file system manages metadata information
+●Translates file name into file number, file handle, location by 
+maintaining file control blocks (inodes in UNIX)
+●Directory management
+●Protection
+UNIVERSITY
+
+--- [Slide / Page 21] ---
+File-System Implementation
+OPERATING SYSTEMS
+PES
+Pum———————————— Pi ee———————————————
+ Nrrm
+Partition table
+Disk partition
+\
+all
+Ws
+aa
+TN
+A possible file system layout.
+
+--- [Slide / Page 22] ---
+File-System Implementation
+OPERATING SYSTEMS
+●We have system calls at the API level, but how do we implement their 
+functions?
+●On-disk and in-memory structures
+●Boot control block contains info needed by system to boot OS from that 
+volume
+●Needed if volume contains OS, usually first block of volume
+●Volume control block (superblock, master file table) contains volume details
+●Total # of blocks, # of free blocks, block size, free block pointers or array
+●Directory structure organizes the files
+●Names and inode numbers, master file table
+UNIVERSITY
+
+--- [Slide / Page 23] ---
+File-System Implementation (Cont.)
+OPERATING SYSTEMS
+●Per-file File Control Block (FCB) contains many details 
+about the file
+●inode number, permissions, size, dates
+●NFTS stores into in master file table  using relational DB 
+structures
+PES
+UNIVERSITY
+
+--- [Slide / Page 24] ---
+In-Memory File System Structures
+OPERATING SYSTEMS
+●Mount table storing file system mounts, mount points, file system types
+●The following figure illustrates the necessary file system structures 
+provided by the operating systems
+●Figure (a) refers to opening a file
+●Figure (b) refers to reading a file
+●Plus buffers hold data blocks from secondary storage
+●Open returns a file handle for subsequent use
+●Data from read eventually copied to specified user process memory 
+address
+UNIVERSITY
+
+--- [Slide / Page 25] ---
+In-Memory File System Structures
+OPERATING SYSTEMS
+]
+L]
+UNIVERSITY
+directory structure
+open (file name)
+]
+Alfie SBE
+file-control block
+user space
+kernel memory
+secondary storage
+CY]
+—
+BN
+aH =
+data blocks
+{E—
+read (index)
+Lo
+[]
+per-process
+system-wide
+file-control block
+open-file table
+open-file table
+user space
+kernel memory
+secondary storage
+(b)
+
+--- [Slide / Page 26] ---
+Virtual File Systems
+OPERATING SYSTEMS
+●Virtual File Systems (VFS) on Unix provide an object-oriented way of 
+implementing file systems
+●VFS allows the same system call interface (the API) to be used for different 
+types of file systems
+●Separates file-system generic operations from implementation details
+●Implementation can be one of many file systems types, or network file 
+system
+4 Implements vnodes which hold inodes or network file details
+●Then dispatches operation to appropriate file system implementation 
+routines
+UNIVERSITY
+
+--- [Slide / Page 27] ---
+Virtual File Systems
+OPERATING SYSTEMS
+●The API is to the VFS interface, rather than any specific 
+type of file system (FS)
+●VFS provides a single set of commands for the kernel 
+and developers to access all types of FSs
+●VFS software calls the specific device driver required to 
+interface to various types of FSs
+●Device driver interprets the standard set of FS 
+commands to a specific type of FS on the partition or 
+logical volume
+UNIVERSITY
+file-system interface
+local file system
+local file system
+remote file system
+type 1
+type 2
+type 1
+E
+E
+network
+
+--- [Slide / Page 28] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.4.1 - Allocation Methods (Contiguous, Linked, Indexed)
+
+# File: resources/u4/Slides/4.4.1_Allocation_methods.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+Implementing File-Systems – Disk Space Allocation Methods
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Allocation Methods - Contiguous
+OPERATING SYSTEMS
+●An allocation method refers to how disk blocks are allocated for files:
+●Contiguous allocation – each file occupies set of contiguous blocks
+●Best performance in most cases
+●Simple – only starting location (block #) and length (number of blocks) 
+are required
+●Supports both sequential and direct access
+●Problems include finding space for file, knowing file size, external 
+fragmentation, need for compaction off-line (downtime) or on-line
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+Contiguous Allocation
+OPERATING SYSTEMS
+●Mapping from logical to 
+physical
+LA/512
+Q
+R
+•
+LA – Length of the area allocated for this file
+•
+Q = displacement into index table
+•
+Block to be accessed = Q + starting address
+•
+Displacement into block = R
+il
+|
+h
+UNIVERSITY
+a
+ile
+start
+lengt
+ol] 11 21 3]
+count
+0
+2
+f
+tr
+14
+3
+401 50 600 70]
+mail
+19
+6
+ye
+=
+8] o[ Jo 111]
+list
+28
+4
+N
+tr
+f
+6
+2
+1211314115]
+16[117[J18[J19[]
+mail
+20(J21[J22[123[]
+24[J25[Je6[127[]
+list
+28[J29[ 130131]
+
+--- [Slide / Page 6] ---
+Contiguous Allocation
+OPERATING SYSTEMS
+i
+NIVERSITY
+fee
+fle
+start
+length
+ol] 11 21 31
+count
+0
+2
+f
+tr
+14
+3
+40] sL1 el] 71]
+mail
+19
+6
+8] oo 111]
+EAE
+ro
+f
+6
+2
+12131141150]
+16[]17[J18[119[]
+mail
+20[J21[Je2[J23[]
+24[J25[Je6[J27[]
+list
+28[]29[ 130131]
+
+--- [Slide / Page 7] ---
+Linked Allocation
+OPERATING SYSTEMS
+•Each block contains a pointer to the 
+next block.
+•If each block is 512 bytes and a disk 
+address (pointer) requires 4 bytes then 
+the user sees blocks of 508 bytes (i.e. 
+some disk space is wasted)
+•Collect blocks into multiples called 
+clusters and allocate clusters rather 
+than blocks
+E———
+directory
+PES
+UNIVERSITY
+oJ 10] 2] 31
+leepn
+2
+4]
+51 6] 71
+8] pl1o211
+12[J13[ 114/115]
+16[J17[J18[J19[]
+20[J21[J22[J23[]
+24
+J25[1l26[ 127]
+28[]29[ 130131]
+
+--- [Slide / Page 8] ---
+Allocation Methods - Linked
+OPERATING SYSTEMS
+●Linked allocation – each file a linked list of blocks
+●File ends with null pointer
+●No external fragmentation
+●Each block contains pointer to next block
+●No compaction, external fragmentation
+●Free space management system called when new block needed
+●Improve efficiency by clustering blocks into groups but increases 
+internal fragmentation
+●Reliability can be a problem
+●Locating a block can take many I/Os and disk seeks
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Allocation Methods – Linked (Cont.)
+OPERATING SYSTEMS
+●FAT (File Allocation Table) variation
+●Beginning of volume has table, indexed by block number
+●Much like a linked list, but faster on disk and cacheable 
+●New block allocation simple
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+File-Allocation Table (variation on linked allocation)
+OPERATING SYSTEMS
+•Unused block is indicated by a 
+table value of 0
+•To allocate a new block to a file, 
+find the first 0-valued table entry 
+and replace the previous EOF 
+value with the address of the 
+new block.
+•Then replace 0 with EOF value
+directory entry
+I ES
+UNIVERSITY
+[test [eee] 217 |
+name
+start block
+O [I
+217
+339—
+618
+no. of disk blocks
+—1[ |
+FAT
+
+--- [Slide / Page 11] ---
+Indexed Allocation
+OPERATING SYSTEMS
+•
+In this scheme, a special block 
+known as the Index block contains 
+the pointers to all the blocks 
+occupied by a file. 
+•
+Each file has its own index block. 
+The ith entry in the index block 
+contains the disk address of the ith 
+file block. 
+•
+The directory entry contains the 
+address of the index block as 
+shown in the figure.
+CD
+directory
+PES
+file
+index block
+UNIVERSITY
+ol] = 3]
+4] 5]
+71]
+8] que
+-
+12[Jia 1aN|
+1
+16] rele)
+19
+2
+20121 J22[A23[]
+24[J2s5[J26[ 27]
+—
+28[]29[J30[131[]
+
+--- [Slide / Page 12] ---
+Allocation Methods – Indexed (Cont.)
+OPERATING SYSTEMS
+Advantages:
+⮚This supports direct access to the blocks occupied by the file 
+and therefore provides fast access to the file blocks.
+⮚It overcomes the problem of external fragmentation.
+Disadvantages:
+⮚The pointer overhead for indexed allocation is greater than 
+linked allocation.
+⮚For very small files, say files that expand only 2-3 blocks, the 
+indexed allocation would keep one entire block (index block) 
+for the pointers which is inefficient in terms of memory 
+utilization. (Note: In linked allocation we lose the space of only 
+1 pointer per block.)
+UNIVERSITY
+
+--- [Slide / Page 13] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.5.1 - Free-Space Management, Efficiency and Performance
+
+# File: resources/u4/Slides/4.5.1_Free-Space_Management,_Efficiency_and_Performance.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+File Management –  Free space management, Efficiency and 
+Performance
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Free-Space Management
+OPERATING SYSTEMS
+• Need to reuse the disk space from deleted files for new files
+• To keep track of free disk space, the system maintains a free-space list
+• The free-space list records all free disk blocks
+• When a file is created, the free-space list is searched for the required amount of space 
+and allocate that space to the new file. This space is then removed from the free-space 
+list. 
+• When a file is deleted, its disk space is added to the free-space list
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+Bit Vector 
+OPERATING SYSTEMS
+• The free-space list is implemented as a bit map or bit vector. 
+• Each block is represented by 1 bit. 
+• If the block is free, the bit is 1; if the block is allocated, the bit is 0
+• For example, consider a disk where blocks 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 17, 18, 25, 26, 
+and 27 are free and the rest of the blocks are allocated. 
+• The free-space bit map would be 001111001111110001100000011100000 ...
+• The main advantage of this approach is its relative simplicity and its efficiency in finding 
+the first free block or n consecutive free blocks on the disk
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+Linked List 
+OPERATING SYSTEMS
+•
+Link together all the free disk blocks, keeping a pointer to the first free 
+block in a special location on the disk and caching it in memory.
+•
+The first free block contains a pointer to the next free disk block, and so on
+•
+Example: Consider blocks 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 17, 18, 25, 26, and 
+27 are free and the rest of the blocks are allocated.
+•
+The pointer would point to block 2 as the first free block. Block 2 would 
+contain a pointer to block 3, which would point to block 4 and so on
+•
+This scheme is not efficient; to traverse the list, one must read each block, 
+which requires substantial I/O time.
+PES
+UNIVERSITY
+>
+free-space list head
+od 10 2sn
+41
+s0 60701
+[1 stot 11117
+12[J13[ 1140150]
+16[J17[J18[ 119]
+2021227123]
+2425
+J26] 1273
+281293031]
+
+--- [Slide / Page 7] ---
+Linked List 
+OPERATING SYSTEMS
+5
+EE
+free-space list head
+oJ] 17 2]
+3[7]
+4]
+57] 6[] 7[]
+8] ol f1ol [1117
+12131415]
+161718119]
+20[]21[J22F 23[]
+24 ]25[ [26][27
+28[]29[ 130131]
+
+--- [Slide / Page 8] ---
+Grouping 
+OPERATING SYSTEMS
+• A modification of the free-list approach stores the addresses of n free blocks 
+in the first free block. 
+• The first n−1 of these blocks are actually free. 
+• The last block contains the addresses of another n free blocks, and so on. 
+• The addresses of a large number of free blocks can now be found quickly, 
+unlike the situation when the standard linked-list approach is used.
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Counting 
+OPERATING SYSTEMS
+• Generally, several contiguous blocks may be allocated or freed simultaneously, 
+particularly when space is allocated with the contiguous-allocation algorithm or 
+through clustering.
+• Rather than keeping a list of n free disk addresses, we can keep the address of the first 
+free block and the number (n) of free contiguous blocks that follow the first block
+• Each entry in the free-space list then consists of a disk address and a count.
+• The entries can be stored in a balanced tree, rather than a linked list, for efficient 
+lookup, insertion, and deletion.
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+Efficiency and Performance
+OPERATING SYSTEMS
+Efficiency dependent on:
+• Disk allocation and directory algorithms
+• Types of data kept in file’s directory entry
+• Pre-allocation or as-needed allocation of metadata structures
+• Fixed-size or varying-size data structures
+Performance dependent on:
+• Keeping data and metadata close together
+• Buffer cache – separate section of main memory for frequently used blocks
+• Free-behind and read-ahead – techniques to optimize sequential access
+• Reads frequently slower than writes
+UNIVERSITY
+
+--- [Slide / Page 11] ---
+Page cache
+OPERATING SYSTEMS
+•
+Some systems maintain a separate section of main memory for a buffer cache, where blocks are kept 
+under the assumption that they will be used again shortly. 
+•
+Other systems cache file data using a page cache. The page cache uses virtual memory techniques to 
+cache file data as pages rather than as file-system-oriented blocks. 
+•
+Caching file data using virtual addresses is far more efficient than caching through physical disk blocks, as 
+accesses interface with virtual memory rather than the file system. 
+•
+Several systems—including Solaris, Linux, and Windows —use page caching to cache both process pages 
+and file data. This is known as unified virtual memory. 
+UNIVERSITY
+
+--- [Slide / Page 12] ---
+I/O without a unified buffer cache
+OPERATING SYSTEMS
+/O
+usi
+UNIVERSITY
+a
+using
+memory-mapped /O
+read( ) and write()
+
+--- [Slide / Page 13] ---
+I/O using a unified buffer cache
+OPERATING SYSTEMS
+1/0 using
+mesnony-maeed I'd
+read( ) and write( )
+
+--- [Slide / Page 14] ---
+Page replacement
+OPERATING SYSTEMS
+•
+Sequential access can be optimized by techniques known as free-behind and read-ahead. 
+•
+Free-behind removes a page from the buffer as soon as the next page is requested. The 
+previous pages are not likely to be used again and waste buffer space. 
+•
+With read-ahead, a requested page and several subsequent pages are read and cached. 
+These pages are likely to be requested after the current page is processed. 
+•
+Retrieving these data from the disk in one transfer and caching them saves a considerable 
+amount of time
+UNIVERSITY
+
+--- [Slide / Page 15] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.6.1 - Mass-Storage Structure and Disk Structure
+
+# File: resources/u4/Slides/4.6.1_Mass_storage_structure,_Disk_Structure.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+Pavan A C
+Department of Computer Science & Engineering
+Mass-Storage Structure
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Overview of Mass Storage Structure
+OPERATING SYSTEMS
+●Magnetic disks provide bulk of secondary storage of modern computers.
+●Each disk platter has a flat circular shape, like a CD. Common platter 
+diameters range from 1.8 to 3.5 inches.
+●The two surfaces of a platter are covered with a magnetic material.
+●The heads are attached to a disk arm that moves all the heads as a unit.
+●The surface of a platter is logically divided into circular tracks, which are 
+subdivided into sectors. 
+●The set of tracks that are at one arm position makes up a cylinder.
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+Moving-head Disk Mechanism
+OPERATING SYSTEMS
+track t
+spindle
+PES
+UNIVERSITY
+-|
+~~
+Inside 5,25" desktop computer hard disk dive =
+>=—_
+e
+===
+arm assembly
+BC chr TW
+= gman
+sector s
+|
+~~
+|
+ps
+ui:
+1}
+cylinder ¢ —
+|
+read-write
+i
+8
+25
+i,
+rig
+|
+|
+/ head
+h
+EP
+|
+Iran
+Ll:
+Ea
+aC YU
+fo | =
+i
+adie
+Tre =
+[3
+|
+Readhwrite head
+—
+=
+i
+¥
+platter
+Lo
+H
+1g
+\
+Platter
+f =
+rotation
+fo
+3
+Chemis
+—
+-
+BJ
+‘
+*
+|
+Hh Com
+pA 2m
+
+--- [Slide / Page 6] ---
+Overview of Mass Storage Structure
+OPERATING SYSTEMS
+●When the disk is in use, a drive motor spins it at high speed. Most drives rotate 
+60 to 250 times per second.
+ Disk speed has two parts.
+●The transfer rate is the rate at which data flow between the drive and the 
+computer.
+● The positioning time, or random-access time, consists of two parts
+●The time necessary to move the disk arm to the desired cylinder, called the 
+seek time.
+● the time necessary for the desired sector to rotate to the disk head, called 
+the rotational latency.
+Disk Latency = Seek time + Rotational latency + Transfer time
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+Overview of Mass Storage Structure
+OPERATING SYSTEMS
+●Disk head flies on an extremely thin cushion of air.
+●Head will sometimes damage the magnetic surface when it 
+makes contact with it.
+●Head crash
+●Not recoverable
+●A disk can be removable.
+●Removable magnetic disks generally consist of one platte
+●Examples CDs, DVDs, and Blu-ray discs as well as removable 
+flash-memory
+UNIVERSITY
+>
+FZ
+4
+/
+Hl
+5
+
+--- [Slide / Page 8] ---
+Mass Storage Structure (Cont.)
+OPERATING SYSTEMS
+●Drive attached to computer via I/O bus
+●Busses vary, including EIDE, ATA, SATA, USB, Fiber Channel, SCSI, SAS, 
+Firewire
+●Host controller in computer uses bus to talk to disk controller built into 
+drive or storage array
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Solid-State Disks
+OPERATING SYSTEMS
+●Nonvolatile memory used like a hard drive
+●Can be more reliable than HDDs
+●More expensive per MB
+●Maybe have shorter life span 
+●Less capacity
+●But much faster
+●Standard Bus interfaces can be too slow -> connect directly to 
+the system bus (PCI, for example)
+●No moving parts, so no seek time or rotational latency
+&
+b
+immE
+©
+Em
+HDD
+SSD
+
+--- [Slide / Page 10] ---
+Magnetic Tape
+OPERATING SYSTEMS
+●Was early secondary-storage medium
+●Relatively permanent and holds large 
+quantities of data
+●Access time slow
+●Random access ~1000 times slower than disk
+●Mainly used for backup, storage of 
+infrequently-used data, transfer medium 
+between systems
+UNIVERSITY
+G
+TE— 8
+\
+
+--- [Slide / Page 11] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.7.1 - Disk Scheduling Algorithms and Disk Management
+
+# File: resources/u4/Slides/4.7.1_Disk_scheduling,_Disk_Management.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+Mass-Storage Structure – Disk Scheduling
+FCFS, SSTF, SCAN, C-SCAN, LOOK
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, 
+combination, and enhancement of material from the following 
+resources and persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, 
+Peter Baer Galvin, Greg Gagne -  9th edition 2013 and some 
+slides from 10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 
+2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy 
+Pieces, Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Disk Scheduling
+OPERATING SYSTEMS
+●The operating system is responsible for using hardware efficiently 
+— for the disk drives, this means having a fast access time and 
+disk bandwidth
+●Minimize seek time
+●Seek time ≈ seek distance
+●Disk bandwidth is the total number of bytes transferred, divided 
+by the total time between the first request for service and the 
+completion of the last transfer
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+Disk Scheduling (Cont.)
+OPERATING SYSTEMS
+●There are many sources of disk I/O request
+●OS
+●System processes
+●Users processes
+●I/O request includes input or output mode, disk address, memory 
+address, number of sectors to transfer
+●OS maintains queue of requests, per disk or device
+●Idle disk can immediately work on I/O request, busy disk means work 
+must queue
+●Optimization algorithms only make sense when a queue exists
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+Disk Scheduling (Cont.)
+OPERATING SYSTEMS
+●Note that drive controllers have small buffers and can manage a queue of I/O 
+requests (of varying “depth”)
+●Several algorithms exist to schedule the servicing of disk I/O requests
+●The analysis is true for one or many platters
+●We illustrate scheduling algorithms with a request queue (0-199)
+98, 183, 37, 122, 14, 124, 65, 67
+Head pointer 53
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+FCFS
+OPERATING SYSTEMS
+Illustration shows total head movement of 640 cylinders
+45+85+146+85+108+110+59
++2 = 640 cylinders
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+PES
+head starts at 53
+0
+14
+37
+536567
+98
+122124
+183199
+
+--- [Slide / Page 8] ---
+FCFS
+OPERATING SYSTEMS
+Illustration shows total head movement of 640 cylinders
+—
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+Dd)
+head starts at 53
+0 14
+37 536567
+98
+122124
+183199
+PES
+UNIVERSITY
+JE
+
+--- [Slide / Page 9] ---
+SSTF
+OPERATING SYSTEMS
+●Shortest Seek Time First selects the request with the minimum seek 
+time from the current head position
+●SSTF scheduling is a form of SJF scheduling; may cause starvation of 
+some requests
+●Illustration shows total head movement of 236 cylinders
+12+2+30+23+84+24+2+59 = 
+236 cylinders
+UNIVERSITY
+queue = 88, 183, 37, 122, 14, 124, 65, 67
+head starts at 53
+Oo
+14
+37
+536567
+88
+122124
+183199
+EM
+CEs—
+
+--- [Slide / Page 10] ---
+SSTF
+OPERATING SYSTEMS
+queue — 98, 183, 37, 122, 14, 124, 65, 67
+PES
+head starts at 53
+UNIVERSITY
+0
+14
+37
+5365867
+98
+122124
+183199
+EEE
+EE
+oo
+I
+
+--- [Slide / Page 11] ---
+SCAN
+OPERATING SYSTEMS
+●The disk arm starts at one end of the disk, and moves toward 
+the other end, servicing requests until it gets to the other end 
+of the disk, where the head movement is reversed and servicing 
+continues.
+●SCAN algorithm Sometimes called the elevator algorithm
+●But note that if requests are uniformly dense, largest density at 
+other end of disk and those wait the longest
+UNIVERSITY
+
+--- [Slide / Page 12] ---
+SCAN (Cont.)
+OPERATING SYSTEMS
+Number of cylinder moves= 
+16+23+79+2+31+24+2+59=236
+queue = 98, 1883, 37, 122, 14, 124, 65, 67
+head starts at 53
+PES
+0
+14
+37
+536567
+98
+122124
+183199
+mn OEE
+
+--- [Slide / Page 13] ---
+SCAN (Cont.)
+OPERATING SYSTEMS
+queue = 98, 1883, 37, 122, 14, 124, 65, 67
+head starts at 53
+PES
+0
+14
+37
+536567
+98
+122124
+183199
+mn OEE
+
+--- [Slide / Page 14] ---
+C-LOOK (Cont.)
+OPERATING SYSTEMS
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+Dd)
+head starts at 53
+PE
+0 14
+37 536567
+98 122124
+183199
+PES
+[
+
+--- [Slide / Page 15] ---
+C-SCAN
+OPERATING SYSTEMS
+●Provides a more uniform wait time than SCAN
+●The head moves from one end of the disk to the other, 
+servicing requests as it goes
+●When it reaches the other end, however, it immediately 
+returns to the beginning of the disk, without servicing any 
+requests on the return trip
+●Treats the cylinders as a circular list that wraps around from 
+the last cylinder to the first one
+●Total number of cylinders?
+UNIVERSITY
+
+--- [Slide / Page 16] ---
+C-SCAN (Cont.)
+OPERATING SYSTEMS
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+head starts at 53
+PES
+UNIVERSITY
+0
+14
+37
+536567
+98
+122124
+183199
+ ceucoraming
+so ears §
+
+--- [Slide / Page 17] ---
+C-SCAN (Cont.)
+OPERATING SYSTEMS
+= (65-53)+(67-65)+(98-67)+(122-98)+(124-122)+(183-124)+(199-183)+(199-0)+(14-0)+(37-14)
+=12+2+31+24+2+59+16+199+14+23
+= 382 
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+head starts at 53
+PES
+0
+14
+37
+536567
+98
+122124
+183199
+UNIVERSITY
+
+--- [Slide / Page 18] ---
+LOOK & C-LOOK
+OPERATING SYSTEMS
+●LOOK a version of SCAN, C-LOOK a version of C-SCAN
+●Arm only goes as far as the last request in each 
+direction, then reverses direction immediately, without 
+first going all the way to the end of the disk 
+●Total number of cylinders?
+UNIVERSITY
+
+--- [Slide / Page 19] ---
+C-LOOK (Cont.)
+OPERATING SYSTEMS
+Total head movements incurred while servicing these requests
+= (65 – 53) + (67 – 65) + (98 – 67) + (122 – 98) + (124 – 122) + (183 – 124) + (183 – 14) + (37 – 14)
+= 12 + 2 + 31 + 24 + 2 + 59 + 169 + 23
+= 322
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+head starts at 53
+oO
+14
+37 536567
+98
+122124
+183199
+PES
+EE
+EF
+A
+\
+UNIVERSITY
+Si
+J
+a
+
+--- [Slide / Page 20] ---
+Selecting a Disk-Scheduling Algorithm
+OPERATING SYSTEMS
+●SSTF is common and has a natural appeal
+●SCAN and C-SCAN perform better for systems that place a heavy load on 
+the disk
+●Less starvation
+●Performance depends on the number and types of requests
+●Requests for disk service can be influenced by the file-allocation method
+●And metadata layout
+●The disk-scheduling algorithm should be written as a separate module of 
+the operating system, allowing it to be replaced with a different 
+algorithm if necessary
+●Either SSTF or LOOK is a reasonable choice for the default algorithm
+UNIVERSITY
+
+--- [Slide / Page 21] ---
+Selecting a Disk-Scheduling Algorithm (Cont.)
+OPERATING SYSTEMS
+●What about rotational latency?
+●Difficult for OS to calculate
+●The rotational latency can be nearly as large as the average seek time. 
+●It is difficult for the operating system to schedule for improved rotational 
+latency, though, because modern disks do not disclose the physical location 
+of logical blocks. 
+●Disk manufacturers have been alleviating this problem by implementing disk-
+scheduling algorithms in the controller hardware built into the disk drive. 
+●How does disk-based queueing effect OS queue ordering efforts?
+●If the OS sends a batch of requests to the controller, the controller can queue them 
+and then schedule them to improve both the seek time and the rotational latency.
+UNIVERSITY
+
+--- [Slide / Page 22] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.8.1 - RAID Structure (RAID 0 through RAID 6)
+
+# File: resources/u4/Slides/4.8.1_RAID_Structure.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+RAID
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, 
+combination, and enhancement of material from the following 
+resources and persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, 
+Peter Baer Galvin, Greg Gagne -  9th edition 2013 and some 
+slides from 10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 
+2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy 
+Pieces, Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+RAID Basics
+OPERATING SYSTEMS
+❑RAID is a Disk Organization technique
+⮚Addresses performance and reliability issues
+⮚Multiple disk drives provide (or improve) reliability via redundancy
+❑Many systems today need to store many terabytes of data
+❑Don’t want to use single, large disk
+⮚too expensive
+⮚failures could be catastrophic
+❑Would prefer to use many smaller disks
+❑Redundant Array of Independent (inexpensive) Disks
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+RAID Basics (Cont.)
+OPERATING SYSTEMS
+❑Basic idea is to connect multiple disks together to provide
+❑large storage capacity
+❑faster access to reading data
+❑redundant data
+❑Many different levels of RAID systems
+❑differing levels of redundancy, error checking, capacity, and cost
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+Striping
+OPERATING SYSTEMS
+• Take file data and map it to different disks
+• Allows for reading data in parallel
+• Transfer rate is improved by striping data across the disks
+⮚Bit-level striping and block-level striping (most common)
+file data
+block 1
+block 0
+block 2
+block 3
+Disk 0
+Disk 1
+Disk 2
+Disk 3
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+Block-level Striping
+OPERATING SYSTEMS
+▪ Requests for different blocks can run in parallel if the blocks reside 
+on different disks
+▪ A request for a long sequence of blocks can utilize all disks in parallel 
+UNIVERSITY
+Diskl
+Disk2
+Disk3
+Disk4
+
+--- [Slide / Page 8] ---
+Mirroring
+OPERATING SYSTEMS
+• Keep two copies of data on two separate disks
+• Gives good error recovery
+– if some data is lost, get it from the other source
+• Expensive
+– requires twice as many disks
+• Write performance can be slow
+– have to write data to two different spots
+• Read performance is enhanced
+– can read data from file in parallel
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+RAID Structure
+OPERATING SYSTEMS
+●Mean time to failure
+●If MTTF of a single disk is 100,000 hours, MTTF of some disk in an array of 100 disks = 
+100000/100 = 1000 hours or 41.66 days
+●Mean time to repair – time taken to replace a failed disk and to restore the 
+data on it
+●Mean time to data loss based on above factors
+●If mirrored disks fail independently (i.e., not related to power failures and 
+natural disasters), consider disk with MTTF of 100,000 hours and MTTR is 
+10 hours
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+RAID (Cont.)
+OPERATING SYSTEMS
+●Several improvements in disk-use techniques involve the use of multiple disks 
+working cooperatively
+●Disk striping uses a group of disks as one storage unit
+●RAID is arranged into six different levels
+●RAID schemes improve performance and improve the reliability of the storage 
+system by storing redundant data
+●Mirroring or shadowing (RAID 1) keeps duplicate of each disk
+●Striped mirrors (RAID 1+0) or mirrored stripes (RAID 0+1) provides high 
+performance and high reliability
+●Block interleaved parity (RAID 4, 5, 6) uses much less redundancy
+UNIVERSITY
+
+--- [Slide / Page 11] ---
+RAID Levels
+OPERATING SYSTEMS
+• P indicates error-correcting bits
+• C indicates a second copy of the data
+• P + Q redundancy scheme uses 2 
+parity values P and Q
+(a) RAID 0: non-redundant striping.
+a
+ef
+J
+(b) RAID 1: mirrored disks.
+(f) RAID 5: block-interleaved distributed parity.
+EEEEEE
+(a) RAID 6: P + Q redundancy.
+
+--- [Slide / Page 12] ---
+RAID Levels 0 and 1
+OPERATING SYSTEMS
+❑RAID level 0 refers to disk arrays with striping at the level of blocks 
+⮚No redundancy (such as mirroring or parity bits)
+⮚lots of disks means low Mean Time To Failure (MTTF)
+❑RAID level 1 refers to disk mirroring. 
+⮚A complete file is stored on a single disk
+⮚A second disk contains an exact copy of the file
+⮚Provides complete redundancy of data
+⮚file data can be read in parallel
+⮚must write the data out twice
+⮚Most expensive RAID implementation
+⮚requires twice as much storage space
+(a) RAID 0: non-redundant striping.
+EEE
+(b) RAID 1: mirrored disks.
+
+--- [Slide / Page 13] ---
+RAID Level-5
+OPERATING SYSTEMS
+❑RAID level 5 stripes file data and checks data over all the disks
+⮚no longer a single check disk
+❑Consists of block-level striping with distributed parity. 
+⮚Unlike RAID 4, parity information is distributed among the drives
+❑Drastically improves the performance of multiple writes
+⮚they can now be done in parallel
+❑read and write performance close to that of RAID Level-1
+UNIVERSITY
+(f) RAID 5: block-interleaved distributed parity.
+
+--- [Slide / Page 14] ---
+RAID Level-6
+OPERATING SYSTEMS
+❑RAID 6 is like RAID 5, but the parity data are written to two drives. 
+❑Write data transactions are slower than RAID 5 due to the additional parity 
+data that have to be calculated.
+UNIVERSITY
+==
+striping with dual parity across drives
+(g) RAID 6: P + Q redundancy.
+block 12, lllblock 10, Jl Parity b1 lll Parity b1’
+Brrr
+Parity b2, Jl Parit= Ny?
+(J10C
+3
+(
+ri
+y
+r
+oc
+ee Eee hrm eed
+Parity b4
+block 42
+block 4b
+Parity b4
+drive 1
+drive 2
+drive 3
+drive 4
+
+--- [Slide / Page 15] ---
+RAID level 10 - combining RAID 1 and RAID 0
+OPERATING SYSTEMS
+❑Provides security by mirroring all data on 
+secondary drives while using striping across each 
+set of drives to speed up data transfers.
+❑Rebuild time is very fast
+❑Half of the storage capacity goes to mirroring
+⮚ so compared to large RAID 5  or RAID 6 arrays, 
+this is an expensive way to have redundancy.
+UNIVERSITY
+RAID 1+0
+mirroring + striping
+block 3
+EE
+block 4
+block4
+ll ne?’ llane?’ Jl an?’
+block 5,8
+block 5
+block 6,8
+block 6
+Se llSo llSa? llSa?
+block 7
+block 7
+block 8
+block8
+drive 1
+drive 2
+drive 3
+drive4
+
+--- [Slide / Page 16] ---
+RAID (0 + 1) and (1 + 0)
+OPERATING SYSTEMS
+Disks are mirrored in pairs and then the resulting 
+mirrored pairs are striped. This is better than 0+1 
+when a single disk fails
+Disks are striped and then the stripe is mirrored 
+to another, equivalent stripe. If a single disk fails, 
+an entire stripe is inaccessible.
+reee
+PES
+UNIVERSITY
+|
+mirror
+reFREER
+a) RAID 0 + 1 with a single disk failure.
+stripe
+mirror
+mirror
+mirror
+mirrol
+b) RAID 1 + 0 with a single disk failure.
+
+--- [Slide / Page 17] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.9.1 - OS Security Problems & Program Threats
+
+# File: resources/u4/Slides/4.9.1_OS_Security_problems__Program_Threats.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+OS Security Problems: Program Threats 
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+The Security Problem 
+OPERATING SYSTEMS
+Why is Security Important?
+●An Operating System manages valuable resources such as:
+○Programs and processes
+○Files and data
+○Memory and CPU
+○Network resources
+○User accounts and credentials
+●A security breach can result in:
+○Unauthorized access
+○Data theft or disclosure
+○Data modification or destruction
+○Misuse of system resources
+○Disruption of services
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+The Security Problem 
+OPERATING SYSTEMS
+Types of Security Violations
+1. Breach of Confidentiality - Unauthorized reading or disclosure of data.
+2. Breach of Integrity - Unauthorized modification of data.
+3. Breach of Availability - Unauthorized destruction or disruption of resources.
+4. Theft of Service - Unauthorized use of system resources.
+5. Denial of Service (DoS) - reventing legitimate users from accessing a system 
+or service.
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+Program Threats 
+OPERATING SYSTEMS
+●Program threats occur when a malicious or compromised program attempts to gain 
+unauthorized access, misuse resources, or damage a computer system.
+●Programs and processes are the primary means through which work is performed 
+on a computer.
+●An attacker can exploit a program to:
+○Access unauthorized data
+○Modify or delete files
+○Gain additional privileges
+○Execute malicious code
+○Disrupt system operation
+Common Program Threats - Malware, Trojan Horse, Spyware, Ransomware, Code, 
+Injection, Viruses, Worms, Trap Doors / Back Doors
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+Malware and Trojan Horse 
+OPERATING SYSTEMS
+Malware - Malware (Malicious Software) is software designed to exploit, disable, 
+damage, or gain unauthorized access to a computer system.
+●Malware may perform malicious actions while appearing to be a legitimate 
+program.
+●Common forms include: Trojan Horse, Spyware, Ransomware, Viruses, Worms
+Trojan Horse
+●A Trojan Horse is a program that appears to perform a legitimate function but 
+secretly performs malicious activities.
+●It may run with the user's privileges, allowing it to access resources available to 
+that user.
+●The user may unknowingly install or execute the program.
+UNIVERSITY
+
+--- [Slide / Page 8] ---
+Spyware
+OPERATING SYSTEMS
+Spyware
+●Spyware is malicious software that secretly collects information about a user or 
+system.
+●It may monitor:
+○Browsing activity
+○User behavior
+○Credentials and personal information
+○Files and system information
+●Collected information may be sent to a remote attacker/server without the user's 
+knowledge.
+Example: A malicious application secretly records user activity and sends the collected 
+information to an attacker.
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Ransomware 
+OPERATING SYSTEMS
+Ransomware
+●Ransomware is malware that encrypts files or data on a system.
+●The attacker demands a ransom payment in exchange for the decryption key.
+●Without the key, the victim may be unable to access the encrypted data.
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+Code Injection 
+OPERATING SYSTEMS
+●Code injection is a security attack in which an attacker causes unauthorized code to be 
+inserted into or executed by a program.
+●It commonly occurs due to poor or insecure programming practices.
+●If successful, the attacker may:
+a. Modify program behavior
+b. Execute unauthorized commands
+c. Access protected data
+d. Gain control over the program
+Common Example: Buffer Overflow
+●A program stores data in a fixed-size buffer.
+●If more data is supplied than the buffer can hold, the extra data may overwrite nearby 
+memory.
+●Carefully crafted input can potentially alter program execution.
+UNIVERSITY
+
+--- [Slide / Page 11] ---
+Viruses 
+OPERATING SYSTEMS
+●A virus is a fragment of code embedded in a legitimate program or file.
+●It is designed to replicate itself by infecting other programs or files.
+●A virus generally requires user action or execution of an infected program to 
+spread.
+●Viruses can:
+a. Modify or destroy files
+b. Corrupt programs
+c. Cause system crashes or malfunction
+d. Spread to other files or systems
+UNIVERSITY
+
+--- [Slide / Page 12] ---
+Worms 
+OPERATING SYSTEMS
+●A worm is a self-replicating program that can spread across computer 
+systems, typically through a network.
+●Unlike a virus, a worm does not need to attach itself to another program or 
+file.
+●Worms can spread automatically by exploiting network or software 
+vulnerabilities.
+●They may consume system and network resources and cause:
+a. Network congestion
+b. System slowdown
+c. Service disruption
+d. Installation of additional malware
+UNIVERSITY
+
+--- [Slide / Page 13] ---
+Trap Door / Back Door & Principle of Least Privilege 
+OPERATING SYSTEMS
+●A trap door (back door) is a hidden entry point in a program that allows access to a 
+system without following the normal authentication or security mechanisms.
+●It may be intentionally created during development or maliciously inserted by an 
+attacker.
+●If discovered and exploited, it can provide unauthorized access to system 
+resources.
+Principle of Least Privilege
+●A user or program should be given only the minimum privileges required to 
+perform its task.
+●Privileges should be limited in:
+○Scope — what resources can be accessed
+○Time — how long access is required
+UNIVERSITY
+
+--- [Slide / Page 14] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.10.1 - System and Network Threats
+
+# File: resources/u4/Slides/4.10.1_System_and_Network_Threats.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+System and Network Threats 
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+System Threats 
+OPERATING SYSTEMS
+●System threats are attacks that target the system services, resources, or operating 
+environment.
+●The goal may be to:
+○
+Make system resources unavailable
+○
+Consume excessive CPU, memory, or storage
+○
+Gain unauthorized access
+○
+Exploit weaknesses in system services
+○
+Disrupt normal system operation
+Common System Threats
+1. Denial-of-Service (DoS) - Attempts to make a system or service unavailable to legitimate 
+users.
+2. Port Scanning - Systematically checks network ports to identify available services and 
+potential entry points.
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+Denial-of-Service (DoS) 
+OPERATING SYSTEMS
+A Denial-of-Service (DoS) attack attempts to make a system or network service 
+unavailable to legitimate users.
+The attacker overwhelms a system by consuming its:
+●CPU resources
+●Memory
+●Network bandwidth
+●Connection capacity
+●Other system resources
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+Port Scanning 
+OPERATING SYSTEMS
+●Port scanning is a technique used to examine a computer or network 
+system to identify open network ports and the services associated with 
+them.
+●Network services listen on specific port numbers for incoming connections.
+●Attackers may use port scanning to discover potential entry points and 
+vulnerable services.
+●Administrators also use port scanning for network security auditing and 
+troubleshooting.
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+Network Threats 
+OPERATING SYSTEMS
+●
+Network threats are attacks that exploit vulnerabilities in network communication, protocols, or 
+connected systems.
+●
+Attackers may attempt to:
+a. Intercept network communication
+b. Steal sensitive information
+c. Impersonate legitimate systems or users
+d. Modify transmitted data
+e. Disrupt network services
+Common Network Threats
+1. IP Spoofing - Attacker sends packets using a forged source IP address.
+2. Man-in-the-Middle (MITM) - Attacker secretly positions themselves between two communicating 
+parties and may observe or modify communication.
+3. Packet Sniffing - Attacker captures and analyzes network packets to obtain information.
+UNIVERSITY
+
+--- [Slide / Page 8] ---
+IP Spoofing & Man-in-the-Middle (MITM) Attack 
+OPERATING SYSTEMS
+●IP spoofing is a technique in which an attacker forges the source IP address 
+of network packets.
+●The packet appears to come from a trusted or different system.
+●The actual sender's IP address is hidden or replaced with a false address.
+●A Man-in-the-Middle (MITM) attack occurs when an attacker secretly 
+positions themselves between two communicating parties.
+●The attacker can potentially intercept, read, or modify the communication.
+●The sender and receiver may believe they are communicating directly with 
+each other
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Packet Sniffing 
+OPERATING SYSTEMS
+●Packet sniffing is the process of capturing and analyzing network packets as they 
+travel through a network.
+●A packet sniffer is a software or hardware tool used to inspect network traffic.
+●Packet sniffing can be:
+○Legitimate — network monitoring, troubleshooting, and security analysis.
+○Malicious — capturing sensitive information without authorization.
+Information That May Be Exposed
+●Usernames and passwords
+●Network addresses
+●Communication data
+●Session information
+●Other unencrypted information
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+Network Security & Protection Mechanisms 
+OPERATING SYSTEMS
+How Can Systems Be Protected?
+1. Firewalls
+●Control incoming and outgoing network traffic based on security rules.
+●Can block unauthorized connections and services.
+2. Encryption
+●Converts readable data into unreadable ciphertext.
+●Protects information during network transmission.
+●Helps prevent attackers from understanding captured data.
+3. Authentication
+●Verifies the identity of users or systems.
+●Examples: passwords, certificates, and multi-factor authentication.
+UNIVERSITY
+
+--- [Slide / Page 11] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.11.1 - Access Matrix and Implementation of Access Matrix
+
+# File: resources/u4/Slides/4.11.1_Access_Matrix,_Implementation_of_the_Access_Matrix.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+Access Matrix
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Access Matrix
+OPERATING SYSTEMS
+Protection Model
+●The Access Matrix is a protection model used by an operating system to specify who can 
+access what and what operations are permitted.
+●It represents access permissions between:
+○Domains → Subjects/users/processes
+○Objects → Resources such as files, printers, memory, etc.
+●Each cell contains the access rights allowed for a particular domain on an object.
+Basic Structure
+●Rows → Domains
+●Columns → Objects
+●Cells → Access Rights
+Example Rights - read (r), write (w), execute (x), print, delete
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+Access Matrix example
+OPERATING SYSTEMS
+●Domains: D1, D2, D3, D4
+●Objects: F1, F2, F3, Printer
+Key Points:
+●D1 → Read F1, F3
+●D4 → Same as D1 + Write F1, F3
+●D2 → Access Printer only
+UNIVERSITY
+F;
+Fs
+Fs
+printer
+domain
+read
+read
+write
+write
+
+--- [Slide / Page 6] ---
+Access Matrix
+OPERATING SYSTEMS
+Ensures:
+●Only allowed access
+●Strict control of resources
+OS decides:
+●Which domain a process runs in
+●What rights are given
+Domain Switching
+●Domain is treated as an object
+●Switching = performing switch operation
+Rule:
+●Process can switch from Di → Dj
+ only if ‘switch’ right exists
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+Access Matrix – Domain switching
+OPERATING SYSTEMS
+●D2 → can switch to D3, D4
+●D4 → can switch to D1
+●D1 → can switch to D2
+Additional Rights:
+●copy → duplicate access rights
+●owner → full control
+●control → modify rights 
+UNIVERSITY
+laser
+F,
+F.
+F.
+.
+0
+fred) fed] |
+fewer] ||
+IC
+A 2
+| 0 | feds
+|
+|
+| ||
+read
+read
+write
+write
+
+--- [Slide / Page 8] ---
+Implementation of the Access Matrix
+OPERATING SYSTEMS
+Why is Implementation Needed?
+●The Access Matrix provides a clear protection model, but a complete matrix can 
+become very large.
+●Most entries in the matrix are usually empty.
+●Therefore, storing the entire matrix directly is not memory efficient.
+●Operating systems use different techniques to implement the Access Matrix.
+Common Implementations
+1. Global Table
+2. Access List for Objects (ACL)
+3. Capability List
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Implementation of the Access Matrix – Global table
+OPERATING SYSTEMS
+●A global table stores all non-empty access relationships in a single table.
+●Each entry is represented as: <Domain, Object, Rights>
+How It Works
+1. A process requests access to an object.
+2. The OS searches the global table.
+3. It looks for the corresponding Domain–Object entry.
+4. The requested operation is checked against the stored rights.
+5. Access is allowed or denied.
+Limitations
+●Large table → inefficient use of memory
+●Slow lookup → searching may take time
+●Difficult to manage grouping of similar access rights
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+Implementation of the Access Matrix – Access list for objects
+OPERATING SYSTEMS
+●
+In this approach, each object maintains a list of domains and their allowed rights.
+●
+The list answers: “Who can access this object, and what can they do?”
+●
+Format: Object → (Domain, Rights)
+How it works
+1. Process requests access to an object.
+2. OS checks that object's access list.
+3. It finds the requesting domain.
+4. The requested operation is compared with the allowed rights.
+5. Access is granted or denied.
+Advantages
+●
+Easy to determine who can access an object.
+●
+Permissions can be easily modified.
+●
+Supports default permissions.
+Limitation - Difficult to determine all objects accessible by a particular domain.
+Domain
+Rights
+D1
+Read
+D3
+Read, Write
+D4
+Read, Write
+So:
+●
+D1 → can read F1
+●
+D3 → can read and write F1
+●
+D4 → can read and write F1
+●
+D2 → has no access to F1
+UNIVERSITY
+
+--- [Slide / Page 11] ---
+Capability List 
+OPERATING SYSTEMS
+●A capability list stores the access rights associated with a domain.
+●It answers: “What objects can this domain access, and what can it do?”
+●Format: Domain → (Object, Rights)
+How it works
+1. A process executes in a particular domain.
+2. The OS checks that domain's capability list.
+3. It finds the requested object.
+4. The requested operation is checked against the stored rights.
+5. Access is granted or denied.
+Object
+Rights
+F1
+Read
+F2
+Read, Write
+Printer
+Print
+So D1 can:
+●
+Read F1
+●
+Read and Write F2
+●
+Print using the Printer
+UNIVERSITY
+
+--- [Slide / Page 12] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.12.1 - Access Control and Revocation of Access Rights
+
+# File: resources/u4/Slides/4.12.1_Access_Control,_Revocation_of_Access_Rights.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+Access Control, Revocation of Access Rights
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Access Control 
+OPERATING SYSTEMS
+●Access control determines who can access a resource and what operations they 
+are allowed to perform.
+●The operating system uses protection mechanisms to control access to files, 
+devices, and other objects.
+●Access rights may be assigned to users, domains, or roles.
+UNIVERSITY
+O
+Operating System
+=
+Access Request
+Security Check
+User
+(e.g., Read, Write, Execute)
+=
+Process
+Domain
+Subject
+Object
+
+--- [Slide / Page 5] ---
+Revocation of Access Rights 
+OPERATING SYSTEMS
+●Revocation means removing previously granted access rights.
+●It is required when access permissions need to be changed or withdrawn.
+●Revocation is important in dynamic protection systems, where access rights 
+can change over time.
+Example
+Before:
+Faculty → File F1 → Read + Write
+After Revocation:
+Faculty → File F1 → Read
+→ The Write permission has been revoked.
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+Role-Based Access Control (RBAC) 
+OPERATING SYSTEMS
+●In RBAC, permissions are assigned to roles, rather than directly to individual 
+users.
+●A role represents a user's job or function in the system.
+●Users are assigned one or more appropriate roles.
+UNIVERSITY
+2 a
+B de
+Go
+fod User 3
+Users
+Roles
+Permissions
+Objects
+
+--- [Slide / Page 7] ---
+Why Revocation of Access Rights is Needed 
+OPERATING SYSTEMS
+Revocation
+●
+Revocation means removing previously granted access rights from a user or domain.
+●
+It is necessary because access requirements can change over time.
+●
+Revocation is an important part of a dynamic protection system.
+Why is Revocation Required?
+●
+A user's role or responsibility changes.
+●
+A user no longer needs access to a resource.
+●
+A resource becomes more restricted.
+●
+Temporary access has expired.
+●
+An administrator needs to withdraw previously granted permissions.
+Simple Example
+Before: D1 → File F1 → Read + Write
+After Revocation: D1 → File F1 → Read : The Write right has been removed, while Read is retained.
+UNIVERSITY
+
+--- [Slide / Page 8] ---
+Types of Revocation 
+OPERATING SYSTEMS
+Revocation can be classified based on when, how much, and for whom access is removed.
+1. Immediate vs. Delayed
+●
+Immediate: Access is removed immediately.
+●
+Delayed: Revocation takes effect after a specified time or condition.
+2. Selective vs. General
+●
+Selective: Remove access from a specific user/domain.
+●
+General: Remove access from all users/domains having that right.
+3. Partial vs. Total
+●
+Partial: Remove some rights while keeping others.
+●
+Total: Remove all access rights to the object.
+4. Temporary vs. Permanent
+●
+Temporary: Access is removed for a limited period or until a condition is met.
+●
+Permanent: Access is removed and does not automatically return.
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+Revocation Using ACL and Capability List 
+OPERATING SYSTEMS
+Revocation with Access Control List (ACL)
+●In an ACL, each object maintains a list of domains/users and their access 
+rights.
+●To revoke access, the OS can remove or modify the corresponding entry.
+●Therefore, revocation using ACL is relatively straightforward.
+Revocation with Capability List
+●In a Capability List, access rights are associated with domains.
+●Capabilities may be distributed among different domains.
+●Therefore, revoking a particular capability can be more difficult.
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+Revocation Techniques 
+OPERATING SYSTEMS
+When capabilities are distributed among domains, different techniques can be used to revoke access.
+1. Reacquisition
+●
+Capabilities have a limited validity.
+●
+When they expire, the user/domain must request access again.
+●
+If access is revoked, the request is denied.
+2. Back-Pointers
+●
+The system maintains pointers to all copies of a capability.
+●
+During revocation, these pointers are used to locate and modify/remove the capabilities.
+3. Indirection
+●
+Access is managed through an intermediate/global table.
+●
+To revoke access, the corresponding entry in the table is deleted or invalidated.
+4. Keys
+●
+A capability is associated with a key.
+●
+Changing or invalidating the key makes the old capability unusable.
+UNIVERSITY
+
+--- [Slide / Page 11] ---
+Access Matrix
+OPERATING SYSTEMS
+●Protection model represented as a matrix
+●Rows → Domains
+●Columns → Objects
+●Each cell contains access rights
+access(i, j):
+●Operations allowed on object Oj by domain Di
+UNIVERSITY
+
+--- [Slide / Page 12] ---
+Access Matrix example
+OPERATING SYSTEMS
+●Domains: D1, D2, D3, D4
+●Objects: F1, F2, F3, Printer
+Key Points:
+●D1 → Read F1, F3
+●D4 → Same as D1 + Write F1, F3
+●D2 → Access Printer only
+UNIVERSITY
+F;
+Fs
+Fs
+printer
+domain
+read
+read
+write
+write
+
+--- [Slide / Page 13] ---
+Access Matrix
+OPERATING SYSTEMS
+Ensures:
+●Only allowed access
+●Strict control of resources
+OS decides:
+●Which domain a process runs in
+●What rights are given
+Domain Switching
+●Domain is treated as an object
+●Switching = performing switch operation
+Rule:
+●Process can switch from Di → Dj
+ only if ‘switch’ right exists
+UNIVERSITY
+
+--- [Slide / Page 14] ---
+Access Matrix – Domain switching
+OPERATING SYSTEMS
+●D2 → can switch to D3, D4
+●D4 → can switch to D1
+●D1 → can switch to D2
+Additional Rights:
+●copy → duplicate access rights
+●owner → full control
+●control → modify rights 
+UNIVERSITY
+laser
+F,
+F.
+F.
+.
+0
+fred) fed] |
+fewer] ||
+IC
+A 2
+| 0 | feds
+|
+|
+| ||
+read
+read
+write
+write
+
+--- [Slide / Page 15] ---
+Implementation of the Access Matrix – Global table
+OPERATING SYSTEMS
+●Represented as: <domain, object, rights>
+●System searches table to check permission
+Drawbacks:
+●Large size → not memory efficient
+●Slow lookup (search required)
+●Difficult to manage grouping
+UNIVERSITY
+
+--- [Slide / Page 16] ---
+Implementation of the Access Matrix – Access list for objects
+OPERATING SYSTEMS
+•
+Each object has a list:
+○(domain, rights)
+Advantages:
+●Easy to check who can access object
+●Supports default permissions
+Limitation:
+●Hard to know what a domain can access
+UNIVERSITY
+
+--- [Slide / Page 17] ---
+Role based access control
+OPERATING SYSTEMS
+•
+Access permissions are assigned to roles, not directly to users
+•
+A role represents a job/function (e.g., Admin, Faculty, Student)
+How it works:
+●Users → assigned to roles
+●Roles → assigned permissions
+●Users gain access through roles
+Example:
+●Admin → read, write, delete
+●Faculty → read, write
+●Student → read only
+If a user is assigned “Faculty” role → gets those permissions
+UNIVERSITY
+user 1
+role 1
+privileges 2
+executes with role 1 privileges
+
+--- [Slide / Page 18] ---
+Role based access control
+OPERATING SYSTEMS
+Advantages:
+●Reduces complexity in access management
+●Easy to update permissions (change role, not every user)
+●Improves security (no direct permission assignment)
+●Supports large systems efficiently
+Limitation:
+●Requires proper role design
+●Too many roles → becomes complex
+UNIVERSITY
+user 1
+role 1
+privileges 2
+executes with role 1 privileges
+
+--- [Slide / Page 19] ---
+Revocation of access rights
+OPERATING SYSTEMS
+●Revocation = Removing access rights from users/domains
+●Needed in dynamic protection systems
+Types of Revocation:
+●Immediate / Delayed
+○
+Instant removal vs later
+●Selective / General
+○
+Specific users vs all users
+●Partial / Total
+○
+Some rights vs all rights
+●Temporary / Permanent
+○
+Can be regained vs removed forever
+UNIVERSITY
+
+--- [Slide / Page 20] ---
+Revocation of access rights
+OPERATING SYSTEMS
+Access List (ACL):
+●Easy to revoke:
+○Simply remove entry from list
+●Supports:
+○
+All types (selective, partial, etc.)
+Capability List:
+●Difficult to revoke:
+○Capabilities are distributed across system
+UNIVERSITY
+
+--- [Slide / Page 21] ---
+Revocation of access rights
+OPERATING SYSTEMS
+Revocation Techniques:
+●Reacquisition
+○Capabilities expire → must request again
+●Back-pointers
+○Track all capabilities → modify them
+●Indirection
+○Use global table → delete entry
+●Keys
+○Change key → invalidate all old access
+UNIVERSITY
+
+--- [Slide / Page 22] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
+
+
+
+################################################################################
+
+# SOURCE DOCUMENT: Topic 4.13.1 - Shell Programming: awk and sed
+
+# File: resources/u4/Slides/4.13.1_Shell_programming_–awk_and_sed.pdf
+
+################################################################################
+
+
+--- [Slide / Page 1] ---
+OPERATING SYSTEMS
+UE24CS242B
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 2] ---
+OPERATING SYSTEMS
+AWK and SED
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- [Slide / Page 3] ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+5. Internet source
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- [Slide / Page 4] ---
+Text Processing Tools
+OPERATING SYSTEMS
+Used for:
+●Processing text files
+●Data extraction & transformation
+Common tools:
+●awk
+●sed
+UNIVERSITY
+
+--- [Slide / Page 5] ---
+AWK – Introduction & Working
+OPERATING SYSTEMS
+●Scripting language for:
+○Pattern scanning & processing
+●Works line-by-line
+●Used for:
+○Data filtering
+○Report generation
+Working
+●Reads file line by line
+●Splits line into fields
+●Applies:
+○Pattern → Action
+UNIVERSITY
+
+--- [Slide / Page 6] ---
+AWK - Syntax
+OPERATING SYSTEMS
+Syntax:
+•
+awk 'pattern {action}' file
+Example:
+•
+awk '{print $1,$4}' employee.txt
+UNIVERSITY
+
+--- [Slide / Page 7] ---
+AWK – Important Operations
+OPERATING SYSTEMS
+●Field access → $1, $2, ...
+●Conditions → if
+●Built-in variables:
+○NR → number of lines
+○NF → number of fields
+UNIVERSITY
+
+--- [Slide / Page 8] ---
+AWK – Selected Examples
+OPERATING SYSTEMS
+awk '{print $1,$4}' file.txt
+Print selected columns
+awk '/manager/ {print}' file.txt
+Pattern matching
+awk 'END {print NR}' file.txt
+Count lines
+UNIVERSITY
+
+--- [Slide / Page 9] ---
+SED – Introduction
+OPERATING SYSTEMS
+●Stream editor for:
+○Text transformation
+●Works in a single pass
+●Used in pipelines
+Syntax
+sed 'command' file
+Example:
+sed 's/hello/world/' file.txt
+UNIVERSITY
+
+--- [Slide / Page 10] ---
+SED – Common Operations
+OPERATING SYSTEMS
+Substitute → s/old/new/
+Delete → d
+Print → p
+Insert / Append
+UNIVERSITY
+
+--- [Slide / Page 11] ---
+SED – Selected Examples
+OPERATING SYSTEMS
+sed 's/hello/world/' file.txt
+Replace text
+sed '2d' file.txt
+Delete line
+sed -n '2p' file.txt
+Print specific line
+sed '4,6d' file.txt
+Delete range
+UNIVERSITY
+
+--- [Slide / Page 12] ---
+AWK vs SED
+OPERATING SYSTEMS
+Feature
+AWK
+SED
+Type
+Programming language
+Stream editor
+Focus
+Data processing
+Text editing
+Works on
+Fields
+Lines
+Complexity
+Higher
+Simpler
+UNIVERSITY
+30
+veers
+
+--- [Slide / Page 13] ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

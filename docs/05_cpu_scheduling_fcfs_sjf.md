@@ -1,6 +1,6 @@
 # Topic 5: CPU Scheduling — FCFS & SJF
 
-**Source**: Lecture 7 + Textbook Ch. 4 (Silberschatz Ch. 5, Stallings Ch. 9, Stevens & Rago Ch. 9)
+**Source**: Lecture 7 (Unit 1) + Textbook Ch. 4 (Silberschatz Ch. 5, Stallings Ch. 9, Stevens & Rago Ch. 9)
 
 ---
 
@@ -56,7 +56,7 @@ CPU burst → I/O burst → CPU burst → I/O burst → ...
 | **Turnaround Time (TAT)** | Completion - Arrival | Minimize |
 | **Waiting Time (WT)** | TAT - Burst = Completion - Arrival - Burst | Minimize |
 | **Response Time (RT)** | First Start - Arrival | Minimize |
-| **CPU Utilization** | % time CPU busy | Maximize |
+| **CPU Utilization** | % time busy | Maximize |
 | **Throughput** | Processes completed / time | Maximize |
 
 ---
@@ -134,9 +134,6 @@ t=5: P2 done. Ready: P1(7), P3(9), P4(5) → run P4
 t=10: P4 done. Ready: P1(7), P3(9) → run P1
 t=17: P1 done. Run P3
 t=26: P3 done.
-
-Gantt: | P1 | P2 | P4 | P1 | P3 |
-       0    1    5   10   17   26
 ```
 
 **Waiting Times**:
@@ -175,7 +172,7 @@ Gantt: | P1 | P2 | P4 | P1 | P3 |
 
 ---
 
-## 5.10 Exam-Relevant MCQ Patterns (from prep file)
+## 5.10 Exam-Relevant MCQ Patterns (from your prep file)
 
 - **Q22**: FCFS convoy effect — short processes wait behind long job
 - **Q23**: SJF optimal — minimum average waiting time
@@ -191,3 +188,7 @@ Gantt: | P1 | P2 | P4 | P1 | P3 |
 1. **FCFS**: P1(0,10), P2(1,5), P3(2,8) → Gantt + Avg WT/TAT
 2. **SJF**: P1(0,7), P2(0,4), P3(0,1), P4(0,4) → Order + Avg WT
 3. **SRTF**: P1(0,8), P2(1,4), P3(2,9), P4(3,5) → Full trace (from slides)
+
+---
+
+*Next: Topic 6 (CPU Scheduling: Priority & Round Robin — Lecture 8)*

@@ -54,7 +54,7 @@ Logical:  s (segment #) | d (offset)
 
 ---
 
-## 17.4 Key Takeaways
+## 17.3 Key Takeaways
 
 1. **Segmentation** = variable-size logical units matching programmer view
 2. **Logical address** = `<segment#, offset>`
@@ -64,7 +64,45 @@ Logical:  s (segment #) | d (offset)
 
 ---
 
-## 17.5 Exam-Relevant MCQ Patterns
+## 17.4 Exam-Relevant MCQ Patterns
 
 - **Q82**: Fundamental difference — paging fixed/transparent, segmentation variable/visible
 - **Q83**: Segmentation address translation — offset ≥ limit → trap (segmentation fault)
+
+---
+
+## 17.4 Practice Problems
+
+### Problem 1: Address Translation
+```
+Segment Table:
+Seg 0: Base=1000, Limit=500
+Seg 1: Base=5000, Limit=1000
+
+Logical <0, 200> → Physical?
+Logical <1, 1200> → Trap?
+```
+
+### Problem 2: Fragmentation
+```
+Why does segmentation have external fragmentation but paging doesn't?
+```
+
+### Problem 3: Programmer View
+```
+Why is segmentation considered "visible" to the programmer?
+```
+
+### Problem 3: Segment Table
+```
+What does each entry in segment table contain?
+```
+
+### Problem 4: Segmentation Fault
+```
+When does a segmentation fault occur in segmentation?
+```
+
+---
+
+*Next: Topic 18 (Paging)*

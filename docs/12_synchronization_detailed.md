@@ -1,283 +1,263 @@
-# Topic 12 (Detailed): Process Synchronization — Complete Programs with Comments
+# Topic 12: Process Synchronization — Software Approaches & Principles
 
-**Source**: Lectures 7-9 (Unit 2) + Textbook Ch. 6 (Silberschatz Ch. 5, 6, Stallings Ch. 5, 6, Stevens & Rago Ch. 10, 11)
+**Source**: Lecture 7 (Unit 2) + Textbook Ch. 8 (Silberschatz Ch. 5, 6, Stallings Ch. 5, 6, Stevens & Rago Ch. 10, 11)
 
 ---
 
-## 12.1 The Critical Section Problem
+## 12.1 The Concurrency Problem
 
-### What is a Race Condition?
-
+### Race Condition
 ```c
-// counter++ is NOT atomic! It compiles to:
-load  counter → register
-inc   register
-store register → counter
+// counter++ compiles to 3 instructions:
+register = counter;    // LOAD
+register = register + 1;  // INC
+counter = register;    // STORE
 
-// Two threads doing counter++ simultaneously:
-Thread A: load 5     (register=5)
-Thread B: load 5     (register=5)  ← PREEMPTION!
-Thread A: inc  → 6
-Thread A: store 6  (counter=6)
-Thread B: inc  → 6
-Thread B: store 6  (counter=6)  ← LOST UPDATE! Should be 7.
+// Interleaving (counter starts at 5):
+Thread A: LOAD 5          counter=5
+Thread A: INC 6
+Thread B: LOAD 5          ← PREEMPTION! counter still 5
+Thread B: INC 6
+Thread B: STORE 4         counter=4
+Thread A: STORE 6         counter=6  ← LOST UPDATE! Should be 5.
 ```
 
-### Critical Section Requirements (ALL THREE Must Hold)
+**Race Condition**: Outcome depends on timing of execution — non-deterministic, hard to reproduce.
 
-| Requirement | Definition |
-|-------------|------------|
-| **Mutual Exclusion** | Only ONE thread in critical section at a time |
+> **Silberschatz**: "A race condition occurs when multiple processes access and manipulate the same data concurrently, and the outcome of the execution depends on the particular order in which the access takes place." [§6.1.1]
+
+### Kernel Example: PID Allocation
+```
+P0: fork() → read next_pid (2615)
+P1: fork() → read next_pid (2615)  ← both get same PID!
+Both write back 2616 → duplicate PIDs assigned
+```
+
+---
+
+## 12.2 Critical Section Problem
+
+### Requirements (ALL must hold)
+| Requirement | Meaning |
+|-------------|---------|
+| **Mutual Exclusion** | Only one thread in CS at a time |
 | **Progress** | If CS free, some waiting thread enters (no deadlock) |
-| **Bounded Waiting** | No starvation — limit on how many others can cut in line |
+| **Bounded Waiting** | No starvation — limit on how many times others can cut in line |
 
+### Process Structure
 ```c
-// Generic critical section structure
 do {
-    // ENTRY SECTION: Request permission
-    
-    // CRITICAL SECTION: Mutate shared data
-    
-    // EXIT SECTION: Release permission
-    
-    // REMAINDER SECTION: Non-critical work
+    /* ENTRY SECTION */  // Request permission
+    /* CRITICAL SECTION */  // Mutate shared data
+    /* EXIT SECTION */   // Notify done
+    /* REMAINDER SECTION */
 } while (true);
 ```
 
 ---
 
-## 12.2 Software Solutions (Why They Fail)
+## 12.3 Software Approaches (Why They Fail)
 
-### Peterson's Algorithm (2 Processes Only)
-
+### Peterson's Algorithm (2 Processes)
 ```c
 boolean flag[2] = {false, false};
 int turn;
 
-void process_i() {
-    int j = 1 - i;  // Other process
-    
-    flag[i] = true;      // "I want in"
-    turn = j;            // "You go first"
-    
-    while (flag[j] && turn == j);  // Spin wait
-    
-    // CRITICAL SECTION
-    
-    flag[i] = false;     // "I'm done"
-}
+Process i:
+flag[i] = true;
+turn = j;
+while (flag[j] && turn == j);  // spin
+// CRITICAL SECTION
+flag[i] = false;
 ```
 
-**Why it fails on modern CPUs:**
-- Compiler/CPU reorder instructions: `turn = j` may execute BEFORE `flag[i] = true`
-- Store buffers: writes not immediately visible to other cores
-- **Fix requires memory barriers** → architecture-specific, not portable
+**Assumption**: `load`/`store` atomic and execute in program order.
+
+**Reality on modern CPUs**:
+```
+Compiler/CPU may reorder:
+  turn = j;        →  moves BEFORE flag[i] = true
+  flag[i] = true;
+
+Or writes sit in store buffer (not visible to other cores yet)
+```
+**Result**: Both threads enter CS → mutual exclusion violated.
+
+**Fix**: Memory barriers (`mfence`, `dmb`, `sync`) — but now architecture-specific.
+
+> **Silberschatz**: "Peterson's algorithm is a classic software-based solution to the critical-section problem for two processes." [§6.3.1]
 
 ---
 
-## 12.3 Hardware Atomic Instructions
+## 12.4 Hardware Atomic Instructions
 
-### Test-and-Set (TSL) — x86 `XCHG`, ARM `LDREX/STREX`
+Modern CPUs provide **indivisible** read-modify-write instructions.
 
+### test_and_set (TSL) — x86 `XCHG`, ARM `LDREX/STREX`
 ```c
-// Atomic: read old value, write true, return old value
 boolean test_and_set(boolean *target) {
-    boolean rv = *target;  // Atomic read
-    *target = TRUE;        // Atomic write
-    return rv;
+    boolean rv = *target;  // atomic read
+    *target = TRUE;        // atomic write
+    return rv;             // return old value
 }
 ```
 
-### Compare-and-Swap (CAS) — x86 `CMPXCHG`
-
+### compare_and_swap (CAS) — x86 `CMPXCHG`, ARM `CAS`
 ```c
-// Atomic: if *addr == expected, write new_val; return old value
 int compare_and_swap(int *addr, int expected, int new_val) {
     int old = *addr;
     if (*addr == expected) *addr = new_val;
-    return old;  // All atomic
+    return old;  // all atomic
 }
 ```
 
-### Building a Spinlock from TSL
+**Key**: Single bus cycle — no interleaving possible.
 
-```c
-boolean lock = false;
-
-void acquire_lock() {
-    while (test_and_set(&lock)) ;  // Spin until we get it
-}
-
-void release_lock() {
-    lock = false;  // Simple store
-}
-```
-
-**Problem**: No bounded waiting — thread can starve.
+> **Silberschatz**: "Modern computer architectures provide special atomic hardware instructions." [§6.4]
 
 ---
 
-## 12.4 Bounded-Waiting Spinlock (Circular Queue)
+## 12.5 Building Spinlocks from Atomics
+
+### TSL Spinlock
+```c
+boolean lock = false;
+
+while (test_and_set(&lock)) ;  // spin until we get false (lock was free)
+// CRITICAL SECTION
+lock = false;  // release
+```
+
+### CAS Spinlock
+```c
+int lock = 0;
+
+while (compare_and_swap(&lock, 0, 1) != 0) ;  // spin until 0→1 succeeds
+// CRITICAL SECTION
+lock = 0;
+```
+
+### Evaluation
+| Property | TSL Spinlock | CAS Spinlock |
+|----------|--------------|--------------|
+| Mutual Exclusion | ✅ | ✅ |
+| Progress | ✅ | ✅ |
+| **Bounded Waiting** | ❌ (starvation possible) | ❌ |
+
+**Problem**: No queue — whoever wins the race gets the lock. A thread can starve forever.
+
+---
+
+## 12.6 Bounded-Waiting Spinlock
 
 ```c
 boolean waiting[N] = {false};
 boolean lock = false;
 
-void acquire_lock(int i) {
-    waiting[i] = true;
-    boolean key = true;
-    while (waiting[i] && key) {
-        key = test_and_set(&lock);
-    }
-    waiting[i] = false;
-    
-    // CRITICAL SECTION
+// Process i:
+waiting[i] = true;
+key = true;
+while (waiting[i] && key) {
+    key = test_and_set(&lock);  // try to get lock
 }
+waiting[i] = false;
 
-void release_lock(int i) {
-    int j = (i + 1) % N;
-    while (j != i && !waiting[j]) j = (j + 1) % N;
-    
-    if (j == i) lock = false;       // Nobody waiting
-    else waiting[j] = false;        // Wake next waiter
-}
+// CRITICAL SECTION
+
+// Hand off to next waiter (circular queue)
+j = (i + 1) % N;
+while (j != i && !waiting[j]) j = (j + 1) % n;
+
+if (j == i) lock = false;
+else waiting[j] = false;
 ```
 
 **Guarantees bounded waiting**: Each waiter served in turn (max N-1 others before you).
 
+> **Silberschatz**: "This algorithm satisfies all three critical-section requirements." [§6.6]
+
 ---
 
-## 12.5 POSIX Synchronization API (Real Code)
+## 12.7 From Spinlocks to Blocking Mutexes
 
-### Mutex (Blocking, Not Spinning)
+### Spinlock vs Mutex
+| | Spinlock | Mutex (Blocking) |
+|---|----------|------------------|
+| **Wait behavior** | Busy loop (burns CPU) | `block()` → yield CPU, scheduler runs other thread |
+| **Context switch** | None | Yes (costly) |
+| **Best for** | Very short CS, multicore | Longer CS, uniprocessor, general use |
 
+### Mutex Implementation (Conceptual)
+```c
+typedef struct {
+    boolean available;
+    queue<thread> waiters;
+} mutex;
+
+acquire(mutex *m) {
+    if (test_and_set(&m->available) == false) return;  // fast path
+    // contended: enqueue self, block()
+    enqueue(&m->waiters, current_thread);
+    block();  // scheduler switches away
+}
+
+release(mutex *m) {
+    if (m->waiters.empty()) {
+        m->available = true;
+    } else {
+        thread *next = dequeue(&m->waiters);
+        wakeup(next);  // handoff directly (no lock release gap)
+    }
+}
+```
+
+---
+
+## 12.8 POSIX Mutex & Semaphore API
+
+### Mutex
 ```c
 #include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-// Shared counter
-int counter = 0;
+// Static init
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
-void *increment(void *arg) {
-    int iterations = *(int*)arg;
-    
-    for (int i = 0; i < iterations; i++) {
-        pthread_mutex_lock(&lock);
-        // CRITICAL SECTION
-        int temp = counter;
-        temp++;
-        counter = temp;
-        pthread_mutex_unlock(&lock);
-    }
-    return NULL;
-}
+// Dynamic init
+pthread_mutex_t lock;
+pthread_mutex_init(&lock, NULL);
 
-int main() {
-    const int THREADS = 4;
-    const int ITERATIONS = 1000000;
-    
-    pthread_t threads[THREADS];
-    
-    for (int i = 0; i < THREADS; i++) {
-        pthread_create(&threads[i], NULL, increment, &ITERATIONS);
-    }
-    
-    for (int i = 0; i < THREADS; i++) {
-        pthread_join(threads[i], NULL);
-    }
-    
-    printf("Expected: %d, Actual: %d\n", THREADS * ITERATIONS, counter);
-    pthread_mutex_destroy(&lock);
-    return 0;
-}
+// Use
+pthread_mutex_lock(&lock);   // blocks if busy
+// CRITICAL SECTION
+pthread_mutex_unlock(&lock); // must be called by owner
+
+// Cleanup
+pthread_mutex_destroy(&lock);
 ```
 
-### Condition Variables (Wait for Predicate)
-
-```c
-#include <pthread.h>
-#include <stdio.h>
-
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-int buffer = 0;
-int has_data = 0;
-
-void *producer(void *arg) {
-    for (int i = 1; i <= 10; i++) {
-        pthread_mutex_lock(&mutex);
-        
-        // Wait for buffer to be empty
-        while (has_data) {
-            pthread_cond_wait(&cond, &mutex);
-        }
-        
-        buffer = i;
-        has_data = 1;
-        printf("Produced: %d\n", i);
-        
-        pthread_cond_signal(&cond);  // Wake consumer
-        pthread_mutex_unlock(&mutex);
-    }
-    return NULL;
-}
-
-void *consumer(void *arg) {
-    for (int i = 1; i <= 10; i++) {
-        pthread_mutex_lock(&mutex);
-        
-        // Wait for buffer to have data
-        while (!has_data) {
-            pthread_cond_wait(&cond, &mutex);
-        }
-        
-        int val = buffer;
-        has_data = 0;
-        printf("Consumed: %d\n", val);
-        
-        pthread_cond_signal(&cond);  // Wake producer
-        pthread_mutex_unlock(&mutex);
-    }
-    return NULL;
-}
-
-int main() {
-    pthread_t prod, cons;
-    pthread_create(&prod, NULL, producer, NULL);
-    pthread_create(&cons, NULL, consumer, NULL);
-    pthread_join(prod, NULL);
-    pthread_join(cons, NULL);
-    return 0;
-}
-```
-
----
-
-## 12.6 Semaphores (Dijkstra's Generalization)
-
-### Semaphore Operations
+### Semaphores (Dijkstra's Generalization)
+- **Semaphore S**: Integer + wait queue
+- **P() / wait()**: "Proberen" (test) — acquire resource
+- **V() / signal()**: "Verhogen" (increment) — release resource
 
 ```c
 #include <semaphore.h>
 
-// Initialize: pshared=0 (threads), value=initial count
+// Init: pshared=0 (threads), !=0 (processes, in shared memory)
 sem_t sem;
-sem_init(&sem, 0, 1);  // Binary semaphore (mutex)
+sem_init(&sem, 0, 10);  // 10 available slots
 
-// P() / wait() - acquire
-sem_wait(&sem);  // Blocks if value == 0
+// Wait (P)
+sem_wait(&sem);         // blocks if value == 0
 
-// V() / signal() - release
-sem_post(&sem);  // Increments, wakes one waiter
+// Signal (V)
+sem_post(&sem);         // increments, wakes one waiter
 
 // Cleanup
 sem_destroy(&sem);
 ```
 
 ### Semaphore Value Meaning
-
 | Value | Meaning |
 |-------|---------|
 | `S > 0` | `S` resources available |
@@ -285,7 +265,6 @@ sem_destroy(&sem);
 | `S < 0` | `|S|` threads blocked waiting |
 
 ### Types
-
 | Type | Range | Use Case |
 |------|-------|----------|
 | **Binary** | 0 or 1 | Mutual exclusion (mutex equivalent) |
@@ -293,436 +272,187 @@ sem_destroy(&sem);
 
 ---
 
-## 12.7 Classical Problems — Complete Solutions
-
-### Problem 1: Producer-Consumer (Bounded Buffer)
+## 12.9 Classical Problem: Producer-Consumer with Semaphores
 
 ```c
-/*
- * File: producer_consumer.c
- * Complete solution with 3 semaphores
- * Buffer size = 10
- */
+sem_t empty = N;   // counting: N free slots
+sem_t full = 0;    // counting: 0 filled slots
+sem_t mutex = 1;   // binary: protect buffer
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <semaphore.h>
-#include <unistd.h>
+// PRODUCER
+produce(item);
+sem_wait(&empty);      // 1. Wait for FREE SLOT
+sem_wait(&mutex);      // 2. Get EXCLUSIVE ACCESS
+add_to_buffer(item);
+sem_post(&mutex);      // 3. Release buffer
+sem_post(&full);       // 4. Signal: item available
 
-#define BUFFER_SIZE 10
-
-int buffer[BUFFER_SIZE];
-int in = 0, out = 0;
-
-// Semaphores
-sem_t empty;   // Counts empty slots (initially BUFFER_SIZE)
-sem_t full;    // Counts filled slots (initially 0)
-sem_t mutex;   // Binary semaphore for buffer access (initially 1)
-
-void *producer(void *arg) {
-    int id = *(int*)arg;
-    
-    for (int i = 1; i <= 20; i++) {
-        int item = id * 100 + i;  // Unique item
-        
-        sem_wait(&empty);    // 1. Wait for EMPTY SLOT
-        sem_wait(&mutex);    // 2. Get EXCLUSIVE ACCESS
-        
-        buffer[in] = item;
-        printf("[Producer %d] Produced item %d at index %d\n", id, item, in);
-        in = (in + 1) % BUFFER_SIZE;
-        
-        sem_post(&mutex);    // 3. Release buffer
-        sem_post(&full);     // 4. Signal: ITEM AVAILABLE
-        
-        usleep(100000);  // Simulate work
-    }
-    return NULL;
-}
-
-void *consumer(void *arg) {
-    int id = *(int*)arg;
-    
-    for (int i = 1; i <= 20; i++) {
-        sem_wait(&full);     // 1. Wait for ITEM
-        sem_wait(&mutex);    // 2. Get EXCLUSIVE ACCESS
-        
-        int item = buffer[out];
-        printf("[Consumer %d] Consumed item %d from index %d\n", id, item, out);
-        out = (out + 1) % BUFFER_SIZE;
-        
-        sem_post(&mutex);    // 3. Release buffer
-        sem_post(&empty);    // 4. Signal: SLOT FREE
-        
-        usleep(150000);  // Simulate work
-    }
-    return NULL;
-}
-
-int main() {
-    // Initialize semaphores
-    sem_init(&empty, 0, BUFFER_SIZE);  // 10 empty slots
-    sem_init(&full, 0, 0);             // 0 filled slots
-    sem_init(&mutex, 0, 1);            // 1 = unlocked
-    
-    pthread_t prod[2], cons[2];
-    int prod_ids[2] = {1, 2};
-    int cons_ids[2] = {1, 2};
-    
-    // Create threads
-    for (int i = 0; i < 2; i++) {
-        pthread_create(&prod[i], NULL, producer, &prod_ids[i]);
-        pthread_create(&cons[i], NULL, consumer, &cons_ids[i]);
-    }
-    
-    // Wait for completion
-    for (int i = 0; i < 2; i++) {
-        pthread_join(prod[i], NULL);
-        pthread_join(cons[i], NULL);
-    }
-    
-    // Cleanup
-    sem_destroy(&empty);
-    sem_destroy(&full);
-    sem_destroy(&mutex);
-    
-    return 0;
-}
+// CONSUMER
+sem_wait(&full);       // 1. Wait for ITEM
+sem_wait(&mutex);      // 2. Get EXCLUSIVE ACCESS
+item = remove_from_buffer();
+sem_post(&mutex);      // 3. Release buffer
+sem_post(&empty);      // 4. Signal: slot free
+consume(item);
 ```
 
-**CRITICAL ORDER** (Producer):
-```
-sem_wait(&empty);   // Wait for slot FIRST
-sem_wait(&mutex);   // Then get mutex
-```
-
-**WRONG ORDER** (causes deadlock when buffer full):
-```
-sem_wait(&mutex);   // Hold mutex
-sem_wait(&empty);   // Wait for slot while holding mutex → DEADLOCK!
-```
+**Critical Order**: Wait on **counting semaphore FIRST**, then **mutex**.
+- Reverse → deadlock (hold mutex while waiting for slot)
 
 ---
 
-### Problem 2: Readers-Writers (Reader Preference)
+## 12.10 Readers-Writers Problem
 
+### Rules
+| Operation | Allowed Concurrently? |
+|-----------|----------------------|
+| Multiple Readers | ✅ Yes |
+| Multiple Writers | ❌ No |
+| Reader + Writer | ❌ No |
+
+### Solution: Reader Preference
 ```c
-/*
- * File: readers_writers.c
- * Multiple readers allowed, writers exclusive
- */
+sem_t rw_mutex = 1;  // Writer exclusion + first/last reader gate
+sem_t mutex = 1;     // Protects read_count
+int read_count = 0;  // Active readers
 
-#include <stdio.h>
-#include <pthread.h>
-#include <semaphore.h>
-#include <unistd.h>
+// Writer (Simple)
+wait(rw_mutex);
+// ... write ...
+signal(rw_mutex);
 
-sem_t rw_mutex;  // Writer exclusion + first/last reader gate
-sem_t mutex;     // Protects read_count
-int read_count = 0;
-int shared_data = 0;
+// Reader (Tricky)
+wait(mutex);
+read_count++;
+if (read_count == 1) wait(rw_mutex);  // First reader locks out writers
+signal(mutex);
 
-void *reader(void *arg) {
-    int id = *(int*)arg;
-    
-    for (int i = 0; i < 5; i++) {
-        // Entry section
-        sem_wait(&mutex);
-        read_count++;
-        if (read_count == 1) {
-            sem_wait(&rw_mutex);  // First reader locks out writers
-        }
-        sem_post(&mutex);
-        
-        // READING
-        printf("[Reader %d] Reading data = %d\n", id, shared_data);
-        usleep(100000);
-        
-        // Exit section
-        sem_wait(&mutex);
-        read_count--;
-        if (read_count == 0) {
-            sem_post(&rw_mutex);  // Last reader unlocks writers
-        }
-        sem_post(&mutex);
-        
-        usleep(200000);
-    }
-    return NULL;
-}
+// ... READ ...
 
-void *writer(void *arg) {
-    int id = *(int*)arg;
-    
-    for (int i = 0; i < 3; i++) {
-        sem_wait(&rw_mutex);  // Exclusive access
-        
-        // WRITING
-        shared_data++;
-        printf("[Writer %d] Wrote data = %d\n", id, shared_data);
-        usleep(300000);
-        
-        sem_post(&rw_mutex);
-        usleep(500000);
-    }
-    return NULL;
-}
-
-int main() {
-    sem_init(&rw_mutex, 0, 1);
-    sem_init(&mutex, 0, 1);
-    
-    pthread_t readers[3], writers[2];
-    int r_ids[3] = {1, 2, 3};
-    int w_ids[2] = {1, 2};
-    
-    for (int i = 0; i < 3; i++) pthread_create(&readers[i], NULL, reader, &r_ids[i]);
-    for (int i = 0; i < 2; i++) pthread_create(&writers[i], NULL, writer, &w_ids[i]);
-    
-    for (int i = 0; i < 3; i++) pthread_join(readers[i], NULL);
-    for (int i = 0; i < 2; i++) pthread_join(writers[i], NULL);
-    
-    sem_destroy(&rw_mutex);
-    sem_destroy(&mutex);
-    return 0;
-}
+wait(mutex);
+read_count--;
+if (read_count == 0) signal(rw_mutex);  // Last reader unlocks writers
+signal(mutex);
 ```
 
-**Starvation Note**: This implementation starves writers if readers keep coming.
-**Fix**: Writer preference or fair queuing (Linux `qrwlock`).
+### Starvation Variants
+| Variation | Who Starves |
+|-----------|-------------|
+| **Reader Preference** | Writers — if readers keep coming, `read_count` never hits 0 |
+| **Writer Preference** | Readers — new readers wait behind queued writers |
+
+### Linux Solutions
+| Mechanism | How It Works |
+|-----------|--------------|
+| `rwlock_t` | Simple RW spinlock, reader-biased |
+| `qrwlock` | Fair FIFO queue — no starvation |
+| **RCU (Read-Copy-Update)** | **Readers NEVER block** — zero overhead reads! |
+
+### RCU Magic
+```
+Writer:
+  1. Allocate new copy of data
+  2. Modify copy
+  3. Atomic pointer swap (new → live)
+  4. Wait for "grace period" (all pre-existing readers done)
+  5. Free old copy
+
+Reader:
+  1. Read pointer (no lock!)
+  2. Access data
+  3. Done
+```
+**Used in**: Linux VFS, networking, RCU-protected linked lists
 
 ---
 
-### Problem 3: Dining Philosophers — 3 Deadlock-Free Solutions
+## 12.11 Dining Philosophers
 
+### Problem
+- 5 philosophers, 5 chopsticks (shared between neighbors)
+- Need **2 chopsticks** to eat
+- Cycle: Think → Pick left → Pick right → Eat → Put both → Think
+
+### Naive Solution (Deadlocks!)
 ```c
-/*
- * File: dining_philosophers.c
- * All 3 solutions implemented
- */
-
-#include <stdio.h>
-#include <pthread.h>
-#include <semaphore.h>
-#include <unistd.h>
-
-#define N 5
-
-// ============================================================
-// SOLUTION 1: Capacity Limiting (Semaphore = N-1 = 4)
-// ============================================================
-sem_t chopstick1[N];
-sem_t seats;  // Max 4 at table
-
-void *philosopher1(void *arg) {
-    int id = *(int*)arg;
-    int left = id;
-    int right = (id + 1) % N;
-    
-    for (int i = 0; i < 3; i++) {
-        sem_wait(&seats);              // Reserve seat (max 4)
-        sem_wait(&chopstick1[left]);   // Pick left
-        sem_wait(&chopstick1[right]);  // Pick right
-        
-        printf("[Phil %d] Eating (Solution 1)\n", id);
-        usleep(200000);
-        
-        sem_post(&chopstick1[left]);
-        sem_post(&chopstick1[right]);
-        sem_post(&seats);              // Free seat
-        
-        printf("[Phil %d] Thinking\n", id);
-        usleep(100000);
-    }
-    return NULL;
-}
-
-// ============================================================
-// SOLUTION 2: Asymmetric (Odd/Even Pick Order)
-// ============================================================
-sem_t chopstick2[N];
-
-void *philosopher2(void *arg) {
-    int id = *(int*)arg;
-    int left = id;
-    int right = (id + 1) % N;
-    
-    for (int i = 0; i < 3; i++) {
-        if (id % 2 == 0) {  // Even: right first
-            sem_wait(&chopstick2[right]);
-            sem_wait(&chopstick2[left]);
-        } else {  // Odd: left first
-            sem_wait(&chopstick2[left]);
-            sem_wait(&chopstick2[right]);
-        }
-        
-        printf("[Phil %d] Eating (Solution 2)\n", id);
-        usleep(200000);
-        
-        sem_post(&chopstick2[left]);
-        sem_post(&chopstick2[right]);
-        
-        usleep(100000);
-    }
-    return NULL;
-}
-
-// ============================================================
-// SOLUTION 3: Atomic Acquisition (Monitor/Mutex)
-// ============================================================
-sem_t chopstick3[N];
-pthread_mutex_t table_mutex = PTHREAD_MUTEX_INITIALIZER;
-
-void *philosopher3(void *arg) {
-    int id = *(int*)arg;
-    int left = id;
-    int right = (id + 1) % N;
-    
-    for (int i = 0; i < 3; i++) {
-        pthread_mutex_lock(&table_mutex);
-        // Check if BOTH available atomically
-        int left_val, right_val;
-        sem_getvalue(&chopstick3[left], &left_val);
-        sem_getvalue(&chopstick3[right], &right_val);
-        
-        if (left_val > 0 && right_val > 0) {
-            sem_wait(&chopstick3[left]);
-            sem_wait(&chopstick3[right]);
-        } else {
-            pthread_mutex_unlock(&table_mutex);
-            usleep(10000);  // Back off
-            continue;
-        }
-        pthread_mutex_unlock(&table_mutex);
-        
-        printf("[Phil %d] Eating (Solution 3)\n", id);
-        usleep(200000);
-        
-        sem_post(&chopstick3[left]);
-        sem_post(&chopstick3[right]);
-        usleep(100000);
-    }
-    return NULL;
-}
-
-// ============================================================
-// Test harness
-// ============================================================
-void run_solution(int sol_num, void *(*phil_func)(void*)) {
-    sem_t chopsticks[N];
-    for (int i = 0; i < N; i++) sem_init(&chopsticks[i], 0, 1);
-    
-    if (sol_num == 1) sem_init(&seats, 0, 4);
-    if (sol_num == 3) pthread_mutex_init(&table_mutex, NULL);
-    
-    pthread_t threads[N];
-    int ids[N] = {0, 1, 2, 3, 4};
-    
-    printf("\n=== Solution %d ===\n", sol_num);
-    for (int i = 0; i < N; i++) {
-        pthread_create(&threads[i], NULL, phil_func, &ids[i]);
-    }
-    
-    sleep(3);  // Let them run
-    
-    for (int i = 0; i < N; i++) pthread_cancel(threads[i]);
-    for (int i = 0; i < N; i++) pthread_join(threads[i], NULL);
-    
-    for (int i = 0; i < N; i++) sem_destroy(&chopsticks[i]);
-    if (sol_num == 1) sem_destroy(&seats);
-    if (sol_num == 3) pthread_mutex_destroy(&table_mutex);
-}
-
-int main() {
-    run_solution(1, philosopher1);
-    run_solution(2, philosopher2);
-    run_solution(3, philosopher3);
-    return 0;
-}
+wait(chopstick[i]);           // Left
+wait(chopstick[(i+1)%5]);     // Right
+// eat
+signal(chopstick[i]);
+signal(chopstick[(i+1)%5]);
 ```
+**Deadlock**: All 5 pick up left simultaneously → all wait for right forever.
+
+### Deadlock-Free Solutions
+
+#### 1. Capacity Limiting (Semaphore = 4)
+```c
+sem_t seats = 4;  // Max 4 at table
+
+wait(seats);          // Reserve seat
+wait(chopstick[i]);
+wait(chopstick[(i+1)%5]);
+// eat
+signal(chopstick[i]);
+signal(chopstick[(i+1)%5]);
+signal(seats);        // Free seat
+```
+**Why it works**: With 4 philosophers and 5 chopsticks, at least 1 can always eat.
+
+#### 2. Asymmetric (Odd/Even)
+```c
+if (i % 2 == 0) {          // Even: right first
+    wait(chopstick[(i+1)%5]);
+    wait(chopstick[i]);
+} else {                    // Odd: left first
+    wait(chopstick[i]);
+    wait(chopstick[(i+1)%5]);
+}
+// eat (same for both)
+signal(chopstick[i]);
+signal(chopstick[(i+1)%5]);
+```
+**Why it works**: Breaks circular wait — adjacent philosophers grab in opposite order.
+
+#### 3. Atomic Acquisition (Monitor)
+```c
+wait(table_mutex);
+if (chopstick[i] && chopstick[(i+1)%5]) {
+    take_both();
+}
+signal(table_mutex);
+```
+**Why it works**: Check-and-acquire atomic — no partial state possible.
 
 ---
 
-## 12.8 Priority Inversion & Inheritance
+## 12.12 Priority Inversion & Inheritance
 
 ### The Problem
-
 ```
-HIGH (H) needs mutex held by LOW (L)
-    H blocks
-MEDIUM (M) becomes ready → preempts L
-    L can't run → can't release mutex → H blocked by M indirectly!
+P1 (High) needs mutex held by P3 (Low)
+    P1 blocks
+P2 (Medium) becomes ready → preempts P3
+    P3 can't run → can't release mutex → P1 blocked by P2 indirectly!
 ```
 
 ### Priority Inheritance Protocol
-
-```c
-#include <pthread.h>
-#include <stdio.h>
-#include <unistd.h>
-
-pthread_mutex_t mutex;
-pthread_mutexattr_t attr;
-
-void *high_priority(void *arg) {
-    printf("[HIGH] Trying to lock mutex...\n");
-    pthread_mutex_lock(&mutex);
-    printf("[HIGH] Got mutex, doing work...\n");
-    sleep(2);
-    pthread_mutex_unlock(&mutex);
-    printf("[HIGH] Released mutex\n");
-    return NULL;
-}
-
-void *low_priority(void *arg) {
-    printf("[LOW] Locking mutex first...\n");
-    pthread_mutex_lock(&mutex);
-    printf("[LOW] Got mutex, doing long work...\n");
-    sleep(5);  // Long critical section
-    pthread_mutex_unlock(&mutex);
-    printf("[LOW] Released mutex\n");
-    return NULL;
-}
-
-void *medium_priority(void *arg) {
-    sleep(1);  // Let low get mutex first
-    printf("[MEDIUM] Running CPU-intensive work (no mutex)...\n");
-    sleep(3);
-    printf("[MEDIUM] Done\n");
-    return NULL;
-}
-
-int main() {
-    // Enable priority inheritance
-    pthread_mutexattr_init(&attr);
-    pthread_mutexattr_setprotocol(&attr, PTHREAD_PRIO_INHERIT);
-    pthread_mutex_init(&mutex, &attr);
-    
-    pthread_t high, low, medium;
-    
-    // Create with priorities (requires root for real-time)
-    pthread_create(&low, NULL, low_priority, NULL);
-    sleep(1);  // Ensure low gets mutex
-    pthread_create(&medium, NULL, medium_priority, NULL);
-    pthread_create(&high, NULL, high_priority, NULL);
-    
-    pthread_join(high, NULL);
-    pthread_join(low, NULL);
-    pthread_join(medium, NULL);
-    
-    pthread_mutex_destroy(&mutex);
-    pthread_mutexattr_destroy(&attr);
-    return 0;
-}
+```
+When P1 (High) blocks on mutex held by P3 (Low):
+    P3 temporarily inherits P1's priority
+    P2 (Medium) can no longer preempt P3
+    P3 finishes CS, releases mutex
+    P3 drops to Low priority
+    P1 acquires mutex, runs
 ```
 
-**Without inheritance**: Medium blocks Low → High waits forever indirectly.
-**With inheritance**: Low inherits High's priority → Medium can't preempt → Low finishes → High proceeds.
+**Implemented in**: Linux `pthread_mutexattr_setprotocol(PTHREAD_PRIO_INHERIT)`, Windows, VxWorks (fixed Mars Pathfinder)
+
+> **Silberschatz**: "The priority inheritance protocol is a technique for preventing priority inversion." [§6.10]
 
 ---
 
-## 12.9 Modern Synchronization Stack
+## 12.13 Modern Synchronization Stack
 
 ```
 APPLICATION CODE
@@ -746,33 +476,28 @@ HARDWARE
     │  - Memory barriers
 ```
 
-**Futex (Fast Userspace Mutex)**:
-- Uncontended lock/unlock: **entirely in userspace** via atomic CAS
-- Contended: syscall to `futex_wait` / `futex_wake`
-- Avoids syscall overhead for common case
+**Modern optimization**: `futex` (Fast Userspace Mutex) — uncontended lock/unlock **entirely in userspace** via atomic CAS. Syscall only on contention.
 
 ---
 
-## 12.10 Complete Exam-Focused Summary
+## 12.14 Key Takeaways
 
-| Concept | Key Points |
-|---------|------------|
-| **Race condition** | Non-atomic read-modify-write + preemption |
-| **Critical section** | Mutual Exclusion, Progress, Bounded Waiting |
-| **Peterson's algorithm** | 2-process software solution; fails on modern CPUs |
-| **TSL / CAS** | Hardware atomic instructions; foundation of all locks |
-| **Spinlock vs Mutex** | Spinlock=busy wait (short CS); Mutex=block (long CS) |
-| **Semaphore** | Integer + wait queue; P()=wait, V()=signal |
-| **Binary vs Counting** | Binary=0/1 (mutex); Counting=resource pool |
-| **Producer-Consumer** | 3 semaphores: mutex + empty + full |
-| **Readers-Writers** | read_count tracks readers; first/last gates writers |
-| **Dining Philosophers** | 3 solutions: capacity=4, asymmetric, atomic acquisition |
-| **Priority inversion** | Medium blocks Low blocks High → fix: priority inheritance |
-| **Futex** | Uncontended in userspace; contended via syscall |
+- **Race conditions** = non-atomic read-modify-write + preemption [Silberschatz §6.1]
+- **Critical section** needs: Mutual Exclusion, Progress, Bounded Waiting [Silberschatz §6.2]
+- **Software algorithms (Peterson)** fail on modern CPUs due to reordering/store buffers [Silberschatz §6.3]
+- **Hardware atomics** (TSL, CAS) provide indivisible RMW — foundation of all locks [Silberschatz §6.4]
+- **Spinlocks** = busy-wait on atomic; good for short CS, bad for long/uniprocessor [Silberschatz §6.5]
+- **Mutexes/Semaphores** = blocking (yield CPU) + wait queues — general purpose [Silberschatz §6.7-8]
+- **Semaphores** generalize mutexes: counting = resource pools [Silberschatz §6.8]
+- **Producer-consumer**: 3 semaphores (mutex + empty + full) [Silberschatz §6.9.1]
+- **Readers-Writers**: `read_count` tracks readers; first/last reader gates writers [Silberschatz §6.9.2]
+- **RCU**: Readers never block — extreme read scalability [Silberschatz §6.9.2]
+- **Priority inversion**: medium blocks low blocks high → fix with priority inheritance [Silberschatz §6.10]
+- **Real code**: Use `pthread_mutex`, `sem_t`, `pthread_cond` — not raw atomics
 
 ---
 
-## 12.11 Common Pitfalls
+## 12.14 Common Pitfalls
 
 | Pitfall | Wrong | Correct |
 |---------|-------|---------|
@@ -784,4 +509,33 @@ HARDWARE
 
 ---
 
-*Next: Topic 13 (Deadlocks) with complete Banker's Algorithm trace and prevention code*
+## 12.15 Exam-Relevant MCQ Patterns (from your prep file)
+
+| Question | Key Answer |
+|----------|------------|
+| **Q49** | Race condition definition |
+| **Q50** | Critical section 3 requirements — Mutual Exclusion, Progress, Bounded Waiting |
+| **Q51** | Peterson's variables — `turn` + `flag[2]` |
+| **Q52** | `test_and_set` — returns original, sets to true |
+| **Q53** | `compare_and_swap` — if equal, sets new; returns original |
+| **Q54** | Mutex vs semaphore — mutex has ownership; semaphore no ownership |
+| **Q55** | Spinlock effective on multiprocessor for short CS — avoids context switch overhead |
+| **Q56** | `sem_init(&mutex, 0, 1)` — 2nd arg 0 = thread-shared; 3rd = binary semaphore |
+| **Q57** | `demo_semaphore_2.c` vs `3.c` — without sync: interleaved; with: mutual exclusion |
+| **Q58** | Producer-consumer semaphores — mutex=1, empty=N, full=0 |
+| **Q59** | Wrong order `wait(mutex); wait(empty)` → DEADLOCK when buffer full |
+| **Q60** | Readers-writers — reader preference starves writers |
+| **Q61** | Dining philosophers — asymmetric pickup (odd left→right, even right→left) |
+| **Q62** | Hold and Wait — process holds resource while requesting more |
+| **Q63** | Eliminate Hold and Wait — request all at once, or release before requesting |
+| **Q64** | Deadlock prevention — global linear lock ordering |
+| **Q65** | RAG multi-instance — cycle = necessary but not sufficient |
+| **Q66** | Banker's Need = Max - Allocation |
+| **Q67** | Safe state — exists sequence where all can finish |
+| **Q68** | Unsafe ≠ deadlocked; all deadlocked are unsafe |
+| **Q69** | Wait-for graph — collapse RAG, cycle = deadlock |
+| **Q70** | Uncatchable signals — SIGKILL, SIGSTOP |
+
+---
+
+*Next: Topic 13 (Deadlocks — Lecture 11, Unit 2)*

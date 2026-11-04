@@ -236,7 +236,7 @@ msgrcv(msqid, &msg, ..., type); // Receive with TYPE FILTERING
 ```c
 semget(key, nsems, flags);
 semctl(semid, semnum, cmd, ...);
-semop(semid, sembuf_array, nops); // ATOMIC multiple operations
+semop(semid, sembuf_array, nops);  // ATOMIC multiple ops
 ```
 
 ### Unix Domain Sockets (`AF_UNIX`)
@@ -277,3 +277,7 @@ semop(semid, sembuf_array, nops); // ATOMIC multiple operations
 - **Q43**: Pipe descriptors — parent closes `fd[0]` (read), child closes `fd[1]` (write)
 - **Q44**: Ordinary pipe = unidirectional, requires common ancestor
 - **Q45**: FIFO vs pipe — FIFO has filesystem path, unrelated processes can communicate
+
+---
+
+*Next: Topic 10 (Threads & Multicore Programming — Lectures 2 & 4, Unit 2)*

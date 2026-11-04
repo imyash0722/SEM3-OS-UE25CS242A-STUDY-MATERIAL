@@ -1,0 +1,212 @@
+OPERATING SYSTEMS 
+UE25CS242A
+Multicore Kernel Concepts 
+Depart ment of Comput er Science and 
+Engineering
+Dr. Anitha K
+Acknowledgement, Prof. 
+Pavan A C
+Slides Credits for all the PPTs of this course 
+• The 
+slides/diagrams 
+in 
+t his 
+course 
+are 
+an 
+adaptation, 
+combination, and enhancement of mat erial f rom t he following 
+resources:
+1. “Operat ing Syst em Concept s”, Abraham Silberschat z, Pet er Baer 
+Galvin, Greg Gagne 10t h Edit ion, John Wiley & Sons, Global 
+Edit ion, 2023.
+2. “Advanced Programming in t he Unix Environment ”, Richard 
+St evens and St ephen A Rago, Pearson, 3rd edit ion, 2017.
+3. Some concept ual t ext and diagram f rom “Operat ing Syst ems, 
+Int ernals and Design Principles”, William St allings, 9t h Edit ion, 
+Pearson, 2018.
+OPERATING SYSTEMS
+Operating Systems 
+Multicore Kernel Concepts 
+ Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+OPERATING SYSTEMS
+Why Multi-Processor Scheduling?
+•
+Everyt hing so f ar assumed a single processing core — one t hread runs at a t ime.
+•
+Wit h mult iple CPUs we achieve load sharing: multiple threads may run in parallel.
+•
+But t he scheduling problem becomes increasingly complex- there is no single best 
+solution.
+•
+Tradit ionally mult iprocessor meant several physical single-core chips. Today t he 
+t erm covers:
+•
+Multicore CPUs — several cores on one chip
+•
+Multithreaded cores — several hardware t hreads per core
+•
+NUMA systems — memory access cost depends on which CPU 
+•
+Heterogeneous multiprocessing — cores of differing capabilit y
+•
+Approaches to Multiple-Processor Scheduling:
+     - Symmetric multiprocessing
+Asymmetric Multiprocessing
+OPERATING SYSTEMS
+• One processor — t he master server — handles all scheduling 
+decisions, I/O processing and ot her syst em act ivit ies.
+• All ot her processors execute user code only.
+• Simple, because only one core t ouches t he syst em dat a 
+st ruct ures — f ar less dat a sharing is needed.
+• Disadvantage: t he mast er server becomes a pot ent ial 
+bottleneck, so overall syst em performance can drop.
+Symmetric Multiprocessing (SMP)
+OPERATING SYSTEMS
+• The standard approach for support ing mult iprocessors.
+• Each processor is self-scheduling: it s own scheduler examines a 
+ready queue and picks a t hread t o run.
+• No master server — syst em and user code can run on any core.
+• Two possible st rat egies for organizing t he t hreads:
+• 1. All t hreads may be in a common ready queue, or
+• 2. Each processor may keep it s own privat e queue of t hreads
+• Virt ually all modern operat ing syst ems support SMP — Windows, 
+Linux, macOS, and mobile syst ems including Android and iOS.
+Organization of Ready Queues 
+OPERATING SYSTEMS
+Figure 5.11  Organization of ready queues.
+Kernel Parallelism under SMP
+OPERATING SYSTEMS
+•
+Under SMP t he kernel it self runs in parallel — several cores may be execut ing 
+kernel code at t he same inst ant .
+•
+Consequences t he kernel designer must handle:
+•
+Shared kernel dat a st ruct ures (ready queues, file t ables) can be hit 
+concurrently → race condit ions.
+•
+Correct ness needs locking; but locks serialise, so heavy locking dest roys 
+t he parallelism you paid for.
+•
+Highly cont ended locks t urn a shared st ruct ure int o a bottleneck — 
+exact ly t he shared-ready-queue problem
+•
+The pract ical answer: partition state per core. Privat e run queues remove t he 
+lock f rom t he hot pat h ent irely.
+•
+The kernel t hen only synchronises for t he rarer cross-core operat ions — for 
+example, migrat ing a t hread during load balancing.
+Multicore Processors
+OPERATING SYSTEMS
+• Most cont emporary hardware place mult iple comput ing cores 
+on t he same physical chip result ing in a mult icore processor.
+• Each core maint ains it s own archit ect ural st at e, so it appears t o 
+t he operat ing syst em as a separat e logical CPU.
+• SMP syst ems built on mult icore chips are faster and consume 
+less power t han syst ems giving each CPU it s own chip.
+• But mult icore complicat es scheduling. 
+• This sit uat ion, known as memory stall occurs mainly because 
+processors operat e at a speed much f ast er t han memory. It also 
+occurs because of cache miss- accessing dat a t hat are not in 
+cache memory.
+Memory Stall 
+OPERATING SYSTEMS
+• The t hread alt ernat es comput e cycles (C) wit h memory st all 
+cycles (M).
+• In t his scenario t he processor can spend up t o 50 percent of it s 
+t ime wait ing for dat a f rom memory.
+Half the core is idle, but the core is not idle from the scheduler's point of view — the fix has to come from the 
+hardware.
+Multithreaded Processing Cores
+OPERATING SYSTEMS
+•
+Hardware remedy: assign two (or more) hardware threads to each core.
+•
+If one hardware t hread st alls wait ing for memory, t he core swit ches t o 
+anot her t hread — t he st all cycles get filled.
+•
+Each hardware t hread keeps it s own archit ect ural st at e (inst ruct ion point er, 
+regist er set ), so it appears t o t he OS as a logical CPU.
+Figure 5.13  Multithreaded multicore system.
+Chip Multithreading 
+OPERATING SYSTEMS
+•
+This t echnique is called chip multithreading (CMT).
+•
+Here t he processor has four cores, each wit h two 
+hardware threads.
+•
+From t he operat ing syst em's point of view t here 
+are eight logical CPUs.
+•
+The OS schedules soft ware t hreads ont o logical 
+CPUs, not ont o physical cores.
+•
+Int el calls t his hyper-threading, also known as 
+simultaneous multithreading (SMT).
+•
+Cont emporary Int el processors such as t he i7 
+support 2 t hreads per core while t he Oracle Sparc 
+M&7support s 8 t hreads per core.
+Load Balancing
+OPERATING SYSTEMS
+• On SMP syst ems t he workload must be kept balanced across all 
+processors t o get t he benefit of having more t han one. Ot herwise 
+some processors sit idle while ot hers have high workloads.
+• Load balancing at tempt s t o keep t he workload evenly dist ribut ed 
+across all processors.
+• There are 2 approaches t o load balancing-
+    1. Push migration-A specific t ask periodically checks t he load on 
+each processor. If it finds an imbalance, it evenly dist ribut es t he 
+load by moving (pushing) t hreads f rom overloaded processors t o 
+idle or less-busy ones.
+    2. Pull migration-Occurs when an idle processor pulls a wait ing 
+t ask  f rom a busy processor
+Processor Affinity
+OPERATING SYSTEMS
+•
+While a t hread runs on a processor, t he dat a it accesses 
+populat e t hat processor's cache — a warm cache.
+•
+Successive memory accesses are t hen sat isfied f rom cache.
+•
+If t he t hread migrates t o anot her processor — say, due t o 
+load balancing:
+- The first processor's cache cont ent s must be invalidated.
+- The second processor's cache must be repopulated.
+•
+Because t hat cost is high, most SMP operat ing syst ems t ry 
+t o avoid migrating a thread and keep it on t he same 
+processor.
+•
+This is processor affinity: a process has an affinit y for t he 
+processor on which it is current ly running.
+•
+Two forms of processor affinity- Soft affinity and Hard affinity.
+Processor Affinity
+OPERATING SYSTEMS
+Soft affinity
+•
+The OS has a policy of at tempt ing t o keep a process on t he 
+same processor but does not guarant ee it .
+•
+A process may st ill migrat e bet ween processors during load 
+balancing.
+•
+This is what Linux implement s by def ault .
+Hard affinity
+•
+Provided t hrough syst em calls.
+•
+Let s a process specif y a subset of processors on which it 
+can run.
+•
+Linux offers sched_setaffinity(), which let s a t hread 
+name t he set of CPUs it is eligible t o run on.
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Depart ment of Comput er Science and 
+Engineering

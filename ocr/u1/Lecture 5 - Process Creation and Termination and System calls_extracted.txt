@@ -1,0 +1,235 @@
+OPERATING SYSTEMS 
+UE25CS242A
+Process Creation and 
+Termination, System calls for 
+Process Management
+Dr. Anitha K 
+Depart ment of Comput er Science & Engineering
+Acknowledgement, Prof. 
+Pavan A C
+Slides Credits for all the PPTs of this course 
+• The 
+slides/diagrams 
+in 
+t his 
+course 
+are 
+an 
+adaptation, 
+combination, and enhancement of mat erial f rom t he following 
+resources:
+1. “Operat ing Syst em Concept s”, Abraham Silberschat z, Pet er Baer 
+Galvin, Greg Gagne 10t h Edit ion, John Wiley & Sons, Global 
+Edit ion, 2023.
+2. “Advanced Programming in t he Unix Environment ”, Richard 
+St evens and St ephen A Rago, Pearson, 3rd edit ion, 2017.
+3. Some concept ual t ext and diagram f rom “Operat ing Syst ems, 
+Int ernals and Design Principles”, William St allings, 9t h Edit ion, 
+Pearson 2018
+OPERATING SYSTEMS
+OPERATING SYSTEMS
+Process Creation and 
+Termination , System calls for 
+Process Management
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+Operations on Processes
+OPERATING SYSTEMS
+Syst em must provide mechanisms for:
+• process creat ion
+• process t erminat ion
+Process Creation
+OPERATING SYSTEMS
+• Parent process creat es children processes, which, in 
+t urn creat e ot her processes, forming a tree of 
+processes
+• Generally, process ident ified and managed via a 
+process identifier (pid)
+• Resource sharing opt ions
+• Parent and children share all resources
+• Children share subset of parent ’s resources
+• Parent and child share no resources
+• Execut ion opt ions
+• Parent and children execut e concurrent ly
+• Parent wait s unt il children t erminat e
+A tree of processes on a typical Linux system.
+Process creation using fork()
+OPERATING SYSTEMS
+• Address space
+• Child duplicat e of parent
+• Child has a program loaded int o it
+• UNIX examples
+• fork() syst em call creat es new process
+• exec() syst em call used aft er a fork() t o 
+replace t he process’ memory space wit h a 
+new program
+Process creation using the fork() system call.
+C Program forking Separate Process
+OPERATING SYSTEMS
+Process Termination
+OPERATING SYSTEMS
+•
+Process execut es last st at ement and t hen asks t he operat ing syst em t o delet e it using t he 
+exit() syst em call.
+•
+Ret urns  st at us dat a f rom child t o parent (via wait())
+•
+Process’ resources are deallocat ed by operat ing syst em
+•
+Parent may t erminat e t he execut ion of children processes  using t he abort() syst em call.  
+Some reasons for doing so:
+•
+Child has exceeded allocat ed resources
+•
+Task assigned t o child is no longer required
+•
+The parent is exit ing and t he operat ing syst ems does not allow  a child t o cont inue if 
+it s parent t erminat es
+Process Termination
+OPERATING SYSTEMS
+•
+Some operat ing syst ems do not allow child t o exist if it s parent has t erminat ed.  
+If a process t erminat es, t hen all it s children must also be t erminat ed.
+•
+cascading termination.  All children, grandchildren, et c.  are  t erminat ed.
+•
+The t erminat ion is init iat ed by t he operat ing syst em.
+•
+The parent process may wait for t erminat ion of a child process by using t he 
+wait() syst em call. The call ret urns st at us informat ion and t he pid of t he 
+t erminat ed process
+•
+pid = wait(&status); 
+•
+If no parent wait ing (did not invoke wait()) process is a zombie
+•
+If parent t erminat ed wit hout invoking wait , process is an orphan
+System calls for Process Management-  Process 
+Identifiers
+OPERATING SYSTEMS
+• Every process has a unique process ID, a non-negat ive int eger
+• The process ID is t he only well-known ident ifier of a process t hat is 
+always unique
+• It is oft en used as a piece of ot her ident ifiers, t o guarant ee uniqueness.
+• Alt hough unique, process IDs are reused. As processes t erminat e, t heir IDs 
+become candidat es for reuse. 
+• Most UNIX syst ems implement algorit hms t o delay reuse, so t hat newly 
+creat ed processes are assigned IDs different f rom t hose used by 
+processes t hat t erminat ed recent ly
+fork()
+OPERATING SYSTEMS
+• An exist ing process can creat e a new one by calling t he fork f unct ion
+• The new process creat ed by fork is called t he child process
+• Ret urn value in t he child is 0
+• Ret urn value in t he parent is t he process ID of t he new child
+• Ret urn value is -1 on error
+• The child is a copy of t he parent . The child get s a copy of t he parent ’s 
+dat a space, heap, and st ack
+exit()
+OPERATING SYSTEMS
+•
+A process can t erminat e normally in five ways
+1.
+Execut ing a ret urn f rom t he main f unct ion
+2.
+Calling t he exit f unct ion. 
+3.
+Calling t he _exit or _Exit f unct ion.
+4.
+Execut ing a ret urn f rom t he st art rout ine of t he last t hread in t he process. 
+5.
+Calling t he pt hread_exit f unct ion f rom t he last t hread in t he process
+A process can t erminat e abnormally in t hree ways
+1.
+Calling abort
+2.
+When t he process receives cert ain signals
+3.
+The last t hread responds t o a cancellat ion request
+•
+Regardless of how a process t erminat es, t he same code in t he kernel is event ually 
+execut ed. 
+•
+This kernel code closes all t he open descript ors for t he process releases t he memory
+wait() and waitpid()
+OPERATING SYSTEMS
+•
+A process t hat calls wait or wait pid can 
+•
+Block, if all of it s children are st ill running 
+•
+Ret urn immediat ely wit h t he t erminat ion st at us of a child, if a child has t erminat ed 
+and is wait ing for it s t erminat ion st at us t o be fet ched
+•
+Ret urn immediat ely wit h an error, if it doesn’t have any child processes
+•
+If t he process is calling wait because it received t he SIGCHLD signal, wait will ret urn 
+immediat ely. But if we call it at any random point in t ime, it can block.
+Bot h ret urn: process ID on success, 0  if st at e hasn’t changed or −1 on 
+f ailure
+waitid()
+OPERATING SYSTEMS
+•
+wait id() allows a process t o specif y which children t o wait for. 
+•
+Inst ead of encoding t his informat ion in a single argument combined wit h t he process ID 
+or process group ID, t wo separat e argument s are used
+•
+Ret urns: 0 if OK, −1 on error
+exec()
+OPERATING SYSTEMS
+•
+When a process calls one of t he exec f unct ions, t hat process is complet ely replaced 
+by t he new program, and t he new program st art s execut ing at it s main f unct ion. 
+•
+The process ID does not change across an exec, because a new process is not 
+creat ed; 
+•
+exec merely replaces t he current process — it s t ext , dat a, heap, and st ack segment s 
+— wit h a brand-new program f rom disk.
+getpid() and getppid()
+OPERATING SYSTEMS
+•
+getpid() ret urns t he process ID (PID) of t he calling process.
+•
+getppid() ret urns t he process ID of t he parent of t he calling process. 
+•
+This will be eit her t he ID of t he process t hat creat ed t his process using fork() 
+or if t hat process has already t erminat ed, t he ID of t he process t o which t his 
+process has been re-parent ed
+Race condition
+OPERATING SYSTEMS
+•
+A race condit ion occurs when mult iple processes are t rying t o do somet hing wit h 
+shared dat a and t he final out come depends on t he order in which t he processes run.
+•
+The fork f unct ion is a lively breeding ground for race condit ions, if t he logic aft er t he 
+fork eit her explicit ly or implicit ly depends on whet her t he parent or child runs first 
+aft er t he fork.
+•
+In general, which process runs first cannot be predict ed
+•
+A process t hat want s t o wait for a child t o t erminat e must call one of t he wait 
+f unct ions. 
+•
+If a process want s t o wait for it s parent t o t erminat e, a loop of t he following form 
+could be used: 
+•
+The problem wit h t his t ype of loop, called polling, is t hat it wast es CPU t ime, as t he 
+caller is awakened every second t o t est t he condit ion
+I/O Request Life Cycle (I/O-Bound Process)
+OPERATING SYSTEMS
+•
+Request s I/O operat ions f requent ly (read/writ e).
+•
+Moves t o wait ing st at e while I/O is performed.
+•
+CPU is allocat ed t o ot her processes during t his t ime.
+•
+Device sends int errupt aft er complet ing I/O.
+•
+Process resumes briefly and again request s I/O.
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Depart ment of Comput er Science & Engineeri

@@ -1,6 +1,6 @@
 # Topic 3: OS Services, System Calls & Process Concept
 
-**Source**: Lecture 3 + Textbook Ch. 3 (Silberschatz Ch. 2-3, Stallings Ch. 3-4, Stevens & Rago Ch. 3, 7-8)
+**Source**: Lecture 3 (Unit 1) + Textbook Ch. 3 (Silberschatz Ch. 2-3, Stallings Ch. 3-4, Stevens & Rago Ch. 3, 7-8)
 
 ---
 
@@ -51,7 +51,8 @@
 
 ## 3.2 System Calls
 
-**Definition**: Programmatic interface to kernel services; written in C/assembly; exposed via APIs.
+### Definition
+**System Calls** = Programmatic interface to kernel services; written in C/assembly; exposed via APIs.
 
 ### Example: File Copy Sequence (Silberschatz Fig 2.2)
 ```
@@ -150,7 +151,7 @@ int y = 15;         // → DATA (initialized)
 
 int main(int argc, char *argv[]) {  // args in high memory
     int *values;    // → STACK (pointer)
-    int i;          // → STACK (local)
+    int i;          // → STACK
     values = malloc(5 * sizeof(int)); // → HEAP
     for (i = 0; i < 5; i++) values[i] = i;  // → TEXT executes
     return 0;
@@ -264,10 +265,10 @@ P0 Running → Interrupt → Save PCB0 → Load PCB1 → P1 Running
 1. **OS Services**: User-facing (UI, exec, I/O, files, comm, errors) + System-facing (resource allocation, accounting, protection)
 2. **System Calls**: API to kernel; categories: process, file, device, info, comm, protection
 3. **Process** = active entity with memory layout (TEXT, DATA, BSS, HEAP, STACK)
-4. **5-State Model**: New → Ready ↔ Running → Waiting → Terminated
-5. **PCB** = kernel's process representation (Linux: `task_struct`)
-6. **Three Schedulers**: Short-term (CPU), Long-term (admission), Medium-term (swapping)
-7. **Context Switch** = save/restore PCB + TLB flush + address space switch
+3. **5-State Model**: New → Ready ↔ Running → Waiting → Terminated
+4. **PCB** = kernel's process representation (Linux: `task_struct`)
+5. **Three Schedulers**: Short-term (CPU), Long-term (admission), Medium-term (swapping)
+6. **Context Switch** = save/restore PCB + TLB flush + address space switch
 
 ---
 
@@ -298,3 +299,37 @@ P0 Running → Interrupt → Save PCB0 → Load PCB1 → P1 Running
 - **Q18**: Symmetric cluster + SAN → local semaphore invisible across nodes → need DLM
 - **Q19**: Interactive editor = I/O-bound (many short CPU bursts)
 - **Q20**: Dispatcher does context switch + mode switch + jump to user code
+
+---
+
+## 3.11 Practice Problems
+
+### Problem 1: System Call Trace
+```
+Trace the syscalls for: cp file1.txt file2.txt
+```
+
+### Problem 2: Process Memory Layout
+```
+Given C code, identify which segment each variable goes to (TEXT, DATA, BSS, HEAP, STACK)
+```
+
+### Problem 3: Process States
+```
+Process does: fork() → wait() → exit()
+Draw state transitions for parent and child
+```
+
+### Problem 4: PCB
+```
+List all fields in a PCB and explain purpose of each
+```
+
+### Problem 5: Scheduler Types
+```
+When does each scheduler run? What triggers each?
+```
+
+---
+
+*Next: Topic 4 (Process Creation, Termination & System Calls — Lecture 5)*

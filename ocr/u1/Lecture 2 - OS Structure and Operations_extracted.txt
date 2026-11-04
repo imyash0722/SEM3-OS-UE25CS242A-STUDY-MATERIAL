@@ -1,0 +1,204 @@
+OPERATING SYSTEMS 
+UE25CS242A
+Computer-System Architecture, 
+OS Structure and Operations
+Acknowledgement, Prof. Pavan A C
+Depart ment of Comput er Science and 
+Engineering
+Dr. Anitha 
+K
+Slides Credits for all the PPTs of this course 
+• The 
+slides/diagrams 
+in 
+t his 
+course 
+are 
+an 
+adaptation, 
+combination, and enhancement of mat erial f rom t he following 
+resources:
+1. “Operat ing Syst em Concept s”, Abraham Silberschat z, Pet er Baer 
+Galvin, Greg Gagne 10t h Edit ion, John Wiley & Sons, Global 
+Edit ion, 2023.
+2. “Advanced Programming in t he Unix Environment ”, Richard 
+St evens and St ephen A Rago, Pearson, 3rd edit ion, 2017.
+3. Some concept ual t ext and diagram f rom “Operat ing Syst ems, 
+Int ernals and Design Principles”, William St allings, 9t h Edit ion, 
+Pearson 2018
+OPERATING SYSTEMS
+OPERATING SYSTEMS
+Computer-System Architecture, 
+OS Structure & Operations
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+Computer-System Architecture
+OPERATING SYSTEMS
+• Most syst ems use a single general-purpose processor
+• Most syst ems have ot her special-purpose processors as well.
+• Device specific processors like disk, keyboard, graphic cont roller
+• Special-purpose processors run a limit ed number of inst ruct ions
+• Special-purpose processors are low-level component s built int o t he 
+hardware Managed by OS. 
+• OS monit ors t he st at us.
+• Example Disk cont roller microprocessor
+• Receives sequence of requests from CPU.
+• Implements its own disk queue and scheduling algorithm
+• Relieves the main CPU of the overhead of disk scheduling. 
+Computer-System Architecture
+OPERATING SYSTEMS
+• Multiprocessors syst ems growing in use and import ance
+• Also known as parallel systems, tightly-coupled systems
+• Advant ages include:
+• Increased throughput
+• Economy of scale
+• Increased reliability – gracef ul degradat ion or f ault 
+t olerance
+Multiprocessors
+OPERATING SYSTEMS
+Two types of Multiprocessor Systems 
+1. Asymmetric Multiprocessing – each processor is assigned a 
+specific t ask.
+2. Symmetric Multiprocessing – each processor performs all 
+t asks
+Symmetric Multiprocessing Architecture
+OPERATING SYSTEMS
+• In SMP all processors are peers; no 
+boss–worker relat ionship exist s 
+bet ween processors.
+• Each processor has it s own set of 
+regist ers, as well as a privat e or local 
+cache. 
+• All processors share physical memory.
+Multi-Core Design
+OPERATING SYSTEMS
+•
+A recent t rend in CPU design is t o include mult iple 
+comput ing cores on a single chip. Such 
+mult iprocessor syst ems are t ermed multicore. 
+•
+More efficient t han mult iple chips wit h single cores 
+because on-chip communicat ion is f ast er t han 
+bet ween-chip communicat ion. 
+•
+One chip wit h mult iple cores uses significant ly less 
+power t han mult iple single-core chips.
+Command t o know t he number of cores, cache det ails
+$cat /proc/cpuinfo|more
+A dual-core design with two cores placed on the 
+same chip
+Blade servers
+OPERATING SYSTEMS
+• Blade servers are a recent development in which mult iple 
+processor boards, I/Oboards, and net working boards are placed 
+in t he same chassis.
+• blade-processor board boot s independent ly and runs it s 
+own operat ing syst em. 
+• Some blade-server boards are mult iprocessor as well, 
+which blurs t he lines bet ween t ypes of comput ers.
+• In essence, t hese servers consist of mult iple independent 
+mult iprocessor syst ems.
+Clustered Systems
+OPERATING SYSTEMS
+•
+Like mult iprocessor syst ems, but mult iple syst ems working t oget her
+•
+Usually sharing st orage via a storage-area network (SAN)
+•
+Provides a high-availability service which survives f ailures
+•
+Asymmetric clustering has one machine in hot -st andby mode
+•
+Symmetric clustering has mult iple nodes running applicat ions, monit oring each 
+ot her
+•
+Some clust ers are for high-performance computing (HPC)
+•
+Applicat ions must be writ ten t o use parallelization
+•
+Some have distributed lock manager (DLM) t o avoid conflict ing operat ions  (Ex: when 
+mult iple host s access t he same dat a on shared st orage)
+Clustered Systems
+OPERATING SYSTEMS
+General structure of a clustered system.
+SAN allow many systems to attach to a pool of storage
+Operating-System Structure - Multiprogramming
+OPERATING SYSTEMS
+• Multiprogramming (Batch system) needed for efficiency
+• Single user cannot keep CPU and I/O devices busy at all 
+t imes
+• Mult iprogramming organizes jobs (code and dat a) so CPU 
+always has one t o execut e
+• A subset of t ot al jobs in syst em is kept in memory
+• One job select ed and run via job scheduling
+• When it has t o wait (for I/O for example), OS swit ches t o 
+anot her job
+Operating-System Structure - Multitasking
+OPERATING SYSTEMS
+• Timesharing (multitasking) is logical ext ension in which CPU 
+swit ches jobs so f requent ly t hat users can int eract wit h each job 
+while it is running, creat ing interactive comput ing
+• Response time should be < 1 second
+• Each user has at least one program execut ing in memory 
+🢡process
+• If several jobs ready t o run at t he same t ime 
+ 
+🢡CPU scheduling
+• If processes don’t fit in memory, swapping moves t hem in and 
+out t o run
+Operating-System Operations
+OPERATING SYSTEMS
+• Interrupt driven (hardware and soft ware)
+• Hardware int errupt by one of t he devices 
+• Soft ware int errupt (exception or trap):
+• Soft ware error (e.g., division by zero)
+• Request for operat ing syst em service
+• Ot her process problems include infinit e loop, processes 
+modif ying each ot her or t he operat ing syst em
+Dual-Mode and Multimode Operation
+OPERATING SYSTEMS
+•
+Dual-mode operat ion allows OS t o prot ect it self and ot her syst em component s
+•
+User mode and kernel mode 
+•
+Mode bit provided by hardware
+•
+Provides abilit y t o dist inguish when syst em is running user code or kernel code
+•
+Some inst ruct ions designat ed as privileged, only execut able in kernel mode
+•
+Syst em call changes mode t o kernel, ret urn f rom call reset s it t o user
+•
+Increasingly CPUs support mult i-mode operat ions
+•
+i.e. virtual machine manager (VMM) mode for guest VMs
+Transition from user to kernel mode
+OPERATING SYSTEMS
+• When a t rap or int errupt occurs, hardware swit ches f rom user 
+mode t o kernel mode (changes t he st at e of t he mode bit t o 0).
+• When t he request is f ulfilled, t he syst em always swit ches t o 
+user mode (by set ting t he mode bit t o 1) before passing cont rol 
+t o a user program.
+Timer
+OPERATING SYSTEMS
+•
+Timer t o prevent infinit e loop / process hogging resources
+•
+Timer is set t o int errupt t he comput er aft er a specified period (fixed 1/60 sec or variable 
+1 msec t o 1 sec)
+•
+A variable timer is generally implement ed by a fixed-rat e clock and a count er. 
+•
+Operat ing syst em set s t he count er (privileged inst ruct ion)
+•
+Every t ime t he clock t icks, t he count er is decrement ed.
+•
+When count er reaches zero, an int errupt occurs
+•
+Timer can be used t o prevent a user program f rom running t oo long (t erminat e t he 
+program)
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K.
+Depart ment of Comput er Science Engineering

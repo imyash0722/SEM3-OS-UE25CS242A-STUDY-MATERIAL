@@ -1,0 +1,345 @@
+OPERATING SYSTEMS
+UE25CS242A
+Introduction to Threads, System 
+calls for Inter Process 
+Communication
+Depart ment of Comput er Science and 
+Engineering
+Dr. Anitha K
+Acknowledgement, Prof. 
+Pavan A C
+Slides Credits for all the PPTs of this course 
+• The 
+slides/diagrams 
+in 
+t his 
+course 
+are 
+an 
+adaptation, 
+combination, and enhancement of mat erial f rom t he following 
+resources:
+1. “Operat ing Syst em Concept s”, Abraham Silberschat z, Pet er Baer 
+Galvin, Greg Gagne 10t h Edit ion, John Wiley & Sons, Global 
+Edit ion, 2023.
+2. “Advanced Programming in t he Unix Environment ”, Richard 
+St evens and St ephen A Rago, Pearson, 3rd edit ion, 2017.
+3. Some concept ual t ext and diagram f rom “Operat ing Syst ems, 
+Int ernals and Design Principles”, William St allings, 9t h Edit ion, 
+Pearson, 2018.
+OPERATING SYSTEMS
+Operating Systems 
+System calls for Inter Process 
+Communication
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+Pipes
+OPERATING SYSTEMS
+• Pipes are t he oldest form of UNIX Syst em IPC and are provided by all UNIX 
+syst ems. 
+• Pipes have t wo limit at ions. 
+1. Hist orically, t hey have been half duplex (i.e., dat a flows in only one 
+direct ion). Some syst ems now provide f ull-duplex pipes, but for 
+maximum port abilit y, we should never assume t hat t his is t he case.
+2. Pipes can be used only bet ween processes t hat have a common 
+ancestor. Normally, a pipe is creat ed by a process, t hat process calls 
+fork, and t he pipe is used bet ween t he parent and t he child.
+pipe()
+OPERATING SYSTEMS
+• A pipe is creat ed by calling t he pipe() f unct ion.
+• Ret urn value: 0 if OK, −1 on error
+• Two file descript ors are ret urned t hrough t he fd argument : 
+1. fd[0] is open for reading
+2. fd[1] is open for writ ing. 
+• The out put of fd[1] is t he input for fd[0]
+pipe()
+OPERATING SYSTEMS
+•
+Two ways t o pict ure a half-duplex pipe
+1.
+The t wo ends of t he pipe connect ed in a single process
+1.
+The dat a in t he pipe flows t hrough t he kernel 
+pipe()
+OPERATING SYSTEMS
+Pipe from parent to child
+Half-duplex pipe after a fork 
+pipe()
+OPERATING SYSTEMS
+•
+Normally, a process t hat calls pipe t hen calls fork, creat ing 
+an IPC channel f rom t he parent t o t he child or vice versa.
+•
+For a pipe f rom t he parent t o t he child, t he parent closes 
+t he read end of t he pipe (fd[0]) and t he child closes t he 
+writ e end (fd[1]).
+•
+For a pipe f rom t he child t o t he parent , t he parent closes 
+fd[1], and t he child closes fd[0].
+Pipe from parent to child
+popen() and pclose()
+OPERATING SYSTEMS
+•
+A common operation is to create a pipe to another process to either read its output or send it input, the 
+standard I/O library has historically provided the popen() and pclose() functions.
+•
+These two functions handle all the work: creating a pipe, forking a child, closing the unused ends of the 
+pipe, executing a shell to run the command, and waiting for the command to terminate.
+•
+The function popen() does a fork and exec to execute the cmdstring and returns a standard I/O file pointer. 
+•
+If type is "r", the file pointer is connected to the standard output of cmdstring. 
+•
+If type is "w", the file pointer is connected to the standard input of cmdstring.
+•
+The function popen() returns file pointer if OK, NULL on error.
+•
+The function pclose() closes the standard I/O stream, waits for the command to terminate, and returns the 
+termination status of the shell or -1 on error.
+FIFOs
+OPERATING SYSTEMS
+•
+FIFOs are sometimes called named pipes.
+•
+Unnamed pipes can be used only between related processes when a common ancestor has created the pipe. 
+•
+With FIFOs, unrelated processes can exchange data.
+•
+Creating a FIFO is similar to creating a file
+•
+Functions mkfifo() and mkfifoat() return 0 if OK, −1 on error.
+•
+Once a FIFO has been created using mkfifo() or mkfifoat() , it can be opened using open(). Normal file I/O functions 
+(e.g., close, read, write, unlink) all work with FIFOs.
+•
+There are two uses for FIFOs. 
+1.
+FIFOs are used by shell commands to pass data from one shell pipeline to another without creating intermediate 
+temporary files.
+2.
+FIFOs are used as rendezvous points in client–server applications to pass data between the clients and the 
+servers
+Message Queues
+OPERATING SYSTEMS
+•
+A message queue is a linked list of messages stored within the kernel and identified by a message queue identifier.
+•
+A new queue is created or an existing queue opened by msgget. 
+•
+Returns message queue ID if OK, −1 on error.
+•
+New messages are added to the end of a queue by msgsnd. 
+•
+Every message has a positive long integer type field, a non-negative length, and the actual data bytes all of which are 
+specified to msgsnd when the message is added to a queue.
+•
+Messages are fetched from a queue by msgrcv. 
+•
+Messages need not be fetched in a first-in, first-out order. Instead, can be fetched based on their type field.
+Semaphores
+OPERATING SYSTEMS
+•
+A semaphore is a count er used t o provide access t o a shared dat a object for mult iple 
+processes.
+•
+To obt ain a shared resource, a process needs t o do t he following: 
+1. Test t he semaphore t hat cont rols t he resource. 
+2. If t he value of t he semaphore is posit ive, t he process can use t he resource. In t his 
+case, t he process decrement s t he semaphore value by 1, indicat ing t hat it has 
+used one unit of t he resource. 
+3. Ot herwise, if t he value of t he semaphore is 0, t he process goes t o sleep unt il t he 
+semaphore value is great er t han 0. When t he process wakes up, it ret urns t o st ep 1. 
+• When a process is done wit h a shared resource t hat is cont rolled by a semaphore, t he 
+semaphore value is increment ed by 1. 
+• If any ot her processes are asleep wait ing for t he semaphore t hey are awakened
+Semaphores
+OPERATING SYSTEMS
+•
+First need t o obt ain a semaphore ID by calling t he semget f unct ion.
+•
+Ret urns: semaphore ID if OK, −1 on error.
+•
+semctl f unct ion is t he cat chall for various semaphore operat ions.
+•
+The f unct ion semop at omically performs an array of operat ions on a semaphore set .
+•
+The semoparray argument is a point er t o an array of semaphore operat ions.
+•
+Ret urns 0 if OK, −1 on error.
+Linux Domain Sockets
+OPERATING SYSTEMS
+•
+A Linux Domain Socket is an IPC mechanism t hat enables processes on t he same 
+machine t o communicat e using t he socket API wit hout using t he net work st ack.
+•
+Socket Address Family
+•
+Linux Domain Socket s use t he AF_UNIX (or AF_LOCAL) address f amily.
+      socket(AF_UNIX, SOCK_STREAM, 0); 
+Socket Address Structure
+•
+The address for a Linux Domain Socket is represented using the  sockaddr_un structure.
+              struct sockaddr_un
+                                 {
+                                  sa_family_t sun_family;
+                                  char sun_path[108];
+   };
+Linux Domain Sockets
+OPERATING SYSTEMS
+Working of the Server Program
+•
+St ep 1: Creat e t he Socket
+server_fd = socket(AF_UNIX, SOCK_STREAM, 0);
+•
+St ep 2: Configure t he Socket Address
+addr.sun_family = AF_UNIX;
+strcpy(addr.sun_path, "/tmp/mysocket");
+•
+St ep 3: Remove Any Exist ing Socket File
+unlink("/tmp/mysocket");
+•
+St ep 4: Bind t he Socket
+Linux Domain Sockets
+OPERATING SYSTEMS
+Step 5: Listen for Connections
+listen(server_fd, 5);
+Step 6: Accept the Client Connection
+client_fd = accept(server_fd, NULL, NULL);
+Step 7: Receive Data
+read(client_fd, buffer, sizeof(buffer));
+Step 8: Send a Reply
+write(client_fd, "Hello Client", 13);
+Step 9: Close the Connection
+close(client_fd);
+close(server_fd);
+unlink("/tmp/mysocket");
+Linux Domain Sockets
+OPERATING SYSTEMS
+Working of the Client 
+•
+St ep 1: Creat e t he Socket
+sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+•
+St ep 2: Specif y t he Server Address
+             addr.sun_family = AF_UNIX;
+strcpy(addr.sun_path, "/tmp/mysocket");
+•
+St ep 3: Connect t o t he Server
+connect(sockfd,(struct sockaddr *)&addr, sizeof(addr));
+•
+St ep 4: Send Dat a
+write(sockfd, "Hello Server", 13);
+Linux Domain Sockets
+OPERATING SYSTEMS
+•
+St ep 5: Receive t he Reply
+read(sockfd, buffer, sizeof(buffer));
+•
+St ep 6: Close t he Socket
+close(sockfd);
+OPERATING SYSTEMS
+Threads and Concurrency
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+Overview and Motivation
+●A Thread is a f undament al unit of CPU ut ilizat ion t hat forms t he 
+basis of mult it hreaded comput er syst ems.
+●It consist s of t hread ID, Program count er, a regist er set and st ack.
+●Shares wit h ot her t hreads of same process it s code, dat a,file 
+descript ors, signals.
+●Most modern applicat ions are mult it hreaded.
+●Threads run wit hin applicat ion.
+●Mult iple t asks wit h t he applicat ion can be implement ed by 
+separat e t hreads.
+●Applicat ion 1: int ernet browser.
+●numerous t abs open at a given t ime.
+●Mult iple t hreads of execut ion are used t o load cont ent , display 
+animat ions, play a video, fet ch dat a f rom a net work and so on.
+OPERATING SYSTEMS
+Single threaded and multithreaded processes
+OPERATING SYSTEMS
+●Applicat ion 2: Word processor
+●Thread t o accept input
+●A t hread for spell checking
+●A t hread for grammar checking
+Single threaded and multithreaded processes
+OPERATING SYSTEMS
+Multithreaded Server Architecture
+OPERATING SYSTEMS
+Benefits
+●Responsiveness 
+●Resource Sharing
+●Economy
+●Scalability
+OPERATING SYSTEMS
+Benefits
+●Responsiveness – may allow cont inued execut ion if part of 
+process is blocked or performing lengt hy operat ions.
+●It is usef ul in designing user int erf aces.
+●A mult it hreaded Web browser could allow user int eract ion in 
+one t hread while an image was being loaded in anot her 
+t hread.
+●Example: click on t he but ton
+●Resource Sharing – t hreads share resources of process, easier 
+t han shared memory or message passing.
+●Programmer needs t o specif y t he t echniques for sharing.
+●But t hreads share t he memory and ot her resources.
+●Sharing of resources helps in having many t hreads wit hin 
+t he same address space.
+OPERATING SYSTEMS
+Benefits
+●Economy – cheaper t han process creat ion, t hread swit ching 
+lower overhead t han cont ext swit ching.
+●In Solaris, for example, creat ing a process is about t hirt y 
+t imes slower t han creat ing a t hread, and cont ext swit ching 
+is about five t imes slower.
+●Scalability – process can t ake advant age of mult iprocessor 
+archit ect ures.
+●Threads can run on mult iple cores parallelly.
+OPERATING SYSTEMS
+Processes vs Threads
+OPERATING SYSTEMS
+Process
+• Will by default not share memory 
+• Most file descriptors not shared 
+• Don't share filesystem context 
+• Don't share signal handling
+Thread
+• Will by default share 
+memory 
+• Will share file descriptors 
+• Will share filesystem 
+context 
+• Will share signal handling 
+Thread Concepts
+OPERATING SYSTEMS
+⮚A thread consists of the following information necessary to represent an 
+execution context within a process. 
+⮚Thread ID that identifies the thread within a process
+⮚Every thread has-
+⮚a thread ID
+⮚set of register values 
+⮚stack 
+⮚scheduling priority and policy 
+⮚signal mask
+⮚ErrNo variable 
+⮚Thread-specific data
+⮚When a thread is created, there is no guarantee which will run first: the 
+newly created thread or the calling thread. 
+Attributes Shared
+OPERATING SYSTEMS
+⮚process ID and parent process ID;process group ID and 
+session ID;
+⮚cont rolling t erminal;
+⮚process credent ials (user and group Ids);open file 
+descript ors;
+Attributes shared by Threads
+⮚t hread ID ;signal mask;
+⮚Thread-specific dat a ;
+⮚t he errno variable;
+Attributes specific to Threads
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Depart ment of Comput er Science and 
+Engineering

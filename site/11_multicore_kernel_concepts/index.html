@@ -1040,6 +1040,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#119-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        11.9 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.9 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-smt-utilization" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: SMT Utilization
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-load-balancing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: Load Balancing
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Affinity
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-mesi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: MESI
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-false-sharing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: False Sharing
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1699,6 +1771,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#119-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        11.9 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.9 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-smt-utilization" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: SMT Utilization
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-load-balancing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: Load Balancing
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Affinity
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-mesi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: MESI
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-false-sharing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: False Sharing
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1835,9 +1979,6 @@
 </table>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>4 cores × 2 threads = 8 Logical CPUs → OS sees 8 CPUs
 </span></code></pre></div>
-<blockquote>
-<p><strong>Silberschatz Fig. 5.14</strong>: "Chip multithreading architecture"</p>
-</blockquote>
 <hr />
 <h2 id="114-multicore-load-balancing">11.4 Multicore Load Balancing<a class="headerlink" href="#114-multicore-load-balancing" title="Permanent link">&para;</a></h2>
 <p>With per-core queues, imbalance happens: Core 0 has 10 tasks, Core 1 has 0.</p>
@@ -1865,7 +2006,7 @@
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>           Cross-node = slow (interconnect)
 </span></code></pre></div>
 - Linux scheduler tracks <strong>NUMA topology</strong>
-- Prefers same-node migration; cross-node only if severe imbalance</p>
+- Prefers same-node migration; cross-node only for severe imbalance</p>
 <blockquote>
 <p><strong>Silberschatz</strong>: "Load balancing is essential for effective use of SMP systems."</p>
 </blockquote>
@@ -1954,9 +2095,36 @@
 </ul>
 <hr />
 <h2 id="118-exam-relevant-mcq-patterns">11.8 Exam-Relevant MCQ Patterns<a class="headerlink" href="#118-exam-relevant-mcq-patterns" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Covered in Topic 10 MCQs (Q36-Q70) — threads, SMP, scheduling, synchronization, deadlocks, signals</li>
-</ul>
+<p>Covered in Topic 10 MCQs (Q36-Q70) — threads, SMP, scheduling, synchronization, deadlocks, signals</p>
+<hr />
+<h2 id="119-practice-problems">11.9 Practice Problems<a class="headerlink" href="#119-practice-problems" title="Permanent link">&para;</a></h2>
+<h3 id="problem-1-smt-utilization">Problem 1: SMT Utilization<a class="headerlink" href="#problem-1-smt-utilization" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Core has 2 threads.
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Thread A: 60% compute, 40% memory stall
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Thread B: 30% compute, 70% memory stall
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Estimate core utilization with/without SMT.
+</span></code></pre></div>
+<h3 id="problem-2-load-balancing">Problem 2: Load Balancing<a class="headerlink" href="#problem-2-load-balancing" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>4 cores, run queue lengths: [10, 2, 0, 8]
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Threshold for imbalance = 3
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Which cores push/pull?
+</span></code></pre></div>
+<h3 id="problem-3-affinity">Problem 3: Affinity<a class="headerlink" href="#problem-3-affinity" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Thread pinned to CPU 2.
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>What syscall? What happens if thread tries to run on CPU 3?
+</span></code></pre></div>
+<h3 id="problem-4-mesi">Problem 4: MESI<a class="headerlink" href="#problem-4-mesi" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Core 0 has X in Modified state.
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Core 1 reads X.
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Describe bus transaction and final states.
+</span></code></pre></div>
+<h3 id="problem-5-false-sharing">Problem 5: False Sharing<a class="headerlink" href="#problem-5-false-sharing" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>struct { int a; int b; } shared;
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Thread 0 increments a, Thread 1 increments b.
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Why slow? How to fix?
+</span></code></pre></div>
+<hr />
+<p><em>Next: Topic 12 (Process Synchronization — Lectures 7-9, Unit 2)</em></p>
 
 
 

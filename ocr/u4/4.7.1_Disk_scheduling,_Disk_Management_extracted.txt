@@ -1,0 +1,329 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+Mass-Storage Structure – Disk Scheduling
+FCFS, SSTF, SCAN, C-SCAN, LOOK
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, 
+combination, and enhancement of material from the following 
+resources and persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, 
+Peter Baer Galvin, Greg Gagne -  9th edition 2013 and some 
+slides from 10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 
+2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy 
+Pieces, Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+Disk Scheduling
+OPERATING SYSTEMS
+●The operating system is responsible for using hardware efficiently 
+— for the disk drives, this means having a fast access time and 
+disk bandwidth
+●Minimize seek time
+●Seek time ≈ seek distance
+●Disk bandwidth is the total number of bytes transferred, divided 
+by the total time between the first request for service and the 
+completion of the last transfer
+UNIVERSITY
+
+--- Slide / Page 5 ---
+Disk Scheduling (Cont.)
+OPERATING SYSTEMS
+●There are many sources of disk I/O request
+●OS
+●System processes
+●Users processes
+●I/O request includes input or output mode, disk address, memory 
+address, number of sectors to transfer
+●OS maintains queue of requests, per disk or device
+●Idle disk can immediately work on I/O request, busy disk means work 
+must queue
+●Optimization algorithms only make sense when a queue exists
+UNIVERSITY
+
+--- Slide / Page 6 ---
+Disk Scheduling (Cont.)
+OPERATING SYSTEMS
+●Note that drive controllers have small buffers and can manage a queue of I/O 
+requests (of varying “depth”)
+●Several algorithms exist to schedule the servicing of disk I/O requests
+●The analysis is true for one or many platters
+●We illustrate scheduling algorithms with a request queue (0-199)
+98, 183, 37, 122, 14, 124, 65, 67
+Head pointer 53
+UNIVERSITY
+
+--- Slide / Page 7 ---
+FCFS
+OPERATING SYSTEMS
+Illustration shows total head movement of 640 cylinders
+45+85+146+85+108+110+59
++2 = 640 cylinders
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+PES
+head starts at 53
+0
+14
+37
+536567
+98
+122124
+183199
+
+--- Slide / Page 8 ---
+FCFS
+OPERATING SYSTEMS
+Illustration shows total head movement of 640 cylinders
+—
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+Dd)
+head starts at 53
+0 14
+37 536567
+98
+122124
+183199
+PES
+UNIVERSITY
+JE
+
+--- Slide / Page 9 ---
+SSTF
+OPERATING SYSTEMS
+●Shortest Seek Time First selects the request with the minimum seek 
+time from the current head position
+●SSTF scheduling is a form of SJF scheduling; may cause starvation of 
+some requests
+●Illustration shows total head movement of 236 cylinders
+12+2+30+23+84+24+2+59 = 
+236 cylinders
+UNIVERSITY
+queue = 88, 183, 37, 122, 14, 124, 65, 67
+head starts at 53
+Oo
+14
+37
+536567
+88
+122124
+183199
+EM
+CEs—
+
+--- Slide / Page 10 ---
+SSTF
+OPERATING SYSTEMS
+queue — 98, 183, 37, 122, 14, 124, 65, 67
+PES
+head starts at 53
+UNIVERSITY
+0
+14
+37
+5365867
+98
+122124
+183199
+EEE
+EE
+oo
+I
+
+--- Slide / Page 11 ---
+SCAN
+OPERATING SYSTEMS
+●The disk arm starts at one end of the disk, and moves toward 
+the other end, servicing requests until it gets to the other end 
+of the disk, where the head movement is reversed and servicing 
+continues.
+●SCAN algorithm Sometimes called the elevator algorithm
+●But note that if requests are uniformly dense, largest density at 
+other end of disk and those wait the longest
+UNIVERSITY
+
+--- Slide / Page 12 ---
+SCAN (Cont.)
+OPERATING SYSTEMS
+Number of cylinder moves= 
+16+23+79+2+31+24+2+59=236
+queue = 98, 1883, 37, 122, 14, 124, 65, 67
+head starts at 53
+PES
+0
+14
+37
+536567
+98
+122124
+183199
+mn OEE
+
+--- Slide / Page 13 ---
+SCAN (Cont.)
+OPERATING SYSTEMS
+queue = 98, 1883, 37, 122, 14, 124, 65, 67
+head starts at 53
+PES
+0
+14
+37
+536567
+98
+122124
+183199
+mn OEE
+
+--- Slide / Page 14 ---
+C-LOOK (Cont.)
+OPERATING SYSTEMS
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+Dd)
+head starts at 53
+PE
+0 14
+37 536567
+98 122124
+183199
+PES
+[
+
+--- Slide / Page 15 ---
+C-SCAN
+OPERATING SYSTEMS
+●Provides a more uniform wait time than SCAN
+●The head moves from one end of the disk to the other, 
+servicing requests as it goes
+●When it reaches the other end, however, it immediately 
+returns to the beginning of the disk, without servicing any 
+requests on the return trip
+●Treats the cylinders as a circular list that wraps around from 
+the last cylinder to the first one
+●Total number of cylinders?
+UNIVERSITY
+
+--- Slide / Page 16 ---
+C-SCAN (Cont.)
+OPERATING SYSTEMS
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+head starts at 53
+PES
+UNIVERSITY
+0
+14
+37
+536567
+98
+122124
+183199
+ ceucoraming
+so ears §
+
+--- Slide / Page 17 ---
+C-SCAN (Cont.)
+OPERATING SYSTEMS
+= (65-53)+(67-65)+(98-67)+(122-98)+(124-122)+(183-124)+(199-183)+(199-0)+(14-0)+(37-14)
+=12+2+31+24+2+59+16+199+14+23
+= 382 
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+head starts at 53
+PES
+0
+14
+37
+536567
+98
+122124
+183199
+UNIVERSITY
+
+--- Slide / Page 18 ---
+LOOK & C-LOOK
+OPERATING SYSTEMS
+●LOOK a version of SCAN, C-LOOK a version of C-SCAN
+●Arm only goes as far as the last request in each 
+direction, then reverses direction immediately, without 
+first going all the way to the end of the disk 
+●Total number of cylinders?
+UNIVERSITY
+
+--- Slide / Page 19 ---
+C-LOOK (Cont.)
+OPERATING SYSTEMS
+Total head movements incurred while servicing these requests
+= (65 – 53) + (67 – 65) + (98 – 67) + (122 – 98) + (124 – 122) + (183 – 124) + (183 – 14) + (37 – 14)
+= 12 + 2 + 31 + 24 + 2 + 59 + 169 + 23
+= 322
+queue = 98, 183, 37, 122, 14, 124, 65, 67
+head starts at 53
+oO
+14
+37 536567
+98
+122124
+183199
+PES
+EE
+EF
+A
+\
+UNIVERSITY
+Si
+J
+a
+
+--- Slide / Page 20 ---
+Selecting a Disk-Scheduling Algorithm
+OPERATING SYSTEMS
+●SSTF is common and has a natural appeal
+●SCAN and C-SCAN perform better for systems that place a heavy load on 
+the disk
+●Less starvation
+●Performance depends on the number and types of requests
+●Requests for disk service can be influenced by the file-allocation method
+●And metadata layout
+●The disk-scheduling algorithm should be written as a separate module of 
+the operating system, allowing it to be replaced with a different 
+algorithm if necessary
+●Either SSTF or LOOK is a reasonable choice for the default algorithm
+UNIVERSITY
+
+--- Slide / Page 21 ---
+Selecting a Disk-Scheduling Algorithm (Cont.)
+OPERATING SYSTEMS
+●What about rotational latency?
+●Difficult for OS to calculate
+●The rotational latency can be nearly as large as the average seek time. 
+●It is difficult for the operating system to schedule for improved rotational 
+latency, though, because modern disks do not disclose the physical location 
+of logical blocks. 
+●Disk manufacturers have been alleviating this problem by implementing disk-
+scheduling algorithms in the controller hardware built into the disk drive. 
+●How does disk-based queueing effect OS queue ordering efforts?
+●If the OS sends a batch of requests to the controller, the controller can queue them 
+and then schedule them to improve both the seek time and the rotational latency.
+UNIVERSITY
+
+--- Slide / Page 22 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

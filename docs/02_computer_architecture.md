@@ -1,6 +1,6 @@
 # Topic 2: Computer Architecture & OS Operations
 
-**Source**: Lecture 2 + Textbook Ch. 2 (Silberschatz Ch. 1-2, Stallings Ch. 2, 15, Stevens & Rago Ch. 2)
+**Source**: Lecture 2 (Unit 1) + Textbook Ch. 2 (Silberschatz Ch. 1-2, Stallings Ch. 2, 15, Stevens & Rago Ch. 2)
 
 ---
 
@@ -10,6 +10,16 @@
 - One general-purpose CPU
 - Special-purpose processors: disk controller, keyboard controller, GPU
 - Run limited instruction sets; offload main CPU (e.g., disk controller handles scheduling)
+
+### Special-Purpose Processors
+- Device-specific: disk, keyboard, graphics controller
+- Run limited instruction sets
+- Low-level components built into hardware, managed by OS
+- OS monitors their status
+- **Example**: Disk controller microprocessor
+  - Receives request sequences from CPU
+  - Implements own disk queue and scheduling algorithm
+  - Relieves main CPU of disk scheduling overhead
 
 ---
 
@@ -131,8 +141,8 @@ USER MODE (bit=1)                 KERNEL MODE (bit=0)
 2. Program needs OS service → executes **system call** (trap instruction)
 3. Hardware: traps, saves CPU state, switches mode bit to 0 (kernel mode)
 4. Kernel: looks up syscall table, verifies parameters, executes privileged function
-5. Kernel: executes **return-from-trap** (privileged instruction)
-6. Hardware: restores state, sets mode bit to 1 (user mode)
+6. Kernel: executes **return-from-trap** (privileged instruction)
+7. Hardware: restores state, sets mode bit to 1 (user mode)
 7. Control returns to user process
 
 ### Privileged Instructions (Kernel Mode Only)
@@ -160,7 +170,194 @@ Mechanism:
 
 ---
 
-## 2.8 Key Takeaways (Memorize)
+## 2.8 Multiprocessor Systems (from Lecture Slides)
+
+### Characteristics
+- Two or more processors in close communication
+- Share: system bus, clock, memory, peripheral devices
+
+### Three Advantages
+| Advantage | Description |
+|-----------|-------------|
+| **Increased Throughput** | More work in less time (not N× due to sync overhead) |
+| **Economy of Scale** | Share peripherals, storage, power — cheaper than N single-CPU systems |
+| **Fault Tolerance** | Failure of one CPU ≠ system halt; graceful degradation |
+
+---
+
+## 2.9 Multiprocessor Types (from Lecture Slides)
+
+### Asymmetric Multiprocessing (AMP)
+```
+Master CPU → Controls system, schedules, allocates work
+Worker CPUs → Execute assigned tasks only
+```
+- Simple but **master becomes bottleneck**
+
+### Symmetric Multiprocessing (SMP) — **Modern Standard**
+```
+All CPUs are PEERS — no master-slave
+Each runs kernel + user code
+Each has private registers + cache
+All share physical memory via system bus
+```
+- Used by: Linux, Windows, macOS, Android, iOS
+
+```
+SMP Architecture:
+  CPU 0          CPU 1          CPU 2
+  [Regs] [Cache] [Regs] [Cache] [Regs] [Cache]
+     │             │             │
+     └─────────────┼─────────────┘
+                   ▼
+            System Bus
+                   │
+                   ▼
+           Shared Memory
+```
+
+---
+
+## 2.10 Multicore Design (from Slides)
+
+- Multiple computing cores on **single chip**
+- Each core = independent physical CPU to OS
+- **Benefits**: Faster on-chip communication, less power/heat than multi-chip
+
+```
+Dual-Core Chip:
+  ┌─────────────────────────────────┐
+  │         PROCESSOR CHIP          │
+  │  ┌──────────┐  ┌──────────┐     │
+  │  │  CORE 0  │  │  CORE 1  │     │
+  │  │ [Regs]   │  │ [Regs]   │     │
+  │  │ [L1]     │  │ [L1]     │     │
+  │  └────┬─────┘  └────┬─────┘     │
+  │       │             │           │
+  │       └──────┬──────┘           │
+  │              ▼                  │
+  │       [Shared L2/L3 Cache]      │
+  └──────────────┬──────────────────┘
+                 │
+           Main Memory
+```
+
+```bash
+# Check your CPU topology
+cat /proc/cpuinfo | more
+```
+
+---
+
+## 2.11 Advanced Architectures (from Slides)
+
+| Architecture | Description |
+|--------------|-------------|
+| **Blade Servers** | High-density: multiple processor/I/O boards in one chassis; each boots independently |
+| **Clustered Systems** | Independent nodes + shared SAN; Asymmetric (hot-standby) / Symmetric (all active) / HPC (MPI/OpenMP) |
+| **NUMA** | Non-Uniform Memory Access — latency varies by CPU-memory distance; scheduler must consider locality |
+| **big.LITTLE** | Heterogeneous cores (performance + efficiency); scheduler migrates tasks based on workload |
+
+---
+
+## 2.11 OS Operations: Dual-Mode & System Calls
+
+### Dual-Mode Operation
+- **User Mode** (bit = 1): Applications run; restricted instructions
+- **Kernel Mode** (bit = 0): OS runs; privileged instructions allowed
+
+### Transition Lifecycle
+1. User program executes in user mode (bit = 1)
+2. Program needs OS service → executes **system call** (trap instruction)
+3. Hardware: traps, saves CPU state, switches mode bit to 0 (kernel mode)
+4. Kernel: looks up syscall table, verifies parameters, executes privileged function
+5. Kernel: executes **return-from-trap** (privileged instruction)
+6. Hardware: restores state, sets mode bit to 1 (user mode)
+7. Control returns to user process
+
+### Privileged Instructions (Kernel Mode Only)
+- Direct I/O manipulation
+- Clearing interrupts
+- Setting timer counters
+- Modifying page tables
+- Context switching
+
+---
+
+## 2.12 Timer & CPU Protection (from Slides)
+
+**Purpose**: Prevent user programs from hogging CPU (infinite loops)
+
+```
+Mechanism:
+1. Hardware timer set to interrupt after interval (fixed or variable)
+2. Variable timers: fixed-rate clock + internal counter
+3. OS loads initial counter via PRIVILEGED INSTRUCTION before dispatch
+4. Each clock tick: counter decrements
+5. Counter reaches 0 → hardware timer interrupt
+6. Interrupt → OS scheduler → preempt current process → assign CPU to another
+```
+
+---
+
+## 2.12 Multiprogramming & Multitasking (from Slides)
+
+### Multiprogramming (Batch System)
+- Single user cannot keep CPU and I/O devices busy at all times
+- Multiprogramming organizes jobs so CPU always has one to execute
+- Subset of total jobs kept in memory
+- One job selected and run via job scheduling
+- When it waits (I/O), OS switches to another job
+
+### Multitasking (Time-Sharing)
+- Logical extension: CPU switches jobs frequently so users can interact
+- Response time < 1 second
+- Each user has at least one program executing in memory → process
+- If several jobs ready → CPU scheduling
+- If processes don't fit in memory → swapping moves them in/out
+
+---
+
+## 2.13 OS Operations: Interrupt-Driven
+
+### Interrupt-Driven Operations
+- **Hardware interrupt** by devices
+- **Software interrupt** (exception/trap):
+  - Software error (division by zero)
+  - Request for OS service (system call)
+- Other process problems: infinite loop, processes modifying each other or OS
+
+### Dual-Mode Operation
+- **User Mode** (bit = 1): Applications run; restricted instructions
+- **Kernel Mode** (bit = 0): OS runs; privileged instructions allowed
+
+### Dual-Mode Transition
+- **Trap/Interrupt**: Hardware switches from user → kernel mode (mode bit = 0)
+- **Return**: System switches back to user mode (mode bit = 1) before returning to user program
+
+### Multi-Mode Operation (Modern CPUs)
+- Increasingly support multi-mode operations
+- e.g., Virtual Machine Manager (VMM) mode for guest VMs
+
+---
+
+## 2.14 Timer & CPU Protection (from Slides)
+
+**Purpose**: Prevent user programs from hogging CPU (infinite loops)
+
+```
+Mechanism:
+1. Hardware timer set to interrupt after interval (fixed or variable)
+2. Variable timers: fixed-rate clock + internal counter
+3. OS loads initial counter via PRIVILEGED INSTRUCTION before dispatch
+4. Each clock tick: counter decrements
+5. Counter reaches 0 → hardware timer interrupt
+5. Interrupt → OS scheduler → preempt current process → assign CPU to another
+```
+
+---
+
+## 2.13 Key Takeaways (Memorize)
 
 1. **SMP** = peer CPUs sharing memory; standard for modern OS (Silberschatz §2.1.2)
 2. **Multicore** = multiple cores on one die; each appears as CPU to OS (Silberschatz §2.2)
@@ -169,10 +366,12 @@ Mechanism:
 5. **Dual-mode**: mode bit in PSW; hardware enforces privileged instruction restriction
 6. **System call** = trap instruction → mode switch → kernel handler → return
 7. **Timer** = hardware mechanism enabling preemptive scheduling
+8. **Multiprogramming** = CPU always has job; when one waits for I/O, switch to another
+9. **Multitasking** = logical extension, rapid response (<1 sec), needs virtual memory
 
 ---
 
-## 2.9 Quick Self-Test
+## 2.14 Quick Self-Test
 
 | Question | Answer |
 |----------|--------|
@@ -182,10 +381,14 @@ Mechanism:
 | What do cores share on-chip? | L2/L3 cache |
 | What prevents user program from executing privileged instruction? | Hardware checks mode bit; traps if user mode (bit=1) |
 | How does timer enable preemption? | Counter decrements each tick; at 0 → interrupt → scheduler runs |
+| What is the difference between AMP and SMP? | AMP: master-worker; SMP: all peers |
+| What does a disk controller do? | Implements own queue/scheduling; relieves main CPU |
+| What is a blade server? | Multiple processor/I/O boards in one chassis; each boots independently |
+| What is DLM in clustered systems? | Distributed Lock Manager for shared storage access |
 
 ---
 
-## 2.10 Exam-Relevant MCQ Patterns
+## 2.15 Exam-Relevant MCQ Patterns (from prep file)
 
 - **Q4**: Special-purpose processors (disk controller, GPU) offload main CPU
 - **Q5**: Multiprocessor advantages — throughput, economy of scale, fault tolerance (graceful degradation)
@@ -198,3 +401,40 @@ Mechanism:
 - **Q14**: Interrupt-driven — hardware interrupt (devices) vs software interrupt (trap/exception/syscall)
 - **Q15-16**: Dual-mode — mode bit (0=kernel, 1=user), transition via trap/syscall
 - **Q17**: Timer — prevents infinite loops, enables preemption, loaded via privileged instruction
+
+---
+
+## 2.15 Practice Problems
+
+### Problem 1: AMP vs SMP
+```
+Describe the bottleneck in AMP and how SMP solves it.
+Answer: AMP master CPU becomes bottleneck scheduling all work; SMP makes all CPUs peers with own run queues.
+```
+
+### Problem 2: Multicore
+```
+Explain why SMT (Hyper-Threading) improves utilization.
+Answer: Two threads on one core fill memory stall cycles of each other; near 100% core utilization.
+```
+
+### Problem 3: Dual-Mode
+```
+Draw the user/kernel mode transition diagram for a system call.
+```
+
+### Problem 4: Timer
+```
+Explain how the timer interrupt enables preemptive scheduling.
+Answer: Counter decrements each tick; at 0 → interrupt → scheduler preempts current process.
+```
+
+### Problem 5: NUMA
+```
+What is NUMA and why does the scheduler need to be NUMA-aware?
+Answer: Memory latency varies by CPU-node distance; scheduler must prefer local memory allocation.
+```
+
+---
+
+*Next: Topic 3 (OS Services, System Calls & Process Concept — Lecture 3)*

@@ -99,3 +99,41 @@ munmap(void *addr, size_t len);  // Unmap
 ## 15.6 Exam-Relevant MCQ Patterns
 
 - Covered in Unit 3 MCQs (Q71-Q100)
+
+---
+
+## 15.7 Practice Problems
+
+### Problem 1: Base/Limit
+```
+Base = 10000, Limit = 5000
+Logical address 3000 → Physical?
+Logical address 6000 → Trap?
+```
+
+### Problem 2: mmap()
+```c
+// Map file for read/write, changes written to file
+// What flags?
+```
+
+### Problem 3: Dynamic Linking
+```
+Explain how dynamic linking saves memory.
+```
+
+### Problem 4: Shared Pages
+```
+How does COW work with shared library code pages?
+```
+
+### Problem 5: Allocation Strategies
+```
+Holes: 100, 500, 200, 300, 600
+Request: 250
+First Fit? Best Fit? Worst Fit?
+```
+
+---
+
+*Next: Topic 16 (Swapping & Fragmentation)*

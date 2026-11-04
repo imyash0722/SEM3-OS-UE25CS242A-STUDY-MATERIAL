@@ -1,0 +1,163 @@
+Operating Systems
+UE25CS242A
+Dr. Anitha K
+Depart ment of Comput er Science & Engineering
+Bash shell and cron
+Acknowledgement, Prof. 
+Pavan A C
+Operating Systems 
+Bash shell and cron
+Dr. Anitha K
+Depart ment of Comput er Science and Engineering
+What is a shell?
+OPERATING SYSTEMS
+• The shell is t he Linux command line int erpret er. 
+• Shell provides an int erf ace bet ween t he user and t he 
+kernel and execut es programs called commands. 
+• For example, if a user ent ers ls t hen t he shell 
+execut es t he ls command. 
+• The shell can also execut e ot her programs such as 
+applicat ions, script s, and user programs
+What is a shell?
+OPERATING SYSTEMS
+•
+Inst ruct ions ent ered in response t o t he shell prompt have t he following 
+synt ax:       command [arg1] [arg2] .. [argn]
+•
+The bracket s [] indicat e t hat t he argument s are opt ional. Many commands can be 
+execut ed wit h or wit hout argument s
+•
+The shell parses t he words or t okens (commandname , opt ions, filesnames[s]) and get s 
+t he kernel t o execut e t he commands assuming t he synt ax is correct .
+•
+Typically, t he shell processes t he complet e line aft er a carriage ret urn (cr) (carriage 
+ret urn) is ent ered and finds t he program t hat t he command line want s execut ing. 
+•
+The shell looks for t he command t o execut e eit her in t he specified direct ory if given 
+(./mycommand) or it searches t hrough a list of direct ories depending on your $PATH 
+variable.
+Various shells
+OPERATING SYSTEMS
+•
+There are a number of shells available t o a Linux user:
+sh - This is known as t he Borne Shell and is t he original shell
+csh, tcsh - These are well-known and widely used derivat ives of t he Borne shell
+ksh - The popular Korn shell
+bash - The Borne Again SHell is t he most popular shell used for linux and developed 
+by GNU
+echo $SHELL 
+Environment variables
+OPERATING SYSTEMS
+•
+Environmental variables are variables t hat are defined for t he current shell 
+and are inherit ed by any child shells or processes. 
+•
+Environment al variables are used t o pass informat ion int o processes t hat are 
+spawned f rom t he shell.
+•
+Shell variables are variables t hat are cont ained exclusively wit hin t he shell in 
+which t hey were set or defined. 
+•
+They are oft en used t o keep t rack of ephemeral dat a, like t he current 
+working direct ory.
+•
+By convent ion, t hese t ypes of variables are usually defined using all capit al 
+let ters. This helps users dist inguish environment al variables wit hin ot her 
+cont ext s.
+Common Environment variables
+OPERATING SYSTEMS
+•
+SHELL: This describes t he shell t hat will be int erpret ing any commands you t ype in. In 
+most cases, t his will be bash by def ault , but ot her values can be set if you prefer 
+ot her opt ions.
+•
+TERM: This specifies t he t ype of t erminal t o emulat e when running t he shell. Different 
+hardware t erminals can be emulat ed for different operat ing requirement s. You usually 
+won’t need t o worry about t his t hough.
+•
+USER: The current logged in user.
+•
+PWD: The current working direct ory.
+•
+OLDPWD: The previous working direct ory. This is kept by t he shell in order t o swit ch 
+back t o your previous direct ory by running cd -.
+•
+PATH: A list of direct ories t hat t he syst em will check when looking for commands. 
+When a user t ypes in a command, t he syst em will check direct ories in t his order for 
+t he execut able.
+Common SHELL variables
+OPERATING SYSTEMS
+•
+BASHOPTS: The list of opt ions t hat were used when bash was execut ed. This 
+can be usef ul for finding out if t he shell environment will operat e in t he way 
+you want it t o.
+•
+BASH_VERSION: The version of bash being execut ed, in human-readable form.
+•
+BASH_VERSINFO: The version of bash, in machine-readable out put .
+SHELL basics
+OPERATING SYSTEMS
+•
+Creat ing shell variables:
+•
+Accessing t he value of any shell or environment al variable:
+•
+Spawning a child shell process
+•
+In t he child shell process, t he shell variable defined in t he parent is not available
+ 
+•
+To t erminat e t he child shell process, 
+•
+To pass t he shell variables t o child shell processes, you need t o export t he variable
+SHELL basics
+OPERATING SYSTEMS
+•
+Removing a shell variable
+•
+For set ting environment variables at login, edit t he .profile file in t he $HOME direct ory 
+and add t he export command
+SHELL control flow - if
+OPERATING SYSTEMS
+Example: To check if t he file exist s
+SHELL control flow - loops
+OPERATING SYSTEMS
+Nested loop:
+SHELL control flow – continue and break
+OPERATING SYSTEMS
+cron
+OPERATING SYSTEMS
+•
+In Unix and Linux, cron is a daemon, which is an unat tended program t hat 
+runs cont inuously in t he background and wakes up (execut es) t o handle 
+periodic service request s when required. The daemon runs when t he syst em 
+boot s
+•
+Cron is a job scheduling ut ilit y present in Unix like syst ems. The crond 
+daemon enables cron f unct ionalit y and runs in background. 
+•
+The cron reads t he crontab (cron t ables) for running predefined script s.
+•
+By using a specific synt ax, you can configure a cron job t o schedule script s 
+or ot her commands t o run aut omat ically.
+•
+Checking for jobs scheduled in cron 
+cron
+OPERATING SYSTEMS
+•
+St art ing/checking st at us of cron
+•
+Adding jobs t o t he scheduler
+•
+crontab -e: edits crontab entries to add, delete, or edit cron jobs.
+cron examples
+OPERATING SYSTEMS
+cron examples
+OPERATING SYSTEMS
+Execut ing a program every minut e
+crontab -l
+anithak@pes.edu
+THANK YOU
+Dr. Anitha K
+Depart ment of Comput er Science and 
+Engineering

@@ -1,24 +1,69 @@
 # Topic 1: OS Introduction & Computer System Organization
 
-**Source**: Lecture 1 + Textbook Ch. 1 (Silberschatz Ch. 1-2, Stallings Ch. 1-2, Stevens & Rago Ch. 1)
+**Source**: Lecture 1 (Unit 1) + Textbook Ch. 1 (Silberschatz Ch. 1-2, Stallings Ch. 1-2, Stevens & Rago Ch. 1)
 
 ---
 
-## 1.1 What is an Operating System?
+## 1.1 Course Overview
 
-**Definition** (Silberschatz): *"An operating system is a program that acts as an intermediary between a user of a computer and the computer hardware."*
+### Course Information
+- **Course**: Operating Systems (UE25CS242A)
+- **Instructor**: Dr. Anitha K
+- **Department**: Computer Science and Engineering
 
-**Two Views:**
-| View | Role |
+### Textbooks
+| Type | Book |
 |------|------|
-| **User View** | Convenience, ease of use, performance |
-| **System View** | **Resource Allocator** (CPU, memory, I/O) + **Control Program** (prevent errors, control I/O) |
+| **Primary** | Operating System Concepts, Silberschatz, Galvin, Gagne, 10th Ed., Wiley 2023 |
+| **Primary** | Advanced Programming in the Unix Environment, Stevens & Rago, 3rd Ed., Pearson 2017 |
+| **Reference** | Operating Systems: Internals and Design Principles, Stallings, 9th Ed., Pearson 2018 |
+| **Reference** | Modern Operating Systems, Tanenbaum, 3rd Ed., Pearson 2007 |
+| **Reference** | Learning the bash shell, Cameron Newham, 3rd Ed., O'Reilly 2005 |
 
-**Kernel**: "The one program running at all times on the computer" — everything else is system programs or applications.
+### Course Evaluation
+| Component | Conduction Marks | Scaled Marks |
+|-----------|-----------------|--------------|
+| ISA-1 | 40 | 15 |
+| ISA-2 | 40 | 15 |
+| Experiential Learning | 70 | 20 |
+| ESA | 100 | 50 |
+| **Total** | **250** | **100** |
+
+### Experiential Learning Components
+| Component | Conduction Marks | Scaled Marks |
+|-----------|-----------------|--------------|
+| Level 1 Problem-1 | 10 | 2 |
+| Level 1 Problem-2 | 10 | 2 |
+| Level 2 Problem | 25 | 6 |
+| Level 3 Problem | 25 | 10 |
+| **Total** | **70** | **20** |
 
 ---
 
-## 1.2 Computer System Organization (4 Components)
+## 1.2 Need for Operating System
+
+### Why OS?
+- Without OS, application developers would need direct hardware knowledge
+- OS provides user-friendly environment for program development/execution
+- Hardware knowledge would otherwise be mandatory for programming
+
+### OS Definition
+> **Silberschatz**: "An operating system is a program that acts as an intermediary between a user of a computer and the computer hardware."
+
+### OS Goals
+1. Execute user programs and make solving user problems easier
+2. Make the computer system convenient to use
+3. Use computer hardware efficiently
+4. Manage resources: Memory, Processor(s), I/O Devices
+
+### Why Study OS?
+- Almost all code runs on top of an OS
+- OS knowledge crucial for efficient, effective, secure programming
+- Understanding OS fundamentals is crucial for all computer practitioners
+
+---
+
+## 1.3 Computer System Organization (4 Components)
 
 ```
 ┌─────────────────────────────────────┐
@@ -32,16 +77,46 @@
 └─────────────────────────────────────┘
 ```
 
-**Hardware Components:**
-- **CPU(s)**: General-purpose + special-purpose (GPU, disk controller, NIC)
-- **Memory**: RAM (volatile), ROM/EEPROM (firmware)
-- **I/O Devices**: Disk, keyboard, mouse, network, display
-- **System Bus**: Connects CPU, memory, device controllers
-- **Memory Controller**: Synchronizes access to shared memory
+**Four Components:**
+1. **Hardware** — CPU, Memory, I/O Devices
+2. **Operating System** — Resource allocator + Control program
+3. **Application Programs** — Compilers, browsers, DBs, games
+4. **Users** — People, machines, other computers
 
 ---
 
-## 1.3 System Boot Process
+## 1.4 System View: OS Roles
+
+### OS as Resource Allocator
+- Manages all resources (CPU, Memory, I/O)
+- Decides between conflicting requests for efficient/fair use
+
+### OS as Control Program
+- Controls program execution to prevent errors
+- Controls improper use of computer
+
+### Kernel
+> "The one program running at all times on the computer" — Silberschatz
+
+---
+
+## 1.5 Computer System Organization
+
+### Hardware Components
+- **CPU(s)** — General-purpose + special-purpose (GPU, disk controller, NIC)
+- **Memory** — RAM (volatile), ROM/EEPROM (firmware)
+- **I/O Devices** — Disk, keyboard, mouse, network, display
+- **System Bus** — Connects CPU, memory, device controllers
+- **Memory Controller** — Synchronizes access to shared memory
+
+### System Bus
+- Connects CPU, memory, device controllers
+- Provides access to shared memory
+- CPU and device controllers execute concurrently
+
+---
+
+## 1.6 System Boot Process
 
 | Step | Description |
 |------|-------------|
@@ -52,7 +127,7 @@
 
 ---
 
-## 1.4 Interrupt-Driven Operation
+## 1.7 Interrupt-Driven Operation
 
 Modern OS is **interrupt-driven** — sits idle waiting for events.
 
@@ -79,7 +154,22 @@ Interrupt Event
 
 ---
 
-## 1.5 Storage Hierarchy
+## 1.8 I/O Structure
+
+### DMA (Direct Memory Access)
+- **Problem**: Interrupt per byte wastes CPU for high-speed devices
+- **Solution**: DMA controller transfers **blocks** directly between device buffer ↔ memory
+- **Result**: Only **one interrupt per block**; CPU executes user code concurrently
+
+### I/O Modes
+| Mode | Behavior |
+|------|----------|
+| **Synchronous (Blocking)** | CPU waits for I/O completion; one request at a time |
+| **Asynchronous (Non-blocking)** | CPU continues immediately; checks completion later |
+
+---
+
+## 1.9 Storage Hierarchy
 
 | Level | Technology | Speed | Capacity | Volatility | Cost/Byte |
 |-------|------------|-------|----------|------------|-----------|
@@ -98,7 +188,7 @@ Interrupt Event
 
 ---
 
-## 1.6 I/O Structure
+## 1.10 I/O Structure
 
 ### DMA (Direct Memory Access)
 - **Problem**: Interrupt per byte wastes CPU for high-speed devices
@@ -113,7 +203,7 @@ Interrupt Event
 
 ---
 
-## 1.7 Key Takeaways (Memorize)
+## 1.11 Key Takeaways
 
 1. **OS = Resource Allocator + Control Program** (Silberschatz §1.2.1)
 2. **Kernel = the one program running at all times** (Silberschatz §1.2.1)
@@ -124,7 +214,7 @@ Interrupt Event
 
 ---
 
-## 1.8 Quick Self-Test
+## 1.12 Quick Self-Test
 
 | Question | Answer |
 |----------|--------|
@@ -136,9 +226,45 @@ Interrupt Event
 
 ---
 
-## 1.9 Exam-Relevant MCQ Patterns (from prep file)
+## 1.13 Exam-Relevant MCQ Patterns (from prep file)
 
 - **Q13**: Dual-mode operation — mode bit (0=kernel, 1=user) checked by hardware on every instruction
 - **Q14**: Interrupt vs Trap — interrupt = async (hardware), trap = sync (syscall, division by zero)
 - **Q15**: System call parameters too large for registers → stored in memory block, address passed in register
 - **Q18**: Symmetric cluster + SAN → local semaphores invisible across nodes → need **DLM** (Distributed Lock Manager)
+
+---
+
+## 1.14 Practice Problems
+
+### Problem 1: Boot Sequence
+```
+Order these: Kernel init, Bootstrap, Power on, Init process
+Answer: Power on → Bootstrap → Kernel init → Init process
+```
+
+### Problem 2: Interrupt vs Trap
+```
+Classify: Division by zero, Disk I/O complete, Ctrl+C, System call
+```
+
+### Problem 3: DMA
+```
+Why use DMA for disk I/O instead of programmed I/O?
+```
+
+### Problem 4: Storage Hierarchy
+```
+Order by speed: Registers > Cache > RAM > SSD > HDD
+```
+
+### Problem 5: Caching
+```
+Cache hit: data found in cache (fast)
+Cache miss: data not in cache, fetch from slower storage
+Replacement policy: LRU, FIFO, etc.
+```
+
+---
+
+*Next: Topic 2 (Computer Architecture & OS Operations — Lecture 2)*

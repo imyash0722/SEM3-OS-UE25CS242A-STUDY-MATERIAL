@@ -92,8 +92,6 @@ Core:      C0     C1     C0     C1     C0   → Near 100% utilization!
 4 cores × 2 threads = 8 Logical CPUs → OS sees 8 CPUs
 ```
 
-> **Silberschatz Fig. 5.14**: "Chip multithreading architecture"
-
 ---
 
 ## 11.4 Multicore Load Balancing
@@ -129,7 +127,7 @@ Node 0 (CPUs 0-3, Local RAM)     Node 1 (CPUs 4-7, Local RAM)
            Cross-node = slow (interconnect)
 ```
 - Linux scheduler tracks **NUMA topology**
-- Prefers same-node migration; cross-node only if severe imbalance
+- Prefers same-node migration; cross-node only for severe imbalance
 
 > **Silberschatz**: "Load balancing is essential for effective use of SMP systems."
 
@@ -221,4 +219,47 @@ taskset -cp 2,3 <pid>    # Set
 
 ## 11.8 Exam-Relevant MCQ Patterns
 
-- Covered in Topic 10 MCQs (Q36-Q70) — threads, SMP, scheduling, synchronization, deadlocks, signals
+Covered in Topic 10 MCQs (Q36-Q70) — threads, SMP, scheduling, synchronization, deadlocks, signals
+
+---
+
+## 11.9 Practice Problems
+
+### Problem 1: SMT Utilization
+```
+Core has 2 threads.
+Thread A: 60% compute, 40% memory stall
+Thread B: 30% compute, 70% memory stall
+Estimate core utilization with/without SMT.
+```
+
+### Problem 2: Load Balancing
+```
+4 cores, run queue lengths: [10, 2, 0, 8]
+Threshold for imbalance = 3
+Which cores push/pull?
+```
+
+### Problem 3: Affinity
+```
+Thread pinned to CPU 2.
+What syscall? What happens if thread tries to run on CPU 3?
+```
+
+### Problem 4: MESI
+```
+Core 0 has X in Modified state.
+Core 1 reads X.
+Describe bus transaction and final states.
+```
+
+### Problem 5: False Sharing
+```
+struct { int a; int b; } shared;
+Thread 0 increments a, Thread 1 increments b.
+Why slow? How to fix?
+```
+
+---
+
+*Next: Topic 12 (Process Synchronization — Lectures 7-9, Unit 2)*

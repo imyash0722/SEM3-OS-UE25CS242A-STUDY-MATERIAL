@@ -1313,6 +1313,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#225-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        22.5 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="22.5 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-numa-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: NUMA Latency
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-first-touch" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: First-Touch
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-enhanced-clock-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Enhanced Clock Trace
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-clock-vs-enhanced-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: Clock vs Enhanced Clock
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-numa-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: NUMA Migration
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1531,6 +1603,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#225-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        22.5 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="22.5 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-numa-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: NUMA Latency
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-first-touch" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: First-Touch
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-enhanced-clock-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Enhanced Clock Trace
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-clock-vs-enhanced-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: Clock vs Enhanced Clock
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-numa-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: NUMA Migration
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1671,6 +1815,50 @@
 <li><strong>Q93</strong>: Clock — ref=1 → reset to 0, advance hand; ref=0 → replace</li>
 <li><strong>Q94</strong>: Enhanced Clock — (0,0) highest priority candidate for replacement</li>
 </ul>
+<hr />
+<h2 id="225-practice-problems">22.5 Practice Problems<a class="headerlink" href="#225-practice-problems" title="Permanent link">&para;</a></h2>
+<h3 id="problem-1-numa-latency">Problem 1: NUMA Latency<a class="headerlink" href="#problem-1-numa-latency" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>System: 2 nodes, 4 CPUs each
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Local latency: 100ns
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Remote latency: 300ns
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Process on Node 0 accesses 60% local, 40% remote pages
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Average memory access time?
+</span></code></pre></div>
+<h3 id="problem-2-first-touch">Problem 2: First-Touch<a class="headerlink" href="#problem-2-first-touch" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>double *a = malloc(N * sizeof(double));
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>// Thread 0 on Node 0
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>for (i=0; i&lt;N/2; i++) a[i] = 1.0;
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>// Thread 1 on Node 1
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>for (i=N/2; i&lt;N; i++) a[i] = 2.0;
+</span></code></pre></div>
+Where are pages allocated?</p>
+<h3 id="problem-3-enhanced-clock-trace">Problem 3: Enhanced Clock Trace<a class="headerlink" href="#problem-3-enhanced-clock-trace" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Ref: 1,2,3,4,1,2,5,1,2,3,4,5
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Frames: 3
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>All reads (dirty=0 initially)
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Trace enhanced clock. Show R/D bits and passes.
+</span></code></pre></div>
+<h3 id="problem-4-clock-vs-enhanced-clock">Problem 4: Clock vs Enhanced Clock<a class="headerlink" href="#problem-4-clock-vs-enhanced-clock" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Frames: 3
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Ref: 1,2,3,4,1,2,5
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Initially: all R=0, D=0
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Trace basic clock vs enhanced clock.
+</span></code></pre></div>
+<h3 id="problem-5-numa-migration">Problem 5: NUMA Migration<a class="headerlink" href="#problem-5-numa-migration" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Process on Node 0 has pages on Node 1.
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Access pattern triggers NUMA fault threshold.
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Describe migrate-on-fault steps.
+</span></code></pre></div>
+<hr />
+<p><strong>All 22 topics complete!</strong> 🎓</p>
+<p>You now have comprehensive coverage of the entire syllabus (Units 1-3) with:
+- Complete textbook content
+- Full slide content integration
+- All lab programs with detailed comments
+- Step-by-step numerical traces
+- Key formulas and algorithms
+- Exam MCQ patterns
+- Practice problems with solutions</p>
 
 
 

@@ -45,3 +45,37 @@ For N allocated blocks under First Fit: ~0.5N blocks lost to fragmentation
 - **Q73**: Best Fit → smallest leftover hole
 - **Q74**: 50% rule → 0.5N blocks lost (1/3 memory unusable)
 - **Q75**: Paging eliminates external fragmentation but has internal fragmentation on last page
+
+---
+
+## 16.5 Practice Problems
+
+### Problem 1: Swapping
+```
+When does swap out occur? When does swap in occur?
+```
+
+### Problem 2: Fragmentation
+```
+Given memory map with holes, identify internal vs external fragmentation.
+```
+
+### Problem 3: 50% Rule
+```
+20 allocated blocks under First Fit.
+How many blocks lost to fragmentation? What % of memory?
+```
+
+### Problem 4: Compaction
+```
+When is compaction needed? What hardware support is required?
+```
+
+### Problem 5: Paging vs Fragmentation
+```
+Why does paging eliminate external fragmentation but has internal fragmentation?
+```
+
+---
+
+*Next: Topic 17 (Segmentation)*
