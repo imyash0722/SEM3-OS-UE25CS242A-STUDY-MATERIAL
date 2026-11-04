@@ -1,0 +1,2401 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Complete study guide for Operating Systems (UE25CS242A) covering Units 1, 2, and 3">
+      
+      
+        <meta name="author" content="Course Materials">
+      
+      
+        <link rel="canonical" href="https://imyash0722.github.io/SEM3-OS-UE25CS242A-STUDY-MATERIAL/32_raid_structure/">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.73">
+    
+    
+      
+        <title>Topic 32: RAID Structure - OS Exam Prep — UE25CS242A (Units 1–3)</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="./.." title="OS Exam Prep — UE25CS242A (Units 1–3)" class="md-header__button md-logo" aria-label="OS Exam Prep — UE25CS242A (Units 1–3)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigation</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OS Exam Prep — UE25CS242A (Units 1–3)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Topic 32: RAID Structure
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Search</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/imyash0722/SEM3-OS-UE25CS242A-STUDY-MATERIAL" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./.." class="md-tabs__link">
+        
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../01_os_introduction/" class="md-tabs__link">
+          
+  
+  Unit 1: Introduction & Process Management
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../09_ipc_shared_memory_message_passing/" class="md-tabs__link">
+          
+  
+  Unit 2: IPC, Threads & Concurrency
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../15_main_memory/" class="md-tabs__link">
+          
+  
+  Unit 3: Memory Management
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="OS Exam Prep — UE25CS242A (Units 1–3)" class="md-nav__button md-logo" aria-label="OS Exam Prep — UE25CS242A (Units 1–3)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    OS Exam Prep — UE25CS242A (Units 1–3)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/imyash0722/SEM3-OS-UE25CS242A-STUDY-MATERIAL" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Home
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Unit 1: Introduction & Process Management
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Unit 1: Introduction & Process Management
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_os_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1. OS Introduction
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_computer_architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2. Computer Architecture
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_os_services_process_concept/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3. OS Services & Process Concept
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_process_creation_termination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Process Creation & Termination
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_cpu_scheduling_fcfs_sjf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5. CPU Scheduling: FCFS & SJF
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_cpu_scheduling_priority_rr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6. CPU Scheduling: Priority & RR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_cpu_scheduling_mlq_mlfq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7. CPU Scheduling: MLQ & MLFQ
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_shell_cron/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8. Shell & Cron
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Unit 2: IPC, Threads & Concurrency
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Unit 2: IPC, Threads & Concurrency
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_ipc_shared_memory_message_passing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  9. IPC: Shared Memory & Message Passing
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_threads_multicore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  10. Threads & Multicore
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_multicore_kernel_concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  11. Multicore Kernel Concepts
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_synchronization_software_approaches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  12. Synchronization
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_deadlocks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13. Deadlocks
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_signals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  14. Signals
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Unit 3: Memory Management
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Unit 3: Memory Management
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_main_memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  15. Main Memory
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_swapping_fragmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  16. Swapping & Fragmentation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17_segmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  17. Segmentation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18_paging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  18. Paging
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19_page_table_tlb_eat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  19. Page Tables, TLB & EAT
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20_virtual_memory_demand_paging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  20. Virtual Memory & Demand Paging
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21_page_replacement_thrashing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  21. Page Replacement & Thrashing
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22_numa_clock_replacement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  22. NUMA & Clock Replacement
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#321-raid-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.1 RAID Basics
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="32.1 RAID Basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What is RAID?
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Why RAID?
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID Goals
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#322-fundamental-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.2 Fundamental Techniques
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="32.2 Fundamental Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-striping" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.1 Striping
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#benefits-of-striping" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Benefits of Striping
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#322-mirroring-shadowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.2 Mirroring (Shadowing)
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="32.2 Mirroring (Shadowing)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Concept
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Trade-offs
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#323-raid-reliability-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.3 RAID Reliability Metrics
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="32.3 RAID Reliability Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mttf-mean-time-to-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        MTTF (Mean Time To Failure)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mttr-mean-time-to-repair" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        MTTR (Mean Time To Repair)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-loss-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Data Loss Probability
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#324-raid-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.4 RAID Levels
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="32.4 RAID Levels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raid-0-striping-no-redundancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID 0: Striping (No Redundancy)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid-1-mirroring-shadowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID 1: Mirroring (Shadowing)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid-4-block-striping-dedicated-parity" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID 4: Block Striping + Dedicated Parity
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid-5-block-interleaved-distributed-parity" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID 5: Block-Interleaved Distributed Parity
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid-5-parity-layout-4-disks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID 5 Parity Layout (4 Disks)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write-penalty" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Write Penalty
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid-6-pq-dual-parity" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID 6: P+Q Dual Parity
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#325-raid-level-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.5 RAID Level Comparison
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#326-raid-10-10-vs-raid-01-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.6 RAID 10 (1+0) vs RAID 01 (0+1)
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="32.6 RAID 10 (1+0) vs RAID 01 (0+1)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raid-10-10-mirror-then-stripe" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID 10 (1+0): Mirror then Stripe
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid-01-01-stripe-then-mirror" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        RAID 01 (0+1): Stripe then Mirror
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Comparison
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#326-raid-level-comparison-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.6 RAID Level Comparison Summary
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#327-raid-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.7 RAID Implementation
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="32.7 RAID Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#software-raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Software RAID
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Hardware RAID
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#327-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.7 Key Takeaways
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#328-exam-relevant-mcq-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.8 Exam-Relevant MCQ Patterns
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#328-practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        32.8 Practice Problems
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="32.8 Practice Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-capacity-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 1: Capacity Calculation
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-raid-5-write" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 2: RAID 5 Write
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-failure-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 3: Failure Tolerance
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-write-penalty" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 4: Write Penalty
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-rebuild-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Problem 5: Rebuild Time
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="topic-32-raid-structure">Topic 32: RAID Structure<a class="headerlink" href="#topic-32-raid-structure" title="Permanent link">&para;</a></h1>
+<p><strong>Source</strong>: Lecture 4.8 (Unit 4) + Textbook Ch. 12 (Silberschatz Ch. 12, Stallings Ch. 13)</p>
+<hr />
+<h2 id="321-raid-basics">32.1 RAID Basics<a class="headerlink" href="#321-raid-basics" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-raid">What is RAID?<a class="headerlink" href="#what-is-raid" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>RAID</strong> = <strong>Redundant Array of Independent (Inexpensive) Disks</strong></li>
+<li>Multiple disks working together as a single storage unit</li>
+<li>Addresses: <strong>Performance</strong> + <strong>Reliability</strong></li>
+</ul>
+<h3 id="why-raid">Why RAID?<a class="headerlink" href="#why-raid" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>RAID Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single large disk expensive</td>
+<td>Use multiple smaller disks</td>
+</tr>
+<tr>
+<td>Single disk failure = catastrophic</td>
+<td>Redundancy via redundancy</td>
+</tr>
+<tr>
+<td>Slow single-disk access</td>
+<td>Parallel I/O across disks</td>
+</tr>
+<tr>
+<td>Data loss on failure</td>
+<td>Redundancy (mirroring/parity)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="raid-goals">RAID Goals<a class="headerlink" href="#raid-goals" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Technique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Large capacity</strong></td>
+<td>Combine multiple disks</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Striping (parallel I/O)</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>Redundancy (mirroring/parity)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="322-fundamental-techniques">32.2 Fundamental Techniques<a class="headerlink" href="#322-fundamental-techniques" title="Permanent link">&para;</a></h2>
+<h3 id="321-striping">32.1 Striping<a class="headerlink" href="#321-striping" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Data split across multiple disks</strong></li>
+<li><strong>Block-level striping</strong> (most common): Consecutive blocks on different disks</li>
+<li><strong>Bit-level striping</strong>: Bits spread across disks (rare)</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Block 0 → Disk 0
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Block 1 → Disk 1
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Block 2 → Disk 2
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Block 3 → Disk 3
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Block 4 → Disk 0
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>...
+</span></code></pre></div>
+<h3 id="benefits-of-striping">Benefits of Striping<a class="headerlink" href="#benefits-of-striping" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parallel I/O</strong></td>
+<td>Multiple disks read/write simultaneously</td>
+</tr>
+<tr>
+<td><strong>Higher throughput</strong></td>
+<td>Aggregate bandwidth of all disks</td>
+</tr>
+<tr>
+<td><strong>Parallel requests</strong></td>
+<td>Different blocks served by different disks</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="322-mirroring-shadowing">32.2 Mirroring (Shadowing)<a class="headerlink" href="#322-mirroring-shadowing" title="Permanent link">&para;</a></h2>
+<h3 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Exact copy</strong> of data on two separate disks</li>
+<li><strong>RAID 1</strong> = Mirroring</li>
+</ul>
+<h3 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Benefit</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read</strong></td>
+<td>✅ Parallel reads from both</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Write</strong></td>
+<td>❌ Write to both (slower)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>✅ Complete redundancy</td>
+<td>2× disk cost</td>
+</tr>
+<tr>
+<td><strong>Rebuild</strong></td>
+<td>✅ Fast (copy from good disk)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="323-raid-reliability-metrics">32.3 RAID Reliability Metrics<a class="headerlink" href="#323-raid-reliability-metrics" title="Permanent link">&para;</a></h2>
+<h3 id="mttf-mean-time-to-failure">MTTF (Mean Time To Failure)<a class="headerlink" href="#mttf-mean-time-to-failure" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Single disk MTTF</strong>: 100,000 hours</li>
+<li><strong>Array of N disks</strong>: MTTF_array = MTTF_disk / N</li>
+<li><strong>Example</strong>: 100 disks × 100,000 hrs = 1,000 hours (41.6 days)</li>
+</ul>
+<h3 id="mttr-mean-time-to-repair">MTTR (Mean Time To Repair)<a class="headerlink" href="#mttr-mean-time-to-repair" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Time to replace failed disk + restore data</li>
+</ul>
+<h3 id="data-loss-probability">Data Loss Probability<a class="headerlink" href="#data-loss-probability" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Depends on: MTTF, MTTR, RAID level</li>
+<li><strong>Independent failures</strong> assumed (not power/correlated)</li>
+</ul>
+<hr />
+<h2 id="324-raid-levels">32.4 RAID Levels<a class="headerlink" href="#324-raid-levels" title="Permanent link">&para;</a></h2>
+<h3 id="raid-0-striping-no-redundancy">RAID 0: Striping (No Redundancy)<a class="headerlink" href="#raid-0-striping-no-redundancy" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Technique</strong></td>
+<td>Block-level striping</td>
+</tr>
+<tr>
+<td><strong>Redundancy</strong></td>
+<td>❌ None</td>
+</tr>
+<tr>
+<td><strong>Capacity</strong></td>
+<td>N × disk size</td>
+</tr>
+<tr>
+<td><strong>Read/Write</strong></td>
+<td>✅ Fast (parallel)</td>
+</tr>
+<tr>
+<td><strong>Failure</strong></td>
+<td>Any disk loss = total data loss</td>
+</tr>
+<tr>
+<td><strong>MTTF</strong></td>
+<td>Lowest (1/N of single disk)</td>
+</tr>
+<tr>
+<td><strong>Use Case</strong></td>
+<td>Performance-critical, non-critical data</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="raid-1-mirroring-shadowing">RAID 1: Mirroring (Shadowing)<a class="headerlink" href="#raid-1-mirroring-shadowing" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Technique</strong></td>
+<td>Exact copy on 2+ disks</td>
+</tr>
+<tr>
+<td><strong>Redundancy</strong></td>
+<td>✅ Full (100%)</td>
+</tr>
+<tr>
+<td><strong>Capacity</strong></td>
+<td>N/2 × disk size (50% usable)</td>
+</tr>
+<tr>
+<td><strong>Read</strong></td>
+<td>✅ Parallel from both</td>
+</tr>
+<tr>
+<td><strong>Write</strong></td>
+<td>❌ Both disks (slower)</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>Highest (2× disks)</td>
+</tr>
+<tr>
+<td><strong>Rebuild</strong></td>
+<td>Fast (copy from good disk)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="raid-4-block-striping-dedicated-parity">RAID 4: Block Striping + Dedicated Parity<a class="headerlink" href="#raid-4-block-striping-dedicated-parity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Striping</strong></td>
+<td>Block-level</td>
+</tr>
+<tr>
+<td><strong>Parity</strong></td>
+<td>Dedicated parity disk</td>
+</tr>
+<tr>
+<td><strong>Write Penalty</strong></td>
+<td>High (parity disk bottleneck)</td>
+</tr>
+<tr>
+<td><strong>Read</strong></td>
+<td>Fast (parallel data disks)</td>
+</tr>
+<tr>
+<td><strong>Write</strong></td>
+<td>Slow (parity disk bottleneck)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="raid-5-block-interleaved-distributed-parity">RAID 5: Block-Interleaved Distributed Parity<a class="headerlink" href="#raid-5-block-interleaved-distributed-parity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Striping</strong></td>
+<td>Block-level</td>
+</tr>
+<tr>
+<td><strong>Parity</strong></td>
+<td><strong>Distributed</strong> across all disks</td>
+</tr>
+<tr>
+<td><strong>Parity Distribution</strong></td>
+<td>Rotates across disks</td>
+</tr>
+<tr>
+<td><strong>Write Penalty</strong></td>
+<td>✅ No bottleneck (parallel)</td>
+</tr>
+<tr>
+<td><strong>Failure Tolerance</strong></td>
+<td>1 disk</td>
+</tr>
+<tr>
+<td><strong>Capacity</strong></td>
+<td>(N-1) × disk size</td>
+</tr>
+</tbody>
+</table>
+<h3 id="raid-5-parity-layout-4-disks">RAID 5 Parity Layout (4 Disks)<a class="headerlink" href="#raid-5-parity-layout-4-disks" title="Permanent link">&para;</a></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Block:     0    1    2    3
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Disk 0:    D0   D1   D2   P3
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Disk 1:    D4   D5   P2   D3
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Disk 2:    D8   P1   D5   D6
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Disk 3:    P0   D9   D10  D11
+</span></code></pre></div>
+- Parity rotates across disks
+- No single parity bottleneck</p>
+<h3 id="write-penalty">Write Penalty<a class="headerlink" href="#write-penalty" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Disk Accesses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read</strong></td>
+<td>1 (data)</td>
+</tr>
+<tr>
+<td><strong>Write (small)</strong></td>
+<td>4 (read old data, read old parity, write new data, write new parity)</td>
+</tr>
+<tr>
+<td><strong>Write (full stripe)</strong></td>
+<td>N (optimal)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="raid-6-pq-dual-parity">RAID 6: P+Q Dual Parity<a class="headerlink" href="#raid-6-pq-dual-parity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parity</strong></td>
+<td>Two independent parity schemes (P + Q)</td>
+</tr>
+<tr>
+<td><strong>Failure Tolerance</strong></td>
+<td><strong>2 disks</strong></td>
+</tr>
+<tr>
+<td><strong>Write Penalty</strong></td>
+<td>Higher than RAID 5 (2 parities)</td>
+</tr>
+<tr>
+<td><strong>Capacity</strong></td>
+<td>(N-2) × disk size</td>
+</tr>
+<tr>
+<td><strong>Use Case</strong></td>
+<td>High reliability, large arrays</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="325-raid-level-comparison">32.5 RAID Level Comparison<a class="headerlink" href="#325-raid-level-comparison" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Technique</th>
+<th>Redundancy</th>
+<th>Capacity</th>
+<th>Read</th>
+<th>Write</th>
+<th>Failure Tolerance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RAID 0</strong></td>
+<td>Striping</td>
+<td>❌ None</td>
+<td>N×</td>
+<td>⚡ Fast</td>
+<td>⚡ Fast</td>
+<td>0 disks</td>
+</tr>
+<tr>
+<td><strong>RAID 1</strong></td>
+<td>Mirroring</td>
+<td>✅ Full (2×)</td>
+<td>N/2</td>
+<td>⚡ Parallel</td>
+<td>⚠️ 2 writes</td>
+<td>N-1 disks</td>
+</tr>
+<tr>
+<td><strong>RAID 4</strong></td>
+<td>Striping + Dedicated Parity</td>
+<td>Parity disk</td>
+<td>(N-1)×</td>
+<td>⚡ Fast</td>
+<td>🐢 Parity bottleneck</td>
+<td>1 disk</td>
+</tr>
+<tr>
+<td><strong>RAID 5</strong></td>
+<td>Striping + Distributed Parity</td>
+<td>Distributed Parity</td>
+<td>(N-1)×</td>
+<td>⚡ Fast</td>
+<td>⚡ Good (parallel)</td>
+<td>1 disk</td>
+</tr>
+<tr>
+<td><strong>RAID 6</strong></td>
+<td>Striping + Dual Parity</td>
+<td>P+Q Parity</td>
+<td>(N-2)×</td>
+<td>⚡ Fast</td>
+<td>⚠️ Dual parity calc</td>
+<td>2 disks</td>
+</tr>
+<tr>
+<td><strong>RAID 10 (1+0)</strong></td>
+<td>Mirror + Stripe</td>
+<td>Mirror</td>
+<td>N/2</td>
+<td>⚡ Parallel</td>
+<td>⚡ Fast</td>
+<td>N/2 disks</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="326-raid-10-10-vs-raid-01-01">32.6 RAID 10 (1+0) vs RAID 01 (0+1)<a class="headerlink" href="#326-raid-10-10-vs-raid-01-01" title="Permanent link">&para;</a></h2>
+<h3 id="raid-10-10-mirror-then-stripe">RAID 10 (1+0): Mirror then Stripe<a class="headerlink" href="#raid-10-10-mirror-then-stripe" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Mirror pairs → Stripe across pairs
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Disk 1 ↔ Disk 2 (mirror)
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Disk 3 ↔ Disk 4 (mirror)
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Stripe across pairs
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Failure: 1 disk lost → pair survives
+</span></code></pre></div>
+<h3 id="raid-01-01-stripe-then-mirror">RAID 01 (0+1): Stripe then Mirror<a class="headerlink" href="#raid-01-01-stripe-then-mirror" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Stripe first → Mirror the stripe
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Stripe A ↔ Stripe B (mirror)
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Failure: 1 disk lost → entire stripe fails
+</span></code></pre></div>
+<h3 id="comparison">Comparison<a class="headerlink" href="#comparison" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>RAID 10 (1+0)</th>
+<th>RAID 01 (0+1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Single Disk Failure</strong></td>
+<td>Pair survives</td>
+<td>Entire stripe lost</td>
+</tr>
+<tr>
+<td><strong>Rebuild</strong></td>
+<td>Fast (copy from mirror)</td>
+<td>Slow (entire stripe)</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>✅ Better</td>
+<td>⚠️ Worse</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="326-raid-level-comparison-summary">32.6 RAID Level Comparison Summary<a class="headerlink" href="#326-raid-level-comparison-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Redundancy</th>
+<th>Capacity</th>
+<th>Read</th>
+<th>Write</th>
+<th>Fail Tolerance</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>None</td>
+<td>100%</td>
+<td>⚡⚡⚡</td>
+<td>⚡⚡⚡</td>
+<td>0</td>
+<td>$</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>Mirror</td>
+<td>50%</td>
+<td>⚡⚡</td>
+<td>⚡</td>
+<td>N-1</td>
+<td>$$$</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Dedicated Parity</td>
+<td>(N-1)/N</td>
+<td>⚡⚡</td>
+<td>🐢</td>
+<td>1</td>
+<td>$$</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Distributed Parity</td>
+<td>(N-1)/N</td>
+<td>⚡⚡</td>
+<td>⚡⚡</td>
+<td>1</td>
+<td>$$</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Dual Parity</td>
+<td>(N-2)/N</td>
+<td>⚡⚡</td>
+<td>⚡</td>
+<td>2</td>
+<td>$$$</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Mirror+Stripe</td>
+<td>50%</td>
+<td>⚡⚡</td>
+<td>⚡⚡</td>
+<td>N/2</td>
+<td>$$$</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="327-raid-implementation">32.7 RAID Implementation<a class="headerlink" href="#327-raid-implementation" title="Permanent link">&para;</a></h2>
+<h3 id="software-raid">Software RAID<a class="headerlink" href="#software-raid" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>OS manages</strong> RAID (Linux mdadm, Windows Storage Spaces)</li>
+<li><strong>CPU overhead</strong> for parity calc</li>
+<li><strong>Flexible</strong>, no special hardware</li>
+</ul>
+<h3 id="hardware-raid">Hardware RAID<a class="headerlink" href="#hardware-raid" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Dedicated controller</strong> with cache, battery backup</li>
+<li><strong>Offloads</strong> parity calculation</li>
+<li><strong>Transparent</strong> to OS</li>
+<li><strong>Better performance</strong>, battery-backed cache</li>
+</ul>
+<hr />
+<h2 id="327-key-takeaways">32.7 Key Takeaways<a class="headerlink" href="#327-key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>RAID 0</strong> = Speed only, no redundancy</li>
+<li><strong>RAID 1</strong> = Mirroring; simple, expensive, fast reads</li>
+<li><strong>RAID 4</strong> = Dedicated parity (bottleneck)</li>
+<li><strong>RAID 5</strong> = <strong>Best balance</strong>; distributed parity; 1 disk failure</li>
+<li><strong>RAID 6</strong> = Dual parity; 2 disk failures; enterprise</li>
+<li><strong>RAID 10</strong> = Best performance + reliability; expensive</li>
+<li><strong>RAID 0+1 vs 1+0</strong> = 1+0 preferred (better failure handling)</li>
+</ol>
+<hr />
+<h2 id="328-exam-relevant-mcq-patterns">32.8 Exam-Relevant MCQ Patterns<a class="headerlink" href="#328-exam-relevant-mcq-patterns" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RAID 0</strong></td>
+<td>Striping, no redundancy</td>
+</tr>
+<tr>
+<td><strong>RAID 1</strong></td>
+<td>Mirroring; 50% capacity; 2 writes</td>
+</tr>
+<tr>
+<td><strong>RAID 4 vs 5</strong></td>
+<td>4 = dedicated parity (bottleneck); 5 = distributed</td>
+</tr>
+<tr>
+<td><strong>RAID 5 write</strong></td>
+<td>Read old data + old parity, write new data + new parity (4 I/Os)</td>
+</tr>
+<tr>
+<td><strong>RAID 6</strong></td>
+<td>Dual parity (P+Q); tolerates 2 failures</td>
+</tr>
+<tr>
+<td><strong>RAID 10 vs 01</strong></td>
+<td>10 = mirror then stripe (better); 01 = stripe then mirror</td>
+</tr>
+<tr>
+<td><strong>RAID 5 capacity</strong></td>
+<td>(N-1) × disk size</td>
+</tr>
+<tr>
+<td><strong>RAID 6 capacity</strong></td>
+<td>(N-2) × disk size</td>
+</tr>
+<tr>
+<td><strong>RAID 10 capacity</strong></td>
+<td>50% (N/2)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="328-practice-problems">32.8 Practice Problems<a class="headerlink" href="#328-practice-problems" title="Permanent link">&para;</a></h2>
+<h3 id="problem-1-capacity-calculation">Problem 1: Capacity Calculation<a class="headerlink" href="#problem-1-capacity-calculation" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>6 disks, 2TB each.
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>RAID 0? RAID 1? RAID 5? RAID 6? RAID 10?
+</span></code></pre></div>
+<h3 id="problem-2-raid-5-write">Problem 2: RAID 5 Write<a class="headerlink" href="#problem-2-raid-5-write" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>4-disk RAID 5. Write 4KB block.
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>How many physical I/Os? What data read/written?
+</span></code></pre></div>
+<h3 id="problem-3-failure-tolerance">Problem 3: Failure Tolerance<a class="headerlink" href="#problem-3-failure-tolerance" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>8-disk array. Which RAID levels survive 2 simultaneous failures?
+</span></code></pre></div>
+<h3 id="problem-4-write-penalty">Problem 4: Write Penalty<a class="headerlink" href="#problem-4-write-penalty" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>RAID 5 small write = 4 I/Os (read old data, read old parity, write new data, write new parity)
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>RAID 6 small write = ? I/Os
+</span></code></pre></div>
+<h3 id="problem-5-rebuild-time">Problem 5: Rebuild Time<a class="headerlink" href="#problem-5-rebuild-time" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>RAID 1 vs RAID 5 vs RAID 10: Which rebuilds fastest after 1 disk failure?
+</span></code></pre></div>
+<hr />
+<p><em>Next: Topic 33 (System &amp; Network Threats / Program Threats)</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      OS Exam Prep — UE25CS242A Units 1–3 | Based on Silberschatz 10e, Stallings 9e, Stevens & Rago 3e
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/imyash0722/SEM3-OS-UE25CS242A-STUDY-MATERIAL" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5v52c0 15 12.5 23.5 27.5 17.5C441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5v-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://python.org" target="_blank" rel="noopener" title="python.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["navigation.tabs","navigation.sections","navigation.expand","navigation.top","search.highlight","search.share","content.code.copy","content.code.annotate","toc.follow","content.tabs.link","color.mode"],"redirect":null,"search":"../assets/javascripts/workers/search.c47bb847.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.77dd0ce9.min.js"></script>
+      
+        <script src="../assets/javascripts/theme-toggle.js"></script>
+      
+    
+  </body>
+</html>
