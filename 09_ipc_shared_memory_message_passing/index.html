@@ -2293,7 +2293,7 @@ If P1 sends, both P2 and P3 <code>receive()</code> → who gets it?</p>
 <h3 id="system-v-semaphores">System V Semaphores<a class="headerlink" href="#system-v-semaphores" title="Permanent link">&para;</a></h3>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">nsems</span><span class="p">,</span><span class="w"> </span><span class="n">flags</span><span class="p">);</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="n">semnum</span><span class="p">,</span><span class="w"> </span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="n">sembuf_array</span><span class="p">,</span><span class="w"> </span><span class="n">nops</span><span class="p">);</span><span class="w"> </span><span class="c1">// ATOMIC multiple operations</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="n">sembuf_array</span><span class="p">,</span><span class="w"> </span><span class="n">nops</span><span class="p">);</span><span class="w">  </span><span class="c1">// ATOMIC multiple ops</span>
 </span></code></pre></div>
 <h3 id="unix-domain-sockets-af_unix">Unix Domain Sockets (<code>AF_UNIX</code>)<a class="headerlink" href="#unix-domain-sockets-af_unix" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2350,6 +2350,8 @@ If P1 sends, both P2 and P3 <code>receive()</code> → who gets it?</p>
 <li><strong>Q44</strong>: Ordinary pipe = unidirectional, requires common ancestor</li>
 <li><strong>Q45</strong>: FIFO vs pipe — FIFO has filesystem path, unrelated processes can communicate</li>
 </ul>
+<hr />
+<p><em>Next: Topic 10 (Threads &amp; Multicore Programming — Lectures 2 &amp; 4, Unit 2)</em></p>
 
 
 
