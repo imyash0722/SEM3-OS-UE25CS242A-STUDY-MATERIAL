@@ -21,6 +21,8 @@ theme:
     - navigation.sections
     - navigation.expand
     - navigation.top
+    - navigation.tracking
+    - navigation.footer
     - search.highlight
     - search.share
     - content.code.copy
@@ -74,6 +76,10 @@ markdown_extensions:
       custom_checkbox: true
   - toc:
       permalink: true
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
 
 extra:
   generator: false

@@ -12,34 +12,2439 @@
     "semantic_hash": "1f8c8539010dbc766f6938d64e25fd5a"
   },
   "site/assets/javascripts/bundle.77dd0ce9.min.js": {
-    "mtime": 1793776083.61,
-    "seen": 1793780565.2339175,
+    "mtime": 1793787586.78,
+    "seen": 1793794619.8504775,
     "ast_hash": "366d69fa8fdc78f68f32105ea7e4491f",
     "semantic_hash": "366d69fa8fdc78f68f32105ea7e4491f"
   },
   "site/assets/javascripts/theme-toggle.js": {
-    "mtime": 1793776083.61,
-    "seen": 1793780565.2339904,
+    "mtime": 1793787586.78,
+    "seen": 1793794619.85048,
     "ast_hash": "1f8c8539010dbc766f6938d64e25fd5a",
     "semantic_hash": "1f8c8539010dbc766f6938d64e25fd5a"
   },
   "site/assets/javascripts/workers/search.c47bb847.min.js": {
-    "mtime": 1793776083.61,
-    "seen": 1793780565.2340589,
+    "mtime": 1793787586.78,
+    "seen": 1793794619.8504825,
     "ast_hash": "5e538ea91ed325909521963abae2d474",
     "semantic_hash": "5e538ea91ed325909521963abae2d474"
   },
   "site/search.json": {
-    "mtime": 1793776084.59,
-    "seen": 1793780565.2341335,
-    "ast_hash": "c281f3d312d54cff46cbb2628981abd1",
-    "semantic_hash": "c281f3d312d54cff46cbb2628981abd1",
-    "ast_empty": true
+    "mtime": 1793787587.43,
+    "seen": 1793794619.8504853,
+    "ast_hash": "d0b8c5e879f69879ffb640befedb499e",
+    "semantic_hash": ""
   },
   "zensical.yml": {
     "mtime": 1793776076.27,
     "seen": 1793780565.2341368,
     "ast_hash": "11af18c62c7405c382674f9ed5504992",
     "semantic_hash": "11af18c62c7405c382674f9ed5504992"
+  },
+  "REUSABLE_PROMPT.md": {
+    "mtime": 1793554243.41,
+    "seen": 1793794619.8504903,
+    "ast_hash": "0a9f23422072621ce2248aee79b9b0c7",
+    "semantic_hash": ""
+  },
+  "Unit_1_All_Content.txt": {
+    "mtime": 1793782487.95,
+    "seen": 1793794619.850493,
+    "ast_hash": "521b359c919c1d23df47b1fbebf91dac",
+    "semantic_hash": ""
+  },
+  "Unit_2_All_Content.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.8504958,
+    "ast_hash": "90d77c5bb2b7cdbf7e0b348cacfa99ff",
+    "semantic_hash": ""
+  },
+  "Unit_3_All_Content.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.8504987,
+    "ast_hash": "c6402973c741df0154824029a8d4ff92",
+    "semantic_hash": ""
+  },
+  "Unit_4_All_Content.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.8505008,
+    "ast_hash": "c2488934db80a01c1ab16a5d47b93e0e",
+    "semantic_hash": ""
+  },
+  "docs/01_os_introduction.md": {
+    "mtime": 1793783018.07,
+    "seen": 1793794619.8505037,
+    "ast_hash": "bd172ed83e1e24d3e0e852e9ae9af3a5",
+    "semantic_hash": ""
+  },
+  "docs/01_os_introduction_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505063,
+    "ast_hash": "e57dc98fcb4d925c2ecf408352192c54",
+    "semantic_hash": ""
+  },
+  "docs/02_computer_architecture.md": {
+    "mtime": 1793784651.26,
+    "seen": 1793794619.8505092,
+    "ast_hash": "5d52f5d357964b8cfb2b24e72115347d",
+    "semantic_hash": ""
+  },
+  "docs/02_computer_architecture_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505116,
+    "ast_hash": "4d94d24f805085812b6d4288ca07d945",
+    "semantic_hash": ""
+  },
+  "docs/03_os_services_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.850514,
+    "ast_hash": "52297293c921e52005a315a01900f9ad",
+    "semantic_hash": ""
+  },
+  "docs/03_os_services_process_concept.md": {
+    "mtime": 1793784718.93,
+    "seen": 1793794619.8505168,
+    "ast_hash": "4688cdd359b568a5fb80de342c814aa5",
+    "semantic_hash": ""
+  },
+  "docs/04_process_creation_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505192,
+    "ast_hash": "295f5acb89bc7f5a322717e3bb2b5da8",
+    "semantic_hash": ""
+  },
+  "docs/04_process_creation_termination.md": {
+    "mtime": 1793784774.26,
+    "seen": 1793794619.8505216,
+    "ast_hash": "57203abeeca7377de2f09060c8d264f0",
+    "semantic_hash": ""
+  },
+  "docs/05_cpu_scheduling_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.850524,
+    "ast_hash": "61228b48b3536f146af996a2ea3dec9e",
+    "semantic_hash": ""
+  },
+  "docs/05_cpu_scheduling_fcfs_sjf.md": {
+    "mtime": 1793784829.96,
+    "seen": 1793794619.850526,
+    "ast_hash": "d047821e6dcbeb2003e2d5fe698b31ce",
+    "semantic_hash": ""
+  },
+  "docs/06_cpu_scheduling_priority_rr.md": {
+    "mtime": 1793786585.12,
+    "seen": 1793794619.8505287,
+    "ast_hash": "82e942c8cae7cd1518b3bb1089317b20",
+    "semantic_hash": ""
+  },
+  "docs/06_cpu_scheduling_priority_rr_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505316,
+    "ast_hash": "72f7466bef60afe6e662915071899d4d",
+    "semantic_hash": ""
+  },
+  "docs/07_cpu_scheduling_mlq_mlfq.md": {
+    "mtime": 1793786654.09,
+    "seen": 1793794619.8505335,
+    "ast_hash": "8ef936e993e24afad51ce9c65a21897a",
+    "semantic_hash": ""
+  },
+  "docs/07_cpu_scheduling_mlq_mlfq_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505354,
+    "ast_hash": "127af5fbcf7d1ca093340f747d905775",
+    "semantic_hash": ""
+  },
+  "docs/08_shell_cron.md": {
+    "mtime": 1793786704.01,
+    "seen": 1793794619.8505378,
+    "ast_hash": "219aed551663244a5a3685b62cc99eab",
+    "semantic_hash": ""
+  },
+  "docs/08_shell_cron_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505394,
+    "ast_hash": "13915af293395fea4face89e169525d4",
+    "semantic_hash": ""
+  },
+  "docs/09_ipc_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.850542,
+    "ast_hash": "6b0400d73da399a090fa844e925da313",
+    "semantic_hash": ""
+  },
+  "docs/09_ipc_shared_memory_message_passing.md": {
+    "mtime": 1793786782.15,
+    "seen": 1793794619.8505445,
+    "ast_hash": "4ecc94301079875dc56cfb51ca4530b0",
+    "semantic_hash": ""
+  },
+  "docs/10_threads_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505464,
+    "ast_hash": "3ad20c87b207910b872c1f602bfc71b7",
+    "semantic_hash": ""
+  },
+  "docs/10_threads_multicore.md": {
+    "mtime": 1793786904.67,
+    "seen": 1793794619.8505492,
+    "ast_hash": "da97f7a2dc2bbf7d26871ec99b6ebc23",
+    "semantic_hash": ""
+  },
+  "docs/11_multicore_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505516,
+    "ast_hash": "710ecf1dbc2c6c16a29ab36c4b76df1f",
+    "semantic_hash": ""
+  },
+  "docs/11_multicore_kernel_concepts.md": {
+    "mtime": 1793787009.67,
+    "seen": 1793794619.8505538,
+    "ast_hash": "f78e88f23a37f16a5912cf083e9d6e1e",
+    "semantic_hash": ""
+  },
+  "docs/12_synchronization_detailed.md": {
+    "mtime": 1793787122.16,
+    "seen": 1793794619.8505557,
+    "ast_hash": "5b2dc9b16a4004acf0b19f429ddfe03d",
+    "semantic_hash": ""
+  },
+  "docs/12_synchronization_software_approaches.md": {
+    "mtime": 1793355764.09,
+    "seen": 1793794619.8505583,
+    "ast_hash": "48b5c75afbde5fcb07dd48851ce089ef",
+    "semantic_hash": ""
+  },
+  "docs/13_deadlocks.md": {
+    "mtime": 1793355764.09,
+    "seen": 1793794619.85056,
+    "ast_hash": "f00446cf9872a322a558b76b93100fe4",
+    "semantic_hash": ""
+  },
+  "docs/13_deadlocks_detailed.md": {
+    "mtime": 1793787204.58,
+    "seen": 1793794619.8505626,
+    "ast_hash": "06498bd26e5a55d590ae5a8f4004aa01",
+    "semantic_hash": ""
+  },
+  "docs/14_signals.md": {
+    "mtime": 1793787285.23,
+    "seen": 1793794619.8505642,
+    "ast_hash": "4cdb4a13cd3c4642877b4a1d1ef30541",
+    "semantic_hash": ""
+  },
+  "docs/14_signals_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505666,
+    "ast_hash": "49f49a89548c452bf10f08877c34c5cf",
+    "semantic_hash": ""
+  },
+  "docs/15_main_memory.md": {
+    "mtime": 1793787345.69,
+    "seen": 1793794619.8505688,
+    "ast_hash": "27e334d1cc2ce148751eb77183728b74",
+    "semantic_hash": ""
+  },
+  "docs/15_main_memory_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.850571,
+    "ast_hash": "4cf51eeba01e7e35442210445f2b3269",
+    "semantic_hash": ""
+  },
+  "docs/16_swapping_fragmentation.md": {
+    "mtime": 1793787371.02,
+    "seen": 1793794619.850573,
+    "ast_hash": "8d655076252f33c9f2666c0a1a17385a",
+    "semantic_hash": ""
+  },
+  "docs/16_swapping_fragmentation_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505764,
+    "ast_hash": "58934b7ab50d015ab7b9fc31e3cdd737",
+    "semantic_hash": ""
+  },
+  "docs/17_segmentation.md": {
+    "mtime": 1793787395.64,
+    "seen": 1793794619.8505793,
+    "ast_hash": "f76df59aeea2330d5a18fa6f95d78e9a",
+    "semantic_hash": ""
+  },
+  "docs/17_segmentation_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505814,
+    "ast_hash": "f83752190bb7f3927c6560e0e2e03f6b",
+    "semantic_hash": ""
+  },
+  "docs/18_paging.md": {
+    "mtime": 1793787419.24,
+    "seen": 1793794619.850584,
+    "ast_hash": "6a8edb1eb6ee0aa6bab7538b2e5d8c33",
+    "semantic_hash": ""
+  },
+  "docs/18_paging_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.850586,
+    "ast_hash": "4884040609f7421eadab5944cd4cc75c",
+    "semantic_hash": ""
+  },
+  "docs/19_page_table_tlb_eat.md": {
+    "mtime": 1793787450.52,
+    "seen": 1793794619.8505886,
+    "ast_hash": "8e7832185a3ec1b141e60ea8fcf510f8",
+    "semantic_hash": ""
+  },
+  "docs/19_page_table_tlb_eat_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505905,
+    "ast_hash": "88ea972c03bf57a248940ac06c4c1c92",
+    "semantic_hash": ""
+  },
+  "docs/20_virtual_memory_demand_paging.md": {
+    "mtime": 1793787506.77,
+    "seen": 1793794619.850593,
+    "ast_hash": "b58b0c184717b9f59463057be881e428",
+    "semantic_hash": ""
+  },
+  "docs/20_virtual_memory_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505948,
+    "ast_hash": "97823878302e9b53b962bf66ec58bfbd",
+    "semantic_hash": ""
+  },
+  "docs/21_page_replacement_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8505974,
+    "ast_hash": "7c76ce6a1cb528dd72f23515ae12013f",
+    "semantic_hash": ""
+  },
+  "docs/21_page_replacement_thrashing.md": {
+    "mtime": 1793787554.3,
+    "seen": 1793794619.850599,
+    "ast_hash": "244dcdbc8bf5e3922182170296ea54e3",
+    "semantic_hash": ""
+  },
+  "docs/22_numa_clock_detailed.md": {
+    "mtime": 1793732417.82,
+    "seen": 1793794619.8506014,
+    "ast_hash": "e758367fce2883a70d62338b98649432",
+    "semantic_hash": ""
+  },
+  "docs/22_numa_clock_replacement.md": {
+    "mtime": 1793787579.71,
+    "seen": 1793794619.8506036,
+    "ast_hash": "9d6bb47c535e47231181039b02a65353",
+    "semantic_hash": ""
+  },
+  "docs/22_numa_clock_replacement_detailed.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.850606,
+    "ast_hash": "4a4d7b80f76a98a6296813e7e446f43a",
+    "semantic_hash": ""
+  },
+  "docs/23_directory_disk_structure.md": {
+    "mtime": 1793782388.29,
+    "seen": 1793794619.8506083,
+    "ast_hash": "a3b90aef24c8ea64c341dc5234a758d4",
+    "semantic_hash": ""
+  },
+  "docs/24_file_concept_operations.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506093,
+    "ast_hash": "3e7f2ff8bdfd9bf438a2ac3d6e25432c",
+    "semantic_hash": ""
+  },
+  "docs/25_mounting_sharing_protection.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506117,
+    "ast_hash": "9e70e76cef6839d6ed19441292112563",
+    "semantic_hash": ""
+  },
+  "docs/26_awk_sed.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.850614,
+    "ast_hash": "58ae44ff1d474d27caac15a3fe238170",
+    "semantic_hash": ""
+  },
+  "docs/27_drivers_flash_filesystem.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506167,
+    "ast_hash": "8431f5af714770a5188dd838129e526d",
+    "semantic_hash": ""
+  },
+  "docs/28_allocation_methods.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506184,
+    "ast_hash": "250d696eccdce3874c1b7c7a4b5376a5",
+    "semantic_hash": ""
+  },
+  "docs/29_free_space_management.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506203,
+    "ast_hash": "4c2ef6009c421571bfb6d0f5a3bda898",
+    "semantic_hash": ""
+  },
+  "docs/30_mass_storage_disk_structure.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.850622,
+    "ast_hash": "5d0d1ba6739acd899253073572d6d2f4",
+    "semantic_hash": ""
+  },
+  "docs/31_disk_scheduling.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.850624,
+    "ast_hash": "db5300cf55bf07723d18fc0f0d48869b",
+    "semantic_hash": ""
+  },
+  "docs/32_raid_structure.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506262,
+    "ast_hash": "8842c140f6849876ee73f3524a7ee02d",
+    "semantic_hash": ""
+  },
+  "docs/33_program_threats.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506284,
+    "ast_hash": "c2dda2901688a9bb4ffaa61fffe78337",
+    "semantic_hash": ""
+  },
+  "docs/34_system_network_threats.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506308,
+    "ast_hash": "f197bf46af2261aba666d908bf92da28",
+    "semantic_hash": ""
+  },
+  "docs/35_access_matrix.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.8506327,
+    "ast_hash": "6e4311fd3a490f0c374c9b0db0778025",
+    "semantic_hash": ""
+  },
+  "docs/36_access_control_revocation.md": {
+    "mtime": 1793782388.3,
+    "seen": 1793794619.850635,
+    "ast_hash": "60098e26dbf58db79ff2bfb60b21704c",
+    "semantic_hash": ""
+  },
+  "docs/index.md": {
+    "mtime": 1793366025.75,
+    "seen": 1793794619.850637,
+    "ast_hash": "f00921465dd4fd7848206fef30912993",
+    "semantic_hash": ""
+  },
+  "notes/23_directory_disk_structure.md": {
+    "mtime": 1793781323.52,
+    "seen": 1793794619.8506393,
+    "ast_hash": "a3b90aef24c8ea64c341dc5234a758d4",
+    "semantic_hash": ""
+  },
+  "notes/24_file_concept_operations.md": {
+    "mtime": 1793781378.93,
+    "seen": 1793794619.8506415,
+    "ast_hash": "3e7f2ff8bdfd9bf438a2ac3d6e25432c",
+    "semantic_hash": ""
+  },
+  "notes/25_mounting_sharing_protection.md": {
+    "mtime": 1793781484.34,
+    "seen": 1793794619.8506436,
+    "ast_hash": "9e70e76cef6839d6ed19441292112563",
+    "semantic_hash": ""
+  },
+  "notes/26_awk_sed.md": {
+    "mtime": 1793781584.16,
+    "seen": 1793794619.850645,
+    "ast_hash": "58ae44ff1d474d27caac15a3fe238170",
+    "semantic_hash": ""
+  },
+  "notes/27_drivers_flash_filesystem.md": {
+    "mtime": 1793781711.82,
+    "seen": 1793794619.8506474,
+    "ast_hash": "8431f5af714770a5188dd838129e526d",
+    "semantic_hash": ""
+  },
+  "notes/28_allocation_methods.md": {
+    "mtime": 1793781803.72,
+    "seen": 1793794619.8506498,
+    "ast_hash": "250d696eccdce3874c1b7c7a4b5376a5",
+    "semantic_hash": ""
+  },
+  "notes/29_free_space_management.md": {
+    "mtime": 1793781868.05,
+    "seen": 1793794619.8506522,
+    "ast_hash": "4c2ef6009c421571bfb6d0f5a3bda898",
+    "semantic_hash": ""
+  },
+  "notes/30_mass_storage_disk_structure.md": {
+    "mtime": 1793781907.08,
+    "seen": 1793794619.8506544,
+    "ast_hash": "5d0d1ba6739acd899253073572d6d2f4",
+    "semantic_hash": ""
+  },
+  "notes/31_disk_scheduling.md": {
+    "mtime": 1793781981.3,
+    "seen": 1793794619.8506567,
+    "ast_hash": "db5300cf55bf07723d18fc0f0d48869b",
+    "semantic_hash": ""
+  },
+  "notes/32_raid_structure.md": {
+    "mtime": 1793782064.96,
+    "seen": 1793794619.850659,
+    "ast_hash": "8842c140f6849876ee73f3524a7ee02d",
+    "semantic_hash": ""
+  },
+  "notes/33_program_threats.md": {
+    "mtime": 1793782149.27,
+    "seen": 1793794619.8506606,
+    "ast_hash": "c2dda2901688a9bb4ffaa61fffe78337",
+    "semantic_hash": ""
+  },
+  "notes/34_system_network_threats.md": {
+    "mtime": 1793782226.22,
+    "seen": 1793794619.850663,
+    "ast_hash": "f197bf46af2261aba666d908bf92da28",
+    "semantic_hash": ""
+  },
+  "notes/35_access_matrix.md": {
+    "mtime": 1793782288.11,
+    "seen": 1793794619.8506649,
+    "ast_hash": "6e4311fd3a490f0c374c9b0db0778025",
+    "semantic_hash": ""
+  },
+  "notes/36_access_control_revocation.md": {
+    "mtime": 1793782347.11,
+    "seen": 1793794619.8506672,
+    "ast_hash": "60098e26dbf58db79ff2bfb60b21704c",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 1 - Introduction_extracted.txt": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.85067,
+    "ast_hash": "09a5e8efbfe0c6c9e709a58f1dbf5ee7",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 10 - CPU Scheduling Algorithms 3_extracted.txt": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8506727,
+    "ast_hash": "2762f049e5c42ecf87013a0cf7194c7c",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 11- Introduction to shell and cron_extracted.txt": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8506749,
+    "ast_hash": "ad235d468b6906bd8e13af59893bb806",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 2 - OS Structure and Operations_extracted.txt": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.850677,
+    "ast_hash": "fb3929ad363778e5c4921ce38ab3bcaf",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 3 - OS Services and Process Concept_extracted.txt": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8506794,
+    "ast_hash": "af1fd78850fd0d5b3d0a18d6852ce6db",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 5 - Process Creation and Termination and System calls_extracted.txt": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8506815,
+    "ast_hash": "82c84b63dfe897e358dfbe87efc6e80e",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 7 - CPU Scheduling-FCFS and SJF Scheduling_extracted.txt": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8506837,
+    "ast_hash": "3095f47766d1944c21e860c4e09d5724",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 8 - CPU Scheduling Algorithms 2_extracted.txt": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8506854,
+    "ast_hash": "049964a0d1e409deb761be5bb741ad43",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 1 - IPC(1)_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8506877,
+    "ast_hash": "ee96b78f51283bf872ed6d502ed76f3f",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 1 - IPC_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8506901,
+    "ast_hash": "ee96b78f51283bf872ed6d502ed76f3f",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 10 - Classic problems of Synchronization (2)_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.850692,
+    "ast_hash": "d15f89b0e1879f41052704aaa7f27cda",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 11 - Principles of deadlock_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8506944,
+    "ast_hash": "934252835bde6d2656d8c4fc9c16a253",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 13 Signals and Signal Handling_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.850696,
+    "ast_hash": "83529caa38465d5961b779f9e37f7a40",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 2 - Introduction to Threads, System calls for IPC_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8506987,
+    "ast_hash": "291b133c879934aebf0699b8625084b1",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 4 - Multicore programming & Multithreading models_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8507009,
+    "ast_hash": "88e46c931bc1f4e53f8bf50f8f87bf5c",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 5 - Multicore Kernel Concepts_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.850703,
+    "ast_hash": "26adb8f5378c621db7bbe090aac62b30",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 7 - Mutual exclusion and synchronization_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8507054,
+    "ast_hash": "f407f269effdfec0ed5177375fa04495",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 8- Principles of concurrency, hardware support (2)_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.850708,
+    "ast_hash": "6e15e4ac16b72aff667b85f3ece38992",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 9 - Mutex locks and semaphores (2)_extracted.txt": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8507097,
+    "ast_hash": "f33f586c8c2fdd7f12cae1329535760c",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.1.1_Main_Memory__Hardware_and_control_structures,_OS_support,_Address_translation,_Dynamic_Loading,_Dyna_extracted.txt": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.850712,
+    "ast_hash": "5901c9b368fc0ed85ed796038cc6809b",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.2.1_Swapping,_Fragmentation_extracted.txt": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8507142,
+    "ast_hash": "ce1abcd2ca66dbdbfa7f9ae46c5ab65f",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.3.1_Segmentation_extracted.txt": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8507164,
+    "ast_hash": "53ab7d0a8c952b050b7c4d6ed04dc9a6",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.4.1_Paging_extracted.txt": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8507187,
+    "ast_hash": "f8de1f5e164e64d61ec1ce31d47125d0",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.5.1_Structure_of_page_tables,_Translation_Lookaside_Buffer_(TLB),_TLB_Hits_and_Misses,_Effective_Access__extracted.txt": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.850721,
+    "ast_hash": "432d6c084aa2ae825e714685043841c3",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.6.1_Virtual_Memory_\u2013_Demand_Paging,_Page-Fault_Handling,_Copy-on-Write_extracted.txt": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8507245,
+    "ast_hash": "db36c154fdddc394d18cd9dc42a4876e",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.7.1_Page_replacement,_Allocation_of_frames,_Thrashing_extracted.txt": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8507264,
+    "ast_hash": "2915c66288d3cf2afe2e904aa62e01ef",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.8.1_NUMA_extracted.txt": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8507283,
+    "ast_hash": "1677f07af3f01b100cc747ae88821304",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.1.1_Directory_and_Disk_Structure_(1B)_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507302,
+    "ast_hash": "13233ca4e09987cac7d633113a9b5fdc",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.1.2_File_Concept_(1A)_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507326,
+    "ast_hash": "c19f95e8fd70936aea2c5337f7b27a4e",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.10.1_System_and_Network_Threats_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507352,
+    "ast_hash": "49af36db771afbd30920561b8cec16d7",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.11.1_Access_Matrix,_Implementation_of_the_Access_Matrix_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507369,
+    "ast_hash": "3e9b6f7392c30ffddc1b13d72838111c",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.12.1_Access_Control,_Revocation_of_Access_Rights_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507385,
+    "ast_hash": "e0cd0de0d681f480da6ead7d1f37b48b",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.13.1_Shell_programming_\u2013awk_and_sed_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507407,
+    "ast_hash": "76dfa3811c2e3dc48ed212e5d72f9f1e",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.2.1_File-System_sharing,_File_system_protection_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507428,
+    "ast_hash": "9bc263f74cd812b8c189d2d19770792d",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.3.1_Driver_Development,_Flash_Drives_,_File_system_implementation,_Directory_implementation_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507445,
+    "ast_hash": "a8ccdd6c5cbf9c1a9f092807c6a39594",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.4.1_Allocation_methods_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507469,
+    "ast_hash": "d6f2de5d20a3d86f3806dfd7daef69a6",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.5.1_Free-Space_Management,_Efficiency_and_Performance_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.850749,
+    "ast_hash": "516992dc693f1bfb65823aee3ee06111",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.6.1_Mass_storage_structure,_Disk_Structure_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507502,
+    "ast_hash": "ae24a8722efb12507bec087548b6fecf",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.7.1_Disk_scheduling,_Disk_Management_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507524,
+    "ast_hash": "013f4a31209b831d080221f56e440d15",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.8.1_RAID_Structure_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8507545,
+    "ast_hash": "572ebcc8f5c357df3bf04b488a410fb0",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.9.1_OS_Security_problems__Program_Threats_extracted.txt": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.850757,
+    "ast_hash": "af6c60a3c5ae3e72710374edec8e0a4c",
+    "semantic_hash": ""
+  },
+  "ocr/unit1.txt": {
+    "mtime": 1793782550.57,
+    "seen": 1793794619.8507593,
+    "ast_hash": "521b359c919c1d23df47b1fbebf91dac",
+    "semantic_hash": ""
+  },
+  "ocr/unit2.txt": {
+    "mtime": 1793782550.57,
+    "seen": 1793794619.8507617,
+    "ast_hash": "90d77c5bb2b7cdbf7e0b348cacfa99ff",
+    "semantic_hash": ""
+  },
+  "ocr/unit3.txt": {
+    "mtime": 1793782550.57,
+    "seen": 1793794619.8507636,
+    "ast_hash": "c6402973c741df0154824029a8d4ff92",
+    "semantic_hash": ""
+  },
+  "ocr/unit4.txt": {
+    "mtime": 1793782550.57,
+    "seen": 1793794619.8507655,
+    "ast_hash": "c2488934db80a01c1ab16a5d47b93e0e",
+    "semantic_hash": ""
+  },
+  "os_topics/01_os_introduction.md": {
+    "mtime": 1793161664.86,
+    "seen": 1793794619.850768,
+    "ast_hash": "4d1ec26ffcd4bd8def1fc205f87a0e7d",
+    "semantic_hash": ""
+  },
+  "os_topics/02_computer_architecture.md": {
+    "mtime": 1793161691.97,
+    "seen": 1793794619.8507705,
+    "ast_hash": "9a93ff1660fc3e53f1f5f8374c02759e",
+    "semantic_hash": ""
+  },
+  "os_topics/03_os_services_process_concept.md": {
+    "mtime": 1793161731.45,
+    "seen": 1793794619.8507726,
+    "ast_hash": "7edbe988aa2bc5a375f02debe9185d31",
+    "semantic_hash": ""
+  },
+  "os_topics/04_process_creation_termination.md": {
+    "mtime": 1793161764.27,
+    "seen": 1793794619.8507745,
+    "ast_hash": "33a4699d9c816d20bdd8e5f4053aeec4",
+    "semantic_hash": ""
+  },
+  "os_topics/05_cpu_scheduling_fcfs_sjf.md": {
+    "mtime": 1793161785.0,
+    "seen": 1793794619.850777,
+    "ast_hash": "b86e9c921348676953b1203acfa45614",
+    "semantic_hash": ""
+  },
+  "os_topics/06_cpu_scheduling_priority_rr.md": {
+    "mtime": 1793161816.83,
+    "seen": 1793794619.8507793,
+    "ast_hash": "6b70e2bdf8161504f9e94d0d88d2071a",
+    "semantic_hash": ""
+  },
+  "os_topics/07_cpu_scheduling_mlq_mlfq.md": {
+    "mtime": 1793161860.42,
+    "seen": 1793794619.8507817,
+    "ast_hash": "f08ec6957f9ccac334205aee0506a81e",
+    "semantic_hash": ""
+  },
+  "os_topics/08_shell_cron.md": {
+    "mtime": 1793161907.04,
+    "seen": 1793794619.8507843,
+    "ast_hash": "24809384371531e70354564e6093d52a",
+    "semantic_hash": ""
+  },
+  "os_topics/09_ipc_shared_memory_message_passing.md": {
+    "mtime": 1793161944.04,
+    "seen": 1793794619.8507864,
+    "ast_hash": "f9908a447d448b03900398cf86e3b4cb",
+    "semantic_hash": ""
+  },
+  "os_topics/10_threads_multicore.md": {
+    "mtime": 1793161993.03,
+    "seen": 1793794619.8507884,
+    "ast_hash": "d2361182466adfa0780047cad332ba2e",
+    "semantic_hash": ""
+  },
+  "os_topics/11_multicore_kernel_concepts.md": {
+    "mtime": 1793162026.04,
+    "seen": 1793794619.8507905,
+    "ast_hash": "e971a1db16e74b26eb62a805b4b406f8",
+    "semantic_hash": ""
+  },
+  "os_topics/12_synchronization_software_approaches.md": {
+    "mtime": 1793162086.73,
+    "seen": 1793794619.8507917,
+    "ast_hash": "48b5c75afbde5fcb07dd48851ce089ef",
+    "semantic_hash": ""
+  },
+  "os_topics/13_deadlocks.md": {
+    "mtime": 1793162135.35,
+    "seen": 1793794619.8507938,
+    "ast_hash": "f00446cf9872a322a558b76b93100fe4",
+    "semantic_hash": ""
+  },
+  "os_topics/14_signals.md": {
+    "mtime": 1793162163.17,
+    "seen": 1793794619.850796,
+    "ast_hash": "0f5847a4af28b55a1e34d828c68f0fb6",
+    "semantic_hash": ""
+  },
+  "os_topics/15_main_memory.md": {
+    "mtime": 1793162178.47,
+    "seen": 1793794619.8507986,
+    "ast_hash": "3aa05507a18a1155a561a431e5233a8a",
+    "semantic_hash": ""
+  },
+  "os_topics/16_swapping_fragmentation.md": {
+    "mtime": 1793162187.82,
+    "seen": 1793794619.8508003,
+    "ast_hash": "c1344ddc88e02e5a80966a47735dc0ae",
+    "semantic_hash": ""
+  },
+  "os_topics/17_segmentation.md": {
+    "mtime": 1793162207.73,
+    "seen": 1793794619.8508024,
+    "ast_hash": "29790a04a38b6d7831e58389f9b1d000",
+    "semantic_hash": ""
+  },
+  "os_topics/18_paging.md": {
+    "mtime": 1793162234.49,
+    "seen": 1793794619.8508048,
+    "ast_hash": "5de1552e8368cc67bb666498509caceb",
+    "semantic_hash": ""
+  },
+  "os_topics/19_page_table_tlb_eat.md": {
+    "mtime": 1793162253.45,
+    "seen": 1793794619.850807,
+    "ast_hash": "f74236d390d6f194f868e000bd0a0bf0",
+    "semantic_hash": ""
+  },
+  "os_topics/20_virtual_memory_demand_paging.md": {
+    "mtime": 1793162270.25,
+    "seen": 1793794619.8508093,
+    "ast_hash": "68e81877369c5278e348dff80ff5e8d0",
+    "semantic_hash": ""
+  },
+  "os_topics/21_page_replacement_thrashing.md": {
+    "mtime": 1793162333.95,
+    "seen": 1793794619.8508112,
+    "ast_hash": "71b6498ab0e2b650c76ff77383142680",
+    "semantic_hash": ""
+  },
+  "os_topics/22_numa_clock_replacement.md": {
+    "mtime": 1793162348.83,
+    "seen": 1793794619.8508127,
+    "ast_hash": "c89d4f16e9689c4d35f7ddadb0ca36bd",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/01_os_introduction_detailed.md": {
+    "mtime": 1793731368.02,
+    "seen": 1793794619.850815,
+    "ast_hash": "e57dc98fcb4d925c2ecf408352192c54",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/02_computer_architecture_detailed.md": {
+    "mtime": 1793731471.17,
+    "seen": 1793794619.8508174,
+    "ast_hash": "4d94d24f805085812b6d4288ca07d945",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/03_os_services_detailed.md": {
+    "mtime": 1793726673.28,
+    "seen": 1793794619.8508198,
+    "ast_hash": "52297293c921e52005a315a01900f9ad",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/04_process_creation_detailed.md": {
+    "mtime": 1793724333.15,
+    "seen": 1793794619.8508222,
+    "ast_hash": "295f5acb89bc7f5a322717e3bb2b5da8",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/05_cpu_scheduling_detailed.md": {
+    "mtime": 1793724460.43,
+    "seen": 1793794619.850824,
+    "ast_hash": "61228b48b3536f146af996a2ea3dec9e",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/06_cpu_scheduling_priority_rr_detailed.md": {
+    "mtime": 1793726706.1,
+    "seen": 1793794619.8508255,
+    "ast_hash": "72f7466bef60afe6e662915071899d4d",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/07_cpu_scheduling_mlq_mlfq_detailed.md": {
+    "mtime": 1793726723.22,
+    "seen": 1793794619.850828,
+    "ast_hash": "127af5fbcf7d1ca093340f747d905775",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/08_shell_cron_detailed.md": {
+    "mtime": 1793726565.67,
+    "seen": 1793794619.8508303,
+    "ast_hash": "13915af293395fea4face89e169525d4",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/09_ipc_detailed.md": {
+    "mtime": 1793726459.64,
+    "seen": 1793794619.850833,
+    "ast_hash": "6b0400d73da399a090fa844e925da313",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/10_threads_detailed.md": {
+    "mtime": 1793726388.02,
+    "seen": 1793794619.8508346,
+    "ast_hash": "3ad20c87b207910b872c1f602bfc71b7",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/11_multicore_detailed.md": {
+    "mtime": 1793726302.98,
+    "seen": 1793794619.8508363,
+    "ast_hash": "710ecf1dbc2c6c16a29ab36c4b76df1f",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/12_synchronization_detailed.md": {
+    "mtime": 1793724574.46,
+    "seen": 1793794619.8508384,
+    "ast_hash": "ef199f7c093ad65bff4b8f2e71c882cc",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/13_deadlocks_detailed.md": {
+    "mtime": 1793724691.92,
+    "seen": 1793794619.8508413,
+    "ast_hash": "480b5493795818f668dfe811263fed60",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/14_signals_detailed.md": {
+    "mtime": 1793726201.26,
+    "seen": 1793794619.8508437,
+    "ast_hash": "49f49a89548c452bf10f08877c34c5cf",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/15_main_memory_detailed.md": {
+    "mtime": 1793732037.87,
+    "seen": 1793794619.850846,
+    "ast_hash": "4cf51eeba01e7e35442210445f2b3269",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/16_swapping_fragmentation_detailed.md": {
+    "mtime": 1793732079.05,
+    "seen": 1793794619.8508484,
+    "ast_hash": "58934b7ab50d015ab7b9fc31e3cdd737",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/17_segmentation_detailed.md": {
+    "mtime": 1793732118.06,
+    "seen": 1793794619.8508503,
+    "ast_hash": "f83752190bb7f3927c6560e0e2e03f6b",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/18_paging_detailed.md": {
+    "mtime": 1793732173.87,
+    "seen": 1793794619.8508523,
+    "ast_hash": "4884040609f7421eadab5944cd4cc75c",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/19_page_table_tlb_eat_detailed.md": {
+    "mtime": 1793732224.41,
+    "seen": 1793794619.8508658,
+    "ast_hash": "88ea972c03bf57a248940ac06c4c1c92",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/20_virtual_memory_detailed.md": {
+    "mtime": 1793732295.24,
+    "seen": 1793794619.8508682,
+    "ast_hash": "97823878302e9b53b962bf66ec58bfbd",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/21_page_replacement_detailed.md": {
+    "mtime": 1793732364.34,
+    "seen": 1793794619.8508701,
+    "ast_hash": "7c76ce6a1cb528dd72f23515ae12013f",
+    "semantic_hash": ""
+  },
+  "os_topics_detailed/22_numa_clock_replacement_detailed.md": {
+    "mtime": 1793732407.18,
+    "seen": 1793794619.8508728,
+    "ast_hash": "4a4d7b80f76a98a6296813e7e446f43a",
+    "semantic_hash": ""
+  },
+  "resources/OS simulation.html": {
+    "mtime": 1789094165.51,
+    "seen": 1793794619.8508747,
+    "ast_hash": "67f552faf4ecccb69572dd95217dec59",
+    "semantic_hash": ""
+  },
+  "resources/os_exam_prep.html": {
+    "mtime": 1793107885.07,
+    "seen": 1793794619.8508766,
+    "ast_hash": "bd246f4765dde33b01fe088a99fc4ef5",
+    "semantic_hash": ""
+  },
+  "resources/qb/u1qb1.txt": {
+    "mtime": 1790204453.18,
+    "seen": 1793794619.850879,
+    "ast_hash": "ac8e25116be83cb3add4cacf84e0c53e",
+    "semantic_hash": ""
+  },
+  "resources/qb/u1qb2.txt": {
+    "mtime": 1790204453.18,
+    "seen": 1793794619.8508813,
+    "ast_hash": "ac2f5b2090986655637f11a551502d4b",
+    "semantic_hash": ""
+  },
+  "resources/qb/u2qb1.txt": {
+    "mtime": 1790204453.19,
+    "seen": 1793794619.8508832,
+    "ast_hash": "cf0d2525208d42244bd27603be555c4c",
+    "semantic_hash": ""
+  },
+  "resources/qb/u2qb2.txt": {
+    "mtime": 1790204453.19,
+    "seen": 1793794619.8508856,
+    "ast_hash": "e477511bbc4262f4beeff4f9a001a0df",
+    "semantic_hash": ""
+  },
+  "resources/textbook/README.md": {
+    "mtime": 1791224167.93,
+    "seen": 1793794619.8508883,
+    "ast_hash": "9d9f5eed50ed249ec5d9fea6af6308b4",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch01_introduction.md": {
+    "mtime": 1791226463.85,
+    "seen": 1793794619.8508904,
+    "ast_hash": "5bf4daeadf33693375155dc3c9198907",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch02_system_architecture.md": {
+    "mtime": 1791226746.69,
+    "seen": 1793794619.850893,
+    "ast_hash": "48887ac3e74b7f1b599a7fa4be4bb657",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch03_process_management.md": {
+    "mtime": 1791227012.2,
+    "seen": 1793794619.8508954,
+    "ast_hash": "37bec0b2c2e8a3eceff015562ef4ddbd",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch04_cpu_scheduling.md": {
+    "mtime": 1791227374.49,
+    "seen": 1793794619.8508973,
+    "ast_hash": "2e72581443790f023b02ca314b50df53",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch05_ipc.md": {
+    "mtime": 1791227755.97,
+    "seen": 1793794619.8508997,
+    "ast_hash": "1598ef3915c9b85472413f2a29673f89",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch06_threads_multicore.md": {
+    "mtime": 1791228359.87,
+    "seen": 1793794619.8509016,
+    "ast_hash": "1fc63b56ce06d9e375ee3f32391b22fc",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch07_multicore_kernel.md": {
+    "mtime": 1791228449.7,
+    "seen": 1793794619.8509037,
+    "ast_hash": "1d0fdff1d23c6075a6ccd25f03f73d09",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch08_synchronization.md": {
+    "mtime": 1791228811.95,
+    "seen": 1793794619.8509061,
+    "ast_hash": "b2f11e9fdf4a61a32775927bcce532b7",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch09_deadlocks.md": {
+    "mtime": 1791228972.45,
+    "seen": 1793794619.850908,
+    "ast_hash": "8de434ce65ea4b45780b565de264bd2c",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch10_shell_cron.md": {
+    "mtime": 1791223927.12,
+    "seen": 1793794619.8509104,
+    "ast_hash": "527a8a1ed3e0cccd827259e2a26c80de",
+    "semantic_hash": ""
+  },
+  "resources/textbook/ch11_signals.md": {
+    "mtime": 1791224111.43,
+    "seen": 1793794619.8509123,
+    "ast_hash": "25b9b8f03a43d2b25b5de8afd6980332",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 1 - Introduction_extracted.txt": {
+    "mtime": 1793728988.15,
+    "seen": 1793794619.8509142,
+    "ast_hash": "09a5e8efbfe0c6c9e709a58f1dbf5ee7",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 10 - CPU Scheduling Algorithms 3_extracted.txt": {
+    "mtime": 1793728988.21,
+    "seen": 1793794619.8509161,
+    "ast_hash": "2762f049e5c42ecf87013a0cf7194c7c",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 11- Introduction to shell and cron_extracted.txt": {
+    "mtime": 1793728988.22,
+    "seen": 1793794619.8509183,
+    "ast_hash": "ad235d468b6906bd8e13af59893bb806",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 2 - OS Structure and Operations_extracted.txt": {
+    "mtime": 1793728988.16,
+    "seen": 1793794619.8509207,
+    "ast_hash": "fb3929ad363778e5c4921ce38ab3bcaf",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 3 - OS Services and Process Concept_extracted.txt": {
+    "mtime": 1793728988.17,
+    "seen": 1793794619.8509228,
+    "ast_hash": "af1fd78850fd0d5b3d0a18d6852ce6db",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 5 - Process Creation and Termination and System calls_extracted.txt": {
+    "mtime": 1793728988.18,
+    "seen": 1793794619.850925,
+    "ast_hash": "82c84b63dfe897e358dfbe87efc6e80e",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 7 - CPU Scheduling-FCFS and SJF Scheduling_extracted.txt": {
+    "mtime": 1793728988.2,
+    "seen": 1793794619.850927,
+    "ast_hash": "3095f47766d1944c21e860c4e09d5724",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 8 - CPU Scheduling Algorithms 2_extracted.txt": {
+    "mtime": 1793728988.2,
+    "seen": 1793794619.8509295,
+    "ast_hash": "049964a0d1e409deb761be5bb741ad43",
+    "semantic_hash": ""
+  },
+  "resources/u1/u1L1.txt": {
+    "mtime": 1790178539.76,
+    "seen": 1793794619.8509316,
+    "ast_hash": "5ee5cca12f7b220a1512578b3fb8be97",
+    "semantic_hash": ""
+  },
+  "resources/u1/u1L10.txt": {
+    "mtime": 1790179202.17,
+    "seen": 1793794619.8509343,
+    "ast_hash": "5c5ade8ce7593dea4d099807d9c324e0",
+    "semantic_hash": ""
+  },
+  "resources/u1/u1L11.txt": {
+    "mtime": 1790179265.93,
+    "seen": 1793794619.8509367,
+    "ast_hash": "90ffdf8b84e9cd9d0870a9fd490fe0d2",
+    "semantic_hash": ""
+  },
+  "resources/u1/u1L2.txt": {
+    "mtime": 1790178819.37,
+    "seen": 1793794619.8509383,
+    "ast_hash": "28994bf9691a0cf133e7537b148d796a",
+    "semantic_hash": ""
+  },
+  "resources/u1/u1L3.txt": {
+    "mtime": 1790178928.23,
+    "seen": 1793794619.8509407,
+    "ast_hash": "434c9384d45247cb654885d802a8c277",
+    "semantic_hash": ""
+  },
+  "resources/u1/u1L5.txt": {
+    "mtime": 1790179014.66,
+    "seen": 1793794619.8509424,
+    "ast_hash": "88bc7518cfc96e235d17a5a60602462a",
+    "semantic_hash": ""
+  },
+  "resources/u1/u1L7.txt": {
+    "mtime": 1790179080.06,
+    "seen": 1793794619.850945,
+    "ast_hash": "0358f4072eced7222bf2fac77faa85cd",
+    "semantic_hash": ""
+  },
+  "resources/u1/u1L8.txt": {
+    "mtime": 1790179169.14,
+    "seen": 1793794619.850947,
+    "ast_hash": "db0beb5f96e5446e953b3ab154d65a1d",
+    "semantic_hash": ""
+  },
+  "resources/u1/unit1.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.850949,
+    "ast_hash": "521b359c919c1d23df47b1fbebf91dac",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 1 - IPC(1)_extracted.txt": {
+    "mtime": 1793728988.23,
+    "seen": 1793794619.8509517,
+    "ast_hash": "ee96b78f51283bf872ed6d502ed76f3f",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 1 - IPC_extracted.txt": {
+    "mtime": 1793728988.24,
+    "seen": 1793794619.850954,
+    "ast_hash": "ee96b78f51283bf872ed6d502ed76f3f",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 10 - Classic problems of Synchronization (2)_extracted.txt": {
+    "mtime": 1793728988.32,
+    "seen": 1793794619.8509562,
+    "ast_hash": "d15f89b0e1879f41052704aaa7f27cda",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 11 - Principles of deadlock_extracted.txt": {
+    "mtime": 1793728988.35,
+    "seen": 1793794619.8509588,
+    "ast_hash": "934252835bde6d2656d8c4fc9c16a253",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 13 Signals and Signal Handling_extracted.txt": {
+    "mtime": 1793728988.36,
+    "seen": 1793794619.8509607,
+    "ast_hash": "83529caa38465d5961b779f9e37f7a40",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 2 - Introduction to Threads, System calls for IPC_extracted.txt": {
+    "mtime": 1793728988.25,
+    "seen": 1793794619.850963,
+    "ast_hash": "291b133c879934aebf0699b8625084b1",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 4 - Multicore programming & Multithreading models_extracted.txt": {
+    "mtime": 1793728988.27,
+    "seen": 1793794619.8509655,
+    "ast_hash": "88e46c931bc1f4e53f8bf50f8f87bf5c",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 5 - Multicore Kernel Concepts_extracted.txt": {
+    "mtime": 1793728988.28,
+    "seen": 1793794619.8509674,
+    "ast_hash": "26adb8f5378c621db7bbe090aac62b30",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 7 - Mutual exclusion and synchronization_extracted.txt": {
+    "mtime": 1793728988.29,
+    "seen": 1793794619.8509688,
+    "ast_hash": "f407f269effdfec0ed5177375fa04495",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 8- Principles of concurrency, hardware support (2)_extracted.txt": {
+    "mtime": 1793728988.3,
+    "seen": 1793794619.8509712,
+    "ast_hash": "6e15e4ac16b72aff667b85f3ece38992",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 9 - Mutex locks and semaphores (2)_extracted.txt": {
+    "mtime": 1793728988.31,
+    "seen": 1793794619.8509736,
+    "ast_hash": "f33f586c8c2fdd7f12cae1329535760c",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L1.txt": {
+    "mtime": 1790191071.93,
+    "seen": 1793794619.850976,
+    "ast_hash": "b40646c28cb77efd59d8bbbec6706794",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L10.txt": {
+    "mtime": 1790191405.28,
+    "seen": 1793794619.850978,
+    "ast_hash": "db24d88c110102eb035be6fec74dc1c9",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L11.txt": {
+    "mtime": 1790191468.56,
+    "seen": 1793794619.8509805,
+    "ast_hash": "377aa5d16110545434c90e0924ae4298",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L13.txt": {
+    "mtime": 1790191488.91,
+    "seen": 1793794619.8509827,
+    "ast_hash": "0bff9c6a9315c7307d2f0d01261a0e52",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L2.txt": {
+    "mtime": 1790191145.74,
+    "seen": 1793794619.8509855,
+    "ast_hash": "d1622324e12a1d3988b3e5fa652f9137",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L4.txt": {
+    "mtime": 1790191221.55,
+    "seen": 1793794619.850987,
+    "ast_hash": "480ccab3c654b2182c49bfb4f86a17d0",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L5.txt": {
+    "mtime": 1790191262.2,
+    "seen": 1793794619.8509893,
+    "ast_hash": "029940be32acdc920e2d0163224e9835",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L7.txt": {
+    "mtime": 1790191301.92,
+    "seen": 1793794619.8509912,
+    "ast_hash": "2ff4f80602527f3536c82692671df015",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L8.txt": {
+    "mtime": 1790191335.4,
+    "seen": 1793794619.8509936,
+    "ast_hash": "85527c1c1b32d5aef2fc2c196dbc00f0",
+    "semantic_hash": ""
+  },
+  "resources/u2/u2L9.txt": {
+    "mtime": 1790191372.04,
+    "seen": 1793794619.850996,
+    "ast_hash": "3c6b299606f35a0dbdcba7b5549aef5a",
+    "semantic_hash": ""
+  },
+  "resources/u2/unit2.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.8509986,
+    "ast_hash": "90d77c5bb2b7cdbf7e0b348cacfa99ff",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.1.1_Main_Memory__Hardware_and_control_structures,_OS_support,_Address_translation,_Dynamic_Loading,_Dyna_extracted.txt": {
+    "mtime": 1793728998.93,
+    "seen": 1793794619.8510008,
+    "ast_hash": "5901c9b368fc0ed85ed796038cc6809b",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.2.1_Swapping,_Fragmentation_extracted.txt": {
+    "mtime": 1793728998.72,
+    "seen": 1793794619.8510027,
+    "ast_hash": "ce1abcd2ca66dbdbfa7f9ae46c5ab65f",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.3.1_Segmentation_extracted.txt": {
+    "mtime": 1793728998.74,
+    "seen": 1793794619.8510036,
+    "ast_hash": "53ab7d0a8c952b050b7c4d6ed04dc9a6",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.4.1_Paging_extracted.txt": {
+    "mtime": 1793728998.76,
+    "seen": 1793794619.8510056,
+    "ast_hash": "f8de1f5e164e64d61ec1ce31d47125d0",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.5.1_Structure_of_page_tables,_Translation_Lookaside_Buffer_(TLB),_TLB_Hits_and_Misses,_Effective_Access__extracted.txt": {
+    "mtime": 1793728998.8,
+    "seen": 1793794619.851008,
+    "ast_hash": "432d6c084aa2ae825e714685043841c3",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.6.1_Virtual_Memory_\u2013_Demand_Paging,_Page-Fault_Handling,_Copy-on-Write_extracted.txt": {
+    "mtime": 1793728998.84,
+    "seen": 1793794619.8510113,
+    "ast_hash": "db36c154fdddc394d18cd9dc42a4876e",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.7.1_Page_replacement,_Allocation_of_frames,_Thrashing_extracted.txt": {
+    "mtime": 1793728998.86,
+    "seen": 1793794619.8510137,
+    "ast_hash": "2915c66288d3cf2afe2e904aa62e01ef",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.8.1_NUMA_extracted.txt": {
+    "mtime": 1793728998.89,
+    "seen": 1793794619.8510153,
+    "ast_hash": "1677f07af3f01b100cc747ae88821304",
+    "semantic_hash": ""
+  },
+  "resources/u3/unit3.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.851017,
+    "ast_hash": "c6402973c741df0154824029a8d4ff92",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.1.1_Directory_and_Disk_Structure_(1B)_extracted.txt": {
+    "mtime": 1793781198.43,
+    "seen": 1793794619.8510194,
+    "ast_hash": "13233ca4e09987cac7d633113a9b5fdc",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.1.2_File_Concept_(1A)_extracted.txt": {
+    "mtime": 1793781198.95,
+    "seen": 1793794619.8510213,
+    "ast_hash": "c19f95e8fd70936aea2c5337f7b27a4e",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.10.1_System_and_Network_Threats_extracted.txt": {
+    "mtime": 1793781192.38,
+    "seen": 1793794619.8510237,
+    "ast_hash": "49af36db771afbd30920561b8cec16d7",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.11.1_Access_Matrix,_Implementation_of_the_Access_Matrix_extracted.txt": {
+    "mtime": 1793781194.56,
+    "seen": 1793794619.851025,
+    "ast_hash": "3e9b6f7392c30ffddc1b13d72838111c",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.12.1_Access_Control,_Revocation_of_Access_Rights_extracted.txt": {
+    "mtime": 1793781198.3,
+    "seen": 1793794619.8510268,
+    "ast_hash": "e0cd0de0d681f480da6ead7d1f37b48b",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.13.1_Shell_programming_\u2013awk_and_sed_extracted.txt": {
+    "mtime": 1793781193.25,
+    "seen": 1793794619.851029,
+    "ast_hash": "76dfa3811c2e3dc48ed212e5d72f9f1e",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.2.1_File-System_sharing,_File_system_protection_extracted.txt": {
+    "mtime": 1793781194.41,
+    "seen": 1793794619.8510308,
+    "ast_hash": "9bc263f74cd812b8c189d2d19770792d",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.3.1_Driver_Development,_Flash_Drives_,_File_system_implementation,_Directory_implementation_extracted.txt": {
+    "mtime": 1793781203.0,
+    "seen": 1793794619.851033,
+    "ast_hash": "a8ccdd6c5cbf9c1a9f092807c6a39594",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.4.1_Allocation_methods_extracted.txt": {
+    "mtime": 1793781198.78,
+    "seen": 1793794619.8510354,
+    "ast_hash": "d6f2de5d20a3d86f3806dfd7daef69a6",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.5.1_Free-Space_Management,_Efficiency_and_Performance_extracted.txt": {
+    "mtime": 1793781196.53,
+    "seen": 1793794619.8510375,
+    "ast_hash": "516992dc693f1bfb65823aee3ee06111",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.6.1_Mass_storage_structure,_Disk_Structure_extracted.txt": {
+    "mtime": 1793781196.63,
+    "seen": 1793794619.8510394,
+    "ast_hash": "ae24a8722efb12507bec087548b6fecf",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.7.1_Disk_scheduling,_Disk_Management_extracted.txt": {
+    "mtime": 1793781202.78,
+    "seen": 1793794619.8510423,
+    "ast_hash": "013f4a31209b831d080221f56e440d15",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.8.1_RAID_Structure_extracted.txt": {
+    "mtime": 1793781200.41,
+    "seen": 1793794619.8510447,
+    "ast_hash": "572ebcc8f5c357df3bf04b488a410fb0",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.9.1_OS_Security_problems__Program_Threats_extracted.txt": {
+    "mtime": 1793781193.46,
+    "seen": 1793794619.8510463,
+    "ast_hash": "af6c60a3c5ae3e72710374edec8e0a4c",
+    "semantic_hash": ""
+  },
+  "resources/u4/unit4.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.851049,
+    "ast_hash": "c2488934db80a01c1ab16a5d47b93e0e",
+    "semantic_hash": ""
+  },
+  "site/01_os_introduction/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510513,
+    "ast_hash": "637080ec0b930cf97175a39e8148d4b9",
+    "semantic_hash": ""
+  },
+  "site/01_os_introduction_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8510537,
+    "ast_hash": "73529dff288e51b81b4768ecf0f3d5b3",
+    "semantic_hash": ""
+  },
+  "site/02_computer_architecture/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8510556,
+    "ast_hash": "5c8ab7ca0c26e5a44a09224aebae4d07",
+    "semantic_hash": ""
+  },
+  "site/02_computer_architecture_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8510582,
+    "ast_hash": "1d929f581239896f438e1ee6b13f5618",
+    "semantic_hash": ""
+  },
+  "site/03_os_services_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510604,
+    "ast_hash": "54f9ea1b76ea885b39ecf367f6d14837",
+    "semantic_hash": ""
+  },
+  "site/03_os_services_process_concept/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8510623,
+    "ast_hash": "734fea28348f3e7bb97f8cf47e1b5918",
+    "semantic_hash": ""
+  },
+  "site/04_process_creation_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8510647,
+    "ast_hash": "7f462efdd534177f0d5e83c073903a56",
+    "semantic_hash": ""
+  },
+  "site/04_process_creation_termination/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.851067,
+    "ast_hash": "3263a673c270e036c48d7aee50bbd382",
+    "semantic_hash": ""
+  },
+  "site/05_cpu_scheduling_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510695,
+    "ast_hash": "d3ce0b87c4f85c47fed92202a889ead2",
+    "semantic_hash": ""
+  },
+  "site/05_cpu_scheduling_fcfs_sjf/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8510718,
+    "ast_hash": "9d65cc30c1e533838a7313a5a40aef13",
+    "semantic_hash": ""
+  },
+  "site/06_cpu_scheduling_priority_rr/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.851074,
+    "ast_hash": "34e38e7bc7e3dd3fb3bff6e4dc44dcdd",
+    "semantic_hash": ""
+  },
+  "site/06_cpu_scheduling_priority_rr_detailed/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8510766,
+    "ast_hash": "76a494af7137695bc1f9b8ef173f4aa5",
+    "semantic_hash": ""
+  },
+  "site/07_cpu_scheduling_mlq_mlfq/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510778,
+    "ast_hash": "1a3d6a4d568efbec8596484c2ba07fc1",
+    "semantic_hash": ""
+  },
+  "site/07_cpu_scheduling_mlq_mlfq_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.85108,
+    "ast_hash": "119f8aaa483398bec79856cd8be7255b",
+    "semantic_hash": ""
+  },
+  "site/08_shell_cron/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8510823,
+    "ast_hash": "776576ecf8e72db975a40b7a7f8deaed",
+    "semantic_hash": ""
+  },
+  "site/08_shell_cron_detailed/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8510847,
+    "ast_hash": "466b1a067fede999de2b58ac27523a20",
+    "semantic_hash": ""
+  },
+  "site/09_ipc_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510876,
+    "ast_hash": "ed205a868582fa8993057f424c38b0dd",
+    "semantic_hash": ""
+  },
+  "site/09_ipc_shared_memory_message_passing/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510897,
+    "ast_hash": "be3895e12bdbb4ce4f9b6bddfa57628e",
+    "semantic_hash": ""
+  },
+  "site/10_threads_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510919,
+    "ast_hash": "2e0228c060dee9a22ebb5866be495880",
+    "semantic_hash": ""
+  },
+  "site/10_threads_multicore/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8510942,
+    "ast_hash": "0f374d1cd7864625e4f2c3be4df0b81f",
+    "semantic_hash": ""
+  },
+  "site/11_multicore_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510966,
+    "ast_hash": "4d231f769347035c8d29c037bde85014",
+    "semantic_hash": ""
+  },
+  "site/11_multicore_kernel_concepts/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8510988,
+    "ast_hash": "eb194e6aaae3ebe3fdca83bf848ed46c",
+    "semantic_hash": ""
+  },
+  "site/12_synchronization_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8511012,
+    "ast_hash": "f5fc6f84e4b0756aee4c1ca053e6bd20",
+    "semantic_hash": ""
+  },
+  "site/12_synchronization_software_approaches/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8511038,
+    "ast_hash": "eb77395f9fd1e0ff6362acc08054f5cf",
+    "semantic_hash": ""
+  },
+  "site/13_deadlocks/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8511055,
+    "ast_hash": "6c0daabc5ecc7dcc2b7743fa0fd5dd86",
+    "semantic_hash": ""
+  },
+  "site/13_deadlocks_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.851108,
+    "ast_hash": "df02186163f756e27499b21602af0d4e",
+    "semantic_hash": ""
+  },
+  "site/14_signals/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8511105,
+    "ast_hash": "cead1ceea251032bda8f09b8515a1451",
+    "semantic_hash": ""
+  },
+  "site/14_signals_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.851112,
+    "ast_hash": "4797d33f47cc4c2a475141db60ffa12d",
+    "semantic_hash": ""
+  },
+  "site/15_main_memory/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8511138,
+    "ast_hash": "b1ce4b01bc7f3511a3f55752316fd149",
+    "semantic_hash": ""
+  },
+  "site/15_main_memory_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8511162,
+    "ast_hash": "9d01a057de0223bc4952d2127b626282",
+    "semantic_hash": ""
+  },
+  "site/16_swapping_fragmentation/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.851118,
+    "ast_hash": "6c6ec747a4e5c50ac28083df80bb3154",
+    "semantic_hash": ""
+  },
+  "site/16_swapping_fragmentation_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511205,
+    "ast_hash": "1cab4a3a8ed2737dbea94f908d59443e",
+    "semantic_hash": ""
+  },
+  "site/17_segmentation/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511224,
+    "ast_hash": "c983aa3fc611a69a0ab18e9e9b24fe8c",
+    "semantic_hash": ""
+  },
+  "site/17_segmentation_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511248,
+    "ast_hash": "658ed10fecd30ea65dea16a029aa02bf",
+    "semantic_hash": ""
+  },
+  "site/18_paging/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511271,
+    "ast_hash": "5b189752202bc067e4a5ba1f6c259e2c",
+    "semantic_hash": ""
+  },
+  "site/18_paging_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511293,
+    "ast_hash": "eafc47fda1c893ca13099aa83c6e15b2",
+    "semantic_hash": ""
+  },
+  "site/19_page_table_tlb_eat/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511314,
+    "ast_hash": "d19b4bbab7d8b8cf7272ab35693d2d86",
+    "semantic_hash": ""
+  },
+  "site/19_page_table_tlb_eat_detailed/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8511336,
+    "ast_hash": "67d1d3f48658babd5b3f6349bdc0100e",
+    "semantic_hash": ""
+  },
+  "site/20_virtual_memory_demand_paging/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.851136,
+    "ast_hash": "ca888134365f9ff4569785f579d4c8b5",
+    "semantic_hash": ""
+  },
+  "site/20_virtual_memory_detailed/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8511386,
+    "ast_hash": "669772e341589a84018341314a65b973",
+    "semantic_hash": ""
+  },
+  "site/21_page_replacement_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.8511403,
+    "ast_hash": "9f028ac15d7af3485ed8f01b79f0d944",
+    "semantic_hash": ""
+  },
+  "site/21_page_replacement_thrashing/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.851143,
+    "ast_hash": "a7b20e4159a6f4846feb3161e4918f41",
+    "semantic_hash": ""
+  },
+  "site/22_numa_clock_detailed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511453,
+    "ast_hash": "8a4800fe804c57fba6a4ea00c7d68317",
+    "semantic_hash": ""
+  },
+  "site/22_numa_clock_replacement/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511467,
+    "ast_hash": "7700c400f20b09a4af673b675d9f6a8c",
+    "semantic_hash": ""
+  },
+  "site/22_numa_clock_replacement_detailed/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.851149,
+    "ast_hash": "3653ae7fc5a62e3f259f33c52deeb1d1",
+    "semantic_hash": ""
+  },
+  "site/23_directory_disk_structure/index.html": {
+    "mtime": 1793787587.45,
+    "seen": 1793794619.851151,
+    "ast_hash": "ce519e4654787bf3e4d17d8d4d59b13c",
+    "semantic_hash": ""
+  },
+  "site/24_file_concept_operations/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8511524,
+    "ast_hash": "1c00bcd7a56f290385b72e3410c544a4",
+    "semantic_hash": ""
+  },
+  "site/25_mounting_sharing_protection/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.851155,
+    "ast_hash": "e0218bfc46f5ec681c58d31314a45085",
+    "semantic_hash": ""
+  },
+  "site/26_awk_sed/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511572,
+    "ast_hash": "c40276501143ed6734de9578724294dd",
+    "semantic_hash": ""
+  },
+  "site/27_drivers_flash_filesystem/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.851159,
+    "ast_hash": "e71ae82f4614caef9490fd5247621460",
+    "semantic_hash": ""
+  },
+  "site/28_allocation_methods/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511612,
+    "ast_hash": "159857014af854a9fc6302a438155a92",
+    "semantic_hash": ""
+  },
+  "site/29_free_space_management/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511636,
+    "ast_hash": "7436580b04d2277265cfeb85ef79511b",
+    "semantic_hash": ""
+  },
+  "site/30_mass_storage_disk_structure/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511662,
+    "ast_hash": "5d45a0d92a108d64eaafd3b531aca2eb",
+    "semantic_hash": ""
+  },
+  "site/31_disk_scheduling/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8511684,
+    "ast_hash": "647725dec4f1e544cd69c12bc701e4c0",
+    "semantic_hash": ""
+  },
+  "site/32_raid_structure/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8511708,
+    "ast_hash": "ce0620e462278d051a629b763ab632f4",
+    "semantic_hash": ""
+  },
+  "site/33_program_threats/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8511724,
+    "ast_hash": "046b7920d1007b8b6121fdbff8e4e21b",
+    "semantic_hash": ""
+  },
+  "site/34_system_network_threats/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.8511746,
+    "ast_hash": "55c597a36efa355ccada725861d2f7d7",
+    "semantic_hash": ""
+  },
+  "site/35_access_matrix/index.html": {
+    "mtime": 1793787587.46,
+    "seen": 1793794619.851177,
+    "ast_hash": "994d8d163097bb33fde4555d873b617a",
+    "semantic_hash": ""
+  },
+  "site/36_access_control_revocation/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8511791,
+    "ast_hash": "79fdda5c24653b0c1bd92affe7fdf47c",
+    "semantic_hash": ""
+  },
+  "site/404.html": {
+    "mtime": 1793787587.43,
+    "seen": 1793794619.8511813,
+    "ast_hash": "26ed7701d10af0c2ec2e2396c7ad52fd",
+    "semantic_hash": ""
+  },
+  "site/index.html": {
+    "mtime": 1793787587.47,
+    "seen": 1793794619.8511837,
+    "ast_hash": "ff1ebdf4fdf94d929031c902266d6465",
+    "semantic_hash": ""
+  },
+  "unit1.txt": {
+    "mtime": 1793782487.95,
+    "seen": 1793794619.8511863,
+    "ast_hash": "521b359c919c1d23df47b1fbebf91dac",
+    "semantic_hash": ""
+  },
+  "unit2.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.8511884,
+    "ast_hash": "90d77c5bb2b7cdbf7e0b348cacfa99ff",
+    "semantic_hash": ""
+  },
+  "unit3.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.8511906,
+    "ast_hash": "c6402973c741df0154824029a8d4ff92",
+    "semantic_hash": ""
+  },
+  "unit4.txt": {
+    "mtime": 1793782487.96,
+    "seen": 1793794619.851193,
+    "ast_hash": "c2488934db80a01c1ab16a5d47b93e0e",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 1 - Introduction.pdf": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.851195,
+    "ast_hash": "1d402a167f2df4459c09ca4161f42cec",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 10 - CPU Scheduling Algorithms 3.pdf": {
+    "mtime": 1793782550.57,
+    "seen": 1793794619.8511975,
+    "ast_hash": "578aa98a850fa71f7ef527063a7e3f73",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 11- Introduction to shell and cron.pdf": {
+    "mtime": 1793782550.57,
+    "seen": 1793794619.8511996,
+    "ast_hash": "cb55e451336a28558565de9abe7f36fd",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 2 - OS Structure and Operations.pdf": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.851202,
+    "ast_hash": "5e247c6891513c2eba68234d8bb0a88d",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 3 - OS Services and Process Concept.pdf": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8512044,
+    "ast_hash": "9ff18c768be77b9ba5e8050ae78fa56e",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 5 - Process Creation and Termination and System calls.pdf": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8512065,
+    "ast_hash": "f5f663ac54127b53c36caa7e0a074a68",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 7 - CPU Scheduling-FCFS and SJF Scheduling.pdf": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8512092,
+    "ast_hash": "d58cef5c34c50d1c441d3234f5fede0a",
+    "semantic_hash": ""
+  },
+  "ocr/u1/Lecture 8 - CPU Scheduling Algorithms 2.pdf": {
+    "mtime": 1793782550.58,
+    "seen": 1793794619.8512115,
+    "ast_hash": "bf4416286e9efead79d2847b3699124e",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 1 - IPC(1).pdf": {
+    "mtime": 1793782550.59,
+    "seen": 1793794619.8512135,
+    "ast_hash": "265c8b9231431863b486c2e125a8a555",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 1 - IPC.pdf": {
+    "mtime": 1793782550.59,
+    "seen": 1793794619.8512158,
+    "ast_hash": "c27f3377563bd7509d8d3cd991f5a93a",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 10 - Classic problems of Synchronization (2).pdf": {
+    "mtime": 1793782550.59,
+    "seen": 1793794619.8512185,
+    "ast_hash": "f33866b6fb35a1fab0005a52e9cf8d1f",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 11 - Principles of deadlock.pdf": {
+    "mtime": 1793782550.59,
+    "seen": 1793794619.8512208,
+    "ast_hash": "b3b3cd5c22e8291f9153d75ac45c21f6",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 13 Signals and Signal Handling.pdf": {
+    "mtime": 1793782550.59,
+    "seen": 1793794619.851223,
+    "ast_hash": "8c961232ffd9efd0a0a59d0a501e8a11",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 2 - Introduction to Threads, System calls for IPC.pdf": {
+    "mtime": 1793782550.59,
+    "seen": 1793794619.8512256,
+    "ast_hash": "92094e694f1e4a3771a39f455164076d",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 4 - Multicore programming & Multithreading models.pdf": {
+    "mtime": 1793782550.59,
+    "seen": 1793794619.8512273,
+    "ast_hash": "5064ac07d98912ff25b52b873e69c537",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 5 - Multicore Kernel Concepts.pdf": {
+    "mtime": 1793782550.59,
+    "seen": 1793794619.8512297,
+    "ast_hash": "54b89fa00eb27f381d602ac6ea8cfcda",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 7 - Mutual exclusion and synchronization.pdf": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.851232,
+    "ast_hash": "af0d50f91ff9ece16eee0c779818cf00",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 8- Principles of concurrency, hardware support (2).pdf": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8512347,
+    "ast_hash": "f444abb3dcab0e806d608dc91ec56736",
+    "semantic_hash": ""
+  },
+  "ocr/u2/Lecture 9 - Mutex locks and semaphores (2).pdf": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8512368,
+    "ast_hash": "7dadd58a5106ba819b2c89742205d1b2",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.1.1_Main_Memory__Hardware_and_control_structures,_OS_support,_Address_translation,_Dynamic_Loading,_Dyna.pdf": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8512392,
+    "ast_hash": "3df2dee2caecf980b7d4b8a2373e9b9d",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.2.1_Swapping,_Fragmentation.pdf": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8512418,
+    "ast_hash": "ae99ad8ef3d8d3eb310d4254f75ed6b8",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.3.1_Segmentation.pdf": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8512485,
+    "ast_hash": "73ce8b93132967758ccadd9e7bf84a6a",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.4.1_Paging.pdf": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8512506,
+    "ast_hash": "2623294ee3aa5ceae59cf2d2d2b7ae24",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.5.1_Structure_of_page_tables,_Translation_Lookaside_Buffer_(TLB),_TLB_Hits_and_Misses,_Effective_Access_.pdf": {
+    "mtime": 1793782550.6,
+    "seen": 1793794619.8512533,
+    "ast_hash": "66524ec7211bdfccd6bb54608b8ca4d5",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.6.1_Virtual_Memory_\u2013_Demand_Paging,_Page-Fault_Handling,_Copy-on-Write.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512557,
+    "ast_hash": "b1f1ce8b3ba92c1978995977968db712",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.7.1_Page_replacement,_Allocation_of_frames,_Thrashing.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512578,
+    "ast_hash": "bc983c9f10d53a31c00cd899c6a98c81",
+    "semantic_hash": ""
+  },
+  "ocr/u3/3.8.1_NUMA.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.85126,
+    "ast_hash": "1b0a6756d297387527d7c2c0a121f61a",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.1.1_Directory_and_Disk_Structure_(1B).pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.851262,
+    "ast_hash": "6cea30981dca0f68e285384d61f21378",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.1.2_File_Concept_(1A).pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512645,
+    "ast_hash": "9b3be88eb786b31d96190b8122ff2305",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.10.1_System_and_Network_Threats.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512664,
+    "ast_hash": "95d3290a318ebf6c17d0ac55fd0ce162",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.11.1_Access_Matrix,_Implementation_of_the_Access_Matrix.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512688,
+    "ast_hash": "02de2cc0437b7dc1b97fbf39d2585361",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.12.1_Access_Control,_Revocation_of_Access_Rights.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512707,
+    "ast_hash": "f346f3dce04c38611a7fd6e6c1b36919",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.13.1_Shell_programming_\u2013awk_and_sed.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512733,
+    "ast_hash": "6b8ddb5573fe30c65149e7987d2b8739",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.2.1_File-System_sharing,_File_system_protection.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512754,
+    "ast_hash": "f9ea636172434267cd001cb69b2213ee",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.3.1_Driver_Development,_Flash_Drives_,_File_system_implementation,_Directory_implementation.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.8512778,
+    "ast_hash": "865b6447e0808695ea002a992af03aa0",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.4.1_Allocation_methods.pdf": {
+    "mtime": 1793782550.61,
+    "seen": 1793794619.85128,
+    "ast_hash": "014383d7de676851663843ce9d71c294",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.5.1_Free-Space_Management,_Efficiency_and_Performance.pdf": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8512821,
+    "ast_hash": "7b4808f539bddac98797185b45c1d065",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.6.1_Mass_storage_structure,_Disk_Structure.pdf": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8512847,
+    "ast_hash": "227b0ed47be152bce825a9f8006e41d4",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.7.1_Disk_scheduling,_Disk_Management.pdf": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8512871,
+    "ast_hash": "08223fc2fbc1d78d56c83bc49c9fea53",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.8.1_RAID_Structure.pdf": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8512888,
+    "ast_hash": "11d255295c47a1527b81eadd8de658aa",
+    "semantic_hash": ""
+  },
+  "ocr/u4/4.9.1_OS_Security_problems__Program_Threats.pdf": {
+    "mtime": 1793782550.62,
+    "seen": 1793794619.8512914,
+    "ast_hash": "c81d759b0f9f43a2c418c04ba39987c1",
+    "semantic_hash": ""
+  },
+  "resources/qb/UE25CS242A_05ae23d5-1910-421d-b611-137bb2bde7e6_20260903210344.pdf": {
+    "mtime": 1790171371.5,
+    "seen": 1793794619.851293,
+    "ast_hash": "b4d8e139f3905a7f550bff5b808d14a1",
+    "semantic_hash": ""
+  },
+  "resources/qb/UE25CS242A_05ae23d5-1910-421d-b611-137bb2bde7e6_20260919111320.pdf": {
+    "mtime": 1790171381.11,
+    "seen": 1793794619.8512955,
+    "ast_hash": "48da049a030a54b13ede7e7bd8e1ea38",
+    "semantic_hash": ""
+  },
+  "resources/qb/UE25CS242A_ec903746-0b5c-466c-8c30-b371e6e5ec7a_20260909150553.pdf": {
+    "mtime": 1790171388.09,
+    "seen": 1793794619.8512979,
+    "ast_hash": "1b6bd78d23b6e802a131034334a074e3",
+    "semantic_hash": ""
+  },
+  "resources/qb/UE25CS242A_ec903746-0b5c-466c-8c30-b371e6e5ec7a_20260909150616.pdf": {
+    "mtime": 1790171394.69,
+    "seen": 1793794619.8512998,
+    "ast_hash": "afa5f4f32587e08a745f923f5567963d",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 1 - Introduction.pdf": {
+    "mtime": 1790176253.61,
+    "seen": 1793794619.8513021,
+    "ast_hash": "1d402a167f2df4459c09ca4161f42cec",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 10 - CPU Scheduling Algorithms 3.pdf": {
+    "mtime": 1790176258.95,
+    "seen": 1793794619.8513043,
+    "ast_hash": "578aa98a850fa71f7ef527063a7e3f73",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 11- Introduction to shell and cron.pdf": {
+    "mtime": 1790176259.92,
+    "seen": 1793794619.8513064,
+    "ast_hash": "cb55e451336a28558565de9abe7f36fd",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 2 - OS Structure and Operations.pdf": {
+    "mtime": 1790176254.51,
+    "seen": 1793794619.851309,
+    "ast_hash": "5e247c6891513c2eba68234d8bb0a88d",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 3 - OS Services and Process Concept.pdf": {
+    "mtime": 1790176255.7,
+    "seen": 1793794619.8513114,
+    "ast_hash": "9ff18c768be77b9ba5e8050ae78fa56e",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 5 - Process Creation and Termination and System calls.pdf": {
+    "mtime": 1790176256.66,
+    "seen": 1793794619.851313,
+    "ast_hash": "f5f663ac54127b53c36caa7e0a074a68",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 7 - CPU Scheduling-FCFS and SJF Scheduling.pdf": {
+    "mtime": 1790176257.72,
+    "seen": 1793794619.8513157,
+    "ast_hash": "d58cef5c34c50d1c441d3234f5fede0a",
+    "semantic_hash": ""
+  },
+  "resources/u1/Lecture 8 - CPU Scheduling Algorithms 2.pdf": {
+    "mtime": 1790176258.43,
+    "seen": 1793794619.8513181,
+    "ast_hash": "bf4416286e9efead79d2847b3699124e",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 1 - IPC(1).pdf": {
+    "mtime": 1790176325.99,
+    "seen": 1793794619.8513193,
+    "ast_hash": "265c8b9231431863b486c2e125a8a555",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 1 - IPC.pdf": {
+    "mtime": 1790176326.58,
+    "seen": 1793794619.851322,
+    "ast_hash": "c27f3377563bd7509d8d3cd991f5a93a",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 10 - Classic problems of Synchronization (2).pdf": {
+    "mtime": 1790176335.71,
+    "seen": 1793794619.8513246,
+    "ast_hash": "f33866b6fb35a1fab0005a52e9cf8d1f",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 11 - Principles of deadlock.pdf": {
+    "mtime": 1790176338.56,
+    "seen": 1793794619.8513265,
+    "ast_hash": "b3b3cd5c22e8291f9153d75ac45c21f6",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 13 Signals and Signal Handling.pdf": {
+    "mtime": 1790176339.28,
+    "seen": 1793794619.851329,
+    "ast_hash": "8c961232ffd9efd0a0a59d0a501e8a11",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 2 - Introduction to Threads, System calls for IPC.pdf": {
+    "mtime": 1790176328.73,
+    "seen": 1793794619.8513312,
+    "ast_hash": "92094e694f1e4a3771a39f455164076d",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 4 - Multicore programming & Multithreading models.pdf": {
+    "mtime": 1790176330.77,
+    "seen": 1793794619.8513336,
+    "ast_hash": "5064ac07d98912ff25b52b873e69c537",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 5 - Multicore Kernel Concepts.pdf": {
+    "mtime": 1790176332.29,
+    "seen": 1793794619.851336,
+    "ast_hash": "54b89fa00eb27f381d602ac6ea8cfcda",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 7 - Mutual exclusion and synchronization.pdf": {
+    "mtime": 1790176333.06,
+    "seen": 1793794619.851338,
+    "ast_hash": "af0d50f91ff9ece16eee0c779818cf00",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 8- Principles of concurrency, hardware support (2).pdf": {
+    "mtime": 1790176334.18,
+    "seen": 1793794619.8513405,
+    "ast_hash": "f444abb3dcab0e806d608dc91ec56736",
+    "semantic_hash": ""
+  },
+  "resources/u2/Lecture 9 - Mutex locks and semaphores (2).pdf": {
+    "mtime": 1790176335.0,
+    "seen": 1793794619.8513424,
+    "ast_hash": "7dadd58a5106ba819b2c89742205d1b2",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.1.1_Main_Memory__Hardware_and_control_structures,_OS_support,_Address_translation,_Dynamic_Loading,_Dyna.pdf": {
+    "mtime": 1793780907.67,
+    "seen": 1793794619.8513448,
+    "ast_hash": "3df2dee2caecf980b7d4b8a2373e9b9d",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.2.1_Swapping,_Fragmentation.pdf": {
+    "mtime": 1793780908.92,
+    "seen": 1793794619.8513472,
+    "ast_hash": "ae99ad8ef3d8d3eb310d4254f75ed6b8",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.3.1_Segmentation.pdf": {
+    "mtime": 1793780909.94,
+    "seen": 1793794619.8513496,
+    "ast_hash": "73ce8b93132967758ccadd9e7bf84a6a",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.4.1_Paging.pdf": {
+    "mtime": 1793780910.61,
+    "seen": 1793794619.8513517,
+    "ast_hash": "2623294ee3aa5ceae59cf2d2d2b7ae24",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.5.1_Structure_of_page_tables,_Translation_Lookaside_Buffer_(TLB),_TLB_Hits_and_Misses,_Effective_Access_.pdf": {
+    "mtime": 1793780913.02,
+    "seen": 1793794619.8513541,
+    "ast_hash": "66524ec7211bdfccd6bb54608b8ca4d5",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.6.1_Virtual_Memory_\u2013_Demand_Paging,_Page-Fault_Handling,_Copy-on-Write.pdf": {
+    "mtime": 1793780914.54,
+    "seen": 1793794619.8513567,
+    "ast_hash": "b1f1ce8b3ba92c1978995977968db712",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.7.1_Page_replacement,_Allocation_of_frames,_Thrashing.pdf": {
+    "mtime": 1793780915.62,
+    "seen": 1793794619.851359,
+    "ast_hash": "bc983c9f10d53a31c00cd899c6a98c81",
+    "semantic_hash": ""
+  },
+  "resources/u3/Slides/3.8.1_NUMA.pdf": {
+    "mtime": 1793780917.7,
+    "seen": 1793794619.8513613,
+    "ast_hash": "1b0a6756d297387527d7c2c0a121f61a",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.1.1_Directory_and_Disk_Structure_(1B).pdf": {
+    "mtime": 1793780926.35,
+    "seen": 1793794619.8513634,
+    "ast_hash": "6cea30981dca0f68e285384d61f21378",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.1.2_File_Concept_(1A).pdf": {
+    "mtime": 1793780927.93,
+    "seen": 1793794619.8513656,
+    "ast_hash": "9b3be88eb786b31d96190b8122ff2305",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.10.1_System_and_Network_Threats.pdf": {
+    "mtime": 1793780924.99,
+    "seen": 1793794619.851368,
+    "ast_hash": "95d3290a318ebf6c17d0ac55fd0ce162",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.11.1_Access_Matrix,_Implementation_of_the_Access_Matrix.pdf": {
+    "mtime": 1793780925.5,
+    "seen": 1793794619.8513706,
+    "ast_hash": "02de2cc0437b7dc1b97fbf39d2585361",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.12.1_Access_Control,_Revocation_of_Access_Rights.pdf": {
+    "mtime": 1793780927.31,
+    "seen": 1793794619.8513722,
+    "ast_hash": "f346f3dce04c38611a7fd6e6c1b36919",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.13.1_Shell_programming_\u2013awk_and_sed.pdf": {
+    "mtime": 1793780928.42,
+    "seen": 1793794619.8513753,
+    "ast_hash": "6b8ddb5573fe30c65149e7987d2b8739",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.2.1_File-System_sharing,_File_system_protection.pdf": {
+    "mtime": 1793780929.02,
+    "seen": 1793794619.8513772,
+    "ast_hash": "f9ea636172434267cd001cb69b2213ee",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.3.1_Driver_Development,_Flash_Drives_,_File_system_implementation,_Directory_implementation.pdf": {
+    "mtime": 1793780930.4,
+    "seen": 1793794619.8513794,
+    "ast_hash": "865b6447e0808695ea002a992af03aa0",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.4.1_Allocation_methods.pdf": {
+    "mtime": 1793780931.0,
+    "seen": 1793794619.8513815,
+    "ast_hash": "014383d7de676851663843ce9d71c294",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.5.1_Free-Space_Management,_Efficiency_and_Performance.pdf": {
+    "mtime": 1793780931.52,
+    "seen": 1793794619.851384,
+    "ast_hash": "7b4808f539bddac98797185b45c1d065",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.6.1_Mass_storage_structure,_Disk_Structure.pdf": {
+    "mtime": 1793780932.18,
+    "seen": 1793794619.8513865,
+    "ast_hash": "227b0ed47be152bce825a9f8006e41d4",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.7.1_Disk_scheduling,_Disk_Management.pdf": {
+    "mtime": 1793780933.11,
+    "seen": 1793794619.8513885,
+    "ast_hash": "08223fc2fbc1d78d56c83bc49c9fea53",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.8.1_RAID_Structure.pdf": {
+    "mtime": 1793780936.04,
+    "seen": 1793794619.8513913,
+    "ast_hash": "11d255295c47a1527b81eadd8de658aa",
+    "semantic_hash": ""
+  },
+  "resources/u4/Slides/4.9.1_OS_Security_problems__Program_Threats.pdf": {
+    "mtime": 1793780938.64,
+    "seen": 1793794619.8513932,
+    "ast_hash": "c81d759b0f9f43a2c418c04ba39987c1",
+    "semantic_hash": ""
+  },
+  "site/assets/images/favicon.png": {
+    "mtime": 1793787586.77,
+    "seen": 1793794619.8513956,
+    "ast_hash": "370ef648333a78cf59e253f1322c6fdc",
+    "semantic_hash": ""
   }
 }
