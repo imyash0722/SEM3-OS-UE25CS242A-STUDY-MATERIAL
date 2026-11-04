@@ -1,0 +1,374 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+Access Control, Revocation of Access Rights
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+Access Control 
+OPERATING SYSTEMS
+●Access control determines who can access a resource and what operations they 
+are allowed to perform.
+●The operating system uses protection mechanisms to control access to files, 
+devices, and other objects.
+●Access rights may be assigned to users, domains, or roles.
+UNIVERSITY
+O
+Operating System
+=
+Access Request
+Security Check
+User
+(e.g., Read, Write, Execute)
+=
+Process
+Domain
+Subject
+Object
+
+--- Slide / Page 5 ---
+Revocation of Access Rights 
+OPERATING SYSTEMS
+●Revocation means removing previously granted access rights.
+●It is required when access permissions need to be changed or withdrawn.
+●Revocation is important in dynamic protection systems, where access rights 
+can change over time.
+Example
+Before:
+Faculty → File F1 → Read + Write
+After Revocation:
+Faculty → File F1 → Read
+→ The Write permission has been revoked.
+UNIVERSITY
+
+--- Slide / Page 6 ---
+Role-Based Access Control (RBAC) 
+OPERATING SYSTEMS
+●In RBAC, permissions are assigned to roles, rather than directly to individual 
+users.
+●A role represents a user's job or function in the system.
+●Users are assigned one or more appropriate roles.
+UNIVERSITY
+2 a
+B de
+Go
+fod User 3
+Users
+Roles
+Permissions
+Objects
+
+--- Slide / Page 7 ---
+Why Revocation of Access Rights is Needed 
+OPERATING SYSTEMS
+Revocation
+●
+Revocation means removing previously granted access rights from a user or domain.
+●
+It is necessary because access requirements can change over time.
+●
+Revocation is an important part of a dynamic protection system.
+Why is Revocation Required?
+●
+A user's role or responsibility changes.
+●
+A user no longer needs access to a resource.
+●
+A resource becomes more restricted.
+●
+Temporary access has expired.
+●
+An administrator needs to withdraw previously granted permissions.
+Simple Example
+Before: D1 → File F1 → Read + Write
+After Revocation: D1 → File F1 → Read : The Write right has been removed, while Read is retained.
+UNIVERSITY
+
+--- Slide / Page 8 ---
+Types of Revocation 
+OPERATING SYSTEMS
+Revocation can be classified based on when, how much, and for whom access is removed.
+1. Immediate vs. Delayed
+●
+Immediate: Access is removed immediately.
+●
+Delayed: Revocation takes effect after a specified time or condition.
+2. Selective vs. General
+●
+Selective: Remove access from a specific user/domain.
+●
+General: Remove access from all users/domains having that right.
+3. Partial vs. Total
+●
+Partial: Remove some rights while keeping others.
+●
+Total: Remove all access rights to the object.
+4. Temporary vs. Permanent
+●
+Temporary: Access is removed for a limited period or until a condition is met.
+●
+Permanent: Access is removed and does not automatically return.
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Revocation Using ACL and Capability List 
+OPERATING SYSTEMS
+Revocation with Access Control List (ACL)
+●In an ACL, each object maintains a list of domains/users and their access 
+rights.
+●To revoke access, the OS can remove or modify the corresponding entry.
+●Therefore, revocation using ACL is relatively straightforward.
+Revocation with Capability List
+●In a Capability List, access rights are associated with domains.
+●Capabilities may be distributed among different domains.
+●Therefore, revoking a particular capability can be more difficult.
+UNIVERSITY
+
+--- Slide / Page 10 ---
+Revocation Techniques 
+OPERATING SYSTEMS
+When capabilities are distributed among domains, different techniques can be used to revoke access.
+1. Reacquisition
+●
+Capabilities have a limited validity.
+●
+When they expire, the user/domain must request access again.
+●
+If access is revoked, the request is denied.
+2. Back-Pointers
+●
+The system maintains pointers to all copies of a capability.
+●
+During revocation, these pointers are used to locate and modify/remove the capabilities.
+3. Indirection
+●
+Access is managed through an intermediate/global table.
+●
+To revoke access, the corresponding entry in the table is deleted or invalidated.
+4. Keys
+●
+A capability is associated with a key.
+●
+Changing or invalidating the key makes the old capability unusable.
+UNIVERSITY
+
+--- Slide / Page 11 ---
+Access Matrix
+OPERATING SYSTEMS
+●Protection model represented as a matrix
+●Rows → Domains
+●Columns → Objects
+●Each cell contains access rights
+access(i, j):
+●Operations allowed on object Oj by domain Di
+UNIVERSITY
+
+--- Slide / Page 12 ---
+Access Matrix example
+OPERATING SYSTEMS
+●Domains: D1, D2, D3, D4
+●Objects: F1, F2, F3, Printer
+Key Points:
+●D1 → Read F1, F3
+●D4 → Same as D1 + Write F1, F3
+●D2 → Access Printer only
+UNIVERSITY
+F;
+Fs
+Fs
+printer
+domain
+read
+read
+write
+write
+
+--- Slide / Page 13 ---
+Access Matrix
+OPERATING SYSTEMS
+Ensures:
+●Only allowed access
+●Strict control of resources
+OS decides:
+●Which domain a process runs in
+●What rights are given
+Domain Switching
+●Domain is treated as an object
+●Switching = performing switch operation
+Rule:
+●Process can switch from Di → Dj
+ only if ‘switch’ right exists
+UNIVERSITY
+
+--- Slide / Page 14 ---
+Access Matrix – Domain switching
+OPERATING SYSTEMS
+●D2 → can switch to D3, D4
+●D4 → can switch to D1
+●D1 → can switch to D2
+Additional Rights:
+●copy → duplicate access rights
+●owner → full control
+●control → modify rights 
+UNIVERSITY
+laser
+F,
+F.
+F.
+.
+0
+fred) fed] |
+fewer] ||
+IC
+A 2
+| 0 | feds
+|
+|
+| ||
+read
+read
+write
+write
+
+--- Slide / Page 15 ---
+Implementation of the Access Matrix – Global table
+OPERATING SYSTEMS
+●Represented as: <domain, object, rights>
+●System searches table to check permission
+Drawbacks:
+●Large size → not memory efficient
+●Slow lookup (search required)
+●Difficult to manage grouping
+UNIVERSITY
+
+--- Slide / Page 16 ---
+Implementation of the Access Matrix – Access list for objects
+OPERATING SYSTEMS
+•
+Each object has a list:
+○(domain, rights)
+Advantages:
+●Easy to check who can access object
+●Supports default permissions
+Limitation:
+●Hard to know what a domain can access
+UNIVERSITY
+
+--- Slide / Page 17 ---
+Role based access control
+OPERATING SYSTEMS
+•
+Access permissions are assigned to roles, not directly to users
+•
+A role represents a job/function (e.g., Admin, Faculty, Student)
+How it works:
+●Users → assigned to roles
+●Roles → assigned permissions
+●Users gain access through roles
+Example:
+●Admin → read, write, delete
+●Faculty → read, write
+●Student → read only
+If a user is assigned “Faculty” role → gets those permissions
+UNIVERSITY
+user 1
+role 1
+privileges 2
+executes with role 1 privileges
+
+--- Slide / Page 18 ---
+Role based access control
+OPERATING SYSTEMS
+Advantages:
+●Reduces complexity in access management
+●Easy to update permissions (change role, not every user)
+●Improves security (no direct permission assignment)
+●Supports large systems efficiently
+Limitation:
+●Requires proper role design
+●Too many roles → becomes complex
+UNIVERSITY
+user 1
+role 1
+privileges 2
+executes with role 1 privileges
+
+--- Slide / Page 19 ---
+Revocation of access rights
+OPERATING SYSTEMS
+●Revocation = Removing access rights from users/domains
+●Needed in dynamic protection systems
+Types of Revocation:
+●Immediate / Delayed
+○
+Instant removal vs later
+●Selective / General
+○
+Specific users vs all users
+●Partial / Total
+○
+Some rights vs all rights
+●Temporary / Permanent
+○
+Can be regained vs removed forever
+UNIVERSITY
+
+--- Slide / Page 20 ---
+Revocation of access rights
+OPERATING SYSTEMS
+Access List (ACL):
+●Easy to revoke:
+○Simply remove entry from list
+●Supports:
+○
+All types (selective, partial, etc.)
+Capability List:
+●Difficult to revoke:
+○Capabilities are distributed across system
+UNIVERSITY
+
+--- Slide / Page 21 ---
+Revocation of access rights
+OPERATING SYSTEMS
+Revocation Techniques:
+●Reacquisition
+○Capabilities expire → must request again
+●Back-pointers
+○Track all capabilities → modify them
+●Indirection
+○Use global table → delete entry
+●Keys
+○Change key → invalidate all old access
+UNIVERSITY
+
+--- Slide / Page 22 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

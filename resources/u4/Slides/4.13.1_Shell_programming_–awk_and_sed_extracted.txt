@@ -1,0 +1,154 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE24CS242B
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+AWK and SED
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+5. Internet source
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+Text Processing Tools
+OPERATING SYSTEMS
+Used for:
+●Processing text files
+●Data extraction & transformation
+Common tools:
+●awk
+●sed
+UNIVERSITY
+
+--- Slide / Page 5 ---
+AWK – Introduction & Working
+OPERATING SYSTEMS
+●Scripting language for:
+○Pattern scanning & processing
+●Works line-by-line
+●Used for:
+○Data filtering
+○Report generation
+Working
+●Reads file line by line
+●Splits line into fields
+●Applies:
+○Pattern → Action
+UNIVERSITY
+
+--- Slide / Page 6 ---
+AWK - Syntax
+OPERATING SYSTEMS
+Syntax:
+•
+awk 'pattern {action}' file
+Example:
+•
+awk '{print $1,$4}' employee.txt
+UNIVERSITY
+
+--- Slide / Page 7 ---
+AWK – Important Operations
+OPERATING SYSTEMS
+●Field access → $1, $2, ...
+●Conditions → if
+●Built-in variables:
+○NR → number of lines
+○NF → number of fields
+UNIVERSITY
+
+--- Slide / Page 8 ---
+AWK – Selected Examples
+OPERATING SYSTEMS
+awk '{print $1,$4}' file.txt
+Print selected columns
+awk '/manager/ {print}' file.txt
+Pattern matching
+awk 'END {print NR}' file.txt
+Count lines
+UNIVERSITY
+
+--- Slide / Page 9 ---
+SED – Introduction
+OPERATING SYSTEMS
+●Stream editor for:
+○Text transformation
+●Works in a single pass
+●Used in pipelines
+Syntax
+sed 'command' file
+Example:
+sed 's/hello/world/' file.txt
+UNIVERSITY
+
+--- Slide / Page 10 ---
+SED – Common Operations
+OPERATING SYSTEMS
+Substitute → s/old/new/
+Delete → d
+Print → p
+Insert / Append
+UNIVERSITY
+
+--- Slide / Page 11 ---
+SED – Selected Examples
+OPERATING SYSTEMS
+sed 's/hello/world/' file.txt
+Replace text
+sed '2d' file.txt
+Delete line
+sed -n '2p' file.txt
+Print specific line
+sed '4,6d' file.txt
+Delete range
+UNIVERSITY
+
+--- Slide / Page 12 ---
+AWK vs SED
+OPERATING SYSTEMS
+Feature
+AWK
+SED
+Type
+Programming language
+Stream editor
+Focus
+Data processing
+Text editing
+Works on
+Fields
+Lines
+Complexity
+Higher
+Simpler
+UNIVERSITY
+30
+veers
+
+--- Slide / Page 13 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

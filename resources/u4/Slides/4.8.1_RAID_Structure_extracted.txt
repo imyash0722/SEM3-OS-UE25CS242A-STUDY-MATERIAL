@@ -1,0 +1,268 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+RAID
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, 
+combination, and enhancement of material from the following 
+resources and persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, 
+Peter Baer Galvin, Greg Gagne -  9th edition 2013 and some 
+slides from 10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 
+2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy 
+Pieces, Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+RAID Basics
+OPERATING SYSTEMS
+❑RAID is a Disk Organization technique
+⮚Addresses performance and reliability issues
+⮚Multiple disk drives provide (or improve) reliability via redundancy
+❑Many systems today need to store many terabytes of data
+❑Don’t want to use single, large disk
+⮚too expensive
+⮚failures could be catastrophic
+❑Would prefer to use many smaller disks
+❑Redundant Array of Independent (inexpensive) Disks
+UNIVERSITY
+
+--- Slide / Page 5 ---
+RAID Basics (Cont.)
+OPERATING SYSTEMS
+❑Basic idea is to connect multiple disks together to provide
+❑large storage capacity
+❑faster access to reading data
+❑redundant data
+❑Many different levels of RAID systems
+❑differing levels of redundancy, error checking, capacity, and cost
+UNIVERSITY
+
+--- Slide / Page 6 ---
+Striping
+OPERATING SYSTEMS
+• Take file data and map it to different disks
+• Allows for reading data in parallel
+• Transfer rate is improved by striping data across the disks
+⮚Bit-level striping and block-level striping (most common)
+file data
+block 1
+block 0
+block 2
+block 3
+Disk 0
+Disk 1
+Disk 2
+Disk 3
+UNIVERSITY
+
+--- Slide / Page 7 ---
+Block-level Striping
+OPERATING SYSTEMS
+▪ Requests for different blocks can run in parallel if the blocks reside 
+on different disks
+▪ A request for a long sequence of blocks can utilize all disks in parallel 
+UNIVERSITY
+Diskl
+Disk2
+Disk3
+Disk4
+
+--- Slide / Page 8 ---
+Mirroring
+OPERATING SYSTEMS
+• Keep two copies of data on two separate disks
+• Gives good error recovery
+– if some data is lost, get it from the other source
+• Expensive
+– requires twice as many disks
+• Write performance can be slow
+– have to write data to two different spots
+• Read performance is enhanced
+– can read data from file in parallel
+UNIVERSITY
+
+--- Slide / Page 9 ---
+RAID Structure
+OPERATING SYSTEMS
+●Mean time to failure
+●If MTTF of a single disk is 100,000 hours, MTTF of some disk in an array of 100 disks = 
+100000/100 = 1000 hours or 41.66 days
+●Mean time to repair – time taken to replace a failed disk and to restore the 
+data on it
+●Mean time to data loss based on above factors
+●If mirrored disks fail independently (i.e., not related to power failures and 
+natural disasters), consider disk with MTTF of 100,000 hours and MTTR is 
+10 hours
+UNIVERSITY
+
+--- Slide / Page 10 ---
+RAID (Cont.)
+OPERATING SYSTEMS
+●Several improvements in disk-use techniques involve the use of multiple disks 
+working cooperatively
+●Disk striping uses a group of disks as one storage unit
+●RAID is arranged into six different levels
+●RAID schemes improve performance and improve the reliability of the storage 
+system by storing redundant data
+●Mirroring or shadowing (RAID 1) keeps duplicate of each disk
+●Striped mirrors (RAID 1+0) or mirrored stripes (RAID 0+1) provides high 
+performance and high reliability
+●Block interleaved parity (RAID 4, 5, 6) uses much less redundancy
+UNIVERSITY
+
+--- Slide / Page 11 ---
+RAID Levels
+OPERATING SYSTEMS
+• P indicates error-correcting bits
+• C indicates a second copy of the data
+• P + Q redundancy scheme uses 2 
+parity values P and Q
+(a) RAID 0: non-redundant striping.
+a
+ef
+J
+(b) RAID 1: mirrored disks.
+(f) RAID 5: block-interleaved distributed parity.
+EEEEEE
+(a) RAID 6: P + Q redundancy.
+
+--- Slide / Page 12 ---
+RAID Levels 0 and 1
+OPERATING SYSTEMS
+❑RAID level 0 refers to disk arrays with striping at the level of blocks 
+⮚No redundancy (such as mirroring or parity bits)
+⮚lots of disks means low Mean Time To Failure (MTTF)
+❑RAID level 1 refers to disk mirroring. 
+⮚A complete file is stored on a single disk
+⮚A second disk contains an exact copy of the file
+⮚Provides complete redundancy of data
+⮚file data can be read in parallel
+⮚must write the data out twice
+⮚Most expensive RAID implementation
+⮚requires twice as much storage space
+(a) RAID 0: non-redundant striping.
+EEE
+(b) RAID 1: mirrored disks.
+
+--- Slide / Page 13 ---
+RAID Level-5
+OPERATING SYSTEMS
+❑RAID level 5 stripes file data and checks data over all the disks
+⮚no longer a single check disk
+❑Consists of block-level striping with distributed parity. 
+⮚Unlike RAID 4, parity information is distributed among the drives
+❑Drastically improves the performance of multiple writes
+⮚they can now be done in parallel
+❑read and write performance close to that of RAID Level-1
+UNIVERSITY
+(f) RAID 5: block-interleaved distributed parity.
+
+--- Slide / Page 14 ---
+RAID Level-6
+OPERATING SYSTEMS
+❑RAID 6 is like RAID 5, but the parity data are written to two drives. 
+❑Write data transactions are slower than RAID 5 due to the additional parity 
+data that have to be calculated.
+UNIVERSITY
+==
+striping with dual parity across drives
+(g) RAID 6: P + Q redundancy.
+block 12, lllblock 10, Jl Parity b1 lll Parity b1’
+Brrr
+Parity b2, Jl Parit= Ny?
+(J10C
+3
+(
+ri
+y
+r
+oc
+ee Eee hrm eed
+Parity b4
+block 42
+block 4b
+Parity b4
+drive 1
+drive 2
+drive 3
+drive 4
+
+--- Slide / Page 15 ---
+RAID level 10 - combining RAID 1 and RAID 0
+OPERATING SYSTEMS
+❑Provides security by mirroring all data on 
+secondary drives while using striping across each 
+set of drives to speed up data transfers.
+❑Rebuild time is very fast
+❑Half of the storage capacity goes to mirroring
+⮚ so compared to large RAID 5  or RAID 6 arrays, 
+this is an expensive way to have redundancy.
+UNIVERSITY
+RAID 1+0
+mirroring + striping
+block 3
+EE
+block 4
+block4
+ll ne?’ llane?’ Jl an?’
+block 5,8
+block 5
+block 6,8
+block 6
+Se llSo llSa? llSa?
+block 7
+block 7
+block 8
+block8
+drive 1
+drive 2
+drive 3
+drive4
+
+--- Slide / Page 16 ---
+RAID (0 + 1) and (1 + 0)
+OPERATING SYSTEMS
+Disks are mirrored in pairs and then the resulting 
+mirrored pairs are striped. This is better than 0+1 
+when a single disk fails
+Disks are striped and then the stripe is mirrored 
+to another, equivalent stripe. If a single disk fails, 
+an entire stripe is inaccessible.
+reee
+PES
+UNIVERSITY
+|
+mirror
+reFREER
+a) RAID 0 + 1 with a single disk failure.
+stripe
+mirror
+mirror
+mirror
+mirrol
+b) RAID 1 + 0 with a single disk failure.
+
+--- Slide / Page 17 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

@@ -1,0 +1,224 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+Access Matrix
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+Access Matrix
+OPERATING SYSTEMS
+Protection Model
+●The Access Matrix is a protection model used by an operating system to specify who can 
+access what and what operations are permitted.
+●It represents access permissions between:
+○Domains → Subjects/users/processes
+○Objects → Resources such as files, printers, memory, etc.
+●Each cell contains the access rights allowed for a particular domain on an object.
+Basic Structure
+●Rows → Domains
+●Columns → Objects
+●Cells → Access Rights
+Example Rights - read (r), write (w), execute (x), print, delete
+UNIVERSITY
+
+--- Slide / Page 5 ---
+Access Matrix example
+OPERATING SYSTEMS
+●Domains: D1, D2, D3, D4
+●Objects: F1, F2, F3, Printer
+Key Points:
+●D1 → Read F1, F3
+●D4 → Same as D1 + Write F1, F3
+●D2 → Access Printer only
+UNIVERSITY
+F;
+Fs
+Fs
+printer
+domain
+read
+read
+write
+write
+
+--- Slide / Page 6 ---
+Access Matrix
+OPERATING SYSTEMS
+Ensures:
+●Only allowed access
+●Strict control of resources
+OS decides:
+●Which domain a process runs in
+●What rights are given
+Domain Switching
+●Domain is treated as an object
+●Switching = performing switch operation
+Rule:
+●Process can switch from Di → Dj
+ only if ‘switch’ right exists
+UNIVERSITY
+
+--- Slide / Page 7 ---
+Access Matrix – Domain switching
+OPERATING SYSTEMS
+●D2 → can switch to D3, D4
+●D4 → can switch to D1
+●D1 → can switch to D2
+Additional Rights:
+●copy → duplicate access rights
+●owner → full control
+●control → modify rights 
+UNIVERSITY
+laser
+F,
+F.
+F.
+.
+0
+fred) fed] |
+fewer] ||
+IC
+A 2
+| 0 | feds
+|
+|
+| ||
+read
+read
+write
+write
+
+--- Slide / Page 8 ---
+Implementation of the Access Matrix
+OPERATING SYSTEMS
+Why is Implementation Needed?
+●The Access Matrix provides a clear protection model, but a complete matrix can 
+become very large.
+●Most entries in the matrix are usually empty.
+●Therefore, storing the entire matrix directly is not memory efficient.
+●Operating systems use different techniques to implement the Access Matrix.
+Common Implementations
+1. Global Table
+2. Access List for Objects (ACL)
+3. Capability List
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Implementation of the Access Matrix – Global table
+OPERATING SYSTEMS
+●A global table stores all non-empty access relationships in a single table.
+●Each entry is represented as: <Domain, Object, Rights>
+How It Works
+1. A process requests access to an object.
+2. The OS searches the global table.
+3. It looks for the corresponding Domain–Object entry.
+4. The requested operation is checked against the stored rights.
+5. Access is allowed or denied.
+Limitations
+●Large table → inefficient use of memory
+●Slow lookup → searching may take time
+●Difficult to manage grouping of similar access rights
+UNIVERSITY
+
+--- Slide / Page 10 ---
+Implementation of the Access Matrix – Access list for objects
+OPERATING SYSTEMS
+●
+In this approach, each object maintains a list of domains and their allowed rights.
+●
+The list answers: “Who can access this object, and what can they do?”
+●
+Format: Object → (Domain, Rights)
+How it works
+1. Process requests access to an object.
+2. OS checks that object's access list.
+3. It finds the requesting domain.
+4. The requested operation is compared with the allowed rights.
+5. Access is granted or denied.
+Advantages
+●
+Easy to determine who can access an object.
+●
+Permissions can be easily modified.
+●
+Supports default permissions.
+Limitation - Difficult to determine all objects accessible by a particular domain.
+Domain
+Rights
+D1
+Read
+D3
+Read, Write
+D4
+Read, Write
+So:
+●
+D1 → can read F1
+●
+D3 → can read and write F1
+●
+D4 → can read and write F1
+●
+D2 → has no access to F1
+UNIVERSITY
+
+--- Slide / Page 11 ---
+Capability List 
+OPERATING SYSTEMS
+●A capability list stores the access rights associated with a domain.
+●It answers: “What objects can this domain access, and what can it do?”
+●Format: Domain → (Object, Rights)
+How it works
+1. A process executes in a particular domain.
+2. The OS checks that domain's capability list.
+3. It finds the requested object.
+4. The requested operation is checked against the stored rights.
+5. Access is granted or denied.
+Object
+Rights
+F1
+Read
+F2
+Read, Write
+Printer
+Print
+So D1 can:
+●
+Read F1
+●
+Read and Write F2
+●
+Print using the Printer
+UNIVERSITY
+
+--- Slide / Page 12 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

@@ -1,0 +1,179 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+File System – File-System Mounting, File Sharing and File Protection
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+File System Mounting
+OPERATING SYSTEMS
+●A file system must be mounted before it can be accessed
+●Fig (a) shows Existing File System
+●A unmounted file system (i.e., Fig. (b)) is mounted at a mount point 
+●Fig (c) shows the effect of mounting
+(c) 
+UNIVERSITY
+/
+/
+Q
+users
+(users
+bill 3
+0) fred
+sue
+jane
+sue
+Jane
+AR
+AR
+fl I
+A
+AN
+4
+a
+0) help
+doc
+doc
+:
+prog
+prog
+(a)
+(0)
+
+--- Slide / Page 5 ---
+File Sharing
+OPERATING SYSTEMS
+●Sharing of files on multi-user systems is desirable
+●Sharing may be done through a protection scheme
+●On distributed systems, files may be shared across a network
+●Network File System (NFS) is a common distributed file-sharing method
+●If multi-user system
+●User IDs identify users, allowing permissions and protections to be per-user
+Group IDs allow users to be in groups, permitting group access rights
+●Owner of a file / directory
+●Group of a file / directory
+UNIVERSITY
+
+--- Slide / Page 6 ---
+File Sharing – Remote File Systems
+OPERATING SYSTEMS
+●Uses networking to allow file system access between systems
+●Manually via programs like FTP
+●Automatically, seamlessly using distributed file systems
+●Semi automatically via the world wide web
+UNIVERSITY
+
+--- Slide / Page 7 ---
+File Sharing – Remote File Systems (Cont.)
+OPERATING SYSTEMS
+●Client-server model allows clients to mount remote file 
+systems from servers
+●Server can serve multiple clients
+●Client and user-on-client identification is insecure or 
+complicated
+●NFS is standard UNIX client-server file sharing protocol
+●CIFS is standard Windows protocol
+●Standard operating system file calls are translated into 
+remote calls
+●Distributed Information Systems (distributed naming 
+services) such as LDAP, DNS, NIS, Active Directory 
+implement unified access to information needed for remote 
+computing
+UNIVERSITY
+NES architecture
+Client computer
+Server computer
+UNIX
+system calls
+UNIX kemnel=—
+UNIX komo
+==
+il
+UNIX
+NFS
+NF
+UNIX
+fle
+| NFS.
+(ES:
+file
+i
+NFS
+protocol
+RPC (UDP
+or TCP)
+
+--- Slide / Page 8 ---
+Protection
+OPERATING SYSTEMS
+●File owner/creator should be able to control:
+●what can be done
+●by whom
+●Types of access
+●Read
+●Write
+●Execute
+●Append
+●Delete
+●List
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Access Lists and Groups
+OPERATING SYSTEMS
+●Mode of access:  read, write, execute
+●Three classes of users on Unix / Linux
+RWX
+a) owner access 7
+⇒
+1 1 1
+RWX
+b) group access 6
+ ⇒
+1 1 0
+RWX
+c) public access
+1
+ ⇒
+0 0 1
+●Ask manager to create a group (unique name), 
+say G, and add some users to the group.
+●For a particular file (say game) or subdirectory, 
+define an appropriate access.
+Attach a group to a file
+chgrp  G  game
+UNIVERSITY
+"Tow
+chmod 761 game
+
+--- Slide / Page 10 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

@@ -1,0 +1,191 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+OS Security Problems: Program Threats 
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+The Security Problem 
+OPERATING SYSTEMS
+Why is Security Important?
+●An Operating System manages valuable resources such as:
+○Programs and processes
+○Files and data
+○Memory and CPU
+○Network resources
+○User accounts and credentials
+●A security breach can result in:
+○Unauthorized access
+○Data theft or disclosure
+○Data modification or destruction
+○Misuse of system resources
+○Disruption of services
+UNIVERSITY
+
+--- Slide / Page 5 ---
+The Security Problem 
+OPERATING SYSTEMS
+Types of Security Violations
+1. Breach of Confidentiality - Unauthorized reading or disclosure of data.
+2. Breach of Integrity - Unauthorized modification of data.
+3. Breach of Availability - Unauthorized destruction or disruption of resources.
+4. Theft of Service - Unauthorized use of system resources.
+5. Denial of Service (DoS) - reventing legitimate users from accessing a system 
+or service.
+UNIVERSITY
+
+--- Slide / Page 6 ---
+Program Threats 
+OPERATING SYSTEMS
+●Program threats occur when a malicious or compromised program attempts to gain 
+unauthorized access, misuse resources, or damage a computer system.
+●Programs and processes are the primary means through which work is performed 
+on a computer.
+●An attacker can exploit a program to:
+○Access unauthorized data
+○Modify or delete files
+○Gain additional privileges
+○Execute malicious code
+○Disrupt system operation
+Common Program Threats - Malware, Trojan Horse, Spyware, Ransomware, Code, 
+Injection, Viruses, Worms, Trap Doors / Back Doors
+UNIVERSITY
+
+--- Slide / Page 7 ---
+Malware and Trojan Horse 
+OPERATING SYSTEMS
+Malware - Malware (Malicious Software) is software designed to exploit, disable, 
+damage, or gain unauthorized access to a computer system.
+●Malware may perform malicious actions while appearing to be a legitimate 
+program.
+●Common forms include: Trojan Horse, Spyware, Ransomware, Viruses, Worms
+Trojan Horse
+●A Trojan Horse is a program that appears to perform a legitimate function but 
+secretly performs malicious activities.
+●It may run with the user's privileges, allowing it to access resources available to 
+that user.
+●The user may unknowingly install or execute the program.
+UNIVERSITY
+
+--- Slide / Page 8 ---
+Spyware
+OPERATING SYSTEMS
+Spyware
+●Spyware is malicious software that secretly collects information about a user or 
+system.
+●It may monitor:
+○Browsing activity
+○User behavior
+○Credentials and personal information
+○Files and system information
+●Collected information may be sent to a remote attacker/server without the user's 
+knowledge.
+Example: A malicious application secretly records user activity and sends the collected 
+information to an attacker.
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Ransomware 
+OPERATING SYSTEMS
+Ransomware
+●Ransomware is malware that encrypts files or data on a system.
+●The attacker demands a ransom payment in exchange for the decryption key.
+●Without the key, the victim may be unable to access the encrypted data.
+UNIVERSITY
+
+--- Slide / Page 10 ---
+Code Injection 
+OPERATING SYSTEMS
+●Code injection is a security attack in which an attacker causes unauthorized code to be 
+inserted into or executed by a program.
+●It commonly occurs due to poor or insecure programming practices.
+●If successful, the attacker may:
+a. Modify program behavior
+b. Execute unauthorized commands
+c. Access protected data
+d. Gain control over the program
+Common Example: Buffer Overflow
+●A program stores data in a fixed-size buffer.
+●If more data is supplied than the buffer can hold, the extra data may overwrite nearby 
+memory.
+●Carefully crafted input can potentially alter program execution.
+UNIVERSITY
+
+--- Slide / Page 11 ---
+Viruses 
+OPERATING SYSTEMS
+●A virus is a fragment of code embedded in a legitimate program or file.
+●It is designed to replicate itself by infecting other programs or files.
+●A virus generally requires user action or execution of an infected program to 
+spread.
+●Viruses can:
+a. Modify or destroy files
+b. Corrupt programs
+c. Cause system crashes or malfunction
+d. Spread to other files or systems
+UNIVERSITY
+
+--- Slide / Page 12 ---
+Worms 
+OPERATING SYSTEMS
+●A worm is a self-replicating program that can spread across computer 
+systems, typically through a network.
+●Unlike a virus, a worm does not need to attach itself to another program or 
+file.
+●Worms can spread automatically by exploiting network or software 
+vulnerabilities.
+●They may consume system and network resources and cause:
+a. Network congestion
+b. System slowdown
+c. Service disruption
+d. Installation of additional malware
+UNIVERSITY
+
+--- Slide / Page 13 ---
+Trap Door / Back Door & Principle of Least Privilege 
+OPERATING SYSTEMS
+●A trap door (back door) is a hidden entry point in a program that allows access to a 
+system without following the normal authentication or security mechanisms.
+●It may be intentionally created during development or maliciously inserted by an 
+attacker.
+●If discovered and exploited, it can provide unauthorized access to system 
+resources.
+Principle of Least Privilege
+●A user or program should be given only the minimum privileges required to 
+perform its task.
+●Privileges should be limited in:
+○Scope — what resources can be accessed
+○Time — how long access is required
+UNIVERSITY
+
+--- Slide / Page 14 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY

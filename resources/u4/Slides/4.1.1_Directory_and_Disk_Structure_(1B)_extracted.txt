@@ -1,0 +1,278 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+File System
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+Directory Structure
+OPERATING SYSTEMS
+●A collection of nodes containing information about all files
+F 
+1
+F 
+2
+F 
+3
+F 
+4
+F 
+n
+Directory
+Files
+Both the directory structure and the files reside on disk
+UNIVERSITY
+
+--- Slide / Page 5 ---
+Disk Structure
+OPERATING SYSTEMS
+●Disk can be subdivided into partitions
+●Disks or partitions can be RAID protected against failure
+●Disk or partition can be used raw – without a file system, or 
+formatted with a file system
+●Partitions also known as minidisks, slices
+●Entity containing file system known as a volume
+●Each volume containing file system also tracks that file system’s 
+info in device directory or volume table of contents
+●As well as general-purpose file systems there are many special-
+purpose file systems, frequently all within the same operating 
+system or computer
+UNIVERSITY
+LVM
+:
+Ihome
+Idata
+File Systems
+(ext3)
+(xfs)
+Logical Volume (LV) [TEFr
+Physical Volumes | /dev/sdb1
+Idevisdc2
+Partitions | /dev/sdb1
+Idevisdc2
+
+--- Slide / Page 6 ---
+A Typical File-system Organization
+OPERATING SYSTEMS
+PES
+UNIVERSITY
+partition A
+disk 2
+disk 1
+partition C
+files
+partition B
+disk 3
+
+--- Slide / Page 7 ---
+Operations Performed on Directory
+OPERATING SYSTEMS
+●Search for a file
+●Create a file
+●Delete a file
+●List a directory
+●Rename a file
+●Traverse the file system
+UNIVERSITY
+
+--- Slide / Page 8 ---
+Directory Organization
+OPERATING SYSTEMS
+●Efficiency – locating a file quickly
+●Naming – convenient to users
+●Two users can have same name for different files
+●The same file can have several different names
+●Grouping – logical grouping of files by properties, (e.g., all Java 
+programs, all games, …)
+The directory is organized logically  to obtain 
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Single-Level Directory
+OPERATING SYSTEMS
+●A single directory for all users
+●Naming problem
+●Grouping problem
+UNIVERSITY
+diecory | cat| bo| a | test] da] mail| cont] hex |ecord
+
+--- Slide / Page 10 ---
+Two-Level Directory
+OPERATING SYSTEMS
+●Separate directory for each user
+●Path name
+●Can have the same file name for different user
+●Efficient searching
+●No grouping capability
+rte i)
+vis
+gree
+oo a row] [ome Lor] x [oe]
+QOO0OO0 00 00 000
+
+--- Slide / Page 11 ---
+Tree-Structured Directories
+OPERATING SYSTEMS
+•
+A tree structure is the most common 
+directory structure. 
+•
+The tree has a root directory, and 
+every file in the system have a unique 
+path.
+—
+PES
+Cow Ter [ar | [io Tom]
+oc Jose] [Tv [ow]
+@
+OO
+QQ
+0
+QO
+©
+O
+oa[wml
+or [or]
+fms
+4 [ior] [ror feo]
+©
+®
+©
+@
+Q
+OQ
+[Cio To [oro J o0 [i To]
+0
+0
+0
+©
+©
+
+--- Slide / Page 12 ---
+Tree-Structured Directories (Cont.)
+OPERATING SYSTEMS
+●Efficient searching
+●Grouping Capability
+●Current directory (working directory)
+●cd /spell/mail/prog
+●type list
+●We cannot share files
+UNIVERSITY
+
+--- Slide / Page 13 ---
+Tree-Structured Directories (Cont.)
+OPERATING SYSTEMS
+●Absolute or relative path name
+●Creating a new file is done in current directory
+●Delete a file
+rm <file-name>
+●Creating a new subdirectory is done in current directory
+mkdir <dir-name>
+❑Example:  if in current directory   /mail
+mkdir count
+Deleting “mail” 
+ deleting the entire subtree rooted by “mail”
+⇒
+UNIVERSITY
+mail
+prog | copy
+count
+
+--- Slide / Page 14 ---
+Acyclic-Graph Directories
+OPERATING SYSTEMS
+●An acyclic graph is a graph with no cycle and allows to 
+share subdirectories and files.
+●The same file or subdirectories may be in two 
+different directories
+●It is used in a situation like when two programmers 
+are working on a joint project and they need to 
+access files.
+PES
+UNIVERSITY
+fie
+oR
+© 0 O
+
+--- Slide / Page 15 ---
+Acyclic-Graph Directories (Cont.)
+OPERATING SYSTEMS
+●Two different names (aliasing)
+●If dict deletes list 
+ dangling pointer
+⇒
+Solutions:
+●Backpointers, so we can delete all pointers
+Variable size records a problem
+●Backpointers using a daisy chain organization
+●Entry-hold-count solution
+●New directory entry type
+●Link – another name (pointer) to an existing file
+●Resolve the link – follow pointer to locate the file
+UNIVERSITY
+
+--- Slide / Page 16 ---
+General Graph Directory 
+OPERATING SYSTEMS
+Advantages:
+It allows cycles  within a dir structure.
+Multiple directories can be derived 
+from more than one parent dir.
+Disadvantages:
+It is more costly than others.
+It needs garbage collection (traversing 
+the entire file system, marking 
+everything that can be accessed)
+Root
+UNIVERSITY
+[uw [uw
+Directory
+[oo [oz [os | [oe |oos | [oe [ or | oe |
+Files
+NL
+
+--- Slide / Page 17 ---
+General Graph Directory (Contd.)
+OPERATING SYSTEMS
+●How do we guarantee no cycles?
+●Allow only links to file not 
+subdirectories
+●Garbage collection
+●Every time a new link is added use 
+a cycle detection algorithm to 
+determine whether it is OK
+TAL
+UNIVERSITY
+Db A
+
+--- Slide / Page 18 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY

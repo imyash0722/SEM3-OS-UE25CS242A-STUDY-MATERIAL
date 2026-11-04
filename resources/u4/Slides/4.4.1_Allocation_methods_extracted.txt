@@ -1,0 +1,273 @@
+--- Slide / Page 1 ---
+OPERATING SYSTEMS
+UE25CS242A
+File Management
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 2 ---
+OPERATING SYSTEMS
+Implementing File-Systems – Disk Space Allocation Methods
+Pavan A C
+Department of Computer Science & Engineering
+UNIVERSITY
+
+--- Slide / Page 3 ---
+Slides Credits for all the PPTs of this course 
+• The slides/diagrams in this course are an adaptation, combination, 
+and enhancement of material from the following resources and 
+persons:
+1. Slides of Operating System Concepts, Abraham Silberschatz, Peter 
+Baer Galvin, Greg Gagne -  9th edition 2013 and some slides from 
+10th edition 2018
+2. Some conceptual text and diagram from Operating Systems - 
+Internals and Design Principles, William Stallings, 9th edition 2018
+3. Some presentation transcripts from A. Frank – P. Weisberg
+4. Some conceptual text from Operating Systems: Three Easy Pieces, 
+Remzi Arpaci-Dusseau, Andrea Arpaci Dusseau 
+OPERATING SYSTEMS
+UNIVERSITY
+
+--- Slide / Page 4 ---
+Allocation Methods - Contiguous
+OPERATING SYSTEMS
+●An allocation method refers to how disk blocks are allocated for files:
+●Contiguous allocation – each file occupies set of contiguous blocks
+●Best performance in most cases
+●Simple – only starting location (block #) and length (number of blocks) 
+are required
+●Supports both sequential and direct access
+●Problems include finding space for file, knowing file size, external 
+fragmentation, need for compaction off-line (downtime) or on-line
+UNIVERSITY
+
+--- Slide / Page 5 ---
+Contiguous Allocation
+OPERATING SYSTEMS
+●Mapping from logical to 
+physical
+LA/512
+Q
+R
+•
+LA – Length of the area allocated for this file
+•
+Q = displacement into index table
+•
+Block to be accessed = Q + starting address
+•
+Displacement into block = R
+il
+|
+h
+UNIVERSITY
+a
+ile
+start
+lengt
+ol] 11 21 3]
+count
+0
+2
+f
+tr
+14
+3
+401 50 600 70]
+mail
+19
+6
+ye
+=
+8] o[ Jo 111]
+list
+28
+4
+N
+tr
+f
+6
+2
+1211314115]
+16[117[J18[J19[]
+mail
+20(J21[J22[123[]
+24[J25[Je6[127[]
+list
+28[J29[ 130131]
+
+--- Slide / Page 6 ---
+Contiguous Allocation
+OPERATING SYSTEMS
+i
+NIVERSITY
+fee
+fle
+start
+length
+ol] 11 21 31
+count
+0
+2
+f
+tr
+14
+3
+40] sL1 el] 71]
+mail
+19
+6
+8] oo 111]
+EAE
+ro
+f
+6
+2
+12131141150]
+16[]17[J18[119[]
+mail
+20[J21[Je2[J23[]
+24[J25[Je6[J27[]
+list
+28[]29[ 130131]
+
+--- Slide / Page 7 ---
+Linked Allocation
+OPERATING SYSTEMS
+•Each block contains a pointer to the 
+next block.
+•If each block is 512 bytes and a disk 
+address (pointer) requires 4 bytes then 
+the user sees blocks of 508 bytes (i.e. 
+some disk space is wasted)
+•Collect blocks into multiples called 
+clusters and allocate clusters rather 
+than blocks
+E———
+directory
+PES
+UNIVERSITY
+oJ 10] 2] 31
+leepn
+2
+4]
+51 6] 71
+8] pl1o211
+12[J13[ 114/115]
+16[J17[J18[J19[]
+20[J21[J22[J23[]
+24
+J25[1l26[ 127]
+28[]29[ 130131]
+
+--- Slide / Page 8 ---
+Allocation Methods - Linked
+OPERATING SYSTEMS
+●Linked allocation – each file a linked list of blocks
+●File ends with null pointer
+●No external fragmentation
+●Each block contains pointer to next block
+●No compaction, external fragmentation
+●Free space management system called when new block needed
+●Improve efficiency by clustering blocks into groups but increases 
+internal fragmentation
+●Reliability can be a problem
+●Locating a block can take many I/Os and disk seeks
+UNIVERSITY
+
+--- Slide / Page 9 ---
+Allocation Methods – Linked (Cont.)
+OPERATING SYSTEMS
+●FAT (File Allocation Table) variation
+●Beginning of volume has table, indexed by block number
+●Much like a linked list, but faster on disk and cacheable 
+●New block allocation simple
+UNIVERSITY
+
+--- Slide / Page 10 ---
+File-Allocation Table (variation on linked allocation)
+OPERATING SYSTEMS
+•Unused block is indicated by a 
+table value of 0
+•To allocate a new block to a file, 
+find the first 0-valued table entry 
+and replace the previous EOF 
+value with the address of the 
+new block.
+•Then replace 0 with EOF value
+directory entry
+I ES
+UNIVERSITY
+[test [eee] 217 |
+name
+start block
+O [I
+217
+339—
+618
+no. of disk blocks
+—1[ |
+FAT
+
+--- Slide / Page 11 ---
+Indexed Allocation
+OPERATING SYSTEMS
+•
+In this scheme, a special block 
+known as the Index block contains 
+the pointers to all the blocks 
+occupied by a file. 
+•
+Each file has its own index block. 
+The ith entry in the index block 
+contains the disk address of the ith 
+file block. 
+•
+The directory entry contains the 
+address of the index block as 
+shown in the figure.
+CD
+directory
+PES
+file
+index block
+UNIVERSITY
+ol] = 3]
+4] 5]
+71]
+8] que
+-
+12[Jia 1aN|
+1
+16] rele)
+19
+2
+20121 J22[A23[]
+24[J2s5[J26[ 27]
+—
+28[]29[J30[131[]
+
+--- Slide / Page 12 ---
+Allocation Methods – Indexed (Cont.)
+OPERATING SYSTEMS
+Advantages:
+⮚This supports direct access to the blocks occupied by the file 
+and therefore provides fast access to the file blocks.
+⮚It overcomes the problem of external fragmentation.
+Disadvantages:
+⮚The pointer overhead for indexed allocation is greater than 
+linked allocation.
+⮚For very small files, say files that expand only 2-3 blocks, the 
+indexed allocation would keep one entire block (index block) 
+for the pointers which is inefficient in terms of memory 
+utilization. (Note: In linked allocation we lose the space of only 
+1 pointer per block.)
+UNIVERSITY
+
+--- Slide / Page 13 ---
+pavanac@pes.edu
+THANK YOU
+Pavan A C
+Department of Computer Science and Engineering
+UNIVERSITY
